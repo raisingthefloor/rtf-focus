@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <AssemblyName>Focus</AssemblyName>
     <StartupObject>Morphic.Focus.App</StartupObject>
@@ -30,7 +30,6 @@
   <ItemGroup>
     <Folder Include="Assets\" />
     <Folder Include="Common\" />
-    <Folder Include="Screens\" />
   </ItemGroup>
 
 </Project>

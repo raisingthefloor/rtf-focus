@@ -1,5 +1,4 @@
-﻿using Morphic.Focus.Screens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,20 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Morphic.Focus
+namespace Morphic.Focus.Screens
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for winFocusMain.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class FocusMain : Window
     {
-        public MainWindow()
+        public FocusMain()
         {
-            this.DataContext = this;
-
             InitializeComponent();
         }
 
@@ -34,13 +30,6 @@ namespace Morphic.Focus
             {
                 this.DragMove();
             }
-        }
-
-        private void btnMainFocus_Click(object sender, RoutedEventArgs e)
-        {
-            FocusMain focusMain = new FocusMain();
-            focusMain.Show();
-
         }
     }
 }

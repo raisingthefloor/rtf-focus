@@ -4,9 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Morphic.Focus"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        mc:Ignorable="d"  Width="100" Height="64" ResizeMode="NoResize" WindowStyle="None"
+        Background="Transparent"
+        Padding="0"
+        AllowsTransparency="True" MouseMove="Window_MouseMove">
 
-    </Grid>
+    <Border x:Name="WindowBorder"
+            CornerRadius="5"
+            BorderBrush="Black"
+            BorderThickness="1"
+            Background="White">
+        
+            <Button x:Name="btnMainFocus" Content="Focus" Background="#008145" Foreground="White" FontSize="14" FontWeight="Bold" Height="60" 
+                    Click="btnMainFocus_Click"/>
+        
+    </Border>
 </Window>

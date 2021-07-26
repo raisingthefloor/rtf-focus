@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Morphic.Focus.Screens
 {
     /// <summary>
-    /// Interaction logic for FocusBreakSequence.xaml
+    /// Interaction logic for FocusReminder.xaml
     /// </summary>
-    public partial class FocusBreakSequence : Window
+    public partial class FocusReminder : Window
     {
-        public FocusBreakSequence()
+        public FocusReminder()
         {
             InitializeComponent();
         }

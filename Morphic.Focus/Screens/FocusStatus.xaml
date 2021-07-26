@@ -5,8 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Morphic.Focus.Screens"
         mc:Ignorable="d"
-        Title="FocusStatus" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        SizeToContent="WidthAndHeight" ShowInTaskbar="False" WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        MouseMove="Window_MouseMove">
+    <Border CornerRadius="10" BorderThickness="1" BorderBrush="Black" Background="White" Padding="10">
+        <Grid>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+
+            <TextBlock  Grid.Row="0" Grid.Column="0" Style="{DynamicResource TitleStyle}">Focus Status</TextBlock>
+            
+            <TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource ContentStyle}" >
+                You have been focusing for
+                <LineBreak />
+                _123_ Minutes
+                <LineBreak />
+                including short breaks
+            </TextBlock>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Style="{DynamicResource ContentStyle}" >
+                Your next break is in _12__ minutes
+            </TextBlock>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Style="{DynamicResource ContentStyle}" >
+                The following BlockSet(s) are in effect:
+                <LineBreak/>
+                Starter set - no penalty to stop
+            </TextBlock>
+
+            <Button Grid.Row="4" Grid.Column="0" Style="{DynamicResource FocusButtonGreen}" Margin="30,10,30,10" HorizontalAlignment="Center" Padding="20,10,20,10">OK - Continue</Button>
+            <Button Grid.Row="5" Grid.Column="0" Style="{DynamicResource FocusButtonRed}" Margin="30,10,30,10" HorizontalAlignment="Center" Padding="20,10,20,10">Stop Focus Session</Button>
+        </Grid>
+    </Border>
 </Window>

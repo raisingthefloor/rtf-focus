@@ -15,20 +15,15 @@ using System.Windows.Shapes;
 namespace Morphic.Focus.Screens
 {
     /// <summary>
-    /// Interaction logic for FocusBreakSequence.xaml
+    /// Interaction logic for Focus2HourBreakUntilStop.xaml
     /// </summary>
-    public partial class FocusBreakSequence : Window
+    public partial class Focus2HourBreakUntilStop : Window
     {
-        public FocusBreakSequence()
+        public Focus2HourBreakUntilStop()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Allow user to drag the window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)

@@ -23,5 +23,18 @@ namespace Morphic.Focus.Screens
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Ability to drag the Window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
     }
 }

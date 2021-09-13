@@ -1,0 +1,266 @@
+﻿<UserControl x:Class="Morphic.Focus.Screens.SettingsSchedule"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:Morphic.Focus.Screens"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="WeekdayButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Height" Value="18" />
+            <Setter Property="Width" Value="18" />
+            <Setter Property="Padding" Value="4 2"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <Ellipse Fill="{TemplateBinding Background}" Stroke="{TemplateBinding Foreground}"/>
+                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#3566D8" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+                <Trigger Property="IsChecked" Value="False">
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="Foreground" Value="Black" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+
+
+    <StackPanel>
+        <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
+            <ItemsControl>
+                <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,25,0,0" >
+                    <Run>Focus Schedule</Run>
+                    <Hyperlink FontSize="12">
+                        <TextBlock Text="Instructions "/>
+                    </Hyperlink>
+                    <Hyperlink FontSize="12">
+                        <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 0 25">
+                    <Run>
+                        Create a schedule to start focus sessions on days and times of your choosing. (When you schedule focus sessions at the top of this page, they will appear on the calendar at the bottom.)
+                    </Run>
+                </TextBlock>
+            </ItemsControl>
+        </StackPanel>
+        <Border Background="#FAFCFF" Margin="0" BorderThickness="0">
+            <StackPanel>
+                <Border Height="29" BorderThickness="0" Background="#EBF2FF">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{DynamicResource SettingsGridHeader}" Margin="27 8 0 8" Width="117" Height="13">PICK A BLOCKLIST
+                        </TextBlock>
+                        <TextBlock Style="{DynamicResource SettingsGridHeader}" Margin="12 8 0 8" Width="57" Height="13">START AT
+                        </TextBlock>
+                        <TextBlock Style="{DynamicResource SettingsGridHeader}" Margin="12 8 0 8" Width="57" Height="13">END AT
+                        </TextBlock>
+                        <TextBlock Style="{DynamicResource SettingsGridHeader}" Margin="12 8 0 8" Width="150" Height="13">ON THESE DAYS
+                        </TextBlock>
+                        <TextBlock Style="{DynamicResource SettingsGridHeader}" Margin="12 8 0 8"  Height="13">ACTIVE
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+                <ItemsControl ItemsSource="{Binding FocusSchedules}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Height="44" Background="#FAFCFF" Margin="0">
+                                <ComboBox Style="{DynamicResource SettingsComboBoxStyle}" Width="117" Height="23" Margin="27 10 0 11">
+                                    <ComboBoxItem>Starter Blocklist</ComboBoxItem>
+                                    <ComboBoxItem>Weekend Blocklist</ComboBoxItem>
+                                    <ComboBoxItem>Meditation Session</ComboBoxItem>
+                                </ComboBox>
+                                <TextBox Width="57" Height="23" Margin="12 10 0 11"></TextBox>
+                                <TextBox Width="57" Height="23" Margin="12 10 0 11"></TextBox>
+                                <StackPanel Orientation="Horizontal" Margin="12 10 0 11">
+                                    <ToggleButton Content="S" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
+                                    <ToggleButton Margin="4 0 0 0" Content="M" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
+                                    <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
+                                    <ToggleButton Margin="4 0 0 0" Content="W" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
+                                    <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
+                                    <ToggleButton Margin="4 0 0 0" Content="F" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
+                                    <ToggleButton Margin="4 0 0 0" Content="S" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
+                                </StackPanel>
+                                <CheckBox Margin="22 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14"/>
+                                <Image Margin="12 10 0 11" Source="/Images/Vector.png" Width="10.5" Height="13.5" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Border Height="36" Margin="8 12 15 0" BorderBrush="#c2c2c2" BorderThickness="0 1 0 0" Background="Transparent">
+                </Border>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20">
+                    <CheckBox Height="15" Margin="0" FontFamily="Source Sans Pro" FontSize="12">Provide short</CheckBox>
+                    <ComboBox Style="{DynamicResource SettingsComboBoxStyle}" Width="70" Height="20" Margin="4 0 0 0" 
+                              FontFamily="Source Sans Pro" >
+                        <ComboBoxItem IsSelected="True">1 min</ComboBoxItem>
+                        <ComboBoxItem>3 min</ComboBoxItem>
+                        <ComboBoxItem>5 min</ComboBoxItem>
+                        <ComboBoxItem>10 min</ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Margin="4 0 0 0" Style="{DynamicResource SettingsSectionBody}">breaks for every</TextBlock>
+                    <ComboBox Style="{DynamicResource SettingsComboBoxStyle}" Width="70" Height="20" Margin="4 0 0 0" 
+                              FontFamily="Source Sans Pro" >
+                        <ComboBoxItem IsSelected="True">15 min</ComboBoxItem>
+                        <ComboBoxItem>20 min</ComboBoxItem>
+                        <ComboBoxItem>25 min</ComboBoxItem>
+                        <ComboBoxItem>30 min</ComboBoxItem>
+                        <ComboBoxItem>45 min</ComboBoxItem>
+                        <ComboBoxItem>60 min</ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Margin="4 0 0 0" Style="{DynamicResource SettingsSectionBody}" FontWeight="Bold">of scheduled Focus sessions</TextBlock>
+                </StackPanel>
+                <Border Height="48" Margin="8 24 15 0" BorderBrush="#c2c2c2" BorderThickness="0 1 0 0" Background="Transparent">
+                </Border>
+
+                <Grid Background="#F5F9FF" Margin="0 0 0 30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="65"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Grid.Column="0" Height="24" Width="65" BorderThickness="1" BorderBrush="#DDDDDD">
+                    </Border>
+
+                    <!-- Column Headers -->
+                    <ItemsControl Grid.Column="1" Grid.Row="0" AlternationCount="2">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" Height="24"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border x:Name="Header" Width="65" BorderThickness="1" BorderBrush="#DDDDDD">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding}" 
+                                           Height="13" FontFamily="Source Sans Pro" FontSize="10" FontWeight="Bold"></TextBlock>
+                                </Border>
+                                <DataTemplate.Triggers>
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                        <Setter Property="Background" Value="#EBF2FF" TargetName="Header"/>
+                                    </Trigger>
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                        <Setter Property="Background" Value="#F5F9FF" TargetName="Header"/>
+                                    </Trigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <sys:String>SUN</sys:String>
+                        <sys:String>MON</sys:String>
+                        <sys:String>TUE</sys:String>
+                        <sys:String>WED</sys:String>
+                        <sys:String>THU</sys:String>
+                        <sys:String>FRI</sys:String>
+                        <sys:String>SAT</sys:String>
+                    </ItemsControl>
+
+                    <!-- RowHeaders -->
+                    <ItemsControl Grid.Column="0" Grid.Row="1">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderThickness="1" BorderBrush="#DDDDDD" HorizontalAlignment="Center" Width="65">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding}" 
+                                           Height="14" FontWeight="Bold" FontSize="10"/>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <sys:String>5 AM</sys:String>
+                        <sys:String>6 AM</sys:String>
+                        <sys:String>7 AM</sys:String>
+                        <sys:String>8 AM</sys:String>
+                        <sys:String>9 AM</sys:String>
+                        <sys:String>10 AM</sys:String>
+                        <sys:String>11 AM</sys:String>
+                        <sys:String>12 PM</sys:String>
+                        <sys:String>1 PM</sys:String>
+                        <sys:String>2 PM</sys:String>
+                        <sys:String>3 PM</sys:String>
+                        <sys:String>4 PM</sys:String>
+                        <sys:String>5 PM</sys:String>
+                        <sys:String>6 PM</sys:String>
+                        <sys:String>7 PM</sys:String>
+                        <sys:String>8 PM</sys:String>
+                        <sys:String>9 PM</sys:String>
+                        <sys:String>10 PM</sys:String>
+                        <sys:String>11 PM</sys:String>
+                        <sys:String>12 AM</sys:String>
+                        <sys:String>1 AM</sys:String>
+                        <sys:String>2 AM</sys:String>
+                        <sys:String>3 AM</sys:String>
+                        <sys:String>4 AM</sys:String>
+                    </ItemsControl>
+
+                    <!-- Data -->
+                    <ItemsControl Grid.Row="1" Grid.Column="1" AlternationCount="7" ItemsSource="{Binding CalendarDataSource}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="7"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border x:Name="Data" Width="65" BorderThickness="1" BorderBrush="#DDDDDD">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Width="32" Height="14" BorderThickness="0" BorderBrush="Transparent" Background="{Binding Color1}">
+
+                                        </Border>
+                                        <Border Width="32" Height="14" BorderThickness="0" BorderBrush="Transparent" Background="{Binding Color2}">
+
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+                                <DataTemplate.Triggers>
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                        <Setter Property="Background" Value="#EBF2FF" TargetName="Data"/>
+                                    </Trigger>
+
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                        <Setter Property="Background" Value="#F5F9FF" TargetName="Data"/>
+                                    </Trigger>
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="2">
+                                        <Setter Property="Background" Value="#EBF2FF" TargetName="Data"/>
+                                    </Trigger>
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="3">
+                                        <Setter Property="Background" Value="#F5F9FF" TargetName="Data"/>
+                                    </Trigger>
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="4">
+                                        <Setter Property="Background" Value="#EBF2FF" TargetName="Data"/>
+                                    </Trigger>
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="5">
+                                        <Setter Property="Background" Value="#F5F9FF" TargetName="Data"/>
+                                    </Trigger>
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="6">
+                                        <Setter Property="Background" Value="#EBF2FF" TargetName="Data"/>
+                                    </Trigger>
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="7">
+                                        <Setter Property="Background" Value="#F5F9FF" TargetName="Data"/>
+                                    </Trigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+
+                    </ItemsControl>
+                </Grid>
+
+            </StackPanel>
+        </Border>
+    </StackPanel>
+
+</UserControl>

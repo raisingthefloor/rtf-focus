@@ -17,6 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Images\external-link 1.png" />
+    <None Remove="Images\Remove Icon.png" />
+    <None Remove="Images\Vector.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Remove="Screens\CustomizeFocus.xaml" />
   </ItemGroup>
 
@@ -36,8 +42,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\" />
     <Folder Include="Common\" />
+    <Folder Include="Screens\NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\external-link 1.png" />
+    <Resource Include="Images\Remove Icon.png" />
+    <Resource Include="Images\Vector.png" />
   </ItemGroup>
 
 </Project>

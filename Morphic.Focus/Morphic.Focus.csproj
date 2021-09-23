@@ -10,20 +10,78 @@
     <Company>Raising the Floor</Company>
     <Authors>Morphic</Authors>
     <Product>Morphic</Product>
+    <ApplicationIcon>morphic-icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AppEngine.cs" />
     <Compile Remove="Screens\CustomizeFocus.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\OFL.txt" />
+    <None Remove="Fonts\SourceSansPro-Black.ttf" />
+    <None Remove="Fonts\SourceSansPro-BlackItalic.ttf" />
+    <None Remove="Fonts\SourceSansPro-Bold.ttf" />
+    <None Remove="Fonts\SourceSansPro-BoldItalic.ttf" />
+    <None Remove="Fonts\SourceSansPro-ExtraLight.ttf" />
+    <None Remove="Fonts\SourceSansPro-ExtraLightItalic.ttf" />
+    <None Remove="Fonts\SourceSansPro-Italic.ttf" />
+    <None Remove="Fonts\SourceSansPro-Light.ttf" />
+    <None Remove="Fonts\SourceSansPro-LightItalic.ttf" />
+    <None Remove="Fonts\SourceSansPro-Regular.ttf" />
+    <None Remove="Fonts\SourceSansPro-SemiBold.ttf" />
+    <None Remove="Fonts\SourceSansPro-SemiBoldItalic.ttf" />
     <None Remove="Images\external-link 1.png" />
+    <None Remove="Images\Gear.png" />
     <None Remove="Images\Remove Icon.png" />
     <None Remove="Images\Vector.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Page Remove="Screens\CustomizeFocus.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Fonts\OFL.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\SourceSansPro-Black.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\SourceSansPro-BlackItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\SourceSansPro-Bold.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\SourceSansPro-BoldItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\SourceSansPro-ExtraLight.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\SourceSansPro-ExtraLightItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\SourceSansPro-Italic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\SourceSansPro-Light.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\SourceSansPro-LightItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\SourceSansPro-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\SourceSansPro-SemiBold.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\SourceSansPro-SemiBoldItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -47,7 +105,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\external-link 1.png" />
+    <Resource Include="Images\Gear.png" />
     <Resource Include="Images\Remove Icon.png" />
     <Resource Include="Images\Vector.png" />
   </ItemGroup>

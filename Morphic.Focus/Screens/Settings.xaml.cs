@@ -23,6 +23,7 @@ namespace Morphic.Focus.Screens
         private SettingsBlockLists _objSettingsBlockLists;
         private SettingsSchedule _objSettingsSchedule;
         private SettingsTodaysSchedule _objSettingsTodaysSchedule;
+        private FocusMain? _scrFocusMain;
         private Control _currentSelectedSetting;
 
         public Settings()
@@ -39,6 +40,16 @@ namespace Morphic.Focus.Screens
             _currentSelectedSetting = _objSettingsGeneral;
             sPnlContent.Children.Add(_currentSelectedSetting);
             lstBoxMenu.SelectedItem = lstItemGeneral;
+        }
+
+        public Settings(FocusMain scrFocusMain) : this()
+        {
+            _scrFocusMain = scrFocusMain;
+        }
+
+        public Settings(FocusMain scrFocusMain, bool openBlocklist) : this(scrFocusMain)
+        {
+            lstBoxMenu.SelectedIndex = 1;//Select BlockList Menu Item
         }
 
         /// <summary>
@@ -83,6 +94,17 @@ namespace Morphic.Focus.Screens
 
             //Add the _currentSelectedSetting as the child of the right menu stack panel
             sPnlContent.Children.Add(_currentSelectedSetting);
+        }
+
+        /// <summary>
+        /// Close this window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+            _scrFocusMain.Show();
         }
     }
 }

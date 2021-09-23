@@ -10,14 +10,107 @@
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVis" />
+        <ControlTemplate x:Key="ComboBoxAddTemplate" TargetType="{x:Type ComboBox}">
+            <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" Placement="Bottom" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                    <theme:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MinWidth="{Binding ActualWidth, ElementName=templateRoot}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                        <Border x:Name="dropDownBorder" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" Height="146">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <ScrollViewer  x:Name="DropDownScrollViewer" Grid.Row="0" Grid.Column="0">
+                                    <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                            <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                        </Canvas>
+                                        <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    </Grid>
+                                </ScrollViewer>
+
+                                <Button Click="AddBlockList_Click" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Left" Padding="0 0 0 0" Height="23" Background="#4370DB" BorderBrush="#4370DB" TextBlock.LineHeight="15" TextBlock.FontFamily="{DynamicResource SourceSansProRegular}" TextBlock.FontSize="12" TextBlock.Foreground="White">Create new blocklist...
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Background" Value="#4370DB"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0">
+                                                            <ContentPresenter Margin="6 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#4370DB"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
+                        </Border>
+                    </theme:SystemDropShadowChrome>
+                </Popup>
+                <ToggleButton x:Name="toggleButton" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Grid.ColumnSpan="2" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource ComboBoxToggleButton}"/>
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Content="{TemplateBinding SelectionBoxItem}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
+                    <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
+                    <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
+                </Trigger>
+                <Trigger Property="HasItems" Value="false">
+                    <Setter Property="Height" TargetName="dropDownBorder" Value="95"/>
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsGrouping" Value="true"/>
+                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                </MultiTrigger>
+                <Trigger Property="ScrollViewer.CanContentScroll" SourceName="DropDownScrollViewer" Value="false">
+                    <Setter Property="Canvas.Top" TargetName="opaqueRect" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}"/>
+                    <Setter Property="Canvas.Left" TargetName="opaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="SettingsAddComboBoxStyle" TargetType="{x:Type ComboBox}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource cmbFocusVisual}"/>
+            <Setter Property="Background" Value="{DynamicResource ComboBox.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource ComboBox.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Padding" Value="6,3,5,3"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template" Value="{StaticResource ComboBoxAddTemplate}"/>
+            <Style.Triggers>
+                <Trigger Property="IsEditable" Value="true">
+                    <Setter Property="IsTabStop" Value="false"/>
+                    <Setter Property="Padding" Value="2"/>
+                    <Setter Property="Template" Value="{DynamicResource ComboBoxEditableTemplate}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-    
-        <StackPanel>
-        
-            <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
-                <ItemsControl Height="105">
-                    <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,25,0,0" >Edit Blocklists</TextBlock>
-                    <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 0 25">
+
+    <StackPanel>
+
+        <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
+            <ItemsControl Height="105">
+                <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,25,0,0" >Edit Blocklists</TextBlock>
+                <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 0 25">
                 <Run>
                     A blocklist is a group of apps, websites and other items that you can choose to block during a focus session. 
                 </Run>
@@ -27,164 +120,164 @@
                 <InlineUIContainer>
                     <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>
                 </InlineUIContainer>
-                    </TextBlock>
-                </ItemsControl>
-                <TextBlock Style="{DynamicResource SettingsSectionTitle}">Select a blocklist to edit:</TextBlock>
-            </StackPanel>
-        
-            <Canvas Height="650" Margin="0 0 0 30">
-                <Border Width="513" BorderBrush="#BFBFBF" CornerRadius="8" BorderThickness="1" Background="#F4F8FF" Margin="8" Canvas.Top="15" Canvas.ZIndex="1">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                </TextBlock>
+            </ItemsControl>
+            <TextBlock Style="{DynamicResource SettingsSectionTitle}">Select a blocklist to edit:</TextBlock>
+        </StackPanel>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+        <Canvas Height="650" Margin="0 0 0 30">
+            <Border Width="513" BorderBrush="#BFBFBF" CornerRadius="8" BorderThickness="1" Background="#F4F8FF" Margin="8" Canvas.Top="15" Canvas.ZIndex="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                        <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Margin="0 8 8 8" HorizontalAlignment="Right" Height="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Margin="0 8 8 8" HorizontalAlignment="Right" Height="15">
                         The following settings only apply to the selected blocklist
-                        </TextBlock>
+                    </TextBlock>
 
-                        <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="1" Grid.Column="0" Margin="20 12 20 8">
+                    <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="1" Grid.Column="0" Margin="20 12 20 8">
                         Block all items in these categories:</TextBlock>
-                        <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="1" Grid.Column="1" Margin="20 12 20 8">
+                    <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="1" Grid.Column="1" Margin="20 12 20 8">
                         Also, block these apps &amp; websites:</TextBlock>
 
-                        <Border Grid.Row="2" Grid.Column="0" BorderThickness="1" BorderBrush="#c2c2c2" Width="232" Height="171"  
+                    <Border Grid.Row="2" Grid.Column="0" BorderThickness="1" BorderBrush="#c2c2c2" Width="232" Height="171"  
                              CornerRadius="4" Background="White" Padding="9 4 8 4">
-                            <ItemsControl ItemsSource="{Binding BlockCategories}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <DockPanel Width="230" Height="23">
-                                            <CheckBox Style="{DynamicResource SettingsCheckbox}" Width="20" VerticalAlignment="Top" >
-                                            </CheckBox>
-                                            <TextBlock Margin="0 2 0 0">
+                        <ItemsControl ItemsSource="{Binding BlockCategories}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel Width="230" Height="23">
+                                        <CheckBox Style="{DynamicResource SettingsCheckbox}" Width="20" VerticalAlignment="Top" >
+                                        </CheckBox>
+                                        <TextBlock Margin="0 2 0 0">
                                             <Hyperlink >
                                                 <TextBlock Text="{Binding Name}"/>
                                                 <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>
                                             </Hyperlink>
                                         </TextBlock>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+
+                    <Border Grid.Row="2" Grid.Column="1" BorderThickness="1" BorderBrush="#c2c2c2" Width="232" Height="171"  
+                             CornerRadius="4" Background="White">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="41"/>
+                            </Grid.RowDefinitions>
+                            <ItemsControl  Name="dgBlock" Grid.Row="0" Grid.Column="0" MinHeight="130" ItemsSource="{Binding BlockItems}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel Height="23">
+                                            <TextBlock Style="{DynamicResource SettingsSectionBody}" Text="{Binding Name}" Width="100" Margin="9 9 0 0">
+                                            </TextBlock>
+                                            <Button Style="{DynamicResource SetingsImageButtonStyle}">
+                                                <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0"/>
+                                            </Button>
                                         </DockPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                        </Border>
 
-                        <Border Grid.Row="2" Grid.Column="1" BorderThickness="1" BorderBrush="#c2c2c2" Width="232" Height="171"  
-                             CornerRadius="4" Background="White">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="41"/>
-                                </Grid.RowDefinitions>
-                                <ItemsControl  Name="dgBlock" Grid.Row="0" Grid.Column="0" MinHeight="130" ItemsSource="{Binding BlockItems}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <DockPanel Height="23">
-                                                <TextBlock Style="{DynamicResource SettingsSectionBody}" Text="{Binding Name}" Width="100" Margin="9 9 0 0">
-                                                </TextBlock>
-                                                <Button Style="{DynamicResource SetingsImageButtonStyle}">
-                                                    <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0"/>
-                                                </Button>
-                                            </DockPanel>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Background="#F1F1F1" MinHeight="41" Orientation="Horizontal" HorizontalAlignment="Center" Width="230">
+                                <Button Name="btnBlockAddApp" Click="btnBlockAddApp_Click" Style="{DynamicResource SettingsButtons}" Margin="8 8 4 8">Add App</Button>
+                                <Button Name="btnBlockAddWebsite" Click="btnBlockAddWebsite_Click"  Style="{DynamicResource SettingsButtons}" Margin="4 8 8 8">Add Website</Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
 
-                                <StackPanel Grid.Row="1" Grid.Column="0" Background="#F1F1F1" MinHeight="41" Orientation="Horizontal" HorizontalAlignment="Center" Width="230">
-                                    <Button Style="{DynamicResource SettingsButtons}" Margin="8 8 4 8">Add App</Button>
-                                    <Button Style="{DynamicResource SettingsButtons}" Margin="4 8 8 8">Add Website</Button>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 12 20 0">
+                    <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 12 20 0">
                         Exceptions to blocked items:
-                        </TextBlock>
-                        <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Height="15" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 0 20 8" Foreground="#333333">
+                    </TextBlock>
+                    <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Height="15" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 0 20 8" Foreground="#333333">
                         These will not be blocked even if in one of the lists above:
-                        </TextBlock>
+                    </TextBlock>
 
-                        <Border Grid.Row="5" Grid.Column="0" BorderThickness="1" BorderBrush="#c2c2c2" Width="232" Height="171"  
+                    <Border Grid.Row="5" Grid.Column="0" BorderThickness="1" BorderBrush="#c2c2c2" Width="232" Height="171"  
                              CornerRadius="4" Background="White">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="41"/>
-                                </Grid.RowDefinitions>
-                                <ItemsControl Grid.Row="0" Grid.Column="0" MinHeight="130" ItemsSource="{Binding BlockExceptions}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <DockPanel Height="23">
-                                                <TextBlock Style="{DynamicResource SettingsSectionBody}" Text="{Binding Name}" Width="100" Margin="9 9 0 0">
-                                                </TextBlock>
-                                                <Button Style="{DynamicResource SetingsImageButtonStyle}">
-                                                    <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0"/>
-                                                </Button>
-                                            </DockPanel>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="41"/>
+                            </Grid.RowDefinitions>
+                            <ItemsControl Grid.Row="0" Grid.Column="0" MinHeight="130" ItemsSource="{Binding BlockExceptions}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel Height="23">
+                                            <TextBlock Style="{DynamicResource SettingsSectionBody}" Text="{Binding Name}" Width="100" Margin="9 9 0 0">
+                                            </TextBlock>
+                                            <Button Style="{DynamicResource SetingsImageButtonStyle}">
+                                                <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0"/>
+                                            </Button>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
 
-                                <StackPanel Grid.Row="1" Grid.Column="0" Background="#F1F1F1" MinHeight="41" Orientation="Horizontal" HorizontalAlignment="Center" Width="230">
-                                    <Button Style="{DynamicResource SettingsButtons}" Margin="8 8 4 8">Add App</Button>
-                                    <Button Style="{DynamicResource SettingsButtons}" Margin="4 8 8 8">Add Website</Button>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                        <TextBlock Grid.Row="5" Grid.Column="1" TextWrapping="WrapWithOverflow" VerticalAlignment="Bottom"
-                               FontFamily="Source Sans Pro" FontSize="13" FontStyle="Italic" FontWeight="Bold" LineHeight="16" Foreground="#8C191B" Margin="20 0 37 0">
+                            <StackPanel Grid.Row="1" Grid.Column="0" Background="#F1F1F1" MinHeight="41" Orientation="Horizontal" HorizontalAlignment="Center" Width="230">
+                                <Button Style="{DynamicResource SettingsButtons}" Margin="8 8 4 8">Add App</Button>
+                                <Button Style="{DynamicResource SettingsButtons}" Margin="4 8 8 8">Add Website</Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <TextBlock Grid.Row="5" Grid.Column="1" TextWrapping="WrapWithOverflow" VerticalAlignment="Bottom"
+                               FontFamily="{DynamicResource SourceSansProBold}" FontSize="13" FontStyle="Italic" FontWeight="Bold" LineHeight="16" Foreground="#8C191B" Margin="20 0 37 0">
                         <Run>Note: You cannot change a blocklist while it is in use in an active focus session.</Run>                                           <Run>Any changes made will not take effect until the next focus session where the blocklist is used.</Run>
-                        </TextBlock>
+                    </TextBlock>
 
-                        <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 12 20 0">
+                    <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 12 20 0">
                         Blocklist behavior during breaks:
-                        </TextBlock>
+                    </TextBlock>
 
-                        <ListView Margin="20 0 20 0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <RadioButton Content="{Binding}" GroupName="DisplayPage" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="{x:Type ListViewItem}">
-                                    <Setter Property="Background" Value="Transparent" />
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                                <ContentPresenter />
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.Items>
-                                <sys:String>Unblock this blocklist during short and long breaks</sys:String>
-                                <sys:String>Unblock this blocklist during long breaks only</sys:String>
-                                <sys:String>Keep this blocklist blocked during all breaks</sys:String>
-                            </ListView.Items>
-                        </ListView>
-                        
-                        <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 12 20 0">
+                    <ListView Margin="20 0 20 0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton Content="{Binding}" GroupName="DisplayPage" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.Items>
+                            <sys:String>Unblock this blocklist during short and long breaks</sys:String>
+                            <sys:String>Unblock this blocklist during long breaks only</sys:String>
+                            <sys:String>Keep this blocklist blocked during all breaks</sys:String>
+                        </ListView.Items>
+                    </ListView>
+
+                    <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 12 20 0">
                         Discourage me from stopping early:
-                        </TextBlock>
+                    </TextBlock>
 
-                    <ListView Margin="20 0 20 20" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" ItemsSource="{Binding Penalties}" FontFamily="Source Sans Pro" FontSize="12">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
+                    <ListView Margin="20 0 20 20" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" ItemsSource="{Binding Penalties}" FontFamily="{DynamicResource SourceSansProRegular}" FontSize="12">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <RadioButton Content="{Binding Type}" GroupName="DisplayPage" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
                                     <TextBox Visibility="{Binding HasValue, Converter={StaticResource boolToVis}}" Width="22" Text="{Binding Value}"/>
@@ -192,7 +285,7 @@
                                                Margin="6,0,0,0">random characters</TextBlock>
                                 </StackPanel>
                             </DataTemplate>
-                            </ListView.ItemTemplate>
+                        </ListView.ItemTemplate>
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <Setter Property="Background" Value="Transparent" />
@@ -207,18 +300,18 @@
 
                         </ListView.ItemContainerStyle>
                     </ListView>
-                    </Grid>
-                </Border>
+                </Grid>
+            </Border>
 
 
-                <ComboBox Style="{DynamicResource SettingsComboBoxStyle}" Width="154" Height="23" Canvas.Left="28" Canvas.ZIndex="2" Canvas.Top="10">
-                    <ComboBoxItem IsSelected="True">Starter Blocklist</ComboBoxItem>
-                    <ComboBoxItem>Weekend Blocklist</ComboBoxItem>
-                    <ComboBoxItem>Meditation Session</ComboBoxItem>
-                </ComboBox>
+            <ComboBox Name="cmbBlockList" Style="{DynamicResource SettingsAddComboBoxStyle}" Width="154" Height="23" Canvas.Left="28" Canvas.ZIndex="2" Canvas.Top="10" ItemsSource="{Binding Path=BlockLists, BindsDirectlyToSource=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Name"
+                  SelectedValue="{Binding Path=BlockList}">
+            </ComboBox>
 
-            </Canvas>
-        
+        </Canvas>
+
     </StackPanel>
-    
+
 </UserControl>

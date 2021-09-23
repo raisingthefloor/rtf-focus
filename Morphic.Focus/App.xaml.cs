@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Morphic.Focus.Services;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,15 @@ namespace Morphic.Focus
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            FocusDbContextFactory _contextFactory = new FocusDbContextFactory();
+            using (FocusDbContext context = _contextFactory.CreateDbContext())
+            {
+                context.Database.Migrate();
+            }
+        }
     }
 }

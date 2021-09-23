@@ -39,7 +39,7 @@
 
                     <!-- Column Headers -->
                     <Border Grid.Row="0" Grid.Column="1" Height="24" Width="68" BorderThickness="1" BorderBrush="#DDDDDD">
-                        <TextBlock Text="{Binding todaysWeekday}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" FontFamily="Source Sans Pro"/>
+                        <TextBlock Text="{Binding todaysWeekday}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" FontFamily="{DynamicResource SourceSansProBold}"/>
                     </Border>
 
                     <!-- RowHeaders -->
@@ -104,7 +104,7 @@
                 </Grid>
 
                 <StackPanel Margin="28 0 28 30" Width="325">
-                    <Border Background="#FAFCFF" Margin="0" BorderThickness="0">
+                    <Border Background="{DynamicResource LightGreen}" Margin="0" BorderThickness="0">
                         <StackPanel>
                             <Border Height="29" BorderThickness="0" Background="#EBF2FF">
                                 <StackPanel Orientation="Horizontal">
@@ -121,9 +121,9 @@
                             <ItemsControl ItemsSource="{Binding FocusSchedules}" Margin="0" >
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Horizontal" Height="44" Width="325" Background="#FAFCFF" Margin="0">
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="325" Background="{DynamicResource LightGreen}" Margin="0">
                                             <Border Margin="8 10 0 11" BorderThickness="0" Background="{Binding ListColor}" Height="23" Width="20"></Border>
-                                            <TextBlock Text="{Binding BlockListName}" FontFamily="Source Sans Pro" FontSize="12" LineHeight="15" Width="118" 
+                                            <TextBlock Text="{Binding BlockListName}" FontFamily="{DynamicResource SourceSansProRegular}" FontSize="12" LineHeight="15" Width="118" 
                                                        Margin="5 10 0 11">
                                             </TextBlock>
 

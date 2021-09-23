@@ -3,11 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:Morphic.Focus.Screens"
         mc:Ignorable="d"
-        Height="650" Width="753" ShowInTaskbar="False" Background="#FFFFFF" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True"
+        Height="650" Width="753" Background="#FFFFFF" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True"
         MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Close"
+                        Executed="CloseCommandHandler"/>
+    </Window.CommandBindings>
+    
     <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ScrollViewer.Resources>
+            <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">10</sys:Double>
+        </ScrollViewer.Resources>
+        
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="204"/>
@@ -16,9 +26,9 @@
 
             <StackPanel Background="#FF095930" Grid.Row="0" Grid.Column="0">
                 <Border Height="73" Background="#008145">
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Source Sans Pro" FontWeight="Bold" FontSize="18" Foreground="White" Margin="36,0,0,0" >Customize Focus</TextBlock>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="{DynamicResource SourceSansProBold}" FontWeight="Bold" FontSize="18" Foreground="White" Margin="36,0,0,0" >Customize Focus</TextBlock>
                 </Border>
-                <ListBox x:Name="lstBoxMenu"  SelectionChanged="lstBoxMenu_SelectionChanged">
+                <ListBox x:Name="lstBoxMenu"  SelectionChanged="lstBoxMenu_SelectionChanged" Cursor="Hand">
                     <ListBox.Resources>
                         <SolidColorBrush x:Key="MouseOverBrush" Color="#FF097030"/>
                         <SolidColorBrush x:Key="MouseOverBorderBrush" Color="Transparent"/>
@@ -38,7 +48,7 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListBoxItem">
                                         <Border x:Name="InnerBorder" Margin="0 10 0 0" Padding="36 10 10 10" BorderThickness="0" CornerRadius="0" BorderBrush="Transparent" Background="#FF095930">
-                                            <ContentPresenter x:Name="Content" Margin="0" TextBlock.Foreground="White" TextBlock.FontFamily="Source Sans Pro"
+                                            <ContentPresenter x:Name="Content" Margin="0" TextBlock.Foreground="White" TextBlock.FontFamily="{DynamicResource SourceSansProBold}"
                                                             TextBlock.FontSize="14" TextBlock.LineHeight="18" TextBlock.FontWeight="Bold"/>
                                         </Border>
 
@@ -78,10 +88,14 @@
                 </ListBox>
             </StackPanel>
 
-            
-            <StackPanel Name="sPnlContent" Grid.Row="0" Grid.Column="1" >
+            <StackPanel Grid.Row="0" Grid.Column="1">
+                <Button Width="30" Height="30" HorizontalAlignment="Right" Content="&#10005;" Padding="0,0,0,0" BorderThickness="0" FontSize="20" Foreground="Black" Command="ApplicationCommands.Close"
+                        Background="Transparent"></Button>
+                <StackPanel Name="sPnlContent" >
                 </StackPanel>
-            
+            </StackPanel>
         </Grid>
+        
     </ScrollViewer>
+    
 </Window>

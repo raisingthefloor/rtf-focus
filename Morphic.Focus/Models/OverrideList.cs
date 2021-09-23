@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Morphic.Focus.Core
+namespace Morphic.Focus.Models
 {
     class OverrideList
     {

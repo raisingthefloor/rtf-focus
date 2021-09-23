@@ -1,0 +1,24 @@
+﻿<Window x:Class="Morphic.Focus.Screens.BlockAddWebsite"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Morphic.Focus.Screens"
+        mc:Ignorable="d"
+        Height="177" Width="354" ShowInTaskbar="False" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True"
+        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Background="Transparent">
+    <Border CornerRadius="18" Background="{DynamicResource LightGreen}" BorderThickness="1" BorderBrush="{DynamicResource DialogBorder}">
+        <StackPanel Margin="12 15">
+            <TextBlock Style="{DynamicResource ModalTitle}">Type or paste a website URL:</TextBlock>
+            <TextBox Margin="0 8 0 0" Style="{DynamicResource ModalTextbox}" Name="txtBlockList"></TextBox>
+            <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
+                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Width="71" Name="btnTestURL" Click="btnTestURL_Click">Test URL</Button>
+                <TextBlock Margin="15,5,0,0" Style="{DynamicResource SettingsSectionItalicBody}" Height="15" VerticalAlignment="Center">Opens the URL in your internet browser.</TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="136 33 0 0">
+                <Button Style="{DynamicResource SettingsButtons}" Width="123" Name="btnCreateBlockList" Click="btnCreateBlockList_Click" IsDefault="True">Add Website</Button>
+                <Button Style="{DynamicResource SettingsButtonsGrey}" Width="60" Margin="8 0 0 0" Name="btnCancel" IsCancel="True" >Cancel</Button>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

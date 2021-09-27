@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ServiceProcess;
 
 namespace Morphic.BlockService
 {
@@ -6,7 +7,9 @@ namespace Morphic.BlockService
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ServiceBase.Run(new BlockingService());
+
+//            new BlockingService();
         }
     }
 }

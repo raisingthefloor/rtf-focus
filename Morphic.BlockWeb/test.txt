@@ -1,0 +1,326 @@
+﻿/// <summary>
+        /// Force all bing-destined requests to go to yahoo.com.
+        /// </summary>
+        /// <param name="messageInfo">
+        /// The message info.
+        /// </param>
+        private static bool RedirectBingToYahoo(HttpMessageInfo messageInfo)
+        {
+            if (messageInfo.MessageType == MessageType.Request && messageInfo.Url.Host.Contains("bing."))
+            {
+                messageInfo.MakeTemporaryRedirect("https://www.yahoo.com");
+                messageInfo.ProxyNextAction = ProxyNextAction.DropConnection;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Rewrites the message URL to force safe search on if the host is a google.X domain.
+        /// </summary>
+        /// <param name="messageInfo">
+        /// The message info.
+        /// </param>
+        private static void ForceGoogleSafeSearch(HttpMessageInfo messageInfo)
+        {
+            // If the host has google in it, we'll append the safe search command.
+            if(messageInfo.Url.Host.IndexOf("google.", StringComparison.OrdinalIgnoreCase) > -1)
+            {
+                // Take everything but query params.
+                string newUri = messageInfo.Url.GetLeftPart(UriPartial.Path);
+
+                // Parse the params.
+                var queryParams = QueryHelpers.ParseQuery(messageInfo.Url.Query);
+                
+                // Iterate over all parsed params.
+                foreach (var param in queryParams)
+                {   
+                    // Skip any param named "safe" because who knows, the user might
+                    // explicitly have &safe=inative, disabling safe search, so just
+                    // ignore anything named this.
+                    if (param.Key.Equals("safe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    // Anything not "safe" param, append to the new URI.
+                    foreach (var value in param.Value)
+                    {
+                        newUri = QueryHelpers.AddQueryString(newUri, param.Key, value);
+                    }
+                }
+
+                // When we're all done, append safe search enforcement.
+                newUri = QueryHelpers.AddQueryString(newUri, "safe", "active");
+
+                // if we end up with a valid URI, overwrite it.
+                if (Uri.TryCreate(newUri, UriKind.Absolute, out Uri result))
+                {
+                    messageInfo.Url = result;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks whether the host is MSNBC.com and if so, we will tell the proxy to let us fulfill
+        /// the request ourselves.
+        /// </summary>
+        /// <param name="messageInfo">
+        /// The message info.
+        /// </param>
+        /// <returns>
+        /// True if we should fulfill the request ourselves, false otherwise.
+        /// </returns>
+        private static bool ManuallyFulfill(HttpMessageInfo messageInfo)
+        {
+            if (messageInfo.MessageType == MessageType.Request)
+            {
+                if (messageInfo.Url.Host.Equals("msnbc.com", StringComparison.OrdinalIgnoreCase))
+                {
+                    messageInfo.ProxyNextAction = ProxyNextAction.AllowButDelegateHandler;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        ForceGoogleSafeSearch(messageInfo);
+
+            if (RedirectBingToYahoo(messageInfo))
+            {
+                return;
+            }
+
+            if (ManuallyFulfill(messageInfo))
+            {
+                return;
+            }
+// Get Technikempire.com as a replay request. 
+            // Replay requests are only available on response message types.
+            // This will cause us to receive a request URI on the IpV4 loopback adapter
+            // that will enable us to "replay" the request.
+            //
+            // This "replay" is a mirroring of the data, allowing it to pass through
+            // but being duplicated in real time. This means you can inspect the
+            // stream in-parallel without interrupting the original stream.
+            //
+            // At any time, you can force the original, mirrored stream to abort and
+            // close by invoking the callback provided in the relay inspection
+            // callback handler.
+            if (messageInfo.Url.Host.Equals("technikempire.com", StringComparison.OrdinalIgnoreCase))
+            {
+                messageInfo.ProxyNextAction = ProxyNextAction.AllowButRequestResponseReplay;
+                return;
+            }
+
+            // If the new message is a response, we want to inspect the payload if it is HTML.
+            if (messageInfo.MessageType == MessageType.Response)
+            {
+                foreach (string headerName in messageInfo.Headers)
+                {
+                    if (messageInfo.Headers[headerName].IndexOf("html") != -1)
+                    {
+                        Console.WriteLine("Requesting to inspect HTML response for request {0}.", messageInfo.Url);
+                        messageInfo.ProxyNextAction = ProxyNextAction.AllowButRequestContentInspection;
+                        return;
+                    }                    
+                }
+
+                // The other kind of filtering we want to do here is to monitor video
+                // streams. So, if we find a video content type in a response, we'll subscribe
+                // the very new, and extremely exciting streaming inspection callback!!!!!
+                var contentTypeKey = "Content-Type";                
+                var contentType = messageInfo.Headers[contentTypeKey];
+
+                if (contentType != null && (contentType.IndexOf("video/", StringComparison.OrdinalIgnoreCase) != -1 || contentType.IndexOf("mpeg", StringComparison.OrdinalIgnoreCase) != -1))
+                {
+                    // Means we have a video response coming.
+                    // We want to get the video stream too! Because we have the tools to tell
+                    // if video is naughty or nice!
+                    Console.WriteLine("Requesting to inspect streamed video response.");
+                    messageInfo.ProxyNextAction = ProxyNextAction.AllowButRequestStreamedContentInspection;
+                }
+            }
+
+            if (messageInfo.Body.Length > 0)
+            {
+                // We assume it's HTML because HTML is the only type we request
+                // to inspect, but you can double-check if you'd like.
+                // We should check Content-Type for charset=XXXX.
+                var htmlResponse = Encoding.UTF8.GetString(messageInfo.Body.ToArray());
+
+                // Any HTML that has 777.com in it, we want to block.
+                if (htmlResponse.IndexOf("777.com") != -1)
+                {
+                    Console.WriteLine("Request {0} blocked by content inspection.", messageInfo.Url);
+                    messageInfo.ProxyNextAction = ProxyNextAction.DropConnection;
+                }
+            }
+
+             var toFrom = operation == StreamOperation.Read ? "from" : "to";
+            Console.WriteLine($"Stream {operation} {buffer.Length} bytes {toFrom} {messageInfo.Url}");
+            // Drop googlevideo.com videos.
+            if (messageInfo.Url.Host.IndexOf(".googlevideo.com") > -1)
+            {
+                // This basically means you can't watch anything on youtube. You can still load the
+                // site, but you can't play any videos.
+                // This is just to demonstrate that it's possible to have complete
+                // control over unbuffered streams.
+                // dropConnection = true;
+            }
+
+            // Just get the default browser to open the URL.
+            Console.WriteLine(replayUrl);
+            Process.Start(replayUrl);
+
+            // Note - Once you access a replay, it's gone. Resources are flushed and it's not persisted anywhere.
+            // Note - You must access a replay as soon as possible. There is a 65 megabyte internal memory limit
+            // for buffering while waiting for a client to connect.
+            // Note - A replay is a verbatum copy, headers and all, of a filtered transaction in progress. It is
+            // a real-time duplicate of a filtered stream. The only exception is the transfer-encoding and
+            // content-length headers. They will be changed and Kestrel most certainly will always chunk the
+            // replay.
+
+            // The original reason for the replay API was to duplicate video streams in real-time so they
+            // the duplicate can be fed to Windows Media Foundation and image classification can be
+            // performed on the video frames. If and when bad images are found in the video stream,
+            // the cancellationCallback can be used to kill the original, source video stream.
+
+            // Create the message AFTER we give the user a chance to alter things.
+            var requestMsg = new HttpRequestMessage(messageInfo.Method, messageInfo.Url);
+
+            // Ignore failed headers. We don't really care.
+            var initialFailedHeaders = requestMsg.PopulateHeaders(messageInfo.Headers, messageInfo.ExemptedHeaders);
+
+            // Make sure we send the body.
+            if (context.Request.Body != null)
+            {
+                if (context.Request.Body != null && (context.Request.Headers.ContainsKey("Transfer-Encoding") || (context.Request.ContentLength.HasValue && context.Request.ContentLength.Value > 0)))
+                {
+                    // We have a body, but the user doesn't want to inspect it. So,
+                    // we'll just set our content to wrap the context's input stream.
+                    requestMsg.Content = new StreamContent(context.Request.Body);
+                }
+            }
+
+            try
+            {
+                var response = await s_client.SendAsync(requestMsg, HttpCompletionOption.ResponseHeadersRead, context.RequestAborted);
+
+                // Blow away all response headers. We wanna clone these now from our upstream request.
+                context.Response.ClearAllHeaders();
+
+                // Ensure our client's response status code is set to match ours.
+                context.Response.StatusCode = (int)response.StatusCode;
+
+                var upstreamResponseHeaders = response.ExportAllHeaders();
+
+                bool responseHasZeroContentLength = false;
+                bool responseIsFixedLength = false;
+
+                foreach (var kvp in upstreamResponseHeaders.ToIHeaderDictionary())
+                {
+                    foreach (var value in kvp.Value)
+                    {
+                        if (kvp.Key.Equals("Content-Length", StringComparison.OrdinalIgnoreCase))
+                        {
+                            responseIsFixedLength = true;
+
+                            if (value.Length <= 0 && value.Equals("0"))
+                            {
+                                responseHasZeroContentLength = true;
+                            }
+                        }
+                    }
+                }
+
+                // Copy over the upstream headers.
+                context.Response.PopulateHeaders(upstreamResponseHeaders, new System.Collections.Generic.HashSet<string>());
+
+                // Copy over the upstream body.
+                using (var responseStream = await response?.Content.ReadAsStreamAsync())
+                {
+                    context.Response.StatusCode = (int)response.StatusCode;
+                    context.Response.PopulateHeaders(response.ExportAllHeaders(), new System.Collections.Generic.HashSet<string>());
+
+                    if (!responseHasZeroContentLength && responseIsFixedLength)
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            await Microsoft.AspNetCore.Http.Extensions.StreamCopyOperation.CopyToAsync(responseStream, ms, s_maxInMemoryData, context.RequestAborted);
+
+                            var responseBody = ms.ToArray();
+
+                            context.Response.Headers.Remove("Content-Length");
+
+                            context.Response.Headers.Add("Content-Length", responseBody.Length.ToString());
+
+                            await context.Response.Body.WriteAsync(responseBody, 0, responseBody.Length);
+                        }
+                    }
+                    else
+                    {
+                        context.Response.Headers.Remove("Content-Length");
+
+                        if (responseHasZeroContentLength)
+                        {
+                            context.Response.Headers.Add("Content-Length", "0");
+                        }
+                        else
+                        {
+                            await Microsoft.AspNetCore.Http.Extensions.StreamCopyOperation.CopyToAsync(responseStream, context.Response.Body, null, context.RequestAborted);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                while (e != null)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine(e.StackTrace);
+                }
+            }
+
+             /// <summary>
+        /// Called whenever a requested replay is available for access.
+        /// </summary>
+        /// <param name="replayUrl">
+        /// The localhost URL to request the replay on.
+        /// </param>
+        /// <param name="cancellationCallback">
+        /// A callback that you can use to terminate the playback and, optionally, the source stream with.
+        /// </param>
+        
+
+        
+
+        /// <summary>
+        /// Called whenever we've requested to inspect an entire message payload.
+        /// </summary>
+        /// <param name="messageInfo">
+        /// The message info.
+        /// </param>
+        
+
+        /// <summary>
+        /// Called whenever we've subscribed to monitor a payload in a streaming fashion. This is
+        /// useful for say, virus scanning without forcing the entire payload to be buffered into
+        /// memory before it is streamed to the user, or to monitor and decode video on the fly
+        /// without affecting the user. You can terminate the stream at any time while monitoring.
+        /// </summary>
+        /// <param name="messageInfo">
+        /// The originating http message item.
+        /// </param>
+        /// <param name="operation">
+        /// The operation kind.
+        /// </param>
+        /// <param name="buffer">
+        /// The data that passed through the stream.
+        /// </param>
+        /// <param name="dropConnection">
+        /// Whether or not to immediately terminate the connection.
+        /// </param>
+        

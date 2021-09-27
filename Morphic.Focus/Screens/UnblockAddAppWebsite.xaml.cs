@@ -16,13 +16,12 @@ using System.Windows.Shapes;
 namespace Morphic.Focus.Screens
 {
     /// <summary>
-    /// Interaction logic for BlockAddApp.xaml
+    /// Interaction logic for UnblockAddAppWebsite.xaml
     /// </summary>
-    public partial class BlockAddApp : Window
+    public partial class UnblockAddAppWebsite : Window
     {
         private List<BlockCategory> blockCategories;
-
-        public BlockAddApp()
+        public UnblockAddAppWebsite()
         {
             InitializeComponent();
 
@@ -51,11 +50,6 @@ namespace Morphic.Focus.Screens
             }
         }
 
-        private void btnBlockAddApp_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         public void GetInstalledApps()
         {
             List<string> installs = new List<string>();
@@ -72,7 +66,7 @@ namespace Morphic.Focus.Screens
             installs.Sort(); // The list of ALL installed applications
 
             blockCategories = new List<BlockCategory>();
-            foreach(string str in installs)
+            foreach (string str in installs)
             {
                 int i = 0;
                 blockCategories.Add(new BlockCategory() { Name = str, Id = i++ });

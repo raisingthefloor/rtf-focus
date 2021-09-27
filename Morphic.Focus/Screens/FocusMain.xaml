@@ -224,7 +224,7 @@
 
             <Button Name="btnSessionTillStop" Grid.Row="5" Grid.Column="0" Style="{DynamicResource FocusButton}" Width="176" GotFocus="FocusChange" LostFocus="FocusChange" MouseEnter="MouseOver" MouseLeave="MouseOver" >Focus until I press Stop</Button>
 
-            <TextBlock Grid.Row="6" Grid.Column="0" Style="{DynamicResource ContentStyle}" Foreground="Blue" Margin="45 0 25 0" Padding="0" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="txtInfo4" Visibility="Hidden">
+            <TextBlock Grid.Row="6" Grid.Column="0" Style="{DynamicResource ContentStyle}" Foreground="Blue" Margin="45 0 25 4" Padding="0" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="txtInfo4" Visibility="Hidden">
                 Customize Focus or schedule automatic focus sessions
             </TextBlock>
 

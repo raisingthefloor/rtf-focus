@@ -6,6 +6,7 @@
     <!--Brushes-->
     <SolidColorBrush x:Key="LightGreen" Color="#FAFCFF"/>
     <SolidColorBrush x:Key="DialogBorder" Color="#00803D"/>
+    <SolidColorBrush x:Key="GreyBorder" Color="#c2c2c2"/>
 
     <!--Fonts-->
     <FontFamily x:Key="SourceSansProRegular">./Fonts/SourceSansPro-Regular.ttf#Source Sans Pro</FontFamily>
@@ -14,7 +15,7 @@
 
     <!--ScrollViewer Width-->
     <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">10</sys:Double>
-    
+
     <!-- Settings Screens -->
     <Style x:Key="ModalTitle" TargetType="{x:Type TextBlock}">
         <Setter Property="Height" Value="15"/>
@@ -23,6 +24,20 @@
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="LineHeight" Value="15"/>
+    </Style>
+
+    <Style x:Key="HeaderTitleBig" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#000000"/>
+        <Setter Property="FontFamily" Value="{StaticResource SourceSansProRegular}"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="LineHeight" Value="22.63"/>
+    </Style>
+
+    <Style x:Key="HeaderTitleBigBold" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#000000"/>
+        <Setter Property="FontFamily" Value="{StaticResource SourceSansProBold}"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="LineHeight" Value="22.63"/>
     </Style>
 
     <Style x:Key="ModalTextbox" TargetType="{x:Type TextBox}">
@@ -43,14 +58,15 @@
         <Setter Property="FontSize" Value="18" />
         <Setter Property="LineHeight" Value="23" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Padding" Value="0 25"/>
+        <Setter Property="Padding" Value="0 10"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="{StaticResource SourceSansProBold}"/>
     </Style>
 
     <Style x:Key="SettingsGridHeader" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource SourceSansProBold}"/>
-        <Setter Property="FontSize" Value="10" />
-        <Setter Property="LineHeight" Value="13" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="LineHeight" Value="15" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="#434343"/>
     </Style>

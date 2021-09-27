@@ -36,6 +36,7 @@
     <None Remove="Images\Gear.png" />
     <None Remove="Images\Remove Icon.png" />
     <None Remove="Images\Vector.png" />
+    <None Remove="Data\categories.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -82,6 +83,7 @@
     <Content Include="Fonts\SourceSansPro-SemiBoldItalic.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\Preferences\categories.json" />
   </ItemGroup>
 
   <ItemGroup>

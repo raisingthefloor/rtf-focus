@@ -9,10 +9,10 @@
         MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Background="Transparent">
     <Border CornerRadius="18" Background="{DynamicResource LightGreen}" BorderThickness="1" BorderBrush="{DynamicResource DialogBorder}">
         <StackPanel Margin="12 13">
-            <TextBlock Style="{DynamicResource ModalTitle}">Select App</TextBlock>
+            <TextBlock Style="{DynamicResource ModalTitle}" Name="txtTitle" HorizontalAlignment="Left">Add App</TextBlock>
 
 
-            <Border Margin="0 15 0 0" BorderThickness="1" BorderBrush="#c2c2c2" Width="440" Height="144" 
+            <Border Margin="0 15 0 0" BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}" Width="440" Height="144" 
                              CornerRadius="4" Background="White" Padding="9 4 8 4">
 
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -20,7 +20,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Height="23">
-                                    <TextBlock Style="{DynamicResource SettingsSectionBody}" Text="{Binding Name}" Width="100" Margin="9 9 0 0">
+                                    <TextBlock Style="{DynamicResource SettingsSectionBody}" Text="{Binding Name}" Margin="9 9 0 0">
                                     </TextBlock>
                                     <Button Style="{DynamicResource SetingsImageButtonStyle}">
                                         <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0"/>

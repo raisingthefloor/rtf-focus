@@ -1,0 +1,119 @@
+{
+  "general": {
+    "dontGive5MinWarning": false,
+    "showBreakCountdownTimer": true,
+    "blockScreen1stMinofBreak": false,
+    "temporarilyUnblock": {
+      "apps": [],
+      "websites": []
+    }
+  },
+  "blockLists": [
+    {
+      "name": "firstBlocklist",
+      "blockCategories": [
+        {
+          "name": "Social Media",
+          "block": false
+        },
+        {
+          "name": "Games",
+          "block": false
+        },
+        {
+          "name": "News",
+          "block": false
+        },
+        {
+          "name": "Shopping",
+          "block": false
+        }
+      ],
+      "alsoBlock": {
+        "apps": [],
+        "websites": []
+      },
+      "exceptions": {
+        "apps": [],
+        "websites": []
+      },
+      "breakBehavior": "fullUnblock", 
+      "penalty": "none",
+      "penaltyValue": 0
+    }
+  ],
+  "schedules": {
+    "schedule1": {
+      "blockListName": "",
+      "startAt": "",
+      "endAt": "",
+      "days": [], 
+      "isActive": false
+    },
+    "schedule2": {
+      "blockListName": "",
+      "startAt": "",
+      "endAt": "",
+      "days": [], 
+      "isActive": false
+    },
+    "schedule3": {
+      "blockListName": "",
+      "startAt": "",
+      "endAt": "",
+      "days": [], 
+      "isActive": false
+    },
+    "schedule4": {
+      "blockListName": "",
+      "startAt": "",
+      "endAt": "",
+      "days": [], 
+      "isActive": false
+    },
+    "schedule5": {
+      "blockListName": "",
+      "startAt": "",
+      "endAt": "",
+      "days": [],
+      "isActive": false
+    },
+    "scheduleBreak": {
+      "isActive": false,
+      "breakDuration": 1, 
+      "breakGap": 15 
+    }
+  },
+  "todaysSchedule": {
+    "schedule1": {
+      "blockListName": "",
+      "startAt": "",
+      "endAt": "",
+      "isActive": false
+    },
+    "schedule2": {
+      "blockListName": "",
+      "startAt": "",
+      "endAt": "",
+      "isActive": false
+    },
+    "schedule3": {
+      "blockListName": "",
+      "startAt": "",
+      "endAt": "",
+      "isActive": false
+    },
+    "schedule4": {
+      "blockListName": "",
+      "startAt": "",
+      "endAt": "",
+      "isActive": false
+    },
+    "schedule5": {
+      "blockListName": "",
+      "startAt": "",
+      "endAt": "",
+      "isActive": false
+    }
+  }
+}

@@ -11,8 +11,8 @@
     <StackPanel>
         <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
             <ItemsControl>
-                <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,25,0,0">Today’s Schedule</TextBlock>
-                <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 21 25">
+                <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,10,0,0">Today’s Schedule</TextBlock>
+                <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 21 10">
                     <Run>
                         These are the focus sessions you scheduled for today. You can edit today’s schedule, but you can only edit or disable a scheduled focus session before it starts. </Run>
                     <LineBreak/>
@@ -39,7 +39,7 @@
 
                     <!-- Column Headers -->
                     <Border Grid.Row="0" Grid.Column="1" Height="24" Width="68" BorderThickness="1" BorderBrush="#DDDDDD">
-                        <TextBlock Text="{Binding todaysWeekday}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" FontFamily="{DynamicResource SourceSansProBold}"/>
+                        <TextBlock Text="{Binding todaysWeekday}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" FontFamily="{DynamicResource SourceSansProBold}"/>
                     </Border>
 
                     <!-- RowHeaders -->
@@ -48,10 +48,15 @@
                             <DataTemplate>
                                 <Border BorderThickness="1" BorderBrush="#DDDDDD" HorizontalAlignment="Center" Width="52" Background="#F5F9FF">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding}" 
-                                           Height="14" FontWeight="Bold" FontSize="10"/>
+                                           Height="15" FontWeight="Bold" FontSize="12"/>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
+                        <sys:String>12 AM</sys:String>
+                        <sys:String>1 AM</sys:String>
+                        <sys:String>2 AM</sys:String>
+                        <sys:String>3 AM</sys:String>
+                        <sys:String>4 AM</sys:String>
                         <sys:String>5 AM</sys:String>
                         <sys:String>6 AM</sys:String>
                         <sys:String>7 AM</sys:String>
@@ -71,11 +76,7 @@
                         <sys:String>9 PM</sys:String>
                         <sys:String>10 PM</sys:String>
                         <sys:String>11 PM</sys:String>
-                        <sys:String>12 AM</sys:String>
-                        <sys:String>1 AM</sys:String>
-                        <sys:String>2 AM</sys:String>
-                        <sys:String>3 AM</sys:String>
-                        <sys:String>4 AM</sys:String>
+                      
                     </ItemsControl>
 
                     <!-- Data -->
@@ -90,10 +91,10 @@
                             <DataTemplate>
                                 <Border x:Name="Data" Width="68" BorderThickness="1" BorderBrush="#DDDDDD" Background="#EBF2FF">
                                     <StackPanel Orientation="Horizontal">
-                                        <Border Width="32" Height="14" BorderThickness="0" BorderBrush="Transparent" Background="{Binding Color1}">
+                                        <Border Width="32" Height="15" BorderThickness="0" BorderBrush="Transparent" Background="{Binding Color1}">
 
                                         </Border>
-                                        <Border Width="32" Height="14" BorderThickness="0" BorderBrush="Transparent" Background="{Binding Color2}">
+                                        <Border Width="32" Height="15" BorderThickness="0" BorderBrush="Transparent" Background="{Binding Color2}">
                                         </Border>
                                     </StackPanel>
                                 </Border>

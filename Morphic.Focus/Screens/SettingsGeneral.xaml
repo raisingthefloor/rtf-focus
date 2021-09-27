@@ -11,16 +11,16 @@
         
     </UserControl.Resources>
     <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
-        <TextBlock Style="{DynamicResource SettingsHeader}" Height="73">General Settings</TextBlock>
+        <TextBlock Style="{DynamicResource SettingsHeader}" Height="auto">General Settings</TextBlock>
 
-        <StackPanel Name="sPnlFocusSessionBehavior" Height="96">
+        <StackPanel Name="sPnlFocusSessionBehavior" Height="auto">
             <TextBlock Style="{DynamicResource SettingsSectionTitle}">Behavior during focus sessions:</TextBlock>
             <CheckBox Style="{DynamicResource SettingsCheckbox}">Don't give me a 5 minute warning before scheduled focus sessions start</CheckBox>
             <CheckBox Style="{DynamicResource SettingsCheckbox}">Show count down timer in minutes for break start and end</CheckBox>
             <CheckBox Style="{DynamicResource SettingsCheckbox}">Block screen for the first minute of each break to encourage me to stand up and stretch</CheckBox>
         </StackPanel>
 
-        <StackPanel Name="sPnlTempUnblock" Height="72">
+        <StackPanel Name="sPnlTempUnblock" Height="auto" Margin="0 25 0 0">
             <TextBlock Style="{DynamicResource SettingsSectionTitle}">Allow me to temporarily unblock these items during focus sessions:</TextBlock>
             <TextBlock Style="{DynamicResource SettingsSectionItalicBody}">If you need access to a program or website, but it is blocked during a focus session, then you can 
 use this feature to unblock it.</TextBlock>
@@ -33,7 +33,7 @@ use this feature to unblock it.</TextBlock>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Row="0" Grid.Column="0" MinHeight="171" BorderThickness="1" BorderBrush="#c2c2c2" CornerRadius="4">
+            <Border Grid.Row="0" Grid.Column="0" MinHeight="171" BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}" CornerRadius="4">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -44,7 +44,7 @@ use this feature to unblock it.</TextBlock>
                             <DataTemplate>
                                 <DockPanel Width="230" Height="23">
                                     <CheckBox Style="{DynamicResource SettingsCheckbox}" Content="{Binding Name}" Width="100" Margin="6 0"></CheckBox>
-                                    <Button Style="{DynamicResource SetingsImageButtonStyle}" Click="Button_Click">
+                                    <Button Style="{DynamicResource SetingsImageButtonStyle}">
                                         <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0"/>
                                     </Button>
                                 </DockPanel>
@@ -53,8 +53,8 @@ use this feature to unblock it.</TextBlock>
                     </ItemsControl>
 
                     <StackPanel Grid.Row="1" Grid.Column="0" Background="#F1F1F1" MinHeight="41" Orientation="Horizontal" HorizontalAlignment="Center" Width="230">
-                        <Button Style="{DynamicResource SettingsButtons}" Margin="8 8 4 8">Add App</Button>
-                        <Button Style="{DynamicResource SettingsButtons}" Margin="4 8 8 8">Add Website</Button>
+                        <Button Style="{DynamicResource SettingsButtons}" Margin="8 8 4 8" Name="btnAddAppUnblock" Click="btnAddAppUnblock_Click">Add App</Button>
+                        <Button Style="{DynamicResource SettingsButtons}" Margin="4 8 8 8" Name="btnAddWebsiteUnblock" Click="btnAddWebsiteUnblock_Click">Add Website</Button>
                     </StackPanel>
                 </Grid>
             </Border>

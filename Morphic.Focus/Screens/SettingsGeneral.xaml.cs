@@ -21,6 +21,7 @@ namespace Morphic.Focus.Screens
     public partial class SettingsGeneral : UserControl
     {
         private List<BlockItem> blockItems;
+        string modalUnblockTitle = "Select apps and websites from your blocklists to allow yourself to temporarily unblock.";
         public SettingsGeneral()
         {
             InitializeComponent();
@@ -41,9 +42,16 @@ namespace Morphic.Focus.Screens
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnAddAppUnblock_Click(object sender, RoutedEventArgs e)
         {
+            UnblockAddAppWebsite unblockAddAppWebsite = new UnblockAddAppWebsite();
+            unblockAddAppWebsite.ShowDialog();
+        }
 
+        private void btnAddWebsiteUnblock_Click(object sender, RoutedEventArgs e)
+        {
+            UnblockAddAppWebsite unblockAddAppWebsite = new UnblockAddAppWebsite();
+            unblockAddAppWebsite.ShowDialog();
         }
     }
 

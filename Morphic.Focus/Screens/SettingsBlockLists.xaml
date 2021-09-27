@@ -108,9 +108,9 @@
     <StackPanel>
 
         <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
-            <ItemsControl Height="105">
-                <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,25,0,0" >Edit Blocklists</TextBlock>
-                <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 0 25">
+            <ItemsControl Height="auto">
+                <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,10,0,0" >Edit Blocklists</TextBlock>
+                <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 0 10">
                 <Run>
                     A blocklist is a group of apps, websites and other items that you can choose to block during a focus session. 
                 </Run>
@@ -155,7 +155,7 @@
                     <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="1" Grid.Column="1" Margin="20 12 20 8">
                         Also, block these apps &amp; websites:</TextBlock>
 
-                    <Border Grid.Row="2" Grid.Column="0" BorderThickness="1" BorderBrush="#c2c2c2" Width="232" Height="171"  
+                    <Border Grid.Row="2" Grid.Column="0" BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}" Width="232" Height="171"  
                              CornerRadius="4" Background="White" Padding="9 4 8 4">
                         <ItemsControl ItemsSource="{Binding BlockCategories}">
                             <ItemsControl.ItemTemplate>
@@ -175,7 +175,7 @@
                         </ItemsControl>
                     </Border>
 
-                    <Border Grid.Row="2" Grid.Column="1" BorderThickness="1" BorderBrush="#c2c2c2" Width="232" Height="171"  
+                    <Border Grid.Row="2" Grid.Column="1" BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}" Width="232" Height="171"  
                              CornerRadius="4" Background="White">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -210,7 +210,7 @@
                         These will not be blocked even if in one of the lists above:
                     </TextBlock>
 
-                    <Border Grid.Row="5" Grid.Column="0" BorderThickness="1" BorderBrush="#c2c2c2" Width="232" Height="171"  
+                    <Border Grid.Row="5" Grid.Column="0" BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}" Width="232" Height="171"  
                              CornerRadius="4" Background="White">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -237,12 +237,12 @@
                             </StackPanel>
                         </Grid>
                     </Border>
-                    <TextBlock Grid.Row="5" Grid.Column="1" TextWrapping="WrapWithOverflow" VerticalAlignment="Bottom"
+                    <TextBlock Grid.Row="5" Grid.Column="1" TextWrapping="WrapWithOverflow" VerticalAlignment="Center"
                                FontFamily="{DynamicResource SourceSansProBold}" FontSize="13" FontStyle="Italic" FontWeight="Bold" LineHeight="16" Foreground="#8C191B" Margin="20 0 37 0">
                         <Run>Note: You cannot change a blocklist while it is in use in an active focus session.</Run>                                           <Run>Any changes made will not take effect until the next focus session where the blocklist is used.</Run>
                     </TextBlock>
 
-                    <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 12 20 0">
+                    <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 25 20 0">
                         Blocklist behavior during breaks:
                     </TextBlock>
 
@@ -271,11 +271,11 @@
                         </ListView.Items>
                     </ListView>
 
-                    <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 12 20 0">
+                    <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 25 20 0">
                         Discourage me from stopping early:
                     </TextBlock>
 
-                    <ListView Margin="20 0 20 20" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" ItemsSource="{Binding Penalties}" FontFamily="{DynamicResource SourceSansProRegular}" FontSize="12">
+                    <ListView Margin="20 0 20 10" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0" ItemsSource="{Binding Penalties}" FontFamily="{DynamicResource SourceSansProRegular}" FontSize="12">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

@@ -41,7 +41,7 @@
     <StackPanel>
         <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
             <ItemsControl>
-                <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,25,0,0" >
+                <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,10,0,0" >
                     <Run>Focus Schedule</Run>
                     <Hyperlink FontSize="12">
                         <TextBlock Text="Instructions "/>
@@ -50,7 +50,7 @@
                         <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>
                     </Hyperlink>
                 </TextBlock>
-                <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 0 25">
+                <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 0 10">
                     <Run>
                         Create a schedule to start focus sessions on days and times of your choosing. (When you schedule focus sessions at the top of this page, they will appear on the calendar at the bottom.)
                     </Run>
@@ -99,7 +99,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Border Height="36" Margin="8 12 15 0" BorderBrush="#c2c2c2" BorderThickness="0 1 0 0" Background="Transparent">
+                <Border Height="20" Margin="8 12 15 0" BorderBrush="{DynamicResource GreyBorder}" BorderThickness="0 1 0 0" Background="Transparent">
                 </Border>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20">
                     <CheckBox Height="15" Margin="0" FontFamily="{DynamicResource SourceSansProRegular}" FontSize="12">Provide short</CheckBox>
@@ -122,7 +122,7 @@
                     </ComboBox>
                     <TextBlock Margin="4 0 0 0" Style="{DynamicResource SettingsSectionBody}" FontWeight="Bold">of scheduled Focus sessions</TextBlock>
                 </StackPanel>
-                <Border Height="48" Margin="8 24 15 0" BorderBrush="#c2c2c2" BorderThickness="0 1 0 0" Background="Transparent">
+                <Border Height="20" Margin="8 12 15 0" BorderBrush="{DynamicResource GreyBorder}" BorderThickness="0 1 0 0" Background="Transparent">
                 </Border>
 
                 <Grid Background="#F5F9FF" Margin="0 0 0 30">
@@ -149,7 +149,7 @@
                             <DataTemplate>
                                 <Border x:Name="Header" Width="65" BorderThickness="1" BorderBrush="#DDDDDD">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding}" 
-                                           Height="13" FontFamily="{DynamicResource SourceSansProBold}" FontSize="10" FontWeight="Bold"></TextBlock>
+                                           Height="15" FontFamily="{DynamicResource SourceSansProBold}" FontSize="12" FontWeight="Bold"></TextBlock>
                                 </Border>
                                 <DataTemplate.Triggers>
                                     <Trigger Property="ItemsControl.AlternationIndex" Value="0">
@@ -176,10 +176,15 @@
                             <DataTemplate>
                                 <Border BorderThickness="1" BorderBrush="#DDDDDD" HorizontalAlignment="Center" Width="65">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding}" 
-                                           Height="14" FontWeight="Bold" FontSize="10"/>
+                                           Height="15" FontWeight="Bold" FontSize="12"/>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
+                        <sys:String>12 AM</sys:String>
+                        <sys:String>1 AM</sys:String>
+                        <sys:String>2 AM</sys:String>
+                        <sys:String>3 AM</sys:String>
+                        <sys:String>4 AM</sys:String>
                         <sys:String>5 AM</sys:String>
                         <sys:String>6 AM</sys:String>
                         <sys:String>7 AM</sys:String>
@@ -199,11 +204,6 @@
                         <sys:String>9 PM</sys:String>
                         <sys:String>10 PM</sys:String>
                         <sys:String>11 PM</sys:String>
-                        <sys:String>12 AM</sys:String>
-                        <sys:String>1 AM</sys:String>
-                        <sys:String>2 AM</sys:String>
-                        <sys:String>3 AM</sys:String>
-                        <sys:String>4 AM</sys:String>
                     </ItemsControl>
 
                     <!-- Data -->

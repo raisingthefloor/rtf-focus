@@ -1,9 +1,11 @@
-﻿using Morphic.Focus.Models;
+﻿using Morphic.Focus.JSONService;
+using Morphic.Focus.Models;
 using Morphic.Focus.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +20,8 @@ using System.Windows.Shapes;
 
 namespace Morphic.Focus.Screens
 {
+    public delegate void EventHandler(Session? currSession1);
+
     /// <summary>
     /// Interaction logic for winFocusMain.xaml
     /// </summary>
@@ -25,13 +29,41 @@ namespace Morphic.Focus.Screens
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private ObservableCollection<BlockList> blockLists = new ObservableCollection<BlockList>();
+        private bool _isFocusRunning = false;
+        Settings scrSettings = null;
+        public event EventHandler SessionUpdate;
+        private Session _currSession1 = null;
 
         public FocusMain()
         {
             InitializeComponent();
 
             GetBlockLists();
+            CheckIsFocusRunning();
             DataContext = this;
+        }
+
+        private void CheckIsFocusRunning()
+        {
+            IsFocusRunning = File.Exists(Common.MakeFilePath(Common.SESSION_FILE_NAME));
+        }
+
+        public bool IsFocusRunning
+        {
+            get
+            {
+                return _isFocusRunning;
+            }
+            set
+            {
+                _isFocusRunning = value;
+                NotifyPropertyChanged("IsFocusRunning"); // method implemented below
+
+                if (SessionUpdate != null)
+                {
+                    SessionUpdate(CurrSession1);
+                }
+            }
         }
 
         private void GetBlockLists()
@@ -52,6 +84,9 @@ namespace Morphic.Focus.Screens
                 NotifyPropertyChanged("BlockLists"); // method implemented below
             }
         }
+
+        public Session CurrSession1 { get => _currSession1; set => _currSession1 = value; }
+
         public void NotifyPropertyChanged(string name)
         {
             if (PropertyChanged != null)
@@ -79,7 +114,6 @@ namespace Morphic.Focus.Screens
             FocusStatus focusStatus = new FocusStatus();
             focusStatus.Show();
         }
-
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -233,7 +267,8 @@ namespace Morphic.Focus.Screens
         /// <param name="e"></param>
         private void btnViewEditBlockList_Click(object sender, RoutedEventArgs e)
         {
-            Settings scrSettings = new Settings(this, true);
+            if (scrSettings == null) scrSettings = new Settings(this);
+            scrSettings.OpenBlocklist = true;
             this.Hide();
             scrSettings.Show();
         }
@@ -245,7 +280,7 @@ namespace Morphic.Focus.Screens
         /// <param name="e"></param>
         private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         /// <summary>
@@ -255,7 +290,7 @@ namespace Morphic.Focus.Screens
         /// <param name="e"></param>
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-            Settings scrSettings = new Settings(this);
+            if (scrSettings == null) scrSettings = new Settings(this);
             this.Hide();
             scrSettings.Show();
         }
@@ -265,5 +300,55 @@ namespace Morphic.Focus.Screens
             GetBlockLists();
         }
 
+        private void FocusStart(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //Create Session Object
+                Session session = new Session()
+                {
+                    TurnONDND = chkDND.IsChecked ?? false,
+
+                    ProvideBreak = chkProvide.IsChecked ?? false,
+                    BreakDuration = int.Parse(((ComboBoxItem)cmbBreakTIme.SelectedItem).Tag.ToString()),
+                    BreakGap = int.Parse(((ComboBoxItem)cmbEvery.SelectedItem).Tag.ToString()),
+
+                    BlockListName = cmbBlockList.SelectedValue == null ? "" : cmbBlockList.SelectedValue.ToString(),
+
+                    CreatedBy = Environment.UserName,
+                    DateCreated = DateTime.Now,
+
+                    ActualStartTime = DateTime.Now,
+
+                    SessionDuration = int.Parse(((Button)sender).Tag.ToString())
+                };
+
+                //Add to database
+                JSONHelper jSONHelper = new JSONHelper(Common.SESSION_FILE_NAME);
+                string jsonString = jSONHelper.Save(session);
+
+                if (IsFocusRunning)
+                {
+                    //Log Session
+                    LoggingService.WriteToLog("Session Restarted : " + jsonString);
+                }
+                else
+                {
+                    //Log Session
+                    LoggingService.WriteToLog("Session Started : " + jsonString);
+                }
+
+                CurrSession1 = session;
+                IsFocusRunning = true;
+
+                //Hide this dialog
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteToLog(ex.Message + ex.StackTrace);
+            }
+
+        }
     }
 }

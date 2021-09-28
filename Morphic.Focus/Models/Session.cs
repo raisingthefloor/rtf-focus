@@ -7,80 +7,20 @@ using System.Threading.Tasks;
 
 namespace Morphic.Focus.Models
 {
-    class Session
+    public class Session : BaseModel
     {
-        //Backbone. Will be modified for data-binding
-        private int _id;
-
-        private DateTime _actualStartTime;
-
-        private DateTime _actualEndTime;
-
-        private string _userName;
-
-        private int _scheduleID;
-
-        private DateTime _lastStartTime;
-
-        private DateTime _lastBreakStartTime;
-
-        private string _focusType;
-
-        public string FocusType
-        {
-            get { return _focusType; }
-            set { _focusType = value; }
-        }
-
-
-        public DateTime LastBreakStartTime
-        {
-            get { return _lastBreakStartTime; }
-            set { _lastBreakStartTime = value; }
-        }
-
-
-        public DateTime LastStartTime
-        {
-            get { return _lastStartTime; }
-            set { _lastStartTime = value; }
-        }
-            
-
-        public int ScheduleID
-        {
-            get { return _scheduleID; }
-            set { _scheduleID = value; }
-        }
-
-
-        public string UserName
-        {
-            get { return _userName; }
-            set { _userName = value; }
-        }
-
-
-        public DateTime ActualEndTime
-        {
-            get { return _actualEndTime; }
-            set { _actualEndTime = value; }
-        }
-
-
-        public DateTime ActualStartTime
-        {
-            get { return _actualStartTime; }
-            set { _actualStartTime = value; }
-        }
-
-
-        public int ID
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
-
-
+        public bool TurnONDND { get; set; }
+        public bool ProvideBreak { get; set; }
+        public int BreakDuration { get; set; }
+        public int BreakGap { get; set; }
+        public string BlockListName { get; set; }
+        public virtual BlockList BlockList { get; set; }
+        public DateTime ActualStartTime { get; set; }
+        public DateTime ActualEndTime { get; set; }
+        public int ScheduleID { get; set; }
+        public DateTime LastStartTime { get; set; }
+        public DateTime LastBreakStartTime { get; set; }
+        public String FocusType { get; set; }
+        public int SessionDuration { get; set; }
     }
 }

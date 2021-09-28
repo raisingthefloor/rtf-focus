@@ -8,7 +8,6 @@ namespace Morphic.Focus.Models
 {
     public class BaseModel
     {
-        public int Id { get; set; }
         public string CreatedBy { get; set; } = Environment.UserName;
         public string? UpdatedBy { get; set; }
         public string? DeletedBy { get; set; }
@@ -16,5 +15,6 @@ namespace Morphic.Focus.Models
         public DateTime DateUpdated { get; set; }
         public DateTime DateDeleted { get; set; }
 
+        public int Id { get; set; }
     }
 }

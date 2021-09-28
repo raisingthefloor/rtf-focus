@@ -504,7 +504,7 @@
         <Setter Property="Width" Value="94.67" />
         <Setter Property="Height" Value="25" />
         <Setter Property="Background" Value="#008145" />
-
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontSize" Value="12" />
@@ -514,12 +514,22 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="4" BorderThickness="0" Background="#008145">
+                    <Border CornerRadius="4" BorderThickness="0" Background="{TemplateBinding Background}">
                         <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=IsFocusRunning, UpdateSourceTrigger=PropertyChanged}" Value="true">
+                <Setter Property="Button.Background" Value="Gray" />
+                <Setter Property="Cursor" Value="Arrow"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=IsFocusRunning, UpdateSourceTrigger=PropertyChanged}" Value="false">
+                <Setter Property="Button.Background" Value="#008145" />
+                <Setter Property="Cursor" Value="Hand"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
 

@@ -25,6 +25,8 @@ namespace Morphic.Focus.Screens
         private SettingsTodaysSchedule _objSettingsTodaysSchedule;
         private FocusMain? _scrFocusMain;
         private Control _currentSelectedSetting;
+        private bool openBlocklist = false;
+
 
         public Settings()
         {
@@ -47,9 +49,14 @@ namespace Morphic.Focus.Screens
             _scrFocusMain = scrFocusMain;
         }
 
-        public Settings(FocusMain scrFocusMain, bool openBlocklist) : this(scrFocusMain)
-        {
-            lstBoxMenu.SelectedIndex = 1;//Select BlockList Menu Item
+        public bool OpenBlocklist 
+        { 
+            get => openBlocklist;
+            set
+            {
+                if (value) lstBoxMenu.SelectedIndex = 1;
+                openBlocklist = value;
+            }
         }
 
         /// <summary>
@@ -103,7 +110,7 @@ namespace Morphic.Focus.Screens
         /// <param name="e"></param>
         private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            this.Close();
+            this.Hide();
             _scrFocusMain.Show();
         }
     }

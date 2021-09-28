@@ -5,18 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Morphic.Focus"
         mc:Ignorable="d"  Width="100" Height="64" ResizeMode="NoResize" WindowStyle="None"
-        Background="Transparent"
+        Background="Transparent" Title="Focus Button"
         Padding="0"
         AllowsTransparency="True" MouseMove="Window_MouseMove">
-
+    <Window.Resources>
+        <!--<DataTemplate x:Key="ButtonContentFocusRunning">
+            <StackPanel VerticalAlignment="Center" Margin="0">
+                <TextBlock>Focus</TextBlock>
+                <TextBlock Text="{Binding Path=SessionDuration}"></TextBlock>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ButtonContentFocusStop">
+            <StackPanel VerticalAlignment="Center" Margin="0">
+                <TextBlock>Focus</TextBlock>
+            </StackPanel>
+        </DataTemplate>-->
+    </Window.Resources>
     <Border x:Name="WindowBorder"
             CornerRadius="5"
             BorderBrush="Black"
             BorderThickness="1"
-            Background="White">
-        
-            <Button x:Name="btnMainFocus" Content="Focus" Background="#008145" Foreground="White" FontSize="14" FontWeight="Bold" Height="60" 
-                    Click="btnMainFocus_Click"/>
-        
+            Background="Black">
+
+        <Button x:Name="btnMainFocus" Click="btnMainFocus_Click" Content="{Binding ButtonText}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Padding" Value="12 4 12 6" />
+                    <Setter Property="Width" Value="94.67" />
+                    <Setter Property="Height" Value="60" />
+                    <Setter Property="Background" Value="#008145" />
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="FontSize" Value="18" />
+                    <Setter Property="FontFamily" Value="{StaticResource SourceSansProBold}" />
+
+                    <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border CornerRadius="4" BorderThickness="0" Background="{TemplateBinding Background}">
+                                    <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                                
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsFocusRunning, UpdateSourceTrigger=PropertyChanged}" Value="true">
+                            <Setter Property="Button.Background" Value="White" />
+                            <Setter Property="Button.Foreground" Value="Black" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=IsFocusRunning, UpdateSourceTrigger=PropertyChanged}" Value="false">
+                            <Setter Property="Button.Background" Value="#008145" />
+                            <Setter Property="Button.Foreground" Value="White" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            
+        </Button>
+
     </Border>
 </Window>

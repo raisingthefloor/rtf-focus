@@ -25,5 +25,10 @@ namespace Morphic.Focus
                 context.Database.Migrate();
             }
         }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            AppEngine.Instance.StopFocusSession();
+        }
     }
 }

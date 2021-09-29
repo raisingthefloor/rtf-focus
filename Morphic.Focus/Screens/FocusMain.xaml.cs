@@ -23,40 +23,39 @@ namespace Morphic.Focus.Screens
     public delegate void EventHandler(Session? currSession1);
 
     /// <summary>
-    /// Interaction logic for winFocusMain.xaml
+    /// Interaction logic for FocusMain.xaml
     /// </summary>
     public partial class FocusMain : Window, INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private ObservableCollection<BlockList> blockLists = new ObservableCollection<BlockList>();
-        private bool _isFocusRunning = false;
-        Settings scrSettings = null;
+        private ObservableCollection<BlockList> _blockLists = new ObservableCollection<BlockList>();
+        public ObservableCollection<BlockList> BlockLists
+        {
+            get
+            {
+                return _blockLists;
+            }
+            set
+            {
+                _blockLists = value;
+                NotifyPropertyChanged("BlockLists"); // method implemented below
+            }
+        }
         public event EventHandler SessionUpdate;
-        private Session _currSession1 = null;
+        
+        AppEngine _engine;
+        public AppEngine Engine { get { return _engine; } }
 
-        public FocusMain()
-        {
-            InitializeComponent();
-
-            GetBlockLists();
-            CheckIsFocusRunning();
-            DataContext = this;
-        }
-
-        private void CheckIsFocusRunning()
-        {
-            IsFocusRunning = File.Exists(Common.MakeFilePath(Common.SESSION_FILE_NAME));
-        }
+        public Session? CurrSession1 { get => _engine.CurrSession1; set => _engine.CurrSession1 = value; }
 
         public bool IsFocusRunning
         {
             get
             {
-                return _isFocusRunning;
+                return _engine.IsFocusRunning;
             }
             set
             {
-                _isFocusRunning = value;
+                _engine.IsFocusRunning = value;
                 NotifyPropertyChanged("IsFocusRunning"); // method implemented below
 
                 if (SessionUpdate != null)
@@ -66,35 +65,35 @@ namespace Morphic.Focus.Screens
             }
         }
 
+        public FocusMain()
+        {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _engine = AppEngine.Instance;
+            }
+
+            InitializeComponent();
+
+            GetBlockLists();
+            DataContext = this;
+
+            _engine.PropertyChanged += _engine_PropertyChanged;
+        }
+
+        private void _engine_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged("IsFocusRunning");
+        }
+
+        #region Helper Methods
         private void GetBlockLists()
         {
             IDataService<BlockList> dataService = new GenericDataService<BlockList>(new FocusDbContextFactory());
             BlockLists = new ObservableCollection<BlockList>(dataService.GetAll().Result);
         }
+        #endregion
 
-        public ObservableCollection<BlockList> BlockLists
-        {
-            get
-            {
-                return blockLists;
-            }
-            set
-            {
-                blockLists = value;
-                NotifyPropertyChanged("BlockLists"); // method implemented below
-            }
-        }
-
-        public Session CurrSession1 { get => _currSession1; set => _currSession1 = value; }
-
-        public void NotifyPropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
-
+        #region Events
         /// <summary>
         /// Allow user to drag the window
         /// </summary>
@@ -108,48 +107,101 @@ namespace Morphic.Focus.Screens
             }
         }
 
-        #region Temporary - Will be removed
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Navigate to Settings Screen with Edit Blocklists Menu Item Open
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnViewEditBlockList_Click(object sender, RoutedEventArgs e)
         {
-            FocusStatus focusStatus = new FocusStatus();
-            focusStatus.Show();
+            //Set Edit Blocklists Tab open
+            _engine.Settings.OpenBlocklist = true;
+
+            //Hide current window and show Settings Window
+            this.Hide();
+            _engine.Settings.Show();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Hide this window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            FocusBreakSequence focusBreakSequence = new FocusBreakSequence();
-            focusBreakSequence.Show();
+            this.Hide();
         }
 
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Close current window and open Settings Screen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-            FocusSessionComplete focusSessionComplete = new FocusSessionComplete();
-            focusSessionComplete.Show();
+            //Donot set Edit Blocklists Tab open
+            _engine.Settings.OpenBlocklist = false;
 
+            //Hide current window and show Settings Window
+            this.Hide();
+            _engine.Settings.Show();
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            Focus2HourBreak focus2HourBreak = new Focus2HourBreak();
-            focus2HourBreak.Show();
+            GetBlockLists();
         }
 
-        private void Button_Click_4(object sender, RoutedEventArgs e)
+        private void FocusStart(object sender, RoutedEventArgs e)
         {
-            Focus2HourBreakUntilStop focus2HourBreakUntilStop = new Focus2HourBreakUntilStop();
-            focus2HourBreakUntilStop.Show();
+            try
+            {
+                //Create Session Object
+                Session session = new Session()
+                {
+                    TurnONDND = chkDND.IsChecked ?? false,
+
+                    ProvideBreak = chkProvide.IsChecked ?? false,
+                    BreakDuration = int.Parse(((ComboBoxItem)cmbBreakTIme.SelectedItem).Tag.ToString()),
+                    BreakGap = int.Parse(((ComboBoxItem)cmbEvery.SelectedItem).Tag.ToString()),
+
+                    BlockListName = cmbBlockList.SelectedValue == null ? "" : cmbBlockList.SelectedValue.ToString(),
+
+                    CreatedBy = Environment.UserName,
+                    DateCreated = DateTime.Now,
+
+                    ActualStartTime = DateTime.Now,
+
+                    SessionDuration = int.Parse(((Button)sender).Tag.ToString())
+                };
+
+                //Add to database
+                JSONHelper jSONHelper = new JSONHelper(Common.SESSION_FILE_NAME);
+                string jsonString = jSONHelper.Save(session);
+
+                if (IsFocusRunning)
+                {
+                    //Log Session
+                    LoggingService.WriteToLog("Session Restarted : " + jsonString);
+                }
+                else
+                {
+                    //Log Session
+                    LoggingService.WriteToLog("Session Started : " + jsonString);
+                }
+
+                CurrSession1 = session;
+                IsFocusRunning = true;
+
+                //Hide this dialog
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteToLog(ex.Message + ex.StackTrace);
+            }
+
         }
-
-        private void Button_Click_5(object sender, RoutedEventArgs e)
-        {
-            FocusBreakEnd focusBreakEnd = new FocusBreakEnd();
-            focusBreakEnd.Show();
-
-            FocusReminder focusReminder = new FocusReminder();
-            focusReminder.Show();
-        }
-
         #endregion
 
         #region Info Text Visibility
@@ -260,95 +312,16 @@ namespace Morphic.Focus.Screens
 
         #endregion
 
-        /// <summary>
-        /// Navigate to Settings Screen with Edit Blocklists Menu Item Open
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnViewEditBlockList_Click(object sender, RoutedEventArgs e)
+        #region INotifyPropertyChanged implement
+        //Property changed
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public void NotifyPropertyChanged(string name)
         {
-            if (scrSettings == null) scrSettings = new Settings(this);
-            scrSettings.OpenBlocklist = true;
-            this.Hide();
-            scrSettings.Show();
-        }
-
-        /// <summary>
-        /// Close this window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
-        {
-            this.Hide();
-        }
-
-        /// <summary>
-        /// Close current window and open Settings Screen
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
-        {
-            if (scrSettings == null) scrSettings = new Settings(this);
-            this.Hide();
-            scrSettings.Show();
-        }
-
-        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            GetBlockLists();
-        }
-
-        private void FocusStart(object sender, RoutedEventArgs e)
-        {
-            try
+            if (PropertyChanged != null)
             {
-                //Create Session Object
-                Session session = new Session()
-                {
-                    TurnONDND = chkDND.IsChecked ?? false,
-
-                    ProvideBreak = chkProvide.IsChecked ?? false,
-                    BreakDuration = int.Parse(((ComboBoxItem)cmbBreakTIme.SelectedItem).Tag.ToString()),
-                    BreakGap = int.Parse(((ComboBoxItem)cmbEvery.SelectedItem).Tag.ToString()),
-
-                    BlockListName = cmbBlockList.SelectedValue == null ? "" : cmbBlockList.SelectedValue.ToString(),
-
-                    CreatedBy = Environment.UserName,
-                    DateCreated = DateTime.Now,
-
-                    ActualStartTime = DateTime.Now,
-
-                    SessionDuration = int.Parse(((Button)sender).Tag.ToString())
-                };
-
-                //Add to database
-                JSONHelper jSONHelper = new JSONHelper(Common.SESSION_FILE_NAME);
-                string jsonString = jSONHelper.Save(session);
-
-                if (IsFocusRunning)
-                {
-                    //Log Session
-                    LoggingService.WriteToLog("Session Restarted : " + jsonString);
-                }
-                else
-                {
-                    //Log Session
-                    LoggingService.WriteToLog("Session Started : " + jsonString);
-                }
-
-                CurrSession1 = session;
-                IsFocusRunning = true;
-
-                //Hide this dialog
-                this.Hide();
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
-            catch (Exception ex)
-            {
-                LoggingService.WriteToLog(ex.Message + ex.StackTrace);
-            }
-
         }
+        #endregion
     }
 }

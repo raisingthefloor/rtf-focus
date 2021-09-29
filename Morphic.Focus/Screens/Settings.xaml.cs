@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,13 +24,20 @@ namespace Morphic.Focus.Screens
         private SettingsBlockLists _objSettingsBlockLists;
         private SettingsSchedule _objSettingsSchedule;
         private SettingsTodaysSchedule _objSettingsTodaysSchedule;
-        private FocusMain? _scrFocusMain;
+
         private Control _currentSelectedSetting;
         private bool openBlocklist = false;
 
+        AppEngine _engine;
+        public AppEngine Engine { get { return _engine; } }
 
         public Settings()
         {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _engine = AppEngine.Instance;
+            }
+
             InitializeComponent();
 
             //Initialize right-side User Controls
@@ -44,21 +52,20 @@ namespace Morphic.Focus.Screens
             lstBoxMenu.SelectedItem = lstItemGeneral;
         }
 
-        public Settings(FocusMain scrFocusMain) : this()
-        {
-            _scrFocusMain = scrFocusMain;
-        }
-
         public bool OpenBlocklist 
         { 
             get => openBlocklist;
             set
             {
-                if (value) lstBoxMenu.SelectedIndex = 1;
+                if (value)
+                    lstBoxMenu.SelectedIndex = 1;
+                else
+                    lstBoxMenu.SelectedIndex = 0;
                 openBlocklist = value;
             }
         }
 
+        #region Events
         /// <summary>
         /// Let the Window be dragged using mouse-press
         /// </summary>
@@ -111,7 +118,8 @@ namespace Morphic.Focus.Screens
         private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
             this.Hide();
-            _scrFocusMain.Show();
+            _engine.ShowFocusWindow();
         }
+        #endregion
     }
 }

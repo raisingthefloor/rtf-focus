@@ -133,7 +133,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Border CornerRadius="18" BorderThickness="1" BorderBrush="#008145" Background="{DynamicResource LightGreen}" Padding="0" Margin="0">
+    <Border CornerRadius="18" BorderThickness="1" BorderBrush="{DynamicResource FrontEndDialogBorder}" Background="{DynamicResource LightGreen}" Padding="0" Margin="0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
@@ -146,8 +146,7 @@
                 <RowDefinition Height="35"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Width="30" Height="30" Content="&#10005;" FontSize="20" BorderThickness="0" Command="ApplicationCommands.Close" 
-                    Foreground="Black" Background="Transparent" ></Button>
+            <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Width="30" Height="30" Content="&#10005;" FontSize="20" BorderThickness="0" Command="ApplicationCommands.Close" BorderBrush="Transparent" Foreground="Black" Background="Transparent" ></Button>
 
             <StackPanel Grid.Row="1" Grid.Column="0" Margin="25 3 25 0" Orientation="Horizontal" Height="28">
                 <TextBlock Style="{DynamicResource TitleStyle}" Margin="66 0 0 0">Start a Focus Session</TextBlock>
@@ -166,7 +165,7 @@
 
                 <CheckBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" FontSize="12" FontFamily="{DynamicResource SourceSansProRegular}" Name="chkDND" GotFocus="FocusChange" LostFocus="FocusChange" MouseEnter="MouseOver" MouseLeave="MouseOver">
                     Turn on “Do Not Disturb” while focusing</CheckBox>
-                <TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource ContentStyle}" Foreground="Blue" Margin="20 0 0 17"
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource ContentStyle}" Foreground="#3566D8" Margin="20 0 0 17"
                            FontStyle="Italic" Name="txtInfo1" Visibility="Hidden">
                     Turns off notifications and calls
                 </TextBlock>
@@ -193,7 +192,7 @@
                     </ComboBox>
                     <TextBlock Name="txtFocus" Margin="4 0 0 0" Style="{DynamicResource SettingsSectionBody}" VerticalAlignment="Center">of Focus</TextBlock>
                 </StackPanel>
-                <TextBlock Grid.Row="3" Grid.Column="0" Style="{DynamicResource ContentStyle}" Foreground="Blue" Margin="20 0 0 0"
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{DynamicResource ContentStyle}" Foreground="#3566D8" Margin="20 0 0 0"
                            FontStyle="Italic" Name="txtInfo2" Visibility="Hidden">
                     Use the dropdowns to change time
                 </TextBlock>
@@ -212,7 +211,7 @@
             </Grid>
 
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Style="{DynamicResource ContentStyle}" Foreground="Blue" Margin="45 0 25 0" Padding="0" FontStyle="Italic" TextWrapping="WrapWithOverflow" Width="277" HorizontalAlignment="Left" Name="txtInfo3" Visibility="Hidden">
+            <TextBlock Grid.Row="3" Grid.Column="0" Style="{DynamicResource ContentStyle}" Foreground="#3566D8" Margin="45 0 25 0" Padding="0" FontStyle="Italic" TextWrapping="WrapWithOverflow" Width="277" HorizontalAlignment="Left" Name="txtInfo3" Visibility="Hidden">
                 Start a Focus session now for the following length of time (With the settings checked above)
             </TextBlock>
 
@@ -224,7 +223,7 @@
 
             <Button Name="btnSessionTillStop" Grid.Row="5" Grid.Column="0" Style="{DynamicResource FocusButton}" Width="176" GotFocus="FocusChange" LostFocus="FocusChange" MouseEnter="MouseOver" MouseLeave="MouseOver" Click="FocusStart" Tag="0">Focus until I press Stop</Button>
 
-            <TextBlock Grid.Row="6" Grid.Column="0" Style="{DynamicResource ContentStyle}" Foreground="Blue" Margin="45 0 25 4" Padding="0" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="txtInfo4" Visibility="Hidden">
+            <TextBlock Grid.Row="6" Grid.Column="0" Style="{DynamicResource ContentStyle}" Foreground="#3566D8" Margin="45 0 25 4" Padding="0" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Bottom" Name="txtInfo4" Visibility="Hidden">
                 Customize Focus or schedule automatic focus sessions
             </TextBlock>
 

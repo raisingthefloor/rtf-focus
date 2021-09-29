@@ -7,6 +7,7 @@
     <SolidColorBrush x:Key="LightGreen" Color="#FAFCFF"/>
     <SolidColorBrush x:Key="DialogBorder" Color="#00803D"/>
     <SolidColorBrush x:Key="GreyBorder" Color="#c2c2c2"/>
+    <SolidColorBrush x:Key="FrontEndDialogBorder" Color="#008145"/>
 
     <!--Fonts-->
     <FontFamily x:Key="SourceSansProRegular">./Fonts/SourceSansPro-Regular.ttf#Source Sans Pro</FontFamily>
@@ -449,6 +450,13 @@
         <Setter Property="TextTrimming" Value="None"/>
         <Setter Property="LineHeight" Value="15"/>
         <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="{StaticResource SourceSansProRegular}" />
+    </Style>
+    <Style x:Key="ContentStyleBig" TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+        <Setter Property="TextTrimming" Value="None"/>
+        <Setter Property="LineHeight" Value="17.6"/>
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="{StaticResource SourceSansProRegular}" />
     </Style>
 

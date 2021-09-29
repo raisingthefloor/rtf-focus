@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Morphic.Focus
 {
@@ -25,37 +26,51 @@ namespace Morphic.Focus
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        FocusMain focusMain = null;
-
-        
-        private bool _isFocusRunning = false;
-        private Session? _currSession1 = null;
         private string _buttonText = "Focus";
+
+        DispatcherTimer _timer;
+        TimeSpan _time;
+
+        AppEngine _engine;
+        public AppEngine Engine { get { return _engine; } }
 
         public MainWindow()
         {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _engine = AppEngine.Instance;
+            }
+
             InitializeComponent();
-            CheckIsFocusRunning();
 
             DataContext = this;
+
+            _engine.FocusMain.SessionUpdate += FocusMain_SessionUpdate;
+            _engine.FocusStatus.SessionUpdate += FocusMain_SessionUpdate;
+            _engine.PropertyChanged += _engine_PropertyChanged;
+
+            _engine.CheckIsFocusRunning();
         }
 
-        private void CheckIsFocusRunning()
+        private void _engine_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            IsFocusRunning = File.Exists(Common.MakeFilePath(Common.SESSION_FILE_NAME));
+            NotifyPropertyChanged("IsFocusRunning");
+            //FocusMain_SessionUpdate(CurrSession1);
         }
 
-        public Session? CurrSession1 { get => _currSession1; set => _currSession1 = value; }
+        #region Properties
+
+        public Session? CurrSession1 { get => _engine.CurrSession1; set => _engine.CurrSession1 = value; }
 
         public bool IsFocusRunning
         {
             get
             {
-                return _isFocusRunning;
+                return _engine.IsFocusRunning;
             }
             set
             {
-                _isFocusRunning = value;
+                _engine.IsFocusRunning = value;
                 NotifyPropertyChanged("IsFocusRunning"); // method implemented below
             }
         }
@@ -73,6 +88,9 @@ namespace Morphic.Focus
             }
         }
 
+        #endregion
+
+        #region Events
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -83,23 +101,47 @@ namespace Morphic.Focus
 
         private void btnMainFocus_Click(object sender, RoutedEventArgs e)
         {
-            if (focusMain == null)
-            {
-                focusMain = new FocusMain();
-                focusMain.SessionUpdate += FocusMain_SessionUpdate;
-            }
-            focusMain.Show();
+            _engine.ShowFocusWindow();
         }
 
         private void FocusMain_SessionUpdate(Session? currSession1)
         {
+
             CurrSession1 = currSession1;
             IsFocusRunning = CurrSession1 != null;
 
-            ButtonText = IsFocusRunning ? "Focus" + Environment.NewLine + CurrSession1.SessionDuration : "Focus";
+            _time = TimeSpan.Zero;
+            if (_timer != null) _timer.Stop();
+
+            if (IsFocusRunning)
+            {
+                if (CurrSession1.SessionDuration == 0)
+                    ButtonText = "Focus till Stop";
+                else
+                {
+                    ButtonText = "Focus" + Environment.NewLine + CurrSession1.BreakGap;
+
+                    _time = TimeSpan.FromMinutes(CurrSession1.BreakGap);
+
+                    _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
+                    {
+                        ButtonText = "Focus" + Environment.NewLine + Math.Ceiling(_time.TotalMinutes);
+
+                        if (_time == TimeSpan.Zero) if (_timer != null) _timer.Stop();
+                        _time = _time.Add(TimeSpan.FromSeconds(-1));
+                    }, Application.Current.Dispatcher);
+
+                    _timer.Start();
+                }
+            }
+            else
+            {
+                ButtonText = "Focus";
+            }
         }
+        #endregion
 
-
+        #region INotifyPropertyChanged implement
         //Property changed
         public event PropertyChangedEventHandler? PropertyChanged;
         public void NotifyPropertyChanged(string name)
@@ -109,5 +151,6 @@ namespace Morphic.Focus
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
+        #endregion
     }
 }

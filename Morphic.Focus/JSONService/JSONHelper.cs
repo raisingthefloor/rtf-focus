@@ -46,7 +46,20 @@ namespace Morphic.Focus.JSONService
                 return JsonSerializer.Deserialize<T>(jsonString);
             }
         }
-        
+
+        internal string GetJson<T>()
+        {
+            //Get Json File Path
+            string path = GetJsonFilePath();
+
+            //Write to Log File
+            lock (locker)
+            {
+                string jsonString = File.ReadAllText(path);
+                return jsonString;
+            }
+        }
+
 
         private string GetJsonFilePath()
         {

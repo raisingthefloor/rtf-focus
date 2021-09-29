@@ -60,7 +60,7 @@
 
             <Border Grid.Row="5" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#A3A3A3" Margin="0 15 0 0"></Border>
 
-            <Button Grid.Row="6" Grid.Column="0" Style="{DynamicResource FocusButton}" Margin="0 15 0 0" Height="25" Width="176" Command="ApplicationCommands.Close">OK</Button>
+            <Button Grid.Row="6" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="0 15 0 0" Height="25" Width="176" Command="ApplicationCommands.Close">OK</Button>
             
             <Button Name="btnSettings" Grid.Row="8" Grid.Column="0" Width="auto" Style="{DynamicResource SettingsButtonBottom}" Margin="0" Padding="15 8 0 9" Cursor="Hand" HorizontalContentAlignment="Left" Click="btnSettings_Click">
                 <StackPanel Orientation="Horizontal">

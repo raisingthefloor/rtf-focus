@@ -127,7 +127,12 @@ namespace Morphic.Focus
                     {
                         ButtonText = "Focus" + Environment.NewLine + Math.Ceiling(_time.TotalMinutes);
 
-                        if (_time == TimeSpan.Zero) if (_timer != null) _timer.Stop();
+                        if (_time == TimeSpan.Zero)
+                        {
+                            if (_timer != null) _timer.Stop();
+
+                            new FocusBreakSequence().ShowDialog();
+                        }
                         _time = _time.Add(TimeSpan.FromSeconds(-1));
                     }, Application.Current.Dispatcher);
 

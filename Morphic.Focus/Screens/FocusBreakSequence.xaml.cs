@@ -24,17 +24,34 @@ namespace Morphic.Focus.Screens
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Allow user to drag the window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        #region Events
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 this.DragMove();
             }
+        }
+
+        /// <summary>
+        /// Hide this window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void btnStopFocus_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Feature will be available soon!");
+        }
+
+        #endregion
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Feature will be available soon!");
         }
     }
 }

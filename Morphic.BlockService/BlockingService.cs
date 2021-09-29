@@ -6,6 +6,7 @@ using CitadelCore.Windows.Net.Proxy;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -34,49 +35,125 @@ namespace Morphic.BlockService
         /// </summary>
         private static readonly long s_maxInMemoryData = 128000000;
 
-        private static FirewallResponse OnFirewallCheck(FirewallRequest request)
+        private static FileSystemWatcher watcher = null;
+
+        private static bool IsFocusRunning { get; set; }
+        //Set Session file watcher
+        public BlockingService()
         {
-            // Only filter chrome, msedge and firefox
-            var filtering = request.BinaryAbsolutePath.IndexOf("chrome", StringComparison.OrdinalIgnoreCase) != -1 ||
-                request.BinaryAbsolutePath.IndexOf("msedge", StringComparison.OrdinalIgnoreCase) != -1 ||
-                request.BinaryAbsolutePath.IndexOf("firefox", StringComparison.OrdinalIgnoreCase) != -1;
-
-            //var filtering = true;
-
-            if (filtering)
+            try
             {
-                if (
-                    request.RemotePort == s_standardHttpPortNetworkOrder ||
-                    request.RemotePort == s_standardHttpsPortNetworkOrder ||
-                    request.RemotePort == s_altHttpPortNetworkOrder ||
-                    request.RemotePort == s_altHttpsPortNetworkOrder
-                    )
-                {
-                    // Let's allow chrome to access TCP 80 and 443, but block all other ports.
-                    //Console.WriteLine("Filtering application {0} destined for {1}", request.BinaryAbsolutePath, (ushort)IPAddress.HostToNetworkOrder((short)request.RemotePort));
-                    return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.FilterApplication);
-                }
-                else
-                {
-                    // Let's allow chrome to access TCP 80 and 443, but ignore all other
-                    // ports. We want to allow non 80/443 requests to go through because
-                    // this example now demonstrates the replay API, which will cause
-                    // a bunch of browser tabs to open whenever you visit my website.
-                    //
-                    // If we filtered the replays back through the proxy, who knows
-                    // what would happen! Actually that's not true, you'd invoke an infinite
-                    // loopback, spawn a ton of browser tabs and then call me a bad programmer.
-                    //Console.WriteLine("Ignoring internet for application {0} destined for {1}", request.BinaryAbsolutePath, (ushort)IPAddress.HostToNetworkOrder((short)request.RemotePort));
-                    return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
-                }
-            }
+                IsFocusRunning = File.Exists(Common.MakeFilePath(Common.SESSION_FILE_NAME));
 
-            // For all other applications, just let them access the internet without filtering.
-            //Console.WriteLine("Not filtering application {0} destined for {1}", request.BinaryAbsolutePath, (ushort)IPAddress.HostToNetworkOrder((short)request.RemotePort));
-            return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
+                //Setup Service
+                this.ServiceName = "BlockingService";
+                this.CanStop = true;
+                this.CanPauseAndContinue = true;
+
+                //Setup logging
+                this.AutoLog = false;
+
+                this.EventLog.Source = this.ServiceName;
+                this.EventLog.Log = "Application";
+
+                watcher = new FileSystemWatcher(Path.GetDirectoryName(Common.MakeFilePath(Common.SESSION_FILE_NAME)));
+                watcher.Created += Watcher_Created;
+                watcher.Deleted += Watcher_Deleted;
+
+                watcher.Filter = Common.SESSION_FILE_NAME;
+                watcher.EnableRaisingEvents = true;
+                LoggingService.WriteToLog("Watching started");
+            }
+            catch (Exception ex)
+            {
+                EventLog.WriteEntry(ex.Message + ex.StackTrace);
+                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+            }
         }
 
+        private void Watcher_Deleted(object sender, FileSystemEventArgs e)
+        {
+            try
+            {
+                EventLog.WriteEntry("Focus End");
+                LoggingService.WriteToLog("Focus End");
+                IsFocusRunning = false;
+            }
+            catch (Exception ex)
+            {
+                EventLog.WriteEntry(ex.Message + ex.StackTrace);
+                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+            }
+        }
 
+        private void Watcher_Created(object sender, FileSystemEventArgs e)
+        {
+            try
+            {
+                EventLog.WriteEntry("Focus Start");
+                LoggingService.WriteToLog("Focus Start");
+                IsFocusRunning = true;
+
+            }
+            catch (Exception ex)
+            {
+                EventLog.WriteEntry(ex.Message + ex.StackTrace);
+                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+            }
+        }
+
+        private static FirewallResponse OnFirewallCheck(FirewallRequest request)
+        {
+            try
+            {
+                //If Focus is not running, do not filter anything
+                if (!IsFocusRunning) return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
+
+                // Only filter chrome, msedge and firefox
+                var filtering = request.BinaryAbsolutePath.IndexOf("chrome", StringComparison.OrdinalIgnoreCase) != -1 ||
+                    request.BinaryAbsolutePath.IndexOf("msedge", StringComparison.OrdinalIgnoreCase) != -1 ||
+                    request.BinaryAbsolutePath.IndexOf("firefox", StringComparison.OrdinalIgnoreCase) != -1;
+
+                //var filtering = true;
+
+                if (filtering)
+                {
+                    if (
+                        request.RemotePort == s_standardHttpPortNetworkOrder ||
+                        request.RemotePort == s_standardHttpsPortNetworkOrder ||
+                        request.RemotePort == s_altHttpPortNetworkOrder ||
+                        request.RemotePort == s_altHttpsPortNetworkOrder
+                        )
+                    {
+                        // Let's allow chrome to access TCP 80 and 443, but block all other ports.
+                        //Console.WriteLine("Filtering application {0} destined for {1}", request.BinaryAbsolutePath, (ushort)IPAddress.HostToNetworkOrder((short)request.RemotePort));
+                        return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.FilterApplication);
+                    }
+                    else
+                    {
+                        // Let's allow chrome to access TCP 80 and 443, but ignore all other
+                        // ports. We want to allow non 80/443 requests to go through because
+                        // this example now demonstrates the replay API, which will cause
+                        // a bunch of browser tabs to open whenever you visit my website.
+                        //
+                        // If we filtered the replays back through the proxy, who knows
+                        // what would happen! Actually that's not true, you'd invoke an infinite
+                        // loopback, spawn a ton of browser tabs and then call me a bad programmer.
+                        //Console.WriteLine("Ignoring internet for application {0} destined for {1}", request.BinaryAbsolutePath, (ushort)IPAddress.HostToNetworkOrder((short)request.RemotePort));
+                        return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
+                    }
+                }
+
+                // For all other applications, just let them access the internet without filtering.
+                //Console.WriteLine("Not filtering application {0} destined for {1}", request.BinaryAbsolutePath, (ushort)IPAddress.HostToNetworkOrder((short)request.RemotePort));
+                return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteToLog("Exception :" + ex.Message + ex.StackTrace);
+            }
+            return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
+        }
 
         /// <summary>
         /// Called whenever a new request or response message is intercepted.
@@ -182,7 +259,6 @@ namespace Morphic.BlockService
             FirewallManager.Instance.Rules.Add(outboundRule);
         }
 
-        //static ManualResetEvent manualResetEvent = new ManualResetEvent(false);
         WindowsProxyServer proxyServer = null;
         private void StartBlock()
         {
@@ -191,16 +267,6 @@ namespace Morphic.BlockService
                 GrantSelfFirewallAccess();
 
                 s_blockPageBytes = File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BlockedPage.html"));
-
-                // Let the user decide when to quit with ctrl+c.
-                //var manualResetEvent = new ManualResetEvent(false);
-
-                //Console.CancelKeyPress += (sender, e) =>
-                //{
-                //    e.Cancel = true;
-                //    manualResetEvent.Set();
-                //    Console.WriteLine("Shutting Down");
-                //};
 
                 // Hooking into these properties gives us an abstract interface where we may use
                 // informational, warning and error messages generated by the internals of the proxy in
@@ -219,6 +285,7 @@ namespace Morphic.BlockService
                 LoggerProxy.Default.OnError += (msg) =>
                 {
                     Console.WriteLine("ERRO: {0}", msg);
+                    LoggingService.WriteToLog("ERRO: " + msg);
                     //Log("ERRO: "+ msg);
                 };
 
@@ -234,73 +301,72 @@ namespace Morphic.BlockService
                     BlockExternalProxies = true
                 };
 
-
                 // Just create the server.
                 proxyServer = new WindowsProxyServer(cfg);
 
                 // Give it a kick.
                 proxyServer.Start(0);
 
+                LoggingService.WriteToLog("Service Started");
+
                 // And you're up and running.
                 Console.WriteLine("Proxy Running");
 
                 Console.WriteLine("Listening for IPv4 HTTP/HTTPS connections on port {0}.", proxyServer.V4HttpEndpoint.Port);
                 Console.WriteLine("Listening for IPv6 HTTP/HTTPS connections on port {0}.", proxyServer.V6HttpEndpoint.Port);
-
-                // Don't exit on me yet fam.
-                //manualResetEvent.WaitOne();
-
-                
             }
             catch (Exception ex)
             {
-
-                //Log(ex.Message + " " + ex.StackTrace);
+                EventLog.WriteEntry(ex.Message + ex.StackTrace);
+                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
             }
         }
 
         protected override void OnStart(string[] args)
         {
-            //Log("Starting");
-            StartBlock();
-            base.OnStart(args);
+            try
+            {
+                
+                LoggingService.WriteToLog("On Start");
+                StartBlock();
+                this.EventLog.WriteEntry("Started");
+                base.OnStart(args);
+            }
+            catch (Exception ex)
+            {
+                EventLog.WriteEntry(ex.Message + ex.StackTrace);
+                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+            }
         }
 
         protected override void OnStop()
         {
-            //manualResetEvent.Set();
-            Console.WriteLine("Shutting Down");
-            Console.WriteLine("Exiting.");
+            try
+            {
+                LoggingService.WriteToLog("On Stop");
 
-            // Stop if you must.
-            proxyServer.Stop();
-            base.OnStop();
+                // Stop if you must.
+                proxyServer.Stop();
+                base.OnStop();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+            }
         }
 
         protected override void OnPause()
         {
-            base.OnPause();
+            try
+            {
+                LoggingService.WriteToLog("On Pause");
+                base.OnPause();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+            }
+            
         }
-
-        //private const string _logFileLocation = @"E:\Focus\Focus .NET\rtf-focus-windows\Morphic.BlockService\bin\Release\net5.0\publish\servicelog.txt";
-
-        public BlockingService()
-        {
-            //Log("Starting");
-            //StartBlock();
-        }
-
-        //public static void Log(string logMessage)
-        //{
-        //    try
-        //    {
-        //        Directory.CreateDirectory(Path.GetDirectoryName(_logFileLocation));
-        //        File.AppendAllText(_logFileLocation, DateTime.UtcNow.ToString() + " : " + logMessage + Environment.NewLine);
-        //    }
-        //    catch
-        //    {
-
-        //    }
-        //}
     }
 }

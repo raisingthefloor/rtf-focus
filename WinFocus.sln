@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Morphic.BlockService", "Morphic.BlockService\Morphic.BlockService.csproj", "{185EB51A-6930-45F1-A02A-89ECF8E33432}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Morphic.Setup", "Morphic.Setup\Morphic.Setup.wixproj", "{DC43947D-AEC6-4ABA-B5E5-49D89ACAD72F}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer2\Installer2.vdproj", "{9E41B450-6EEC-4382-8DBA-A14D9C1E2556}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,12 +41,10 @@ Global
 		{185EB51A-6930-45F1-A02A-89ECF8E33432}.Release|Any CPU.Build.0 = Release|Any CPU
 		{185EB51A-6930-45F1-A02A-89ECF8E33432}.Release|x86.ActiveCfg = Release|Any CPU
 		{185EB51A-6930-45F1-A02A-89ECF8E33432}.Release|x86.Build.0 = Release|Any CPU
-		{DC43947D-AEC6-4ABA-B5E5-49D89ACAD72F}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{DC43947D-AEC6-4ABA-B5E5-49D89ACAD72F}.Debug|x86.ActiveCfg = Debug|x86
-		{DC43947D-AEC6-4ABA-B5E5-49D89ACAD72F}.Debug|x86.Build.0 = Debug|x86
-		{DC43947D-AEC6-4ABA-B5E5-49D89ACAD72F}.Release|Any CPU.ActiveCfg = Release|x86
-		{DC43947D-AEC6-4ABA-B5E5-49D89ACAD72F}.Release|x86.ActiveCfg = Release|x86
-		{DC43947D-AEC6-4ABA-B5E5-49D89ACAD72F}.Release|x86.Build.0 = Release|x86
+		{9E41B450-6EEC-4382-8DBA-A14D9C1E2556}.Debug|Any CPU.ActiveCfg = Debug
+		{9E41B450-6EEC-4382-8DBA-A14D9C1E2556}.Debug|x86.ActiveCfg = Debug
+		{9E41B450-6EEC-4382-8DBA-A14D9C1E2556}.Release|Any CPU.ActiveCfg = Release
+		{9E41B450-6EEC-4382-8DBA-A14D9C1E2556}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

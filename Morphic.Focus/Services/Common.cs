@@ -16,12 +16,12 @@ namespace Morphic.Focus.Services
 
         public static string MakeFilePath(string fileName)
         {
-            return Path.Combine(GetAppDataFolder(), fileName);
+            return Path.Combine(GetWinRootFolder(), fileName);
         }
 
-        static string GetAppDataFolder()
+        static string GetWinRootFolder()
         {
-            string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string appData = Path.GetPathRoot(Environment.SystemDirectory);
             return Path.Combine(appData, APP_NAME);
         }
     }

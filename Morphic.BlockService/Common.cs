@@ -14,13 +14,13 @@ namespace Morphic.BlockService
         public static string SESSION_FILE_NAME = "session.json";
         public static string MakeFilePath(string fileName)
         {
-            return Path.Combine(GetAppDataFolder(), fileName);
+            return Path.Combine(GetWinRootFolder(), fileName);
         }
 
-        static string GetAppDataFolder()
+        static string GetWinRootFolder()
         {
-            //string appData = Environment.GetFolderPath("C:\\Users\\kunal\\AppData\\Roaming\\");
-            return Path.Combine("C:\\Users\\kunal\\AppData\\Roaming\\", APP_NAME);
+            string appData = Path.GetPathRoot(Environment.SystemDirectory);
+            return Path.Combine(appData, APP_NAME);
         }
     }
 }

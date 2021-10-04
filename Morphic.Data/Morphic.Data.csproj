@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\FocusDbContext.cs" />
+    <Compile Remove="Services\FocusDbContextFactory.cs" />
+    <Compile Remove="Services\GenericDataService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Data\Preferences\categories.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\Preferences\categories.json" />
+  </ItemGroup>
+
+</Project>

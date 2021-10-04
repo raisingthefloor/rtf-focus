@@ -44,13 +44,13 @@ namespace Morphic.Focus.Screens
 
         private void btnAddAppUnblock_Click(object sender, RoutedEventArgs e)
         {
-            UnblockAddAppWebsite unblockAddAppWebsite = new UnblockAddAppWebsite();
+            AllowUnblockingModal unblockAddAppWebsite = new AllowUnblockingModal();
             unblockAddAppWebsite.ShowDialog();
         }
 
         private void btnAddWebsiteUnblock_Click(object sender, RoutedEventArgs e)
         {
-            UnblockAddAppWebsite unblockAddAppWebsite = new UnblockAddAppWebsite();
+            AllowUnblockingModal unblockAddAppWebsite = new AllowUnblockingModal();
             unblockAddAppWebsite.ShowDialog();
         }
     }

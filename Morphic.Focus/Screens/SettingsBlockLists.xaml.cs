@@ -1,5 +1,5 @@
-﻿using Morphic.Focus.Models;
-using Morphic.Focus.Services;
+﻿using Morphic.Data.Models;
+using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -68,7 +68,7 @@ namespace Morphic.Focus.Screens
 
         private void AddBlockList_Click(object sender, RoutedEventArgs e)
         {
-            NewBlocklist newBlocklist = new NewBlocklist();
+            NewBlocklistModal  newBlocklist = new NewBlocklistModal();
 
             if (newBlocklist.ShowDialog() == true)
             {
@@ -78,9 +78,9 @@ namespace Morphic.Focus.Screens
                 }
                 else
                 {
-                    IDataService<BlockList> dataService = new GenericDataService<BlockList>(new FocusDbContextFactory());
-                    dataService.Create(new BlockList() { Name = newBlocklist.BlockListName });
-                    BlockLists = new ObservableCollection<BlockList>(dataService.GetAll().Result);
+                    //IDataService<BlockList> dataService = new GenericDataService<BlockList>(new FocusDbContextFactory());
+                    //dataService.Create(new BlockList() { Name = newBlocklist.BlockListName });
+                    BlockLists = new ObservableCollection<BlockList>(new List<BlockList>() { new BlockList() });
                     if (BlockLists.Count > 0) BlockList = BlockLists[0];
                 }
             }
@@ -91,8 +91,8 @@ namespace Morphic.Focus.Screens
 
         private void GetBlockLists()
         {
-            IDataService<BlockList> dataService = new GenericDataService<BlockList>(new FocusDbContextFactory());
-            BlockLists = new ObservableCollection<BlockList>(dataService.GetAll().Result);
+            //IDataService<BlockList> dataService = new GenericDataService<BlockList>(new FocusDbContextFactory());
+            BlockLists = new ObservableCollection<BlockList>(new List<BlockList>() { new BlockList() });
 
             if (BlockLists.Count > 0) BlockList = BlockLists[0];
         }
@@ -152,7 +152,7 @@ namespace Morphic.Focus.Screens
         #endregion
         private void btnBlockAddApp_Click(object sender, RoutedEventArgs e)
         {
-            BlockAddApp blockAddApp = new BlockAddApp();
+            AddAppModal blockAddApp = new AddAppModal();
 
             if (blockAddApp.ShowDialog() == true)
             {
@@ -162,7 +162,7 @@ namespace Morphic.Focus.Screens
 
         private void btnBlockAddWebsite_Click(object sender, RoutedEventArgs e)
         {
-            BlockAddWebsite blockAddWebsite = new BlockAddWebsite();
+            AddWebsiteModal blockAddWebsite = new AddWebsiteModal();
 
             if (blockAddWebsite.ShowDialog() == true)
             {

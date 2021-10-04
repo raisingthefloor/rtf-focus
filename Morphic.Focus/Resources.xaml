@@ -8,6 +8,7 @@
     <SolidColorBrush x:Key="DialogBorder" Color="#00803D"/>
     <SolidColorBrush x:Key="GreyBorder" Color="#c2c2c2"/>
     <SolidColorBrush x:Key="FrontEndDialogBorder" Color="#008145"/>
+    <SolidColorBrush x:Key="BlueText" Color="#3566D8"/>
 
     <!--Fonts-->
     <FontFamily x:Key="SourceSansProRegular">./Fonts/SourceSansPro-Regular.ttf#Source Sans Pro</FontFamily>
@@ -452,12 +453,28 @@
         <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="{StaticResource SourceSansProRegular}" />
     </Style>
+    <Style x:Key="ContentStyleSmall" TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+        <Setter Property="TextTrimming" Value="None"/>
+        <Setter Property="LineHeight" Value="13"/>
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontFamily" Value="{StaticResource SourceSansProRegular}" />
+    </Style>
     <Style x:Key="ContentStyleBig" TargetType="{x:Type TextBlock}">
         <Setter Property="TextWrapping" Value="NoWrap"/>
         <Setter Property="TextTrimming" Value="None"/>
         <Setter Property="LineHeight" Value="17.6"/>
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="{StaticResource SourceSansProRegular}" />
+    </Style>
+    <Style x:Key="ContentStyleSmallBlueItalic" TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+        <Setter Property="TextTrimming" Value="None"/>
+        <Setter Property="LineHeight" Value="14.57"/>
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="{StaticResource SourceSansProRegular}" />
+        <Setter Property="Foreground" Value="{StaticResource BlueText}"/>
+        <Setter Property="FontStyle" Value="Italic"/>
     </Style>
 
     <!-- Settings Left Menu -->
@@ -529,7 +546,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="Button" x:Key="FocusButton">
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="12 4 12 6" />

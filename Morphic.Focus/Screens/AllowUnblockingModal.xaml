@@ -1,0 +1,35 @@
+﻿<Window x:Class="Morphic.Focus.Screens.AllowUnblockingModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Morphic.Focus.Screens"
+        mc:Ignorable="d"
+        Height="244" Width="485" ShowInTaskbar="False" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True"
+        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Background="Transparent" Topmost="True">
+    <Border CornerRadius="18" Background="{DynamicResource LightGreen}" BorderThickness="1" BorderBrush="{DynamicResource DialogBorder}">
+        <StackPanel Margin="12 13">
+            <TextBlock Style="{DynamicResource ModalTitle}">
+                Select apps and websites from your blocklists to allow yourself to temporarily unblock.
+            </TextBlock>
+            <Border Margin="0 15 0 0" BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}" Width="461" Height="144" 
+                             CornerRadius="4" Background="White" Padding="0">
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl  MinHeight="130" ItemsSource="{Binding BlockCategories}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Height="23">
+                                    <CheckBox Style="{DynamicResource SettingsCheckbox}" Content="{Binding Name}" Margin="8 8 0 0"></CheckBox>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+
+            <Button Style="{DynamicResource SettingsButtons}" Width="175" Margin="0 15" Name="btnBlockAddApp" IsCancel="True">Add items</Button>
+
+        </StackPanel>
+    </Border>
+</Window>

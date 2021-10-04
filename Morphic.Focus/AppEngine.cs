@@ -1,7 +1,7 @@
-﻿using Morphic.Focus.JSONService;
-using Morphic.Focus.Models;
+﻿using Morphic.Data.Models;
+using Morphic.Data.Services;
 using Morphic.Focus.Screens;
-using Morphic.Focus.Services;
+using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Morphic.Data.JSONService;
 
 namespace Morphic.Focus
 {
@@ -26,14 +27,14 @@ namespace Morphic.Focus
             CheckIsFocusRunning();
         }
 
-        FocusMain _focusMain = null;
-        public FocusMain FocusMain
+        MainMenuNonModal _focusMain = null;
+        public MainMenuNonModal FocusMain
         {
             get
             {
                 if (_focusMain == null)
                 {
-                    _focusMain = new FocusMain();
+                    _focusMain = new MainMenuNonModal();
                 }
 
                 return _focusMain;
@@ -42,14 +43,14 @@ namespace Morphic.Focus
         }
 
 
-        FocusStatus _focusStatus = null;
-        public FocusStatus FocusStatus
+        ActiveSessionNonModal _focusStatus = null;
+        public ActiveSessionNonModal FocusStatus
         {
             get
             {
                 if (_focusStatus == null)
                 {
-                    _focusStatus = new FocusStatus();
+                    _focusStatus = new ActiveSessionNonModal();
                 }
 
                 return _focusStatus;

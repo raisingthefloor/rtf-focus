@@ -4,6 +4,7 @@ using CitadelCore.Net.Http;
 using CitadelCore.Net.Proxy;
 using CitadelCore.Windows.Net.Proxy;
 using Microsoft.AspNetCore.Http;
+using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,16 +46,16 @@ namespace Morphic.BlockService
             {
                 IsFocusRunning = File.Exists(Common.MakeFilePath(Common.SESSION_FILE_NAME));
 
-                //Setup Service
-                this.ServiceName = "BlockingService";
-                this.CanStop = true;
-                this.CanPauseAndContinue = true;
+                ////Setup Service
+                //this.ServiceName = "BlockingService";
+                //this.CanStop = true;
+                //this.CanPauseAndContinue = true;
 
-                //Setup logging
-                this.AutoLog = false;
+                ////Setup logging
+                //this.AutoLog = false;
 
-                this.EventLog.Source = this.ServiceName;
-                this.EventLog.Log = "Application";
+                //this.EventLog.Source = this.ServiceName;
+                //this.EventLog.Log = "Application";
 
                 watcher = new FileSystemWatcher(Path.GetDirectoryName(Common.MakeFilePath(Common.SESSION_FILE_NAME)));
                 watcher.Created += Watcher_Created;
@@ -66,7 +67,7 @@ namespace Morphic.BlockService
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry(ex.Message + ex.StackTrace);
+                //EventLog.WriteEntry(ex.Message + ex.StackTrace);
                 LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
             }
         }

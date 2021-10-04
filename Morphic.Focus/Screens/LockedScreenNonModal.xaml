@@ -1,0 +1,35 @@
+﻿<Window x:Class="Morphic.Focus.Screens.LockedScreenNonModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Morphic.Focus.Screens"
+        mc:Ignorable="d"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Screen is blocked"
+        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
+    </Window.CommandBindings>
+    <Border CornerRadius="18" BorderThickness="1" BorderBrush="{DynamicResource FrontEndDialogBorder}" Background="{DynamicResource LightGreen}" Padding="0" Margin="0">
+        <Grid Name="grdMain">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Margin="25 0 25 0"  Style="{DynamicResource TitleStyle}" FontSize="24">Screen is blocked</TextBlock>
+
+            <StackPanel Grid.Row="3" Grid.Column="0" Margin="25 0 25 0"  Width="335">
+                <TextBlock Style="{DynamicResource ContentStyleBig}" TextWrapping="WrapWithOverflow" TextAlignment="Center">
+                    You set the computer to be locked for one minute at the start of each 
+                    break to encourage you to stand and stretch.</TextBlock>
+                <TextBlock Style="{DynamicResource ContentStyleSmallBlueItalic}" Margin="25 10 25 0" TextAlignment="Center" FontSize="12">
+                    This window will close in 1 minute.</TextBlock>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
+

@@ -1,0 +1,53 @@
+﻿<Window x:Class="Morphic.Focus.Screens.StopFocusRandomCharModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Morphic.Focus.Screens"
+        mc:Ignorable="d"
+        Width="312" Height="334" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Stop Focus Session"
+        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Topmost="True">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
+    </Window.CommandBindings>
+    <Border CornerRadius="18" BorderThickness="1" BorderBrush="{DynamicResource FrontEndDialogBorder}" Background="{DynamicResource LightGreen}" Padding="0" Margin="0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Margin="25 20 25 0"  Style="{DynamicResource TitleStyle}" FontSize="18" Height="auto" LineHeight="23">
+                Stop Focus Session</TextBlock>
+
+            <StackPanel Grid.Row="1" Grid.Column="0" Margin="33 20 33 0" Width="246">
+                <TextBlock Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" TextAlignment="Center">
+                You set the blocklist (currently being used) to require you to complete the task below in order to stop the focus session.</TextBlock>
+
+                <TextBlock Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" TextAlignment="Center" Margin="0 15 0 0">
+                Type the following characters in the space below:</TextBlock>
+
+                <TextBlock Style="{DynamicResource ModalTitle}" TextWrapping="WrapWithOverflow" TextAlignment="Center">
+                GwEUf45HBLDKSG56BNBFdbNBIV110nWI</TextBlock>
+            </StackPanel>
+
+            <TextBox Grid.Row="2" Grid.Column="0" Margin="30 8 30 0" Height="25" Width="249"></TextBox>
+
+            <Button Grid.Row="3" Grid.Column="0" Style="{DynamicResource SettingsButtonsGrey}" Margin="25 10 25 0" Height="25" Width="143" IsEnabled="False">Stop focus session</Button>
+
+            <Border Grid.Row="4" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#a3a3a3" Margin="25 15 25 0"></Border>
+
+            <Button Grid.Row="5" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="25 20 25 0" Width="130" Command="ApplicationCommands.Close">
+                Nevermind, go back</Button>
+
+            <TextBlock Grid.Row="6" Grid.Column="0" Margin="25 20 25 0" Style="{DynamicResource ContentStyleSmall}" TextAlignment="Center">
+                <Hyperlink>Show me the blocklist that requires this ...</Hyperlink>
+            </TextBlock>
+        </Grid>
+    </Border>
+</Window>

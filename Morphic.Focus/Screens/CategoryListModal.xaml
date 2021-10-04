@@ -1,0 +1,35 @@
+﻿<Window x:Class="Morphic.Focus.Screens.CategoryListModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Morphic.Focus.Screens"
+        mc:Ignorable="d"
+        Height="268" Width="355" ShowInTaskbar="False" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True"
+        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Background="Transparent" Topmost="True">
+    <Border CornerRadius="18" Background="{DynamicResource LightGreen}" BorderThickness="1" BorderBrush="{DynamicResource DialogBorder}">
+        <StackPanel Margin="12 15">
+            <TextBlock Style="{DynamicResource HeaderTitleBig}" HorizontalAlignment="Left">Apps and websites blocked by the category:</TextBlock>
+            <TextBlock Style="{DynamicResource HeaderTitleBigBold}" Name="txtCategory" HorizontalAlignment="Left">Social Media</TextBlock>
+
+            <Border Margin="0 15 0 0" BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}" Width="325" Height="137" 
+                             CornerRadius="4" Background="White">
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl MinHeight="130" ItemsSource="{Binding BlockCategories}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Height="23">
+                                    <TextBlock Style="{DynamicResource SettingsSectionBody}" Text="{Binding Name}" Margin="11 7 0 0">
+                                    </TextBlock>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+
+            <Button Style="{DynamicResource SettingsButtons}" Width="175" IsCancel="True" Margin=" 0 15 0 0">OK</Button>
+        </StackPanel>
+    </Border>
+</Window>

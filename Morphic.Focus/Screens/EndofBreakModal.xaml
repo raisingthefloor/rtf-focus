@@ -1,0 +1,38 @@
+﻿<Window x:Class="Morphic.Focus.Screens.EndofBreakModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Morphic.Focus.Screens"
+        mc:Ignorable="d"
+        Width="209" Height="236" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="End of break!"
+        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Topmost="True">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
+    </Window.CommandBindings>
+    <Border CornerRadius="18" BorderThickness="1" BorderBrush="{DynamicResource FrontEndDialogBorder}" Background="{DynamicResource LightGreen}" Padding="0" Margin="0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Margin="25 20 25 0"  Style="{DynamicResource TitleStyle}" Height="23" FontSize="18">End of break!</TextBlock>
+            <Button Grid.Row="1" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="43 20 43 0" Width="121" Command="ApplicationCommands.Close">
+                OK, back to focus</Button>
+            <TextBlock Grid.Row="2" Grid.Column="0" Margin="25 20 25 0"  Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" Width="159" TextAlignment="Center">
+                Or, extend my break by...</TextBlock>
+            <StackPanel Grid.Row="3" Grid.Column="0" Margin="25 8 25 0"  Orientation="Horizontal">
+                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Click="Button_Click">1 min</Button>
+                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Margin="8 0 0 0" Click="Button_Click">5 min</Button>
+                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Margin="8 0 0 0" Click="Button_Click">15 min</Button>
+            </StackPanel>
+            <Border Grid.Row="4" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#c2c2c2" Margin="25 20 25 0"></Border>
+            <Button Grid.Row="5" Grid.Column="0" Name="btnStopFocus" Click="btnStopFocus_Click" Style="{DynamicResource SettingsButtonsGrey}" Margin="43 15 43 0" Height="25" Width="121">Stop focus session</Button>
+        </Grid>
+    </Border>
+</Window>

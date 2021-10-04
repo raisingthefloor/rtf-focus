@@ -1,6 +1,6 @@
-﻿using Morphic.Focus.Models;
+﻿using Morphic.Data.Models;
 using Morphic.Focus.Screens;
-using Morphic.Focus.Services;
+using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -131,7 +131,7 @@ namespace Morphic.Focus
                         {
                             if (_timer != null) _timer.Stop();
 
-                            new FocusBreakSequence().ShowDialog();
+                            new ShortBreakModal().ShowDialog();
                         }
                         _time = _time.Add(TimeSpan.FromSeconds(-1));
                     }, Application.Current.Dispatcher);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Morphic.Data.Services;
+using System;
 using System.Diagnostics;
 using System.ServiceProcess;
 
@@ -8,6 +9,8 @@ namespace Morphic.BlockService
     {
         static void Main(string[] args)
         {
+            
+
             //EventLog.WriteEntry("Main");
             ServiceBase.Run(new BlockingService());
 

@@ -20,7 +20,7 @@ namespace Morphic.Focus.Screens
     /// </summary>
     public partial class AllowUnblockingModal : Window
     {
-        private List<BlockCategory> blockCategories;
+        private List<AppsAndWebsites> _apps;
         public AllowUnblockingModal()
         {
             InitializeComponent();
@@ -29,11 +29,11 @@ namespace Morphic.Focus.Screens
             this.DataContext = this;
         }
 
-        public List<BlockCategory> BlockCategories
+        public List<AppsAndWebsites> Apps
         {
             get
             {
-                return blockCategories;
+                return _apps;
             }
         }
 
@@ -54,8 +54,8 @@ namespace Morphic.Focus.Screens
         {
             List<string> installs = new List<string>();
             List<string> keys = new List<string>() {
-              @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
-              @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
+              @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths",
+              @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\App Paths"
             };
 
             // The RegistryView.Registry64 forces the application to open the registry as x64 even if the application is compiled as x86 
@@ -65,11 +65,11 @@ namespace Morphic.Focus.Screens
             installs = installs.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList();
             installs.Sort(); // The list of ALL installed applications
 
-            blockCategories = new List<BlockCategory>();
+            _apps = new List<AppsAndWebsites>();
             foreach (string str in installs)
             {
                 int i = 0;
-                blockCategories.Add(new BlockCategory() { Name = str, Id = i++ });
+                _apps.Add(new AppsAndWebsites() { name = str });
             }
         }
 

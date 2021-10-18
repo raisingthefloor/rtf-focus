@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,29 +19,24 @@ namespace Morphic.Focus.Screens
     /// <summary>
     /// Interaction logic for SettingsGeneral.xaml
     /// </summary>
-    public partial class SettingsGeneral : UserControl
+    public partial class SettingsGeneral : UserControl, INotifyPropertyChanged
     {
-        private List<BlockItem> blockItems;
-        string modalUnblockTitle = "Select apps and websites from your blocklists to allow yourself to temporarily unblock.";
+        AppEngine _engine;
+        public AppEngine Engine { get { return _engine; } }
+
         public SettingsGeneral()
         {
-            InitializeComponent();
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _engine = AppEngine.Instance;
+            }
 
-            blockItems = new List<BlockItem>();
-            blockItems.Add(new BlockItem { Id = 1, Name = "Mail"});
-            blockItems.Add(new BlockItem { Id = 2, Name = "Skype"});
-            blockItems.Add(new BlockItem { Id = 3, Name = "Linkedin.com"});
+            InitializeComponent();
 
             this.DataContext = this;
         }
 
-        public List<BlockItem> BlockItems
-        {
-            get
-            {
-                return blockItems;
-            }
-        }
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void btnAddAppUnblock_Click(object sender, RoutedEventArgs e)
         {
@@ -50,17 +46,18 @@ namespace Morphic.Focus.Screens
 
         private void btnAddWebsiteUnblock_Click(object sender, RoutedEventArgs e)
         {
-            AllowUnblockingModal unblockAddAppWebsite = new AllowUnblockingModal();
-            unblockAddAppWebsite.ShowDialog();
+            AddWebsiteModal addWebsiteModal = new AddWebsiteModal();
+            addWebsiteModal.ShowDialog();
         }
     }
 
+    #region To be deleted
     public class BlockItem
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        
-    }
 
+    }
+    #endregion
 }
 

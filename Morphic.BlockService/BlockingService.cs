@@ -46,16 +46,20 @@ namespace Morphic.BlockService
             {
                 IsFocusRunning = File.Exists(Common.MakeFilePath(Common.SESSION_FILE_NAME));
 
-                ////Setup Service
-                //this.ServiceName = "BlockingService";
-                //this.CanStop = true;
-                //this.CanPauseAndContinue = true;
+                //Setup Service
+                this.ServiceName = "BlockingService";
+                this.CanStop = true;
+                this.CanPauseAndContinue = true;
 
-                ////Setup logging
-                //this.AutoLog = false;
+                //Setup logging
+                this.AutoLog = false;
 
-                //this.EventLog.Source = this.ServiceName;
-                //this.EventLog.Log = "Application";
+                this.EventLog.Source = this.ServiceName;
+                this.EventLog.Log = "Application";
+
+                EventLog.WriteEntry("Log Start");
+
+                LoggingService.WriteServiceLog("Service Launched");
 
                 watcher = new FileSystemWatcher(Path.GetDirectoryName(Common.MakeFilePath(Common.SESSION_FILE_NAME)));
                 watcher.Created += Watcher_Created;
@@ -63,12 +67,12 @@ namespace Morphic.BlockService
 
                 watcher.Filter = Common.SESSION_FILE_NAME;
                 watcher.EnableRaisingEvents = true;
-                LoggingService.WriteToLog("Watching started");
+                LoggingService.WriteAppLog("Watching started");
             }
             catch (Exception ex)
             {
-                //EventLog.WriteEntry(ex.Message + ex.StackTrace);
-                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+                EventLog.WriteEntry(ex.Message + ex.StackTrace);
+                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
             }
         }
 
@@ -77,13 +81,13 @@ namespace Morphic.BlockService
             try
             {
                 EventLog.WriteEntry("Focus End");
-                LoggingService.WriteToLog("Focus End");
+                LoggingService.WriteAppLog("Focus End");
                 IsFocusRunning = false;
             }
             catch (Exception ex)
             {
                 EventLog.WriteEntry(ex.Message + ex.StackTrace);
-                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
             }
         }
 
@@ -92,14 +96,14 @@ namespace Morphic.BlockService
             try
             {
                 EventLog.WriteEntry("Focus Start");
-                LoggingService.WriteToLog("Focus Start");
+                LoggingService.WriteAppLog("Focus Start");
                 IsFocusRunning = true;
 
             }
             catch (Exception ex)
             {
                 EventLog.WriteEntry(ex.Message + ex.StackTrace);
-                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
             }
         }
 
@@ -151,7 +155,7 @@ namespace Morphic.BlockService
             }
             catch (Exception ex)
             {
-                LoggingService.WriteToLog("Exception :" + ex.Message + ex.StackTrace);
+                LoggingService.WriteAppLog("Exception :" + ex.Message + ex.StackTrace);
             }
             return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
         }
@@ -199,7 +203,7 @@ namespace Morphic.BlockService
             }
 
             // By default, allow and ignore content, but not any responses to this content.
-            messageInfo.ProxyNextAction = ProxyNextAction.AllowAndIgnoreContent;
+            messageInfo.ProxyNextAction = ProxyNextAction.AllowAndIgnoreContentAndResponse;
         }
 
         private static void OnStreamedContentInspection(HttpMessageInfo messageInfo, StreamOperation operation, Memory<byte> buffer, out bool dropConnection)
@@ -286,7 +290,7 @@ namespace Morphic.BlockService
                 LoggerProxy.Default.OnError += (msg) =>
                 {
                     Console.WriteLine("ERRO: {0}", msg);
-                    LoggingService.WriteToLog("ERRO: " + msg);
+                    LoggingService.WriteAppLog("ERRO: " + msg);
                     //Log("ERRO: "+ msg);
                 };
 
@@ -308,7 +312,7 @@ namespace Morphic.BlockService
                 // Give it a kick.
                 proxyServer.Start(0);
 
-                LoggingService.WriteToLog("Service Started");
+                LoggingService.WriteAppLog("Service Started");
 
                 // And you're up and running.
                 Console.WriteLine("Proxy Running");
@@ -319,7 +323,7 @@ namespace Morphic.BlockService
             catch (Exception ex)
             {
                 EventLog.WriteEntry(ex.Message + ex.StackTrace);
-                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
             }
         }
 
@@ -328,7 +332,7 @@ namespace Morphic.BlockService
             try
             {
                 
-                LoggingService.WriteToLog("On Start");
+                LoggingService.WriteAppLog("On Start");
                 StartBlock();
                 this.EventLog.WriteEntry("Started");
                 base.OnStart(args);
@@ -336,7 +340,7 @@ namespace Morphic.BlockService
             catch (Exception ex)
             {
                 EventLog.WriteEntry(ex.Message + ex.StackTrace);
-                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
             }
         }
 
@@ -344,7 +348,7 @@ namespace Morphic.BlockService
         {
             try
             {
-                LoggingService.WriteToLog("On Stop");
+                LoggingService.WriteAppLog("On Stop");
 
                 // Stop if you must.
                 proxyServer.Stop();
@@ -352,7 +356,7 @@ namespace Morphic.BlockService
             }
             catch (Exception ex)
             {
-                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
             }
         }
 
@@ -360,12 +364,12 @@ namespace Morphic.BlockService
         {
             try
             {
-                LoggingService.WriteToLog("On Pause");
+                LoggingService.WriteAppLog("On Pause");
                 base.OnPause();
             }
             catch (Exception ex)
             {
-                LoggingService.WriteToLog("Exception" + ex.Message + ex.StackTrace);
+                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
             }
             
         }

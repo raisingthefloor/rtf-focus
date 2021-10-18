@@ -1,4 +1,4 @@
-﻿using Morphic.Data.JSONService;
+﻿
 using Morphic.Data.Models;
 using Morphic.Data.Services;
 using System;
@@ -103,7 +103,7 @@ namespace Morphic.Focus.Screens
                 string jsonString = jSONHelper.GetJson<Session>();
 
                 //Log Closing Session
-                LoggingService.WriteToLog("Session Closing : " + jsonString);
+                LoggingService.WriteAppLog("Session Closing : " + jsonString);
 
                 File.Delete(Common.MakeFilePath(Common.SESSION_FILE_NAME));
 
@@ -115,7 +115,7 @@ namespace Morphic.Focus.Screens
             }
             catch (Exception ex)
             {
-                LoggingService.WriteToLog(ex.Message + ex.StackTrace);
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
 

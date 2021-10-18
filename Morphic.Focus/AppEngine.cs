@@ -10,23 +10,32 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Morphic.Data.JSONService;
+
 
 namespace Morphic.Focus
 {
     public class AppEngine : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        // Singleton
+        #region AppEnding Instance
         private static readonly AppEngine _instance = new AppEngine();
         public static AppEngine Instance { get { return _instance; } }
 
         AppEngine()
         {
+            GetFocusSettings();
             CheckIsFocusRunning();
+
+            UserPreferences.PropertyChanged += UserPreferences_PropertyChanged;
         }
 
+        private void UserPreferences_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            SetFocusSettings();
+        }
+
+        #endregion
+
+        #region UI Screens
         MainMenuNonModal _focusMain = null;
         public MainMenuNonModal FocusMain
         {
@@ -88,6 +97,26 @@ namespace Morphic.Focus
                 FocusMain.Show();
             }
         }
+        #endregion
+
+        #region Properties
+
+        private UserPreferences? _userPreferences = null;
+        public UserPreferences? UserPreferences
+        { 
+            get
+            {
+                return _userPreferences;
+            }
+            set
+            {
+                if (_userPreferences != value)
+                {
+                    _userPreferences = value;
+                    NotifyPropertyChanged("UserPreferences");
+                }
+            }
+        }
 
         private bool _isFocusRunning = false;
         public bool IsFocusRunning
@@ -101,6 +130,45 @@ namespace Morphic.Focus
                 _isFocusRunning = value;
                 NotifyPropertyChanged("IsFocusRunning"); // method implemented below
             }
+        }
+
+        private Session? _currSession1 = null;
+        public Session? CurrSession1 { get => _currSession1; set => _currSession1 = value; }
+        #endregion
+        internal void GetFocusSettings()
+        {
+            //Get Focus Preferences from the Settings.json file
+            //If the file is not found, a new settings file is created
+            //Settings are persisted in memomy as long as the Focus Tool is running
+
+            //1. Get Focus Preferences from the Settings.json file
+            JSONHelper jSONHelper = new JSONHelper(Common.SETTINGS_FILE_NAME);
+            UserPreferences = jSONHelper.Get<UserPreferences>();
+
+            //2. If the file is not found, a new settings file is created
+            if (UserPreferences == null)
+            {
+                UserPreferences = new UserPreferences();
+                jSONHelper.Save<UserPreferences>(UserPreferences);
+            }
+            
+        }
+
+        internal void SetFocusSettings()
+        {
+            //Get Focus Preferences from the Settings.json file
+            //If the file is not found, a new settings file is created
+            //Settings are persisted in memomy as long as the Focus Tool is running
+
+            //1. Get Focus Preferences from the Settings.json file
+            JSONHelper jSONHelper = new JSONHelper(Common.SETTINGS_FILE_NAME);
+            
+            //2. If the file is not found, a new settings file is created
+            if (UserPreferences != null)
+            {
+                jSONHelper.Save<UserPreferences>(UserPreferences);
+            }
+
         }
 
         public void CheckIsFocusRunning()
@@ -125,7 +193,7 @@ namespace Morphic.Focus
             string jsonString = jSONHelper.GetJson<Session>();
 
             //Log Closing Session
-            LoggingService.WriteToLog("Session Closing : " + jsonString);
+            LoggingService.WriteAppLog("Session Closing : " + jsonString);
 
             File.Delete(Common.MakeFilePath(Common.SESSION_FILE_NAME));
 
@@ -133,9 +201,8 @@ namespace Morphic.Focus
             IsFocusRunning = false;
         }
 
-        private Session? _currSession1 = null;
-        public Session? CurrSession1 { get => _currSession1; set => _currSession1 = value; }
-
+        #region PropertyChanged
+        public event PropertyChangedEventHandler? PropertyChanged;
         public void NotifyPropertyChanged(string name)
         {
             if (PropertyChanged != null)
@@ -143,5 +210,6 @@ namespace Morphic.Focus
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
+        #endregion
     }
 }

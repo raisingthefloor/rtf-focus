@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Morphic.Focus"
         mc:Ignorable="d"  MinWidth="100" SizeToContent="Width" Height="64" ResizeMode="NoResize" WindowStyle="None"
-        Background="Transparent" Title="Focus Button" WindowStartupLocation="CenterScreen"
+        Background="Transparent" Title="Focus Button" WindowStartupLocation="CenterScreen" 
         Padding="0"
         AllowsTransparency="True" MouseMove="Window_MouseMove">
     <Window.Resources>

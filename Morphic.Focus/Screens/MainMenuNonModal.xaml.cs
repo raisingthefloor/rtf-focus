@@ -1,5 +1,4 @@
-﻿using Morphic.Data.JSONService;
-using Morphic.Data.Models;
+﻿using Morphic.Data.Models;
 using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
@@ -182,12 +181,12 @@ namespace Morphic.Focus.Screens
                 if (IsFocusRunning)
                 {
                     //Log Session
-                    LoggingService.WriteToLog("Session Restarted : " + jsonString);
+                    LoggingService.WriteAppLog("Session Restarted : " + jsonString);
                 }
                 else
                 {
                     //Log Session
-                    LoggingService.WriteToLog("Session Started : " + jsonString);
+                    LoggingService.WriteAppLog("Session Started : " + jsonString);
                 }
 
                 CurrSession1 = session;
@@ -198,7 +197,7 @@ namespace Morphic.Focus.Screens
             }
             catch (Exception ex)
             {
-                LoggingService.WriteToLog(ex.Message + ex.StackTrace);
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
 
         }

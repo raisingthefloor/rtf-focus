@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Morphic.Data.Services;
+﻿using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,11 +18,7 @@ namespace Morphic.Focus
         {
             base.OnStartup(e);
 
-            //FocusDbContextFactory _contextFactory = new FocusDbContextFactory();
-            //using (FocusDbContext context = _contextFactory.CreateDbContext())
-            //{
-            //    context.Database.Migrate();
-            //}
+            LoggingService.WriteAppLog("Application Launched");
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)

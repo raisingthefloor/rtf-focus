@@ -48,10 +48,9 @@ namespace Morphic.Focus
             _engine.FocusMain.SessionUpdate += FocusMain_SessionUpdate;
             _engine.FocusStatus.SessionUpdate += FocusMain_SessionUpdate;
             _engine.PropertyChanged += _engine_PropertyChanged;
-
-            _engine.CheckIsFocusRunning();
         }
 
+        
         private void _engine_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             NotifyPropertyChanged("IsFocusRunning");
@@ -155,6 +154,144 @@ namespace Morphic.Focus
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
+        }
+        #endregion
+
+        #region To be deleted
+        public async void video()
+        {
+            //Scr 1
+            ActiveSessionNonModal scr1 = new ActiveSessionNonModal();
+            scr1.Show();
+
+            await Task.Delay(5000);
+            scr1.Close();
+
+            //Src 2
+            AddAppModal scr2 = new AddAppModal();
+            scr2.Show();
+
+            await Task.Delay(5000);
+            scr2.Close();
+
+            //Src 3
+            AddWebsiteModal scr3 = new AddWebsiteModal();
+            scr3.Show();
+
+            await Task.Delay(5000);
+            scr3.Close();
+
+            //Src 4
+            AllowUnblockingModal scr4 = new AllowUnblockingModal();
+            scr4.Show();
+
+            await Task.Delay(5000);
+            scr4.Close();
+
+            //Src 5
+            BlockedAppModal scr5 = new BlockedAppModal();
+            scr5.Show();
+
+            await Task.Delay(5000);
+            scr5.Close();
+
+            //Src 6
+            CategoryListModal scr6 = new CategoryListModal();
+            scr6.Show();
+
+            await Task.Delay(5000);
+            scr6.Close();
+
+            //Src 7
+            EndofBreakModal scr7 = new EndofBreakModal();
+            scr7.Show();
+
+            await Task.Delay(5000);
+            scr7.Close();
+
+            //Src 8
+            ErrorMessageModal scr8 = new ErrorMessageModal();
+            scr8.Show();
+
+            await Task.Delay(5000);
+            scr8.Close();
+
+            //Src 9
+            LockedScreenNonModal scr9 = new LockedScreenNonModal();
+            scr9.Show();
+
+            await Task.Delay(5000);
+            scr9.Close();
+
+            //Src 10
+            LongBreakModal scr10 = new LongBreakModal();
+            scr10.Show();
+
+            await Task.Delay(5000);
+            scr10.Close();
+
+            //Src 11
+            MainMenuNonModal scr11 = new MainMenuNonModal();
+            scr11.Show();
+
+            await Task.Delay(5000);
+            scr11.Close();
+
+            //Src 12
+            NewBlocklistModal scr12 = new NewBlocklistModal();
+            scr12.Show();
+
+            await Task.Delay(5000);
+            scr12.Close();
+
+            //Src 13
+            ScheduledReminderModal scr13 = new ScheduledReminderModal();
+            scr13.Show();
+
+            await Task.Delay(5000);
+            scr13.Close();
+
+            //Src 14
+            ScheduledSessionModal scr14 = new ScheduledSessionModal();
+            scr14.Show();
+
+            await Task.Delay(5000);
+            scr14.Close();
+
+            //Src 15
+            SessionCompletedModal scr15 = new SessionCompletedModal();
+            scr15.Show();
+
+            await Task.Delay(5000);
+            scr15.Close();
+
+            //Src 16
+            Settings scr16 = new Settings();
+            scr16.Show();
+
+            await Task.Delay(5000);
+            scr16.Close();
+
+            //Src 17
+            ShortBreakModal scr17 = new ShortBreakModal();
+            scr17.Show();
+
+            await Task.Delay(5000);
+            scr17.Close();
+
+            //Src 18
+            StopFocusRandomCharModal scr18 = new StopFocusRandomCharModal();
+            scr18.Show();
+
+            await Task.Delay(5000);
+            scr18.Close();
+
+            //Src 19
+            StopFocusRestartModal scr19 = new StopFocusRestartModal();
+            scr19.Show();
+
+            await Task.Delay(5000);
+            scr19.Close();
         }
         #endregion
     }

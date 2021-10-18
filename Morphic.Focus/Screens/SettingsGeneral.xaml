@@ -39,12 +39,12 @@ use this feature to unblock it.</TextBlock>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="41"/>
                     </Grid.RowDefinitions>
-                    <ItemsControl  Name="dgBlock" Grid.Row="0" Grid.Column="0" MinHeight="130" ItemsSource="{Binding Path=Engine.UserPreferences.General.TemporarilyUnblock}">
+                    <ItemsControl  Name="dgBlock" Grid.Row="0" Grid.Column="0" MinHeight="130" ItemsSource="{Binding Path=Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Width="230" Height="23">
-                                    <CheckBox Style="{DynamicResource SettingsCheckbox}" Content="{Binding Name}" Width="100" Margin="6 0"></CheckBox>
-                                    <Button Style="{DynamicResource SetingsImageButtonStyle}">
+                                    <CheckBox Style="{DynamicResource SettingsCheckbox}" IsChecked="{Binding IsActive}" Content="{Binding Name}" Width="100" Margin="6 0"></CheckBox>
+                                    <Button Style="{DynamicResource SetingsImageButtonStyle}" Name="btnRemoveTempUnblock" Click="btnRemoveTempUnblock_Click" Cursor="Hand">
                                         <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0"/>
                                     </Button>
                                 </DockPanel>

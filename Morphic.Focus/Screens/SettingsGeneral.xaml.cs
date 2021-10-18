@@ -49,6 +49,14 @@ namespace Morphic.Focus.Screens
             AddWebsiteModal addWebsiteModal = new AddWebsiteModal();
             addWebsiteModal.ShowDialog();
         }
+
+        private void btnRemoveTempUnblock_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            var dataObject = btn.DataContext as AppsAndWebsites;
+
+            Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites.Remove(dataObject);
+        }
     }
 
     #region To be deleted

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,15 @@ namespace Morphic.Focus.Screens
     public partial class AllowUnblockingModal : Window
     {
         private List<AppsAndWebsites> _apps;
+        AppEngine _engine;
+        public AppEngine Engine { get { return _engine; } }
         public AllowUnblockingModal()
         {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _engine = AppEngine.Instance;
+            }
+
             InitializeComponent();
 
             GetInstalledApps();
@@ -52,28 +60,21 @@ namespace Morphic.Focus.Screens
 
         public void GetInstalledApps()
         {
-            List<string> installs = new List<string>();
+            //List<string> installs = new List<string>();
             List<string> keys = new List<string>() {
               @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths",
               @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\App Paths"
             };
 
-            // The RegistryView.Registry64 forces the application to open the registry as x64 even if the application is compiled as x86 
-            FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64), keys, installs);
-            FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64), keys, installs);
-
-            installs = installs.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList();
-            installs.Sort(); // The list of ALL installed applications
-
             _apps = new List<AppsAndWebsites>();
-            foreach (string str in installs)
-            {
-                int i = 0;
-                _apps.Add(new AppsAndWebsites() { name = str });
-            }
+            // The RegistryView.Registry64 forces the application to open the registry as x64 even if the application is compiled as x86 
+            FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64), keys, _apps);
+            FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64), keys, _apps);
+
+            _apps = _apps.Distinct().OrderBy(p => p.Name).ToList();
         }
 
-        private void FindInstalls(RegistryKey regKey, List<string> keys, List<string> installed)
+        private void FindInstalls(RegistryKey regKey, List<string> keys, List<AppsAndWebsites> installed)
         {
             foreach (string key in keys)
             {
@@ -89,7 +90,11 @@ namespace Morphic.Focus.Screens
                         {
                             try
                             {
-                                installed.Add(Convert.ToString(sk.GetValue("DisplayName")).Trim());
+                                var defvalue = sk?.GetValue("");
+                                if (defvalue != null)
+                                {
+                                    installed.Add(new AppsAndWebsites() { IsActive = false, IsApp = true, Name = skName.Trim(), Path = Convert.ToString(defvalue).Trim() });
+                                }
                             }
                             catch (Exception ex)
                             { }
@@ -97,6 +102,16 @@ namespace Morphic.Focus.Screens
                     }
                 }
             }
+        }
+
+        private void btnBlockAddApp_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in _apps.Where(p => p.IsActive))
+            {
+                Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites.Add(item);
+            }
+
+            this.Close();
         }
     }
 }

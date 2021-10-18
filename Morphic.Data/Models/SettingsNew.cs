@@ -160,7 +160,7 @@ public class General : INotifyPropertyChanged
             if (_temporarilyUnblock == null)
             {
                 _temporarilyUnblock = new Temporarilyunblock();
-                
+                _temporarilyUnblock.PropertyChanged += _temporarilyUnblock_PropertyChanged;
             }
             return _temporarilyUnblock;
         }
@@ -169,9 +169,14 @@ public class General : INotifyPropertyChanged
             if (value != _temporarilyUnblock)
             {
                 _temporarilyUnblock = value;
-                NotifyPropertyChanged();
+                _temporarilyUnblock.PropertyChanged += _temporarilyUnblock_PropertyChanged;
             }
         }
+    }
+
+    private void _temporarilyUnblock_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        NotifyPropertyChanged();
     }
 
     #region PropertyChanged
@@ -190,11 +195,10 @@ public class General : INotifyPropertyChanged
     #endregion
 }
 
-public class Temporarilyunblock
+public class Temporarilyunblock : INotifyPropertyChanged
 {
     private ObservableCollection<AppsAndWebsites> _appsAndWebsites;
     
-
     public ObservableCollection<AppsAndWebsites> AppsAndWebsites
     {
         get
@@ -202,6 +206,7 @@ public class Temporarilyunblock
             if (_appsAndWebsites == null)
             {
                 _appsAndWebsites = new ObservableCollection<AppsAndWebsites>();
+                _appsAndWebsites.CollectionChanged += _appsAndWebsites_CollectionChanged;
             }
             return _appsAndWebsites;
         }
@@ -210,16 +215,68 @@ public class Temporarilyunblock
             if (value != _appsAndWebsites)
             {
                 _appsAndWebsites = value;
+                _appsAndWebsites.CollectionChanged += _appsAndWebsites_CollectionChanged;
             }
         }
     }
+
+    private void _appsAndWebsites_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        NotifyPropertyChanged();
+    }
+
+    #region PropertyChanged
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    // This method is called by the Set accessor of each property.
+    // The CallerMemberName attribute that is applied to the optional propertyName
+    // parameter causes the property name of the caller to be substituted as an argument.
+    private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+    #endregion
 }
 
-public class AppsAndWebsites
+public class AppsAndWebsites : IEquatable<AppsAndWebsites>
 {
-    public bool isActive { get; set; }
-    public string name { get; set; }
-    public bool isApp { get; set; }
+    public bool IsActive { get; set; }
+    public string Name { get; set; }
+    public bool IsApp { get; set; }
+
+    public string Path { get; set; }
+
+    public override bool Equals(object obj)
+    {
+        return Equals(obj as AppsAndWebsites);
+    }
+
+    public bool Equals(AppsAndWebsites other)
+    {
+        return other != null &&
+               IsActive == other.IsActive &&
+               Name == other.Name &&
+               IsApp == other.IsApp &&
+               Path == other.Path;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(IsActive, Name, IsApp, Path);
+    }
+
+    public static bool operator ==(AppsAndWebsites left, AppsAndWebsites right)
+    {
+        return EqualityComparer<AppsAndWebsites>.Default.Equals(left, right);
+    }
+
+    public static bool operator !=(AppsAndWebsites left, AppsAndWebsites right)
+    {
+        return !(left == right);
+    }
 }
 
 public class Schedules

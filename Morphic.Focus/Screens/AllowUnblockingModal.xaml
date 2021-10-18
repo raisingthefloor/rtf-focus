@@ -16,11 +16,11 @@
                              CornerRadius="4" Background="White" Padding="0">
 
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl  MinHeight="130" ItemsSource="{Binding BlockCategories}">
+                    <ItemsControl  MinHeight="130" ItemsSource="{Binding Apps}" Name="icApps">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Height="23">
-                                    <CheckBox Style="{DynamicResource SettingsCheckbox}" Content="{Binding Name}" Margin="8 8 0 0"></CheckBox>
+                                    <CheckBox Style="{DynamicResource SettingsCheckbox}" IsChecked="{Binding IsActive}" Content="{Binding Name}" Margin="8 8 0 0"></CheckBox>
                                 </DockPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -28,7 +28,7 @@
                 </ScrollViewer>
             </Border>
 
-            <Button Style="{DynamicResource SettingsButtons}" Width="175" Margin="0 15" Name="btnBlockAddApp" IsCancel="True">Add items</Button>
+            <Button Style="{DynamicResource SettingsButtons}" Width="175" Margin="0 15" Name="btnBlockAddApp" Click="btnBlockAddApp_Click">Add items</Button>
 
         </StackPanel>
     </Border>

@@ -27,12 +27,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_1F10BBC4293B4FDD917D36A3BC137307"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_256B1990D88B4D53A574350D7B87B865"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -45,12 +39,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3744D4D4A5C542C0934FEE6DF9370979"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_5864A4BD9F6C45A19B07712A059B1581"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -58,6 +46,12 @@
         "Entry"
         {
         "MsmKey" = "8:_5D5B9A8E0882438F9EF74F3B7424E0B6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7DECC8336CB14E2491CDEF89C5BD6D18"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -121,6 +115,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -137,6 +139,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -236,26 +246,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1F10BBC4293B4FDD917D36A3BC137307"
-            {
-            "SourcePath" = "8:..\\Morphic.Focus\\winfocus.db"
-            "TargetName" = "8:winfocus.db"
-            "Tag" = "8:"
-            "Folder" = "8:_C16AE6CDEEBF4BDDA7971E737EB7E9E1"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_256B1990D88B4D53A574350D7B87B865"
             {
             "SourcePath" = "8:..\\Morphic.BlockService\\bin\\Release\\net5.0\\publish\\BlockedPage.html"
@@ -296,12 +286,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3744D4D4A5C542C0934FEE6DF9370979"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5D5B9A8E0882438F9EF74F3B7424E0B6"
             {
-            "SourcePath" = "8:..\\Morphic.Focus\\morphic-icon.ico"
-            "TargetName" = "8:morphic-icon.ico"
+            "SourcePath" = "8:..\\Morphic.BlockService\\RunInstallWinService.vbs"
+            "TargetName" = "8:RunInstallWinService.vbs"
             "Tag" = "8:"
-            "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
+            "Folder" = "8:_DB358C21B0B3465384E3474672E60AA5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -316,12 +306,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5D5B9A8E0882438F9EF74F3B7424E0B6"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7DECC8336CB14E2491CDEF89C5BD6D18"
             {
-            "SourcePath" = "8:..\\Morphic.BlockService\\RunInstallWinService.vbs"
-            "TargetName" = "8:RunInstallWinService.vbs"
+            "SourcePath" = "8:..\\Morphic.Focus\\FocusIcon.ico"
+            "TargetName" = "8:FocusIcon.ico"
             "Tag" = "8:"
-            "Folder" = "8:_DB358C21B0B3465384E3474672E60AA5"
+            "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -529,29 +519,6 @@
                     }
                 }
             }
-            "{994432C3-9487-495D-8656-3E829A8DBDDE}:_D2989ECDE6AB482B9996EC7326A8CA51"
-            {
-            "DefaultLocation" = "8:[WindowsVolume]"
-            "Name" = "8:C"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:NEWPROPERTY1"
-                "Folders"
-                {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_C16AE6CDEEBF4BDDA7971E737EB7E9E1"
-                    {
-                    "Name" = "8:Morphic.Focus"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_B4FDA80908B54BE685CC937F85AC504C"
-                        "Folders"
-                        {
-                        }
-                    }
-                }
-            }
         }
         "LaunchCondition"
         {
@@ -567,26 +534,26 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Morphic.Focus"
-        "ProductCode" = "8:{2D4D7E8C-589F-41D0-9ED3-81C3969239C1}"
-        "PackageCode" = "8:{28737A50-9E70-45DF-A004-C38C63A79132}"
+        "ProductName" = "8:Morphic Focus"
+        "ProductCode" = "8:{EFB207BB-52DC-45C5-B023-276481917671}"
+        "PackageCode" = "8:{5834C208-369E-4065-8BDB-977026C65B8C}"
         "UpgradeCode" = "8:{FA6CD905-D080-44C9-8B46-2E9FA3408312}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:2.0.0"
         "Manufacturer" = "8:Raising The Floor"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Morphic.Focus"
+        "Title" = "8:Morphic Focus"
         "Subject" = "8:"
         "ARPCONTACT" = "8:kunal@raisingthefloor.org"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Windows Morphic Focus Tool"
-        "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_3744D4D4A5C542C0934FEE6DF9370979"
+        "ARPURLINFOABOUT" = "8:https://morphic.org/"
+        "ARPPRODUCTICON" = "8:_7DECC8336CB14E2491CDEF89C5BD6D18"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -691,7 +658,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_EE426AE008964A8E8F9C950FC59B8020"
             {
-            "Name" = "8:Morphic.Focus"
+            "Name" = "8:Morphic Focus"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -700,12 +667,12 @@
             "Target" = "8:_5864A4BD9F6C45A19B07712A059B1581"
             "Folder" = "8:_1A30662872EC4913AB34FA8FB47B383B"
             "WorkingFolder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
-            "Icon" = "8:_3744D4D4A5C542C0934FEE6DF9370979"
+            "Icon" = "8:_7DECC8336CB14E2491CDEF89C5BD6D18"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F9B6667EF4144864BF00961DEC477F0D"
             {
-            "Name" = "8:Morphic.Focus"
+            "Name" = "8:Morphic Focus"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -714,7 +681,7 @@
             "Target" = "8:_5864A4BD9F6C45A19B07712A059B1581"
             "Folder" = "8:_8885814747A147139702EDCF9AFE5598"
             "WorkingFolder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
-            "Icon" = "8:_3744D4D4A5C542C0934FEE6DF9370979"
+            "Icon" = "8:_7DECC8336CB14E2491CDEF89C5BD6D18"
             "Feature" = "8:"
             }
         }

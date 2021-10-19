@@ -10,7 +10,7 @@
     <Company>Raising the Floor</Company>
     <Authors>Morphic</Authors>
     <Product>Morphic</Product>
-    <ApplicationIcon>morphic-icon.ico</ApplicationIcon>
+    <ApplicationIcon>FocusIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Screens\NewFolder\**" />
@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="FocusIcon.ico" />
     <None Remove="Fonts\OFL.txt" />
     <None Remove="Fonts\SourceSansPro-Black.ttf" />
     <None Remove="Fonts\SourceSansPro-BlackItalic.ttf" />
@@ -115,10 +116,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="FocusIcon.ico" />
     <Resource Include="Images\external-link 1.png" />
     <Resource Include="Images\Gear.png" />
     <Resource Include="Images\info.png" />
-    <Resource Include="Images\morphic-icon.ico" />
     <Resource Include="Images\Remove Icon.png" />
     <Resource Include="Images\Vector.png" />
   </ItemGroup>

@@ -7,7 +7,7 @@
         mc:Ignorable="d"  MinWidth="100" SizeToContent="Width" Height="64" ResizeMode="NoResize" WindowStyle="None"
         Background="Transparent" Title="Focus Button" WindowStartupLocation="CenterScreen" 
         Padding="0"
-        AllowsTransparency="True" MouseMove="Window_MouseMove">
+        AllowsTransparency="True" MouseDown="Window_MouseDown">
     <Window.Resources>
         <!--<DataTemplate x:Key="ButtonContentFocusRunning">
             <StackPanel VerticalAlignment="Center" Margin="0">
@@ -32,7 +32,7 @@
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
                     <Setter Property="Padding" Value="12 4 12 6" />
-                    
+
                     <Setter Property="Height" Value="60" />
                     <Setter Property="Background" Value="#008145" />
                     <Setter Property="Cursor" Value="Hand"/>
@@ -48,7 +48,7 @@
                                 <Border CornerRadius="4" BorderThickness="0" Background="{TemplateBinding Background}">
                                     <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                 </Border>
-                                
+
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -64,7 +64,7 @@
                     </Style.Triggers>
                 </Style>
             </Button.Style>
-            
+
         </Button>
 
     </Border>

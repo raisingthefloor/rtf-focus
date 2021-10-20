@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Morphic.Focus.Screens"
         mc:Ignorable="d"
         Height="650" Width="753" Background="#FFFFFF" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True"
-        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Title="Customize Focus">
+        WindowStartupLocation="CenterScreen" Title="Customize Focus" MouseMove="Window_MouseMove">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close"
                         Executed="CloseCommandHandler"/>

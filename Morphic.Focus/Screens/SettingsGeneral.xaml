@@ -39,7 +39,8 @@ use this feature to unblock it.</TextBlock>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="41"/>
                     </Grid.RowDefinitions>
-                    <ItemsControl  Name="dgBlock" Grid.Row="0" Grid.Column="0" MinHeight="130" ItemsSource="{Binding Path=Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites}">
+                    
+                        <ItemsControl  Grid.Row="0" Grid.Column="0" Name="dgBlock" MinHeight="130" ItemsSource="{Binding Path=Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Width="230" Height="23">
@@ -51,7 +52,7 @@ use this feature to unblock it.</TextBlock>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-
+                    
                     <StackPanel Grid.Row="1" Grid.Column="0" Background="#F1F1F1" MinHeight="41" Orientation="Horizontal" HorizontalAlignment="Center" Width="230">
                         <Button Style="{DynamicResource SettingsButtons}" Margin="8 8 4 8" Name="btnAddAppUnblock" Click="btnAddAppUnblock_Click">Add App</Button>
                         <Button Style="{DynamicResource SettingsButtons}" Margin="4 8 8 8" Name="btnAddWebsiteUnblock" Click="btnAddWebsiteUnblock_Click">Add Website</Button>

@@ -9,8 +9,8 @@
         MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Background="Transparent" Topmost="True">
     <Border CornerRadius="18" Background="{DynamicResource LightGreen}" BorderThickness="1" BorderBrush="{DynamicResource DialogBorder}">
         <StackPanel Margin="12 15">
-            <TextBlock Style="{DynamicResource ModalTitle}">Type or paste a website URL:</TextBlock>
-            <TextBox Margin="0 8 0 0" Style="{DynamicResource ModalTextbox}" Name="txtBlockList"></TextBox>
+            <TextBlock Style="{DynamicResource ModalTitle}" >Type or paste a website URL:</TextBlock>
+            <TextBox Margin="0 8 0 0" Style="{DynamicResource ModalTextbox}" Name="txtWebsiteURL"></TextBox>
             <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
                 <Button Style="{DynamicResource SettingsButtonsLightGreen}" Width="71" Name="btnTestURL" Click="btnTestURL_Click">Test URL</Button>
                 <TextBlock Margin="15,5,0,0" Style="{DynamicResource SettingsSectionItalicBody}" Height="15" VerticalAlignment="Center">Opens the URL in your internet browser.</TextBlock>

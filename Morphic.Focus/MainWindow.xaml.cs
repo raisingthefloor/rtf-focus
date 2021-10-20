@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace Morphic.Focus
 {
@@ -90,12 +91,10 @@ namespace Morphic.Focus
         #endregion
 
         #region Events
-        private void Window_MouseMove(object sender, MouseEventArgs e)
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
+            if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
-            }
         }
 
         private void btnMainFocus_Click(object sender, RoutedEventArgs e)
@@ -294,5 +293,9 @@ namespace Morphic.Focus
             scr19.Close();
         }
         #endregion
+
+       
+
+        
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.Win32;
+using Morphic.Data.Models;
+using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,8 +24,13 @@ namespace Morphic.Focus.Screens
     public partial class AllowUnblockingModal : Window
     {
         private List<AppsAndWebsites> _apps;
+        public List<AppsAndWebsites> Apps { get => _apps; set => _apps = value; }
+
         AppEngine _engine;
         public AppEngine Engine { get { return _engine; } }
+
+        
+
         public AllowUnblockingModal()
         {
             if (!DesignerProperties.GetIsInDesignMode(this))
@@ -35,14 +42,6 @@ namespace Morphic.Focus.Screens
 
             GetInstalledApps();
             this.DataContext = this;
-        }
-
-        public List<AppsAndWebsites> Apps
-        {
-            get
-            {
-                return _apps;
-            }
         }
 
         /// <summary>
@@ -66,12 +65,19 @@ namespace Morphic.Focus.Screens
               @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\App Paths"
             };
 
-            _apps = new List<AppsAndWebsites>();
+            Apps = new List<AppsAndWebsites>();
             // The RegistryView.Registry64 forces the application to open the registry as x64 even if the application is compiled as x86 
-            FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64), keys, _apps);
-            FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64), keys, _apps);
+            FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64), keys, Apps);
+            FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64), keys, Apps);
 
-            _apps = _apps.Distinct().OrderBy(p => p.Name).ToList();
+            Apps = Apps.Distinct().OrderBy(p => p.Name).ToList();
+
+            
+            foreach(AppsAndWebsites item in Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites)
+            {
+                AppsAndWebsites existingItem = Apps.Find(p => p.IsApp == item.IsApp && p.Name == item.Name && p.Path == item.Path);
+                if (existingItem != null) existingItem.IsActive = item.IsActive;
+            }
         }
 
         private void FindInstalls(RegistryKey regKey, List<string> keys, List<AppsAndWebsites> installed)
@@ -106,9 +112,26 @@ namespace Morphic.Focus.Screens
 
         private void btnBlockAddApp_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in _apps.Where(p => p.IsActive))
+            LoggingService.WriteAppLog("btnBlockAddApp_Click");
+
+            //TODO - What if user deselects an item in the dialog
+            foreach (var item in Apps.Where(p => p.IsActive))
             {
-                Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites.Add(item);
+                List<AppsAndWebsites> existingItem = Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites.Where(p => p.IsApp == item.IsApp && p.Name == item.Name && p.Path == item.Path).ToList();
+
+                if (existingItem.Count == 0)
+                {
+                    Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites.Add(item);
+                }
+                else if (existingItem.Count == 1)
+                {
+                    existingItem[0].IsActive = item.IsActive;
+                }
+                else
+                {
+                    //TODO
+                    //What if more than one item received
+                }
             }
 
             this.Close();

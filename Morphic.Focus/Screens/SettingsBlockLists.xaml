@@ -105,21 +105,23 @@
         </Style>
     </UserControl.Resources>
 
+
     <StackPanel>
 
         <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
             <ItemsControl Height="auto">
                 <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,10,0,0" >Edit Blocklists</TextBlock>
                 <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 0 10">
-                <Run>
-                    A blocklist is a group of apps, websites and other items that you can choose to block during a focus session. 
-                </Run>
-                <Run Foreground="#3566D8">
-                    Learn more about Blocklists
-                </Run>
-                <InlineUIContainer>
-                    <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>
-                </InlineUIContainer>
+                    
+                        A blocklist is a group of apps, websites and other items that you can choose to block during a focus session. 
+                    
+                    <Hyperlink NavigateUri="https://morphic.org/blocklists">
+                        Learn more about Blocklists
+                        <InlineUIContainer>
+                            <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>
+                        </InlineUIContainer>
+                    </Hyperlink>
+
                 </TextBlock>
             </ItemsControl>
             <TextBlock Style="{DynamicResource SettingsSectionTitle}">Select a blocklist to edit:</TextBlock>
@@ -304,10 +306,9 @@
             </Border>
 
 
-            <ComboBox Name="cmbBlockList" Style="{DynamicResource SettingsAddComboBoxStyle}" Width="154" Height="23" Canvas.Left="28" Canvas.ZIndex="2" Canvas.Top="10" ItemsSource="{Binding Path=BlockLists, BindsDirectlyToSource=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+            <ComboBox Name="cmbBlockList" Style="{DynamicResource SettingsAddComboBoxStyle}" Width="154" Height="23" Canvas.Left="28" Canvas.ZIndex="2" Canvas.Top="10" ItemsSource="{Binding Path=Engine.UserPreferences.BlockLists, BindsDirectlyToSource=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                   DisplayMemberPath="Name"
-                  SelectedValuePath="Name"
-                  SelectedValue="{Binding Path=BlockList}">
+                  SelectedValuePath="Name">
             </ComboBox>
 
         </Canvas>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Morphic.Data.Models;
+using Morphic.Data.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,8 +21,9 @@ namespace Morphic.Focus.Screens
     /// <summary>
     /// Interaction logic for SettingsGeneral.xaml
     /// </summary>
-    public partial class SettingsGeneral : UserControl, INotifyPropertyChanged
+    public partial class SettingsGeneral : UserControl
     {
+        #region AppEngine and Constructor
         AppEngine _engine;
         public AppEngine Engine { get { return _engine; } }
 
@@ -35,37 +38,30 @@ namespace Morphic.Focus.Screens
 
             this.DataContext = this;
         }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
+        #endregion
 
         private void btnAddAppUnblock_Click(object sender, RoutedEventArgs e)
         {
+            LoggingService.WriteAppLog("btnAddAppUnblock_Click");
             AllowUnblockingModal unblockAddAppWebsite = new AllowUnblockingModal();
             unblockAddAppWebsite.ShowDialog();
         }
 
         private void btnAddWebsiteUnblock_Click(object sender, RoutedEventArgs e)
         {
+            LoggingService.WriteAppLog("btnAddWebsiteUnblock_Click");
             AddWebsiteModal addWebsiteModal = new AddWebsiteModal();
             addWebsiteModal.ShowDialog();
         }
 
         private void btnRemoveTempUnblock_Click(object sender, RoutedEventArgs e)
         {
+            LoggingService.WriteAppLog("btnRemoveTempUnblock_Click");
             Button btn = sender as Button;
             var dataObject = btn.DataContext as AppsAndWebsites;
 
             Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites.Remove(dataObject);
         }
     }
-
-    #region To be deleted
-    public class BlockItem
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
-    }
-    #endregion
 }
 

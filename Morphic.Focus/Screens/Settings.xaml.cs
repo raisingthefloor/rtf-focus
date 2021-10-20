@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Morphic.Data.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,8 +54,8 @@ namespace Morphic.Focus.Screens
             lstBoxMenu.SelectedItem = lstItemGeneral;
         }
 
-        public bool OpenBlocklist 
-        { 
+        public bool OpenBlocklist
+        {
             get => openBlocklist;
             set
             {
@@ -75,7 +77,22 @@ namespace Morphic.Focus.Screens
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                this.DragMove();
+                if (e.OriginalSource is Hyperlink)
+                {
+                    try
+                    {
+                        LoggingService.WriteAppLog("Hyperlink_RequestNavigate");
+                        Process.Start("explorer", ((Hyperlink)e.OriginalSource).NavigateUri.ToString());
+                    }
+                    catch (Exception ex)
+                    {
+                        LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                    }
+                }
+                else
+                {
+                    this.DragMove();
+                }
             }
         }
 
@@ -121,5 +138,7 @@ namespace Morphic.Focus.Screens
             _engine.ShowFocusWindow();
         }
         #endregion
+
+
     }
 }

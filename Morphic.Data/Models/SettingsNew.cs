@@ -5,348 +5,208 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-public class UserPreferences : INotifyPropertyChanged
+namespace Morphic.Data.Models
 {
-    private General _general;
-    public General General
+    public class UserPreferences : INotifyPropertyChanged
     {
-        get
+        private General _general;
+        public General General
         {
-            if (_general == null)
+            get
             {
-                _general = new General();
-                _general.PropertyChanged += General_PropertyChanged;
+                if (_general == null)
+                {
+                    _general = new General();
+                    _general.PropertyChanged += General_PropertyChanged;
+                }
+                return _general;
             }
-            return _general;
+            set
+            {
+                if (value != _general)
+                {
+                    _general = value;
+                    _general.PropertyChanged += General_PropertyChanged;
+                }
+            }
         }
-        set
+
+        private ObservableCollection<Blocklist> _blockLists;
+
+        public ObservableCollection<Blocklist> BlockLists
         {
-            if (value != _general)
+            get
             {
-                _general = value;
-                _general.PropertyChanged += General_PropertyChanged;
+                if (_blockLists == null)
+                {
+                    _blockLists = new ObservableCollection<Blocklist>();
+                    _blockLists.CollectionChanged += _blockLists_CollectionChanged; ;
+                }
+                return _blockLists;
+            }
+            set
+            {
+                if (value != _blockLists)
+                {
+                    _blockLists = value;
+                    _blockLists.CollectionChanged += _blockLists_CollectionChanged;
+                    foreach (Blocklist item in _blockLists)
+                        item.PropertyChanged += Item_PropertyChanged;
+
+                }
             }
         }
+
+        private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged();
+        }
+
+        private void _blockLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (Blocklist item in e.OldItems)
+                    item.PropertyChanged -= Item_PropertyChanged;
+            }
+            if (e.NewItems != null)
+            {
+                foreach (Blocklist item in e.NewItems)
+                    item.PropertyChanged += Item_PropertyChanged;
+            }
+
+            NotifyPropertyChanged();
+        }
+
+
+        private Schedules _schedules;
+
+        public Schedules Schedules
+        {
+            get
+            {
+                if (_schedules == null)
+                {
+                    _schedules = new Schedules();
+                    //_schedules.PropertyChanged += General_PropertyChanged;
+                }
+                return _schedules;
+            }
+            set
+            {
+                if (value != _schedules)
+                {
+                    _schedules = value;
+                    //_schedules.PropertyChanged += General_PropertyChanged;
+                }
+            }
+        }
+
+        public Todaysschedule _todaysSchedule;
+
+        public Todaysschedule TodaysSchedule
+        {
+            get
+            {
+                if (_todaysSchedule == null)
+                {
+                    _todaysSchedule = new Todaysschedule();
+                    //_todaysSchedule.PropertyChanged += General_PropertyChanged;
+                }
+                return _todaysSchedule;
+            }
+            set
+            {
+                if (value != _todaysSchedule)
+                {
+                    _todaysSchedule = value;
+                    //_todaysSchedule.PropertyChanged += General_PropertyChanged;
+                }
+            }
+        }
+
+        //Propagate the User Preference changes to App Engine for App Engine to update settings json file
+        private void General_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged();
+        }
+
+        #region PropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
     }
 
-    public Blocklist[] blockLists { get; set; }
-
-
-    private Schedules _schedules;
-
-    public Schedules Schedules
+    public class Schedules
     {
-        get
-        {
-            if (_schedules == null)
-            {
-                _schedules = new Schedules();
-                //_schedules.PropertyChanged += General_PropertyChanged;
-            }
-            return _schedules;
-        }
-        set
-        {
-            if (value != _schedules)
-            {
-                _schedules = value;
-                //_schedules.PropertyChanged += General_PropertyChanged;
-            }
-        }
+        public Schedule schedule1 { get; set; } = new Schedule();
+        public Schedule schedule2 { get; set; } = new Schedule();
+        public Schedule schedule3 { get; set; } = new Schedule();
+        public Schedule schedule4 { get; set; } = new Schedule();
+        public Schedule schedule5 { get; set; } = new Schedule();
+        public Schedulebreak scheduleBreak { get; set; } = new Schedulebreak();
     }
 
-    public Todaysschedule _todaysSchedule;
-
-    public Todaysschedule TodaysSchedule
+    public class Schedule
     {
-        get
-        {
-            if (_todaysSchedule == null)
-            {
-                _todaysSchedule = new Todaysschedule();
-                //_todaysSchedule.PropertyChanged += General_PropertyChanged;
-            }
-            return _todaysSchedule;
-        }
-        set
-        {
-            if (value != _todaysSchedule)
-            {
-                _todaysSchedule = value;
-                //_todaysSchedule.PropertyChanged += General_PropertyChanged;
-            }
-        }
+        public string blockListName { get; set; } = string.Empty;
+        public string startAt { get; set; } = string.Empty;
+        public string endAt { get; set; } = string.Empty;
+        public List<int> days { get; set; } = new List<int>();
+        public bool isActive { get; set; }
     }
 
-    //Propagate the User Preference changes to App Engine for App Engine to update settings json file
-    private void General_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    public class Schedulebreak
     {
-        NotifyPropertyChanged();
+        public bool isActive { get; set; }
+        public int breakDuration { get; set; } = 1;
+        public int breakGap { get; set; } = 15;
     }
 
-    #region PropertyChanged
-    public event PropertyChangedEventHandler PropertyChanged;
+    public class Todaysschedule
+    {
+        public ScheduleToday schedule1 { get; set; } = new ScheduleToday();
+        public ScheduleToday schedule2 { get; set; } = new ScheduleToday();
+        public ScheduleToday schedule3 { get; set; } = new ScheduleToday();
+        public ScheduleToday schedule4 { get; set; } = new ScheduleToday();
+        public ScheduleToday schedule5 { get; set; } = new ScheduleToday();
+    }
 
-    // This method is called by the Set accessor of each property.
-    // The CallerMemberName attribute that is applied to the optional propertyName
-    // parameter causes the property name of the caller to be substituted as an argument.
-    private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+    public class ScheduleToday
     {
-        if (PropertyChanged != null)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public string blockListName { get; set; } = string.Empty;
+        public string startAt { get; set; } = string.Empty;
+        public string endAt { get; set; } = string.Empty;
+        public bool isActive { get; set; }
     }
-    #endregion
-}
 
-public class General : INotifyPropertyChanged
-{
-    private bool _dontGive5MinWarning = false;
-    private bool _showBreakCountdownTimer = true;
-    private bool _blockScreen1stMinofBreak = false;
-    private Temporarilyunblock _temporarilyUnblock;
-
-    public bool dontGive5MinWarning
-    {
-        get
-        {
-            return _dontGive5MinWarning;
-        }
-        set
-        {
-            if (value != this._dontGive5MinWarning)
-            {
-                this._dontGive5MinWarning = value;
-                NotifyPropertyChanged();
-            }
-        }
-    }
-    public bool showBreakCountdownTimer
-    {
-        get
-        {
-            return _showBreakCountdownTimer;
-        }
-        set
-        {
-            if (value != this._showBreakCountdownTimer)
-            {
-                this._showBreakCountdownTimer = value;
-                NotifyPropertyChanged();
-            }
-        }
-    }
-    public bool blockScreen1stMinofBreak
-    {
-        get
-        {
-            return _blockScreen1stMinofBreak;
-        }
-        set
-        {
-            if (value != this._blockScreen1stMinofBreak)
-            {
-                this._blockScreen1stMinofBreak = value;
-                NotifyPropertyChanged();
-            }
-        }
-    }
     
-    public Temporarilyunblock TemporarilyUnblock
+
+    public class Alsoblock
     {
-        get
-        {
-            if (_temporarilyUnblock == null)
-            {
-                _temporarilyUnblock = new Temporarilyunblock();
-                _temporarilyUnblock.PropertyChanged += _temporarilyUnblock_PropertyChanged;
-            }
-            return _temporarilyUnblock;
-        }
-        set
-        {
-            if (value != _temporarilyUnblock)
-            {
-                _temporarilyUnblock = value;
-                _temporarilyUnblock.PropertyChanged += _temporarilyUnblock_PropertyChanged;
-            }
-        }
+        public object[] apps { get; set; }
+        public object[] websites { get; set; }
     }
 
-    private void _temporarilyUnblock_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    public class Exceptions
     {
-        NotifyPropertyChanged();
+        public object[] apps { get; set; }
+        public object[] websites { get; set; }
     }
 
-    #region PropertyChanged
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    // This method is called by the Set accessor of each property.
-    // The CallerMemberName attribute that is applied to the optional propertyName
-    // parameter causes the property name of the caller to be substituted as an argument.
-    private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+    public class Blockcategory
     {
-        if (PropertyChanged != null)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public string name { get; set; }
+        public bool block { get; set; }
     }
-    #endregion
-}
-
-public class Temporarilyunblock : INotifyPropertyChanged
-{
-    private ObservableCollection<AppsAndWebsites> _appsAndWebsites;
-    
-    public ObservableCollection<AppsAndWebsites> AppsAndWebsites
-    {
-        get
-        {
-            if (_appsAndWebsites == null)
-            {
-                _appsAndWebsites = new ObservableCollection<AppsAndWebsites>();
-                _appsAndWebsites.CollectionChanged += _appsAndWebsites_CollectionChanged;
-            }
-            return _appsAndWebsites;
-        }
-        set
-        {
-            if (value != _appsAndWebsites)
-            {
-                _appsAndWebsites = value;
-                _appsAndWebsites.CollectionChanged += _appsAndWebsites_CollectionChanged;
-            }
-        }
-    }
-
-    private void _appsAndWebsites_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-    {
-        NotifyPropertyChanged();
-    }
-
-    #region PropertyChanged
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    // This method is called by the Set accessor of each property.
-    // The CallerMemberName attribute that is applied to the optional propertyName
-    // parameter causes the property name of the caller to be substituted as an argument.
-    private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-    {
-        if (PropertyChanged != null)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-    #endregion
-}
-
-public class AppsAndWebsites : IEquatable<AppsAndWebsites>
-{
-    public bool IsActive { get; set; }
-    public string Name { get; set; }
-    public bool IsApp { get; set; }
-
-    public string Path { get; set; }
-
-    public override bool Equals(object obj)
-    {
-        return Equals(obj as AppsAndWebsites);
-    }
-
-    public bool Equals(AppsAndWebsites other)
-    {
-        return other != null &&
-               IsActive == other.IsActive &&
-               Name == other.Name &&
-               IsApp == other.IsApp &&
-               Path == other.Path;
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(IsActive, Name, IsApp, Path);
-    }
-
-    public static bool operator ==(AppsAndWebsites left, AppsAndWebsites right)
-    {
-        return EqualityComparer<AppsAndWebsites>.Default.Equals(left, right);
-    }
-
-    public static bool operator !=(AppsAndWebsites left, AppsAndWebsites right)
-    {
-        return !(left == right);
-    }
-}
-
-public class Schedules
-{
-    public Schedule schedule1 { get; set; } = new Schedule();
-    public Schedule schedule2 { get; set; } = new Schedule();
-    public Schedule schedule3 { get; set; } = new Schedule();
-    public Schedule schedule4 { get; set; } = new Schedule();
-    public Schedule schedule5 { get; set; } = new Schedule();
-    public Schedulebreak scheduleBreak { get; set; } = new Schedulebreak();
-}
-
-public class Schedule
-{
-    public string blockListName { get; set; } = string.Empty;
-    public string startAt { get; set; } = string.Empty;
-    public string endAt { get; set; } = string.Empty;
-    public List<int> days { get; set; } = new List<int>();
-    public bool isActive { get; set; }
-}
-
-public class Schedulebreak
-{
-    public bool isActive { get; set; }
-    public int breakDuration { get; set; } = 1;
-    public int breakGap { get; set; } = 15;
-}
-
-public class Todaysschedule
-{
-    public ScheduleToday schedule1 { get; set; } = new ScheduleToday();
-    public ScheduleToday schedule2 { get; set; } = new ScheduleToday();
-    public ScheduleToday schedule3 { get; set; } = new ScheduleToday();
-    public ScheduleToday schedule4 { get; set; } = new ScheduleToday();
-    public ScheduleToday schedule5 { get; set; } = new ScheduleToday();
-}
-
-public class ScheduleToday
-{
-    public string blockListName { get; set; } = string.Empty;
-    public string startAt { get; set; } = string.Empty;
-    public string endAt { get; set; } = string.Empty;
-    public bool isActive { get; set; }
-}
-
-public class Blocklist
-{
-    public string name { get; set; }
-    public Blockcategory[] blockCategories { get; set; }
-    public Alsoblock alsoBlock { get; set; }
-    public Exceptions exceptions { get; set; }
-    public string breakBehavior { get; set; }
-    public string penalty { get; set; }
-    public int penaltyValue { get; set; }
-}
-
-public class Alsoblock
-{
-    public object[] apps { get; set; }
-    public object[] websites { get; set; }
-}
-
-public class Exceptions
-{
-    public object[] apps { get; set; }
-    public object[] websites { get; set; }
-}
-
-public class Blockcategory
-{
-    public string name { get; set; }
-    public bool block { get; set; }
 }

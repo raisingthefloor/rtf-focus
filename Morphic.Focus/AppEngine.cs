@@ -151,7 +151,7 @@ namespace Morphic.Focus
                 UserPreferences = new UserPreferences();
                 jSONHelper.Save<UserPreferences>(UserPreferences);
             }
-            
+
         }
 
         internal void SetFocusSettings()

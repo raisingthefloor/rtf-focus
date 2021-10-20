@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace Morphic.Focus.Screens
     /// <summary>
     /// Interaction logic for SettingsBlockLists.xaml
     /// </summary>
-    public partial class SettingsBlockLists : UserControl, INotifyPropertyChanged
+    public partial class SettingsBlockLists : UserControl
     {
         private List<BlockCategory> blockCategories;
         private List<BlockItem> blockItems;
@@ -33,10 +34,18 @@ namespace Morphic.Focus.Screens
         private ObservableCollection<BlockList> blockLists;
         private BlockList BlockList;
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+
+        #region AppEngine and Constructor
+        AppEngine _engine;
+        public AppEngine Engine { get { return _engine; } }
 
         public SettingsBlockLists()
         {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _engine = AppEngine.Instance;
+            }
+
             InitializeComponent();
 
             blockCategories = new List<BlockCategory>();
@@ -61,62 +70,54 @@ namespace Morphic.Focus.Screens
             penalties.Add(new Penalty { Id = 2, Type = "Yes, make me type to stop the focus session: ", HasValue = true, Value = 30 });
             penalties.Add(new Penalty { Id = 3, Type = "Yes, make me restart my computer to stop the focus session", HasValue = false });
 
-            GetBlockLists();
-
             this.DataContext = this;
         }
+        #endregion
 
         private void AddBlockList_Click(object sender, RoutedEventArgs e)
         {
-            NewBlocklistModal  newBlocklist = new NewBlocklistModal();
-
-            if (newBlocklist.ShowDialog() == true)
+            try
             {
-                if (String.IsNullOrWhiteSpace(newBlocklist.BlockListName))
+                LoggingService.WriteAppLog("AddBlockList_Click");
+
+                NewBlocklistModal newBlocklist = new NewBlocklistModal();
+
+                if (newBlocklist.ShowDialog() == true)
                 {
-                    MessageBox.Show("Blocklist Name cannot be an empty string");
-                }
-                else
-                {
-                    //IDataService<BlockList> dataService = new GenericDataService<BlockList>(new FocusDbContextFactory());
-                    //dataService.Create(new BlockList() { Name = newBlocklist.BlockListName });
-                    BlockLists = new ObservableCollection<BlockList>(new List<BlockList>() { new BlockList() });
-                    if (BlockLists.Count > 0) BlockList = BlockLists[0];
+                    if (String.IsNullOrWhiteSpace(newBlocklist.BlockListName))
+                    {
+                        MessageBox.Show("Blocklist Name cannot be an empty string");
+                    }
+                    else
+                    {
+                        //IDataService<BlockList> dataService = new GenericDataService<BlockList>(new FocusDbContextFactory());
+                        //dataService.Create(new BlockList() { Name = newBlocklist.BlockListName });
+                        //BlockLists = new ObservableCollection<BlockList>(new List<BlockList>() { new BlockList() });
+                        //if (BlockLists.Count > 0) BlockList = BlockLists[0];
+                    }
                 }
             }
-                
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }  
         }
 
         #region Data
 
-        private void GetBlockLists()
-        {
-            //IDataService<BlockList> dataService = new GenericDataService<BlockList>(new FocusDbContextFactory());
-            BlockLists = new ObservableCollection<BlockList>(new List<BlockList>() { new BlockList() });
-
-            if (BlockLists.Count > 0) BlockList = BlockLists[0];
-        }
-
-        public ObservableCollection<BlockList> BlockLists
-        {
-            get
-            {
-                return blockLists;
-            }
-            set
-            {
-                blockLists = value;
-                NotifyPropertyChanged("BlockLists"); // method implemented below
-            }
-        }
-        public void NotifyPropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
-
+        //public ObservableCollection<BlockList> BlockLists
+        //{
+        //    get
+        //    {
+        //        return blockLists;
+        //    }
+        //    set
+        //    {
+        //        blockLists = value;
+        //        NotifyPropertyChanged("BlockLists"); // method implemented below
+        //    }
+        //}
+        
         public List<BlockCategory> BlockCategories
         {
             get
@@ -185,4 +186,13 @@ namespace Morphic.Focus.Screens
         public int Value { get; set; }
         public bool HasValue { get; set; }
     }
+
+    #region To be deleted
+    public class BlockItem
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+    }
+    #endregion
 }

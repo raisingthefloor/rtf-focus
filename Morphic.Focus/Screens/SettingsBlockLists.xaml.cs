@@ -84,16 +84,13 @@ namespace Morphic.Focus.Screens
 
                 if (newBlocklist.ShowDialog() == true)
                 {
-                    if (String.IsNullOrWhiteSpace(newBlocklist.BlockListName))
+                    if (String.IsNullOrWhiteSpace(newBlocklist.BlockListName)) //Ideally, not needed. Just an additional check
                     {
                         MessageBox.Show("Blocklist Name cannot be an empty string");
                     }
                     else
                     {
-                        //IDataService<BlockList> dataService = new GenericDataService<BlockList>(new FocusDbContextFactory());
-                        //dataService.Create(new BlockList() { Name = newBlocklist.BlockListName });
-                        //BlockLists = new ObservableCollection<BlockList>(new List<BlockList>() { new BlockList() });
-                        //if (BlockLists.Count > 0) BlockList = BlockLists[0];
+                        cmbBlockList.SelectedItem = Engine.UserPreferences.BlockLists.Where(p => p.Name == newBlocklist.BlockListName).First();
                     }
                 }
             }
@@ -103,20 +100,7 @@ namespace Morphic.Focus.Screens
             }  
         }
 
-        #region Data
-
-        //public ObservableCollection<BlockList> BlockLists
-        //{
-        //    get
-        //    {
-        //        return blockLists;
-        //    }
-        //    set
-        //    {
-        //        blockLists = value;
-        //        NotifyPropertyChanged("BlockLists"); // method implemented below
-        //    }
-        //}
+        #region To be deleted
         
         public List<BlockCategory> BlockCategories
         {

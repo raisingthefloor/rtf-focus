@@ -38,6 +38,7 @@ namespace Morphic.Focus.Screens
         }
         #endregion
 
+        #region Events
         /// <summary>
         /// Let the Window be dragged using mouse-press
         /// </summary>
@@ -63,6 +64,7 @@ namespace Morphic.Focus.Screens
                     return;
                 }
                 Engine.UserPreferences.BlockLists.Add(new Data.Models.Blocklist() { Name = txtBlockList.Text.Trim() });
+                this.DialogResult = true;
                 this.Close();
             }
             catch (Exception ex)
@@ -70,10 +72,10 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
-
+        #endregion
         public string BlockListName
         {
-            get { return txtBlockList.Text; }
+            get { return txtBlockList.Text.Trim(); }
         }
     }
 }

@@ -307,8 +307,7 @@
 
 
             <ComboBox Name="cmbBlockList" Style="{DynamicResource SettingsAddComboBoxStyle}" Width="154" Height="23" Canvas.Left="28" Canvas.ZIndex="2" Canvas.Top="10" ItemsSource="{Binding Path=Engine.UserPreferences.BlockLists, BindsDirectlyToSource=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                  DisplayMemberPath="Name"
-                  SelectedValuePath="Name">
+                  DisplayMemberPath="Name" SelectedValuePath="Name" SelectedIndex="0">
             </ComboBox>
 
         </Canvas>

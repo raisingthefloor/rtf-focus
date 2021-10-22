@@ -26,7 +26,6 @@ namespace Morphic.Focus.Screens
     /// </summary>
     public partial class SettingsBlockLists : UserControl
     {
-        private List<BlockCategory> blockCategories;
         private List<BlockItem> blockItems;
         private List<BlockItem> blockExceptions;
         private List<Penalty> penalties;
@@ -47,14 +46,6 @@ namespace Morphic.Focus.Screens
             }
 
             InitializeComponent();
-
-            blockCategories = new List<BlockCategory>();
-            blockCategories.Add(new BlockCategory { Id = 1, Name = "Calls" });
-            blockCategories.Add(new BlockCategory { Id = 2, Name = "Notifications" });
-            blockCategories.Add(new BlockCategory { Id = 3, Name = "Social Media" });
-            blockCategories.Add(new BlockCategory { Id = 4, Name = "Games" });
-            blockCategories.Add(new BlockCategory { Id = 5, Name = "News" });
-            blockCategories.Add(new BlockCategory { Id = 6, Name = "Shopping" });
 
             blockItems = new List<BlockItem>();
             blockItems.Add(new BlockItem { Id = 1, Name = "Acron Editor" });
@@ -101,14 +92,6 @@ namespace Morphic.Focus.Screens
         }
 
         #region To be deleted
-        
-        public List<BlockCategory> BlockCategories
-        {
-            get
-            {
-                return blockCategories;
-            }
-        }
 
         public List<BlockItem> BlockExceptions
         {
@@ -154,13 +137,6 @@ namespace Morphic.Focus.Screens
 
             }
         }
-    }
-
-    public class BlockCategory
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
     }
 
     public class Penalty

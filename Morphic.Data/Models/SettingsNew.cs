@@ -204,9 +204,5 @@ namespace Morphic.Data.Models
         public object[] websites { get; set; }
     }
 
-    public class Blockcategory
-    {
-        public string name { get; set; }
-        public bool block { get; set; }
-    }
+    
 }

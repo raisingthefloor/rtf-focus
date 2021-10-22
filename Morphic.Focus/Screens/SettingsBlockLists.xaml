@@ -159,18 +159,18 @@
 
                     <Border Grid.Row="2" Grid.Column="0" BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}" Width="232" Height="171"  
                              CornerRadius="4" Background="White" Padding="9 4 8 4">
-                        <ItemsControl ItemsSource="{Binding BlockCategories}">
+                        <ItemsControl ItemsSource="{Binding Path=Engine.UserPreferences.BlockLists}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <DockPanel Width="230" Height="23">
-                                        <CheckBox Style="{DynamicResource SettingsCheckbox}" Width="20" VerticalAlignment="Top" >
-                                        </CheckBox>
-                                        <TextBlock Margin="0 2 0 0">
-                                            <Hyperlink >
+                                        <CheckBox Style="{DynamicResource SettingsCheckbox}" Width="200" VerticalAlignment="Top" >
+                                            <TextBlock Margin="0 2 0 0">
+                                            <Hyperlink>
                                                 <TextBlock Text="{Binding Name}"/>
                                                 <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>
                                             </Hyperlink>
                                         </TextBlock>
+                                        </CheckBox>
                                     </DockPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -306,7 +306,7 @@
             </Border>
 
 
-            <ComboBox Name="cmbBlockList" Style="{DynamicResource SettingsAddComboBoxStyle}" Width="154" Height="23" Canvas.Left="28" Canvas.ZIndex="2" Canvas.Top="10" ItemsSource="{Binding Path=Engine.UserPreferences.BlockLists, BindsDirectlyToSource=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+            <ComboBox Name="cmbBlockList" Style="{DynamicResource SettingsAddComboBoxStyle}" Width="154" Height="23" Canvas.Left="28" Canvas.ZIndex="2" Canvas.Top="10" ItemsSource="{Binding Path=Engine.UserPreferences.BlockLists}" 
                   DisplayMemberPath="Name" SelectedValuePath="Name" SelectedIndex="0">
             </ComboBox>
 

@@ -44,7 +44,7 @@ use this feature to unblock it.</TextBlock>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Width="230" Height="23">
-                                    <CheckBox Style="{DynamicResource SettingsCheckbox}" IsChecked="{Binding IsActive}" Content="{Binding Name}" Width="100" Margin="6 0"></CheckBox>
+                                    <CheckBox Style="{DynamicResource SettingsCheckbox}" IsChecked="{Binding IsActive}" Content="{Binding Name}" Width="150" Margin="6 0"></CheckBox>
                                     <Button Style="{DynamicResource SetingsImageButtonStyle}" Name="btnRemoveTempUnblock" Click="btnRemoveTempUnblock_Click" Cursor="Hand">
                                         <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0"/>
                                     </Button>

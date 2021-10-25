@@ -27,8 +27,6 @@ namespace Morphic.Focus.Screens
     /// </summary>
     public partial class SettingsBlockLists : UserControl
     {
-        private List<BlockItem> blockItems;
-        private List<BlockItem> blockExceptions;
         private List<Penalty> penalties;
 
         private ObservableCollection<BlockList> blockLists;
@@ -46,15 +44,6 @@ namespace Morphic.Focus.Screens
             }
 
             InitializeComponent();
-
-            blockItems = new List<BlockItem>();
-            blockItems.Add(new BlockItem { Id = 1, Name = "Acron Editor" });
-            blockItems.Add(new BlockItem { Id = 2, Name = "doppler.com" });
-            blockItems.Add(new BlockItem { Id = 3, Name = "Brian Lara's Cricket" });
-
-            blockExceptions = new List<BlockItem>();
-            blockExceptions.Add(new BlockItem { Id = 1, Name = "Microsoft Word" });
-            blockExceptions.Add(new BlockItem { Id = 2, Name = "wikipedia.com" });
 
             penalties = new List<Penalty>();
             penalties.Add(new Penalty { Id = 1, Type = "No, let me stop the focus session at any time", HasValue = false });
@@ -97,14 +86,7 @@ namespace Morphic.Focus.Screens
 
         #region To be deleted
 
-        public List<BlockItem> BlockExceptions
-        {
-            get
-            {
-                return blockExceptions;
-            }
-        }
-
+        
         public List<Penalty> Penalties
         {
             get
@@ -113,22 +95,18 @@ namespace Morphic.Focus.Screens
             }
         }
 
-        public List<BlockItem> BlockItems
-        {
-            get
-            {
-                return blockItems;
-            }
-        }
+
 
         #endregion
+
+        #region User Events
         private void btnBlockAddApp_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 LoggingService.WriteAppLog("SettingsBlockLists -> btnBlockAddApp_Click");
-                AllowUnblockingModal unblockAddAppWebsite = new AllowUnblockingModal(Engine.SelectedBlockList.AlsoBlock.ActiveAppsAndWebsites);
-                unblockAddAppWebsite.ShowDialog();
+                AllowUnblockingModal allowUnblockingModal = new AllowUnblockingModal(Engine.SelectedBlockList.AlsoBlock.ActiveAppsAndWebsites);
+                allowUnblockingModal.ShowDialog();
 
             }
             catch (Exception ex)
@@ -167,20 +145,57 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
-    }
 
-    public class NullToCollapsed : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        private void btnExceptionsAddApp_Click(object sender, RoutedEventArgs e)
         {
-            return value != null ? Visibility.Visible : Visibility.Collapsed;
+            try
+            {
+                LoggingService.WriteAppLog("SettingsBlockLists -> btnExceptionsAddApp_Click");
+                AllowUnblockingModal allowUnblockingModal = new AllowUnblockingModal(Engine.SelectedBlockList.Exceptions.ActiveAppsAndWebsites);
+                allowUnblockingModal.ShowDialog();
+
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        private void btnExceptionsAddWebsite_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            try
+            {
+                LoggingService.WriteAppLog("SettingsBlockLists -> btnExceptionsAddWebsite_Click");
+                AddWebsiteModal addWebsiteModal = new AddWebsiteModal(Engine.SelectedBlockList.Exceptions.ActiveAppsAndWebsites);
+                addWebsiteModal.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
+
+        private void btnExceptionsRemove_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LoggingService.WriteAppLog("SettingsBlockLists -> btnExceptionsRemove_Click");
+
+                Button btn = sender as Button;
+                var dataObject = btn.DataContext as ActiveAppsAndWebsites;
+
+                Engine.SelectedBlockList.Exceptions.ActiveAppsAndWebsites.Remove(dataObject);
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        #endregion
     }
+
+    
 
     public class Penalty
     {
@@ -190,12 +205,5 @@ namespace Morphic.Focus.Screens
         public bool HasValue { get; set; }
     }
 
-    #region To be deleted
-    public class BlockItem
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
-    }
-    #endregion
+   
 }

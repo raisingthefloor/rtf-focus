@@ -112,7 +112,36 @@ namespace Morphic.Data.Models
         }
         #endregion
 
-        public Exceptions exceptions { get; set; }
+        #region Exceptions
+        private CollAppsAndWebsites _exceptions;
+
+        public CollAppsAndWebsites Exceptions
+        {
+            get
+            {
+                if (_exceptions == null)
+                {
+                    _exceptions = new CollAppsAndWebsites();
+                    _exceptions.PropertyChanged += _exceptions_PropertyChanged; ; ;
+                }
+                return _exceptions;
+            }
+            set
+            {
+                if (value != _exceptions)
+                {
+                    _exceptions = value;
+                    _exceptions.PropertyChanged += _exceptions_PropertyChanged;
+                }
+            }
+        }
+
+        private void _exceptions_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged();
+        }
+        #endregion
+
         public string breakBehavior { get; set; }
         public string penalty { get; set; }
         public int penaltyValue { get; set; }

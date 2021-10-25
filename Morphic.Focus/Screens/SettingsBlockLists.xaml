@@ -233,14 +233,14 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="41"/>
                             </Grid.RowDefinitions>
-                            <ItemsControl Grid.Row="0" Grid.Column="0" MinHeight="130" ItemsSource="{Binding BlockExceptions}">
+                            <ItemsControl Grid.Row="0" Grid.Column="0" MinHeight="130" ItemsSource="{Binding Exceptions.ActiveAppsAndWebsites}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <DockPanel Height="23">
                                             <TextBlock Style="{DynamicResource SettingsSectionBody}" Text="{Binding Name}" Width="100" Margin="9 9 0 0">
                                             </TextBlock>
-                                            <Button Style="{DynamicResource SetingsImageButtonStyle}">
-                                                <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0"/>
+                                            <Button Style="{DynamicResource SetingsImageButtonStyle}" Cursor="Hand" Name="btnExceptionsRemove" Click="btnExceptionsRemove_Click">
+                                                <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0" />
                                             </Button>
                                         </DockPanel>
                                     </DataTemplate>
@@ -248,8 +248,8 @@
                             </ItemsControl>
 
                             <StackPanel Grid.Row="1" Grid.Column="0" Background="#F1F1F1" MinHeight="41" Orientation="Horizontal" HorizontalAlignment="Center" Width="230">
-                                <Button Style="{DynamicResource SettingsButtons}" Margin="8 8 4 8">Add App</Button>
-                                <Button Style="{DynamicResource SettingsButtons}" Margin="4 8 8 8">Add Website</Button>
+                                <Button Style="{DynamicResource SettingsButtons}" Margin="8 8 4 8" Name="btnExceptionsAddApp" Click="btnExceptionsAddApp_Click">Add App</Button>
+                                <Button Style="{DynamicResource SettingsButtons}" Margin="4 8 8 8" Name="btnExceptionsAddWebsite" Click="btnExceptionsAddWebsite_Click">Add Website</Button>
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -266,7 +266,7 @@
                     <ListView Margin="20 0 20 0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <RadioButton Content="{Binding}" GroupName="DisplayPage" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+                                <RadioButton Content="{Binding}" GroupName="BreakBehavior" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ItemContainerStyle>

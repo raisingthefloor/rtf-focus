@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,11 +47,6 @@ namespace Morphic.Focus.Screens
 
             InitializeComponent();
 
-            penalties = new List<Penalty>();
-            penalties.Add(new Penalty { Id = 1, Type = "No, let me stop the focus session at any time", HasValue = false });
-            penalties.Add(new Penalty { Id = 2, Type = "Yes, make me type to stop the focus session: ", HasValue = true, Value = 30 });
-            penalties.Add(new Penalty { Id = 3, Type = "Yes, make me restart my computer to stop the focus session", HasValue = false });
-
             this.DataContext = this;
         }
         #endregion
@@ -85,20 +81,7 @@ namespace Morphic.Focus.Screens
         }
         #endregion
 
-        #region To be deleted
-
-        
-        public List<Penalty> Penalties
-        {
-            get
-            {
-                return penalties;
-            }
-        }
-
-
-
-        #endregion
+       
 
         #region User Events
         private void btnBlockAddApp_Click(object sender, RoutedEventArgs e)
@@ -193,10 +176,17 @@ namespace Morphic.Focus.Screens
             }
         }
 
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
         #endregion
+
+
     }
 
-    
+
 
     public class Penalty
     {

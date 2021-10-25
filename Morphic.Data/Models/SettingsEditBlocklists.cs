@@ -160,8 +160,43 @@ namespace Morphic.Data.Models
             }
         }
         #endregion
-        public string penalty { get; set; }
-        public int penaltyValue { get; set; }
+
+        #region Penalty
+        private Penalty _penalty;
+        public Penalty Penalty
+        {
+            get
+            {
+                return _penalty;
+            }
+            set
+            {
+                if (value != this._penalty)
+                {
+                    this._penalty = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private int _penaltyValue;
+        public int PenaltyValue
+        {
+            get
+            {
+                return _penaltyValue;
+            }
+            set
+            {
+                if (value != this._penaltyValue)
+                {
+                    this._penaltyValue = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        #endregion
+
     }
 
     public enum BreakBehavior
@@ -172,6 +207,16 @@ namespace Morphic.Data.Models
         UnblockLongOnly,
         [Description("Keep this blocklist blocked during all breaks")]
         Blocked
+    }
+
+    public enum Penalty
+    {
+        [Description("No, let me stop the focus session at any time")]
+        None,
+        [Description("Yes, make me type to stop the focus session: ")]
+        Type,
+        [Description("Yes, make me restart my computer to stop the focus session")]
+        Restart
     }
 
     public class Blockcategory : Category, IEquatable<Blockcategory>

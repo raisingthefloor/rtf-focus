@@ -58,9 +58,9 @@ namespace Morphic.Focus.Screens
         {
             LoggingService.WriteAppLog("btnRemoveTempUnblock_Click");
             Button btn = sender as Button;
-            var dataObject = btn.DataContext as AppsAndWebsites;
+            var dataObject = btn.DataContext as ActiveAppsAndWebsites;
 
-            Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites.Remove(dataObject);
+            Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Remove(dataObject);
         }
     }
 }

@@ -90,28 +90,28 @@ namespace Morphic.Data.Models
         #endregion
     }
 
-    public class Temporarilyunblock : BaseClass
+    public class Temporarilyunblock : BaseClass, IEquatable<Temporarilyunblock>
     {
-        private ObservableCollection<AppsAndWebsites> _appsAndWebsites;
+        private ObservableCollection<ActiveAppsAndWebsites> _activeAppsAndWebsites;
 
-        public ObservableCollection<AppsAndWebsites> AppsAndWebsites
+        public ObservableCollection<ActiveAppsAndWebsites> ActiveAppsAndWebsites
         {
             get
             {
-                if (_appsAndWebsites == null)
+                if (_activeAppsAndWebsites == null)
                 {
-                    _appsAndWebsites = new ObservableCollection<AppsAndWebsites>();
-                    _appsAndWebsites.CollectionChanged += _appsAndWebsites_CollectionChanged;
+                    _activeAppsAndWebsites = new ObservableCollection<ActiveAppsAndWebsites>();
+                    _activeAppsAndWebsites.CollectionChanged += _appsAndWebsites_CollectionChanged;
                 }
-                return _appsAndWebsites;
+                return _activeAppsAndWebsites;
             }
             set
             {
-                if (value != _appsAndWebsites)
+                if (value != _activeAppsAndWebsites)
                 {
-                    _appsAndWebsites = value;
-                    _appsAndWebsites.CollectionChanged += _appsAndWebsites_CollectionChanged;
-                    foreach (AppsAndWebsites item in _appsAndWebsites)
+                    _activeAppsAndWebsites = value;
+                    _activeAppsAndWebsites.CollectionChanged += _appsAndWebsites_CollectionChanged;
+                    foreach (AppsAndWebsites item in _activeAppsAndWebsites)
                         item.PropertyChanged += Item_PropertyChanged;
 
                 }
@@ -123,12 +123,12 @@ namespace Morphic.Data.Models
         {
             if (e.OldItems != null)
             {
-                foreach (AppsAndWebsites item in e.OldItems)
+                foreach (ActiveAppsAndWebsites item in e.OldItems)
                     item.PropertyChanged -= Item_PropertyChanged;
             }
             if (e.NewItems != null)
             {
-                foreach (AppsAndWebsites item in e.NewItems)
+                foreach (ActiveAppsAndWebsites item in e.NewItems)
                     item.PropertyChanged += Item_PropertyChanged;
             }
 
@@ -139,16 +139,43 @@ namespace Morphic.Data.Models
         {
             NotifyPropertyChanged();
         }
+
+        #endregion
+
+        #region IEquatable
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Temporarilyunblock);
+        }
+
+        public bool Equals(Temporarilyunblock other)
+        {
+            return other != null &&
+                   EqualityComparer<ObservableCollection<ActiveAppsAndWebsites>>.Default.Equals(ActiveAppsAndWebsites, other.ActiveAppsAndWebsites);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ActiveAppsAndWebsites);
+        }
+
+        public static bool operator ==(Temporarilyunblock left, Temporarilyunblock right)
+        {
+            return EqualityComparer<Temporarilyunblock>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(Temporarilyunblock left, Temporarilyunblock right)
+        {
+            return !(left == right);
+        }
+
+
         #endregion
     }
 
-    public class AppsAndWebsites : BaseClass, IEquatable<AppsAndWebsites>
+    public class ActiveAppsAndWebsites : AppsAndWebsites
     {
         private bool _isActive;
-        private string _name;
-        private bool _isApp;
-        private string _path;
-
         public bool IsActive
         {
             get
@@ -164,6 +191,16 @@ namespace Morphic.Data.Models
                 }
             }
         }
+    }
+
+    public class AppsAndWebsites : BaseClass, IEquatable<AppsAndWebsites>
+    {
+        
+        private string _name;
+        private bool _isApp;
+        private string _path;
+
+        
 
         public string Name
         {
@@ -221,7 +258,6 @@ namespace Morphic.Data.Models
         public bool Equals(AppsAndWebsites other)
         {
             return other != null &&
-                   IsActive == other.IsActive &&
                    Name == other.Name &&
                    IsApp == other.IsApp &&
                    Path == other.Path;
@@ -229,7 +265,7 @@ namespace Morphic.Data.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(IsActive, Name, IsApp, Path);
+            return HashCode.Combine(Name, IsApp, Path);
         }
 
         public static bool operator ==(AppsAndWebsites left, AppsAndWebsites right)

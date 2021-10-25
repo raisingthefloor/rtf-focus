@@ -39,8 +39,8 @@ use this feature to unblock it.</TextBlock>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="41"/>
                     </Grid.RowDefinitions>
-                    
-                        <ItemsControl  Grid.Row="0" Grid.Column="0" Name="dgBlock" MinHeight="130" ItemsSource="{Binding Path=Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites}">
+
+                    <ItemsControl  Grid.Row="0" Grid.Column="0" Name="dgBlock" MinHeight="130" ItemsSource="{Binding Path=Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Width="230" Height="23">

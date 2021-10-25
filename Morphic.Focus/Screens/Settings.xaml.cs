@@ -82,7 +82,17 @@ namespace Morphic.Focus.Screens
                     try
                     {
                         LoggingService.WriteAppLog("Hyperlink_RequestNavigate");
-                        Process.Start("explorer", ((Hyperlink)e.OriginalSource).NavigateUri.ToString());
+
+                        Hyperlink link = (Hyperlink)e.OriginalSource;
+
+                        if (link.Tag == "Category")
+                        {
+
+                            return;
+                        }
+
+                        if (((Hyperlink)e.OriginalSource).NavigateUri != null)
+                            Process.Start("explorer", ((Hyperlink)e.OriginalSource).NavigateUri.ToString());
                     }
                     catch (Exception ex)
                     {

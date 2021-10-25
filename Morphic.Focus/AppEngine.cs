@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Morphic.Focus
 {
-    public class AppEngine : INotifyPropertyChanged
+    public class AppEngine : BaseClass
     {
         #region AppEnding Instance
         private static readonly AppEngine _instance = new AppEngine();
@@ -23,10 +23,14 @@ namespace Morphic.Focus
         AppEngine()
         {
             GetFocusSettings();
+            GetCategoryies();
+
             CheckIsFocusRunning();
 
             UserPreferences.PropertyChanged += UserPreferences_PropertyChanged;
         }
+
+        
 
         private void UserPreferences_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
@@ -101,6 +105,7 @@ namespace Morphic.Focus
 
         #region Properties
 
+        #region User Preferences
         private UserPreferences? _userPreferences = null;
         public UserPreferences? UserPreferences
         { 
@@ -113,28 +118,28 @@ namespace Morphic.Focus
                 if (_userPreferences != value)
                 {
                     _userPreferences = value;
-                    NotifyPropertyChanged("UserPreferences");
+                    NotifyPropertyChanged();
                 }
             }
         }
 
-        private bool _isFocusRunning = false;
-        public bool IsFocusRunning
+        internal void SetFocusSettings()
         {
-            get
+            //Get Focus Preferences from the Settings.json file
+            //If the file is not found, a new settings file is created
+            //Settings are persisted in memomy as long as the Focus Tool is running
+
+            //1. Get Focus Preferences from the Settings.json file
+            JSONHelper jSONHelper = new JSONHelper(Common.SETTINGS_FILE_NAME);
+
+            //2. If the file is not found, a new settings file is created
+            if (UserPreferences != null)
             {
-                return _isFocusRunning;
+                jSONHelper.Save<UserPreferences>(UserPreferences);
             }
-            set
-            {
-                _isFocusRunning = value;
-                NotifyPropertyChanged("IsFocusRunning"); // method implemented below
-            }
+
         }
 
-        private Session? _currSession1 = null;
-        public Session? CurrSession1 { get => _currSession1; set => _currSession1 = value; }
-        #endregion
         internal void GetFocusSettings()
         {
             //Get Focus Preferences from the Settings.json file
@@ -153,24 +158,90 @@ namespace Morphic.Focus
             }
 
         }
+        #endregion
 
-        internal void SetFocusSettings()
+        #region CategoryCollection
+
+        private CategoryCollection? _categoryCollection = null;
+        public CategoryCollection? CategoryCollection
+        {
+            get
+            {
+                return _categoryCollection;
+            }
+            set
+            {
+                if (_categoryCollection != value)
+                {
+                    _categoryCollection = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        private void GetCategoryies()
         {
             //Get Focus Preferences from the Settings.json file
             //If the file is not found, a new settings file is created
             //Settings are persisted in memomy as long as the Focus Tool is running
 
             //1. Get Focus Preferences from the Settings.json file
-            JSONHelper jSONHelper = new JSONHelper(Common.SETTINGS_FILE_NAME);
-            
-            //2. If the file is not found, a new settings file is created
-            if (UserPreferences != null)
-            {
-                jSONHelper.Save<UserPreferences>(UserPreferences);
-            }
+            JSONHelper jSONHelper = new JSONHelper(Common.CATEGORIES_FILE_NAME);
+            CategoryCollection = jSONHelper.Get<CategoryCollection>();
 
+            //2. If the file is not found, a new settings file is created
+            if (CategoryCollection == null)
+            {
+                CategoryCollection = new CategoryCollection();
+                jSONHelper.Save<CategoryCollection>(CategoryCollection);
+            }
         }
 
+        #endregion
+
+        #region Selected Blocklist in Settings
+        private Blocklist _selectedBlockList;
+        public Blocklist SelectedBlockList
+        {
+            get 
+            {
+                //Set first item as selected item is initial selection not done yet
+                if (_selectedBlockList == null && UserPreferences.BlockLists.Count > 0) 
+                    SelectedBlockList = UserPreferences.BlockLists[0];
+
+                return _selectedBlockList; 
+            }
+            set
+            {
+                if (_selectedBlockList != value)
+                {
+                    _selectedBlockList = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        #endregion
+
+        #region To Review
+        private bool _isFocusRunning = false;
+        public bool IsFocusRunning
+        {
+            get
+            {
+                return _isFocusRunning;
+            }
+            set
+            {
+                _isFocusRunning = value;
+                NotifyPropertyChanged("IsFocusRunning"); // method implemented below
+            }
+        }
+
+        private Session? _currSession1 = null;
+        public Session? CurrSession1 { get => _currSession1; set => _currSession1 = value; }
+        #endregion
+
+        #endregion
         public void CheckIsFocusRunning()
         {
             if (File.Exists(Common.MakeFilePath(Common.SESSION_FILE_NAME)))
@@ -201,15 +272,5 @@ namespace Morphic.Focus
             IsFocusRunning = false;
         }
 
-        #region PropertyChanged
-        public event PropertyChangedEventHandler? PropertyChanged;
-        public void NotifyPropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
-        #endregion
     }
 }

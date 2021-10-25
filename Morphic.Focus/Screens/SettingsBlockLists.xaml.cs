@@ -31,7 +31,6 @@ namespace Morphic.Focus.Screens
         private List<Penalty> penalties;
 
         private ObservableCollection<BlockList> blockLists;
-        private BlockList BlockList;
 
 
         #region AppEngine and Constructor
@@ -65,14 +64,17 @@ namespace Morphic.Focus.Screens
         }
         #endregion
 
+        #region User Events
         private void AddBlockList_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 LoggingService.WriteAppLog("AddBlockList_Click");
 
+                //Open the the Add New Blocklist Diaog
                 NewBlocklistModal newBlocklist = new NewBlocklistModal();
 
+                //If user has added a blocklist name, add it to json database and make the new item selected
                 if (newBlocklist.ShowDialog() == true)
                 {
                     if (String.IsNullOrWhiteSpace(newBlocklist.BlockListName)) //Ideally, not needed. Just an additional check
@@ -90,6 +92,7 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }  
         }
+        #endregion
 
         #region To be deleted
 

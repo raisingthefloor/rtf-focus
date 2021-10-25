@@ -79,8 +79,8 @@ namespace Morphic.Focus.Screens
                 {
                     Uri url = new UriBuilder(txtWebsiteURL.Text.Trim()).Uri;
 
-                    Engine.UserPreferences.General.TemporarilyUnblock.AppsAndWebsites.Add(
-                        new AppsAndWebsites()
+                    Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Add(
+                        new ActiveAppsAndWebsites()
                         {
                             IsActive = true,
                             IsApp = false,

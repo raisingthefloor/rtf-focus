@@ -1,4 +1,5 @@
-﻿using Morphic.Data.Services;
+﻿using Morphic.Data.Models;
+using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -63,7 +64,23 @@ namespace Morphic.Focus.Screens
                     MessageBox.Show("Please enter blocklist name");
                     return;
                 }
-                Engine.UserPreferences.BlockLists.Add(new Data.Models.Blocklist() { Name = txtBlockList.Text.Trim() });
+
+                Blocklist blocklist = new Blocklist() { Name = txtBlockList.Text.Trim() };
+
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "Notifications", IsActive = false });
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "Email", IsActive = false });
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "Communication (Not Email)", IsActive = false });
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "Games", IsActive = false });
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "Proxies", IsActive = false });
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "Videos", IsActive = false });
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "Social Media", IsActive = false });
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "Shopping", IsActive = false });
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "Porn", IsActive = false });
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "News", IsActive = false });
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "Gambling", IsActive = false });
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "Dating", IsActive = false });
+
+                Engine.UserPreferences.BlockLists.Add(blocklist);
                 this.DialogResult = true;
                 this.Close();
             }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Morphic.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Morphic.Focus.Screens
     /// </summary>
     public partial class AddAppModal : Window
     {
-        private List<BlockCategory> blockCategories;
+        private List<Blockcategory> blockCategories;
 
         public AddAppModal()
         {
@@ -30,7 +31,7 @@ namespace Morphic.Focus.Screens
             this.DataContext = this;
         }
 
-        public List<BlockCategory> BlockCategories
+        public List<Blockcategory> BlockCategories
         {
             get
             {
@@ -71,11 +72,10 @@ namespace Morphic.Focus.Screens
             installs = installs.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList();
             installs.Sort(); // The list of ALL installed applications
 
-            blockCategories = new List<BlockCategory>();
+            blockCategories = new List<Blockcategory>();
             foreach(string str in installs)
             {
-                int i = 0;
-                blockCategories.Add(new BlockCategory() { Name = str, Id = i++ });
+                blockCategories.Add(new Blockcategory() { Name = str });
             }
         }
 

@@ -59,9 +59,17 @@ namespace Morphic.Focus.Screens
             {
                 LoggingService.WriteAppLog("btnCreateBlockList_Click");
 
+                //Validation 1 : Blocklist name cannot be empty
                 if (String.IsNullOrWhiteSpace(txtBlockList.Text.Trim()))
                 {
                     MessageBox.Show("Please enter blocklist name");
+                    return;
+                }
+
+                //Validation 2 : We should not have a blocklist created with the same name earlier
+                if (Engine.UserPreferences.BlockLists.Any(p => p.Name.ToLowerInvariant() == txtBlockList.Text.Trim().ToLowerInvariant()))
+                {
+                    MessageBox.Show("A Blocklist with the name " + txtBlockList.Text.Trim() + " already exists.");
                     return;
                 }
 

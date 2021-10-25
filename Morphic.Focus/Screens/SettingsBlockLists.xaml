@@ -143,13 +143,43 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <DockPanel Width="230" Height="23">
-                                                <CheckBox Style="{DynamicResource SettingsCheckbox}" Width="200" VerticalAlignment="Top" IsChecked="{Binding Path=IsActive}">
-                                                    <TextBlock Margin="0 2 0 0">
-                                            <Hyperlink Tag="Category">
-                                                <TextBlock Text="{Binding Name}"/>
-                                                <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>
-                                            </Hyperlink>
-                                        </TextBlock>
+                                                <CheckBox Style="{DynamicResource SettingsCheckbox}" Width="200" VerticalAlignment="Top" 
+                                                    IsChecked="{Binding Path=IsActive}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Margin="0 2 0 0">
+                                                            <Hyperlink Tag="Category" >
+                                                                <Run Text="{Binding Name}"/>
+                                                                <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>
+                                                            </Hyperlink>
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="{x:Type TextBlock}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Name}" Value="Porn">
+                                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding Name}" Value="Notifications">
+                                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                        <TextBlock Margin="0 2 0 0" Text="{Binding Name}">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="{x:Type TextBlock}">
+                                                                    <Setter Property="Visibility" Value="Hidden" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Name}" Value="Porn" >
+                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding Name}" Value="Notifications" >
+                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </StackPanel>
                                                 </CheckBox>
                                             </DockPanel>
                                         </DataTemplate>
@@ -157,8 +187,8 @@
                                 </ItemsControl>
                             </StackPanel>
                         </ScrollViewer>
-                        
-                        
+
+
                     </Border>
 
                     <Border Grid.Row="2" Grid.Column="1" BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}" Width="232" Height="171"  
@@ -322,7 +352,7 @@
             <ContentControl Content="{Binding Path=Engine.SelectedBlockList}"
                     ContentTemplate="{StaticResource BlockListDetails}" Canvas.Top="15" Canvas.ZIndex="1"/>
 
-           
+
 
         </Canvas>
 

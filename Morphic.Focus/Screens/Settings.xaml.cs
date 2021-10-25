@@ -52,6 +52,8 @@ namespace Morphic.Focus.Screens
             _currentSelectedSetting = _objSettingsGeneral;
             sPnlContent.Children.Add(_currentSelectedSetting);
             lstBoxMenu.SelectedItem = lstItemGeneral;
+
+            this.DataContext = this;
         }
 
         public bool OpenBlocklist
@@ -81,13 +83,19 @@ namespace Morphic.Focus.Screens
                 {
                     try
                     {
-                        LoggingService.WriteAppLog("Hyperlink_RequestNavigate");
+                        LoggingService.WriteAppLog("Settings -> Window_MouseMove");
 
                         Hyperlink link = (Hyperlink)e.OriginalSource;
 
-                        if (link.Tag == "Category")
+                        if (link.Tag.ToString() == "Category")
                         {
+                            LoggingService.WriteAppLog("Settings -> Category_Clicked");
 
+                            var run = ((Hyperlink)e.OriginalSource).Inlines.FirstOrDefault() as Run;
+                            string text = run == null ? string.Empty : run.Text;
+
+                            CategoryListModal categoryListModal = new CategoryListModal(text);
+                            categoryListModal.ShowDialog();
                             return;
                         }
 

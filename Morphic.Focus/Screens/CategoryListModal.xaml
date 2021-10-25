@@ -10,17 +10,17 @@
     <Border CornerRadius="18" Background="{DynamicResource LightGreen}" BorderThickness="1" BorderBrush="{DynamicResource DialogBorder}">
         <StackPanel Margin="12 15">
             <TextBlock Style="{DynamicResource HeaderTitleBig}" HorizontalAlignment="Left">Apps and websites blocked by the category:</TextBlock>
-            <TextBlock Style="{DynamicResource HeaderTitleBigBold}" Name="txtCategory" HorizontalAlignment="Left">Social Media</TextBlock>
+            <TextBlock Style="{DynamicResource HeaderTitleBigBold}" Name="txtCategory" HorizontalAlignment="Left" Text="{Binding Path=CategoryName}"/>
 
             <Border Margin="0 15 0 0" BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}" Width="325" Height="137" 
                              CornerRadius="4" Background="White">
 
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl MinHeight="130" ItemsSource="{Binding BlockCategories}">
+                    <ItemsControl MinHeight="130" ItemsSource="{Binding SelectedCategory.AppsAndWebsites}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Height="23">
-                                    <TextBlock Style="{DynamicResource SettingsSectionBody}" Text="{Binding Name}" Margin="11 7 0 0">
+                                    <TextBlock Style="{DynamicResource SettingsSectionBody}" Text="{Binding}" Margin="11 7 0 0">
                                     </TextBlock>
                                 </DockPanel>
                             </DataTemplate>
@@ -29,7 +29,7 @@
                 </ScrollViewer>
             </Border>
 
-            <Button Style="{DynamicResource SettingsButtons}" Width="175" IsCancel="True" Margin=" 0 15 0 0">OK</Button>
+            <Button Style="{DynamicResource SettingsButtons}" Width="175" IsCancel="True" Margin=" 0 13 0 0">OK</Button>
         </StackPanel>
     </Border>
 </Window>

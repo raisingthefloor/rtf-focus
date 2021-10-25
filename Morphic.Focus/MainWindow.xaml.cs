@@ -195,11 +195,11 @@ namespace Morphic.Focus
             scr5.Close();
 
             //Src 6
-            CategoryListModal scr6 = new CategoryListModal();
-            scr6.Show();
+            //CategoryListModal scr6 = new CategoryListModal();
+            //scr6.Show();
 
-            await Task.Delay(5000);
-            scr6.Close();
+            //await Task.Delay(5000);
+            //scr6.Close();
 
             //Src 7
             EndofBreakModal scr7 = new EndofBreakModal();

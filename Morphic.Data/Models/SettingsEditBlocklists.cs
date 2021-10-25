@@ -10,6 +10,8 @@ namespace Morphic.Data.Models
 {
     public class Blocklist : BaseClass
     {
+        public Blocklist(){}
+
         #region Name
         private string _name;
         public string Name
@@ -31,6 +33,8 @@ namespace Morphic.Data.Models
 
         #region Categories
         private ObservableCollection<Blockcategory> _blockcategories;
+
+        
 
         public ObservableCollection<Blockcategory> Blockcategories
         {

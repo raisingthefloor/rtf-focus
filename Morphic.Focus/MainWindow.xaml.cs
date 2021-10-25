@@ -167,25 +167,25 @@ namespace Morphic.Focus
             scr1.Close();
 
             //Src 2
-            AddAppModal scr2 = new AddAppModal();
-            scr2.Show();
+            //AddAppModal scr2 = new AddAppModal();
+            //scr2.Show();
 
-            await Task.Delay(5000);
-            scr2.Close();
+            //await Task.Delay(5000);
+            //scr2.Close();
 
             //Src 3
-            AddWebsiteModal scr3 = new AddWebsiteModal();
-            scr3.Show();
+            //AddWebsiteModal scr3 = new AddWebsiteModal();
+            //scr3.Show();
 
-            await Task.Delay(5000);
-            scr3.Close();
+            //await Task.Delay(5000);
+            //scr3.Close();
 
             //Src 4
-            AllowUnblockingModal scr4 = new AllowUnblockingModal();
-            scr4.Show();
+            //AllowUnblockingModal scr4 = new AllowUnblockingModal();
+            //scr4.Show();
 
-            await Task.Delay(5000);
-            scr4.Close();
+            //await Task.Delay(5000);
+            //scr4.Close();
 
             //Src 5
             BlockedAppModal scr5 = new BlockedAppModal();

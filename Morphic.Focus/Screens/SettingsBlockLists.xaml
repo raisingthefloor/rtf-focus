@@ -198,13 +198,13 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="41"/>
                             </Grid.RowDefinitions>
-                            <ItemsControl  Name="dgBlock" Grid.Row="0" Grid.Column="0" MinHeight="130" ItemsSource="{Binding BlockItems}">
+                            <ItemsControl  Name="dgBlock" Grid.Row="0" Grid.Column="0" MinHeight="130" ItemsSource="{Binding AlsoBlock.ActiveAppsAndWebsites}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <DockPanel Height="23">
                                             <TextBlock Style="{DynamicResource SettingsSectionBody}" Text="{Binding Name}" Width="100" Margin="9 9 0 0">
                                             </TextBlock>
-                                            <Button Style="{DynamicResource SetingsImageButtonStyle}">
+                                            <Button Style="{DynamicResource SetingsImageButtonStyle}" Cursor="Hand" Name="btnAlsoBlockRemove" Click="btnAlsoBlockRemove_Click">
                                                 <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0"/>
                                             </Button>
                                         </DockPanel>
@@ -255,7 +255,8 @@
                     </Border>
                     <TextBlock Grid.Row="5" Grid.Column="1" TextWrapping="WrapWithOverflow" VerticalAlignment="Center"
                                FontFamily="{DynamicResource SourceSansProBold}" FontSize="13" FontStyle="Italic" FontWeight="Bold" LineHeight="16" Foreground="#8C191B" Margin="20 0 37 0">
-                        <Run>Note: You cannot change a blocklist while it is in use in an active focus session.</Run>                                           <Run>Any changes made will not take effect until the next focus session where the blocklist is used.</Run>
+                        <Run>Note: You cannot change a blocklist while it is in use in an active focus session.</Run>                  
+                        <Run>Any changes made will not take effect until the next focus session where the blocklist is used.</Run>
                     </TextBlock>
 
                     <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 25 20 0">

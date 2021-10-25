@@ -13,7 +13,7 @@ namespace Morphic.Data.Models
         private bool _dontGive5MinWarning = false;
         private bool _showBreakCountdownTimer = true;
         private bool _blockScreen1stMinofBreak = false;
-        private Temporarilyunblock _temporarilyUnblock;
+        private CollAppsAndWebsites _temporarilyUnblock;
 
         public bool dontGive5MinWarning
         {
@@ -61,13 +61,13 @@ namespace Morphic.Data.Models
             }
         }
 
-        public Temporarilyunblock TemporarilyUnblock
+        public CollAppsAndWebsites TemporarilyUnblock
         {
             get
             {
                 if (_temporarilyUnblock == null)
                 {
-                    _temporarilyUnblock = new Temporarilyunblock();
+                    _temporarilyUnblock = new CollAppsAndWebsites();
                     _temporarilyUnblock.PropertyChanged += _temporarilyUnblock_PropertyChanged;
                 }
                 return _temporarilyUnblock;
@@ -90,7 +90,7 @@ namespace Morphic.Data.Models
         #endregion
     }
 
-    public class Temporarilyunblock : BaseClass, IEquatable<Temporarilyunblock>
+    public class CollAppsAndWebsites : BaseClass, IEquatable<CollAppsAndWebsites>
     {
         private ObservableCollection<ActiveAppsAndWebsites> _activeAppsAndWebsites;
 
@@ -145,10 +145,10 @@ namespace Morphic.Data.Models
         #region IEquatable
         public override bool Equals(object obj)
         {
-            return Equals(obj as Temporarilyunblock);
+            return Equals(obj as CollAppsAndWebsites);
         }
 
-        public bool Equals(Temporarilyunblock other)
+        public bool Equals(CollAppsAndWebsites other)
         {
             return other != null &&
                    EqualityComparer<ObservableCollection<ActiveAppsAndWebsites>>.Default.Equals(ActiveAppsAndWebsites, other.ActiveAppsAndWebsites);
@@ -159,12 +159,12 @@ namespace Morphic.Data.Models
             return HashCode.Combine(ActiveAppsAndWebsites);
         }
 
-        public static bool operator ==(Temporarilyunblock left, Temporarilyunblock right)
+        public static bool operator ==(CollAppsAndWebsites left, CollAppsAndWebsites right)
         {
-            return EqualityComparer<Temporarilyunblock>.Default.Equals(left, right);
+            return EqualityComparer<CollAppsAndWebsites>.Default.Equals(left, right);
         }
 
-        public static bool operator !=(Temporarilyunblock left, Temporarilyunblock right)
+        public static bool operator !=(CollAppsAndWebsites left, CollAppsAndWebsites right)
         {
             return !(left == right);
         }

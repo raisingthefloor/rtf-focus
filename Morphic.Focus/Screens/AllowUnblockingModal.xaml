@@ -16,7 +16,7 @@
                              CornerRadius="4" Background="White" Padding="0">
 
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl  MinHeight="130" ItemsSource="{Binding Apps}" Name="icApps">
+                    <ItemsControl  MinHeight="130" ItemsSource="{Binding AppsLocalList}" Name="icApps">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Height="23">

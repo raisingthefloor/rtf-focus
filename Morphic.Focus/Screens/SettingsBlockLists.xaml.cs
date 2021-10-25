@@ -124,21 +124,47 @@ namespace Morphic.Focus.Screens
         #endregion
         private void btnBlockAddApp_Click(object sender, RoutedEventArgs e)
         {
-            AddAppModal blockAddApp = new AddAppModal();
-
-            if (blockAddApp.ShowDialog() == true)
+            try
             {
-                
+                LoggingService.WriteAppLog("SettingsBlockLists -> btnBlockAddApp_Click");
+                AllowUnblockingModal unblockAddAppWebsite = new AllowUnblockingModal(Engine.SelectedBlockList.AlsoBlock.ActiveAppsAndWebsites);
+                unblockAddAppWebsite.ShowDialog();
+
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
 
         private void btnBlockAddWebsite_Click(object sender, RoutedEventArgs e)
         {
-            AddWebsiteModal blockAddWebsite = new AddWebsiteModal();
-
-            if (blockAddWebsite.ShowDialog() == true)
+            try
             {
+                LoggingService.WriteAppLog("SettingsBlockLists -> btnBlockAddWebsite_Click");
+                AddWebsiteModal addWebsiteModal = new AddWebsiteModal(Engine.SelectedBlockList.AlsoBlock.ActiveAppsAndWebsites);
+                addWebsiteModal.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
 
+        private void btnAlsoBlockRemove_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LoggingService.WriteAppLog("SettingsBlockLists -> btnAlsoBlockRemove_Click");
+                
+                Button btn = sender as Button;
+                var dataObject = btn.DataContext as ActiveAppsAndWebsites;
+
+                Engine.SelectedBlockList.AlsoBlock.ActiveAppsAndWebsites.Remove(dataObject);
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
     }

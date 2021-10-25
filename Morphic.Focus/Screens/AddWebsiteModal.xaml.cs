@@ -2,6 +2,7 @@
 using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -23,17 +24,12 @@ namespace Morphic.Focus.Screens
     /// </summary>
     public partial class AddWebsiteModal : Window
     {
-        AppEngine _engine;
-        public AppEngine Engine { get { return _engine; } }
+        public ObservableCollection<ActiveAppsAndWebsites> AppsAppEngineList { get; set; }
 
-        public AddWebsiteModal()
+        public AddWebsiteModal(ObservableCollection<ActiveAppsAndWebsites> appEngineList)
         {
-            if (!DesignerProperties.GetIsInDesignMode(this))
-            {
-                _engine = AppEngine.Instance;
-            }
-
             InitializeComponent();
+            AppsAppEngineList = appEngineList;
         }
 
         /// <summary>
@@ -51,7 +47,7 @@ namespace Morphic.Focus.Screens
 
         private void btnTestURL_Click(object sender, RoutedEventArgs e)
         {
-            LoggingService.WriteAppLog("btnTestURL_Click");
+            LoggingService.WriteAppLog("AddWebsiteModel -> btnTestURL_Click");
 
             if (!string.IsNullOrWhiteSpace(txtWebsiteURL.Text.Trim()))
             {
@@ -71,7 +67,7 @@ namespace Morphic.Focus.Screens
 
         private void btnCreateBlockList_Click(object sender, RoutedEventArgs e)
         {
-            LoggingService.WriteAppLog("btnCreateBlockList_Click");
+            LoggingService.WriteAppLog("AddWebsiteModel -> btnCreateBlockList_Click");
 
             if (!string.IsNullOrWhiteSpace(txtWebsiteURL.Text.Trim()))
             {
@@ -79,7 +75,7 @@ namespace Morphic.Focus.Screens
                 {
                     Uri url = new UriBuilder(txtWebsiteURL.Text.Trim()).Uri;
 
-                    Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Add(
+                    AppsAppEngineList.Add(
                         new ActiveAppsAndWebsites()
                         {
                             IsActive = true,

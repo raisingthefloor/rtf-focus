@@ -43,24 +43,38 @@ namespace Morphic.Focus.Screens
         private void btnAddAppUnblock_Click(object sender, RoutedEventArgs e)
         {
             LoggingService.WriteAppLog("btnAddAppUnblock_Click");
-            AllowUnblockingModal unblockAddAppWebsite = new AllowUnblockingModal();
+            AllowUnblockingModal unblockAddAppWebsite = new AllowUnblockingModal(Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites);
             unblockAddAppWebsite.ShowDialog();
         }
 
         private void btnAddWebsiteUnblock_Click(object sender, RoutedEventArgs e)
         {
-            LoggingService.WriteAppLog("btnAddWebsiteUnblock_Click");
-            AddWebsiteModal addWebsiteModal = new AddWebsiteModal();
-            addWebsiteModal.ShowDialog();
+            try
+            {
+                LoggingService.WriteAppLog("SettingsGeneral -> btnAddWebsiteUnblock_Click");
+                AddWebsiteModal addWebsiteModal = new AddWebsiteModal(Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites);
+                addWebsiteModal.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
 
         private void btnRemoveTempUnblock_Click(object sender, RoutedEventArgs e)
         {
-            LoggingService.WriteAppLog("btnRemoveTempUnblock_Click");
-            Button btn = sender as Button;
-            var dataObject = btn.DataContext as ActiveAppsAndWebsites;
+            try
+            {
+                LoggingService.WriteAppLog("SettingsGeneral -> btnRemoveTempUnblock_Click");
+                Button btn = sender as Button;
+                var dataObject = btn.DataContext as ActiveAppsAndWebsites;
 
-            Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Remove(dataObject);
+                Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Remove(dataObject);
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
     }
 }

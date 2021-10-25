@@ -3,6 +3,7 @@ using Morphic.Data.Models;
 using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -24,23 +25,17 @@ namespace Morphic.Focus.Screens
     public partial class AllowUnblockingModal : Window
     {
         private List<ActiveAppsAndWebsites> _apps;
-        public List<ActiveAppsAndWebsites> Apps { get => _apps; set => _apps = value; }
+        public List<ActiveAppsAndWebsites> AppsLocalList { get => _apps; set => _apps = value; }
 
-        AppEngine _engine;
-        public AppEngine Engine { get { return _engine; } }
+        public ObservableCollection<ActiveAppsAndWebsites> AppsAppEngineList { get; set; }
 
-        
-
-        public AllowUnblockingModal()
+        public AllowUnblockingModal(ObservableCollection<ActiveAppsAndWebsites> appEngineList)
         {
-            if (!DesignerProperties.GetIsInDesignMode(this))
-            {
-                _engine = AppEngine.Instance;
-            }
-
             InitializeComponent();
 
+            AppsAppEngineList = appEngineList;
             GetInstalledApps();
+
             this.DataContext = this;
         }
 
@@ -59,23 +54,22 @@ namespace Morphic.Focus.Screens
 
         public void GetInstalledApps()
         {
-            //List<string> installs = new List<string>();
             List<string> keys = new List<string>() {
               @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths",
               @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\App Paths"
             };
 
-            Apps = new List<ActiveAppsAndWebsites>();
+            AppsLocalList = new List<ActiveAppsAndWebsites>();
             // The RegistryView.Registry64 forces the application to open the registry as x64 even if the application is compiled as x86 
-            FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64), keys, Apps);
-            FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64), keys, Apps);
+            FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64), keys, AppsLocalList);
+            FindInstalls(RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64), keys, AppsLocalList);
 
-            Apps = Apps.Distinct().OrderBy(p => p.Name).ToList();
+            AppsLocalList = AppsLocalList.Distinct().OrderBy(p => p.Name).ToList();
 
             
-            foreach(ActiveAppsAndWebsites item in Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites)
+            foreach(ActiveAppsAndWebsites item in AppsAppEngineList)
             {
-                ActiveAppsAndWebsites existingItem = Apps.Find(p => p.IsApp == item.IsApp && p.Name == item.Name && p.Path == item.Path);
+                ActiveAppsAndWebsites existingItem = AppsLocalList.Find(p => p.IsApp == item.IsApp && p.Name == item.Name && p.Path == item.Path);
                 if (existingItem != null) existingItem.IsActive = item.IsActive;
             }
         }
@@ -115,13 +109,13 @@ namespace Morphic.Focus.Screens
             LoggingService.WriteAppLog("btnBlockAddApp_Click");
 
             //TODO - What if user deselects an item in the dialog
-            foreach (var item in Apps.Where(p => p.IsActive))
+            foreach (var item in AppsLocalList.Where(p => p.IsActive))
             {
-                List<ActiveAppsAndWebsites> existingItem = Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Where(p => p.IsApp == item.IsApp && p.Name == item.Name && p.Path == item.Path).ToList();
+                List<ActiveAppsAndWebsites> existingItem = AppsAppEngineList.Where(p => p.IsApp == item.IsApp && p.Name == item.Name && p.Path == item.Path).ToList();
 
                 if (existingItem.Count == 0)
                 {
-                    Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Add(item);
+                    AppsAppEngineList.Add(item);
                 }
                 else if (existingItem.Count == 1)
                 {

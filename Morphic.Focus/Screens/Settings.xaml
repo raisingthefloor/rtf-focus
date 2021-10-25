@@ -13,7 +13,7 @@
                         Executed="CloseCommandHandler"/>
     </Window.CommandBindings>
     <Border BorderThickness="1" BorderBrush="{DynamicResource DialogBorder}">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <!--<ScrollViewer VerticalScrollBarVisibility="Auto">-->
         
         <Grid>
             <Grid.ColumnDefinitions>
@@ -88,13 +88,15 @@
             <StackPanel Grid.Row="0" Grid.Column="1">
                 <Button Width="30" Height="30" HorizontalAlignment="Right" Content="&#10005;" Padding="0,0,0,0" BorderThickness="0" FontSize="20" Foreground="Black" Command="ApplicationCommands.Close"
                         Background="Transparent"></Button>
-                
-                <StackPanel Name="sPnlContent" >
+
+                    
+                        <StackPanel Name="sPnlContent">
+                        </StackPanel>
+                    
+
                 </StackPanel>
-        
-        </StackPanel>
         </Grid>
 
-        </ScrollViewer>
+      <!--  --><!--</ScrollViewer>-->
     </Border>
 </Window>

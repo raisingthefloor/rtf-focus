@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:Morphic.Focus.Screens"
              xmlns:data="clr-namespace:Morphic.Data.Models;assembly=Morphic.Data"
              mc:Ignorable="d" 
-             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="620"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVis" />
@@ -369,7 +369,7 @@
 
     </UserControl.Resources>
 
-
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
     <StackPanel>
 
         <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
@@ -405,5 +405,5 @@
         </Canvas>
 
     </StackPanel>
-
+    </ScrollViewer>
 </UserControl>

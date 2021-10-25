@@ -82,7 +82,36 @@ namespace Morphic.Data.Models
         }
         #endregion
 
-        public Alsoblock alsoBlock { get; set; }
+        #region AlsoBlock
+        private AppsAndWebsitesBase _alsoBlock;
+
+        public AppsAndWebsitesBase AlsoBlock
+        {
+            get
+            {
+                if (_alsoBlock == null)
+                {
+                    _alsoBlock = new AppsAndWebsitesBase();
+                    _alsoBlock.PropertyChanged += _alsoBlock_PropertyChanged; ;
+                }
+                return _alsoBlock;
+            }
+            set
+            {
+                if (value != _alsoBlock)
+                {
+                    _alsoBlock = value;
+                    _alsoBlock.PropertyChanged += _alsoBlock_PropertyChanged;
+                }
+            }
+        }
+
+        private void _alsoBlock_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged();
+        }
+        #endregion
+
         public Exceptions exceptions { get; set; }
         public string breakBehavior { get; set; }
         public string penalty { get; set; }
@@ -139,6 +168,87 @@ namespace Morphic.Data.Models
         }
     }
 
+    public class AppsAndWebsitesBase : BaseClass, IEquatable<AppsAndWebsitesBase>
+    {
+        private ObservableCollection<AppsAndWebsites> _appsAndWebsites;
+
+        public ObservableCollection<AppsAndWebsites> AppsAndWebsites
+        {
+            get
+            {
+                if (_appsAndWebsites == null)
+                {
+                    _appsAndWebsites = new ObservableCollection<AppsAndWebsites>();
+                    _appsAndWebsites.CollectionChanged += _appsAndWebsites_CollectionChanged;
+                }
+                return _appsAndWebsites;
+            }
+            set
+            {
+                if (value != _appsAndWebsites)
+                {
+                    _appsAndWebsites = value;
+                    _appsAndWebsites.CollectionChanged += _appsAndWebsites_CollectionChanged;
+                    foreach (AppsAndWebsites item in _appsAndWebsites)
+                        item.PropertyChanged += Item_PropertyChanged;
+
+                }
+            }
+        }
+
+        #region IEquatable
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as AppsAndWebsitesBase);
+        }
+
+        public bool Equals(AppsAndWebsitesBase other)
+        {
+            return other != null &&
+                   EqualityComparer<ObservableCollection<AppsAndWebsites>>.Default.Equals(_appsAndWebsites, other._appsAndWebsites) &&
+                   EqualityComparer<ObservableCollection<AppsAndWebsites>>.Default.Equals(AppsAndWebsites, other.AppsAndWebsites);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_appsAndWebsites, AppsAndWebsites);
+        }
+
+        public static bool operator ==(AppsAndWebsitesBase left, AppsAndWebsitesBase right)
+        {
+            return EqualityComparer<AppsAndWebsitesBase>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(AppsAndWebsitesBase left, AppsAndWebsitesBase right)
+        {
+            return !(left == right);
+        }
+        #endregion
+
+        #region PropertyChanged
+        private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged();
+        }
+
+        private void _appsAndWebsites_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (AppsAndWebsites item in e.OldItems)
+                    item.PropertyChanged -= Item_PropertyChanged;
+            }
+            if (e.NewItems != null)
+            {
+                foreach (AppsAndWebsites item in e.NewItems)
+                    item.PropertyChanged += Item_PropertyChanged;
+            }
+
+            NotifyPropertyChanged();
+        }
+
+        #endregion
+    }
 
     public class CategoryCollection : BaseClass
     {

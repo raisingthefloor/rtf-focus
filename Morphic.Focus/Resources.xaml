@@ -88,6 +88,13 @@
         <Setter Property="LineHeight" Value="15"/>
     </Style>
 
+    <Style x:Key="SettingsRadioStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="FontFamily" Value="{StaticResource SourceSansProRegular}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+
     <Style x:Key="SettingsSectionItalicBody" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource SourceSansProItalic}"/>
         <Setter Property="FontStyle" Value="Italic"/>

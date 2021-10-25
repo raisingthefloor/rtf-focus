@@ -105,6 +105,14 @@
             </Style.Triggers>
         </Style>
 
+        <ObjectDataProvider MethodName="GetValues"
+                ObjectType="{x:Type sys:Enum}"
+                x:Key="BlockBehaviorValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="data:BreakBehavior" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <local:EnumDescriptionConverter x:Key="EnumDescriptionConverter"></local:EnumDescriptionConverter>
         <DataTemplate DataType="{x:Type data:Blocklist}" x:Key="BlockListDetails">
             <Border Width="513" BorderBrush="#BFBFBF" CornerRadius="8" BorderThickness="1" Background="#F4F8FF" Margin="8" >
                 <Grid>
@@ -263,10 +271,11 @@
                         Blocklist behavior during breaks:
                     </TextBlock>
 
-                    <ListView Margin="20 0 20 0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0">
+                    <ListView Margin="20 0 20 0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0"
+                              ItemsSource="{Binding Source={StaticResource BlockBehaviorValues}}" SelectedItem="{Binding Path=BreakBehavior, Mode=TwoWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <RadioButton Content="{Binding}" GroupName="BreakBehavior" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+                                <RadioButton Style="{DynamicResource SettingsRadioStyle}" Content="{Binding Converter={StaticResource EnumDescriptionConverter}}" GroupName="BreakBehavior" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ItemContainerStyle>
@@ -281,11 +290,6 @@
                                 </Setter>
                             </Style>
                         </ListView.ItemContainerStyle>
-                        <ListView.Items>
-                            <sys:String>Unblock this blocklist during short and long breaks</sys:String>
-                            <sys:String>Unblock this blocklist during long breaks only</sys:String>
-                            <sys:String>Keep this blocklist blocked during all breaks</sys:String>
-                        </ListView.Items>
                     </ListView>
 
                     <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 25 20 0">
@@ -320,6 +324,7 @@
                 </Grid>
             </Border>
         </DataTemplate>
+
     </UserControl.Resources>
 
 

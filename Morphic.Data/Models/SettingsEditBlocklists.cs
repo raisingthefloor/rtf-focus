@@ -142,9 +142,36 @@ namespace Morphic.Data.Models
         }
         #endregion
 
-        public string breakBehavior { get; set; }
+        #region BreakBehavior
+        private BreakBehavior _breakBehavior;
+        public BreakBehavior BreakBehavior
+        {
+            get
+            {
+                return _breakBehavior;
+            }
+            set
+            {
+                if (value != this._breakBehavior)
+                {
+                    this._breakBehavior = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        #endregion
         public string penalty { get; set; }
         public int penaltyValue { get; set; }
+    }
+
+    public enum BreakBehavior
+    {
+        [Description("Unblock this blocklist during short and long breaks")]
+        UnblockFull,
+        [Description("Unblock this blocklist during long breaks only")]
+        UnblockLongOnly,
+        [Description("Keep this blocklist blocked during all breaks")]
+        Blocked
     }
 
     public class Blockcategory : Category, IEquatable<Blockcategory>

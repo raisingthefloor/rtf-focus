@@ -87,7 +87,7 @@ namespace Morphic.Focus.Screens
 
                         Hyperlink link = (Hyperlink)e.OriginalSource;
 
-                        if (link.Tag.ToString() == "Category")
+                        if (link.Tag != null && link.Tag.ToString() == "Category")
                         {
                             LoggingService.WriteAppLog("Settings -> Category_Clicked");
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,23 +21,48 @@ namespace Morphic.Focus.Screens
     /// </summary>
     public partial class SettingsSchedule : UserControl
     {
-        private List<FocusSchedule> focusSchedules;
-        private List<CalendarData> calendarDataSource;
+        #region AppEngine and Constructor
+        AppEngine _engine;
+        public AppEngine Engine { get { return _engine; } }
+
         public SettingsSchedule()
         {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _engine = AppEngine.Instance;
+            }
+
             InitializeComponent();
 
+            Schedule1.Schedule = Engine.UserPreferences.Schedules.schedule1;
+            Schedule2.Schedule = Engine.UserPreferences.Schedules.schedule2;
+            Schedule3.Schedule = Engine.UserPreferences.Schedules.schedule3;
+            Schedule4.Schedule = Engine.UserPreferences.Schedules.schedule4;
+            Schedule5.Schedule = Engine.UserPreferences.Schedules.schedule5;
+
+            var bc = new BrushConverter();
+            Schedule1.scheduleColor.Background = (Brush)bc.ConvertFrom("#662261");
+            Schedule2.scheduleColor.Background = (Brush)bc.ConvertFrom("#0080A8");
+            Schedule3.scheduleColor.Background = (Brush)bc.ConvertFrom("#002957");
+            Schedule4.scheduleColor.Background = (Brush)bc.ConvertFrom("#008145");
+            Schedule5.scheduleColor.Background = (Brush)bc.ConvertFrom("#434343");
+
             focusSchedules = new List<FocusSchedule>();
-            focusSchedules.Add(new FocusSchedule { Id = 1 });
-            focusSchedules.Add(new FocusSchedule { Id = 2 });
-            focusSchedules.Add(new FocusSchedule { Id = 3 });
-            focusSchedules.Add(new FocusSchedule { Id = 4 });
-            focusSchedules.Add(new FocusSchedule { Id = 5 });
+            focusSchedules.Add(new FocusSchedule { Id = 1, StartAt= DateTime.Now });
+            focusSchedules.Add(new FocusSchedule { Id = 2, StartAt = DateTime.Now });
+            focusSchedules.Add(new FocusSchedule { Id = 3, StartAt = DateTime.Now });
+            focusSchedules.Add(new FocusSchedule { Id = 4, StartAt = DateTime.Now });
+            focusSchedules.Add(new FocusSchedule { Id = 5, StartAt = DateTime.Now });
 
             InitializeCalendarData();
 
             this.DataContext = this;
         }
+        #endregion
+
+        private List<FocusSchedule> focusSchedules;
+        private List<CalendarData> calendarDataSource;
+        
 
         /// <summary>
         /// This method sends color info to calendar view
@@ -90,7 +116,7 @@ namespace Morphic.Focus.Screens
         public int Id { get; set; }
         public string BlockListName { get; set; }
 
-        public TimeSpan StartAt { get; set; }
+        public DateTime StartAt { get; set; }
         public TimeSpan EndAt { get; set; }
         public List<DayOfWeek> ScheduledDays { get; set; }
         public bool IsActive { get; set; }

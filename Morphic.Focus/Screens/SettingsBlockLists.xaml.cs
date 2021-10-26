@@ -29,11 +29,6 @@ namespace Morphic.Focus.Screens
     /// </summary>
     public partial class SettingsBlockLists : UserControl
     {
-        private List<Penalty> penalties;
-
-        private ObservableCollection<BlockList> blockLists;
-
-
         #region AppEngine and Constructor
         AppEngine _engine;
         public AppEngine Engine { get { return _engine; } }
@@ -79,11 +74,7 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }  
         }
-        #endregion
 
-       
-
-        #region User Events
         private void btnBlockAddApp_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -98,7 +89,7 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
-
+        
         private void btnBlockAddWebsite_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -112,7 +103,7 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
-
+        
         private void btnAlsoBlockRemove_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -129,7 +120,7 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
-
+        
         private void btnExceptionsAddApp_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -144,7 +135,7 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
-
+        
         private void btnExceptionsAddWebsite_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -182,18 +173,6 @@ namespace Morphic.Focus.Screens
             e.Handled = regex.IsMatch(e.Text);
         }
         #endregion
-
-
-    }
-
-
-
-    public class Penalty
-    {
-        public int Id { get; set; }
-        public string Type { get; set; }
-        public int Value { get; set; }
-        public bool HasValue { get; set; }
     }
 
     public class EnumDescriptionConverter : IValueConverter

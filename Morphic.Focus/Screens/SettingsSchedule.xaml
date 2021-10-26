@@ -7,34 +7,7 @@
              xmlns:local="clr-namespace:Morphic.Focus.Screens"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Height="620">
-    <UserControl.Resources>
-        <Style x:Key="WeekdayButtonStyle" TargetType="{x:Type ToggleButton}">
-            <Setter Property="Height" Value="18" />
-            <Setter Property="Width" Value="18" />
-            <Setter Property="Padding" Value="4 2"/>
-            <Setter Property="FontSize" Value="10"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ToggleButton">
-                        <Grid>
-                            <Ellipse Fill="{TemplateBinding Background}" Stroke="{TemplateBinding Foreground}"/>
-                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Background" Value="#3566D8" />
-                    <Setter Property="Foreground" Value="White" />
-                </Trigger>
-                <Trigger Property="IsChecked" Value="False">
-                    <Setter Property="Background" Value="White" />
-                    <Setter Property="Foreground" Value="Black" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
+    
 
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -42,18 +15,18 @@
             <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
                 <ItemsControl>
                     <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,10,0,0" >
-                    <Run>Focus Schedule</Run>
-                    <Hyperlink FontSize="12" NavigateUri="https://morphic.org/focus-schedules/">
-                        <TextBlock Text="Instructions "/>
-                    </Hyperlink>
-                    <Hyperlink FontSize="12" NavigateUri="https://morphic.org/focus-schedules/">
-                        <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>
-                    </Hyperlink>
-                </TextBlock>
+                        <Run>Focus Schedule</Run>
+                        <Hyperlink FontSize="12" NavigateUri="https://morphic.org/focus-schedules/">
+                            <TextBlock Text="Instructions "/>
+                        </Hyperlink>
+                        <Hyperlink FontSize="12" NavigateUri="https://morphic.org/focus-schedules/">
+                            <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>
+                        </Hyperlink>
+                    </TextBlock>
                     <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 0 10">
-                    <Run>
-                        Create a schedule to start focus sessions on days and times of your choosing. (When you schedule focus sessions at the top of this page, they will appear on the calendar at the bottom.)
-                    </Run>
+                        <Run>
+                            Create a schedule to start focus sessions on days and times of your choosing. (When you schedule focus sessions at the top of this page, they will appear on the calendar at the bottom.)
+                        </Run>
                     </TextBlock>
                 </ItemsControl>
             </StackPanel>
@@ -73,32 +46,19 @@
                             </TextBlock>
                         </StackPanel>
                     </Border>
-                    <ItemsControl ItemsSource="{Binding FocusSchedules}">
+                    <!--<ItemsControl ItemsSource="{Binding FocusSchedules}" Name="icSchedules">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Height="44" Background="{DynamicResource LightGreen}" Margin="0">
-                                    <ComboBox Style="{DynamicResource SettingsComboBoxStyle}" Width="117" Height="23" Margin="27 10 0 11">
-                                        <ComboBoxItem>Starter Blocklist</ComboBoxItem>
-                                        <ComboBoxItem>Weekend Blocklist</ComboBoxItem>
-                                        <ComboBoxItem>Meditation Session</ComboBoxItem>
-                                    </ComboBox>
-                                    <TextBox Width="57" Height="23" Margin="12 10 0 11"></TextBox>
-                                    <TextBox Width="57" Height="23" Margin="12 10 0 11"></TextBox>
-                                    <StackPanel Orientation="Horizontal" Margin="12 10 0 11">
-                                        <ToggleButton Content="S" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-                                        <ToggleButton Margin="4 0 0 0" Content="M" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-                                        <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-                                        <ToggleButton Margin="4 0 0 0" Content="W" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-                                        <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-                                        <ToggleButton Margin="4 0 0 0" Content="F" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-                                        <ToggleButton Margin="4 0 0 0" Content="S" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-                                    </StackPanel>
-                                    <CheckBox Margin="22 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14"/>
-                                    <Image Margin="12 10 0 11" Source="/Images/Vector.png" Width="10.5" Height="13.5" VerticalAlignment="Center"/>
-                                </StackPanel>
+                                
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    </ItemsControl>-->
+                    <local:UCSchedule x:Name="Schedule1"/>
+                    <local:UCSchedule x:Name="Schedule2"/>
+                    <local:UCSchedule x:Name="Schedule3"/>
+                    <local:UCSchedule x:Name="Schedule4"/>
+                    <local:UCSchedule x:Name="Schedule5"/>
+                    
                     <Border Height="20" Margin="8 12 15 0" BorderBrush="{DynamicResource GreyBorder}" BorderThickness="0 1 0 0" Background="Transparent">
                     </Border>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20">

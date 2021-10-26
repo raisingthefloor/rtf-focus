@@ -386,6 +386,10 @@ namespace Morphic.Data.Models
             NotifyPropertyChanged();
         }
 
+        #endregion
+
+        #region IEquatable
+
         public override bool Equals(object obj)
         {
             return Equals(obj as Category);
@@ -414,7 +418,5 @@ namespace Morphic.Data.Models
         }
 
         #endregion
-
-
     }
 }

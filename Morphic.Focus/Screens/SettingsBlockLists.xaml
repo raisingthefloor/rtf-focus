@@ -393,7 +393,7 @@
 
         <Canvas Height="650" Margin="0 0 0 30">
 
-            <ComboBox Name="cmbBlockList" Style="{DynamicResource SettingsAddComboBoxStyle}" Width="154" Height="23" Canvas.Left="28" Canvas.ZIndex="2" Canvas.Top="10" ItemsSource="{Binding Path=Engine.UserPreferences.BlockLists}"  SelectedItem="{Binding Path=Engine.SelectedBlockList, Mode=TwoWay}"
+            <ComboBox Name="cmbBlockList" Style="{DynamicResource SettingsAddComboBoxStyle}" Width="154" Height="23" Canvas.Left="28" Canvas.ZIndex="2" Canvas.Top="10" ItemsSource="{Binding Path=Engine.UserPreferences.BlockLists}" SelectedItem="{Binding Path=Engine.SelectedBlockList, Mode=TwoWay}"
                   DisplayMemberPath="Name" SelectedValuePath="Name">
             </ComboBox>
 

@@ -46,13 +46,7 @@
                             </TextBlock>
                         </StackPanel>
                     </Border>
-                    <!--<ItemsControl ItemsSource="{Binding FocusSchedules}" Name="icSchedules">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>-->
+                    
                     <local:UCSchedule x:Name="Schedule1"/>
                     <local:UCSchedule x:Name="Schedule2"/>
                     <local:UCSchedule x:Name="Schedule3"/>

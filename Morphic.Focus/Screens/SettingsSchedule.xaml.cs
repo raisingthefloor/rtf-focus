@@ -34,18 +34,48 @@ namespace Morphic.Focus.Screens
 
             InitializeComponent();
 
-            Schedule1.Schedule = Engine.UserPreferences.Schedules.schedule1;
-            Schedule2.Schedule = Engine.UserPreferences.Schedules.schedule2;
-            Schedule3.Schedule = Engine.UserPreferences.Schedules.schedule3;
-            Schedule4.Schedule = Engine.UserPreferences.Schedules.schedule4;
-            Schedule5.Schedule = Engine.UserPreferences.Schedules.schedule5;
+            Schedule1.Schedule = Engine.UserPreferences.Schedules.Schedule1;
+            Schedule2.Schedule = Engine.UserPreferences.Schedules.Schedule2;
+            Schedule3.Schedule = Engine.UserPreferences.Schedules.Schedule3;
+            Schedule4.Schedule = Engine.UserPreferences.Schedules.Schedule4;
+            Schedule5.Schedule = Engine.UserPreferences.Schedules.Schedule5;
+
+            if (!string.IsNullOrWhiteSpace(Schedule1.Schedule.BlockListName) &&
+                Engine.UserPreferences.BlockLists.Any(p => p.Name == Schedule1.Schedule.BlockListName))
+            {
+                Schedule1.Blocklist = Engine.UserPreferences.BlockLists.Where(p => p.Name == Schedule1.Schedule.BlockListName).First();
+            }
+
+            if (!string.IsNullOrWhiteSpace(Schedule2.Schedule.BlockListName) &&
+                Engine.UserPreferences.BlockLists.Any(p => p.Name == Schedule2.Schedule.BlockListName))
+            {
+                Schedule2.Blocklist = Engine.UserPreferences.BlockLists.Where(p => p.Name == Schedule2.Schedule.BlockListName).First();
+            }
+
+            if (!string.IsNullOrWhiteSpace(Schedule3.Schedule.BlockListName) &&
+                Engine.UserPreferences.BlockLists.Any(p => p.Name == Schedule3.Schedule.BlockListName))
+            {
+                Schedule3.Blocklist = Engine.UserPreferences.BlockLists.Where(p => p.Name == Schedule3.Schedule.BlockListName).First();
+            }
+
+            if (!string.IsNullOrWhiteSpace(Schedule4.Schedule.BlockListName) &&
+                Engine.UserPreferences.BlockLists.Any(p => p.Name == Schedule4.Schedule.BlockListName))
+            {
+                Schedule4.Blocklist = Engine.UserPreferences.BlockLists.Where(p => p.Name == Schedule4.Schedule.BlockListName).First();
+            }
+
+            if (!string.IsNullOrWhiteSpace(Schedule5.Schedule.BlockListName) &&
+                Engine.UserPreferences.BlockLists.Any(p => p.Name == Schedule5.Schedule.BlockListName))
+            {
+                Schedule5.Blocklist = Engine.UserPreferences.BlockLists.Where(p => p.Name == Schedule5.Schedule.BlockListName).First();
+            }
 
             var bc = new BrushConverter();
             Schedule1.scheduleColor.Background = (Brush)bc.ConvertFrom("#662261");
             Schedule2.scheduleColor.Background = (Brush)bc.ConvertFrom("#0080A8");
-            Schedule3.scheduleColor.Background = (Brush)bc.ConvertFrom("#002957");
+            Schedule3.scheduleColor.Background = Brushes.Orange; //bc.ConvertFrom(  (Brush)bc.ConvertFrom("#002957");
             Schedule4.scheduleColor.Background = (Brush)bc.ConvertFrom("#008145");
-            Schedule5.scheduleColor.Background = (Brush)bc.ConvertFrom("#434343");
+            Schedule5.scheduleColor.Background = (Brush)bc.ConvertFrom("#ff0000");
 
             focusSchedules = new List<FocusSchedule>();
             focusSchedules.Add(new FocusSchedule { Id = 1, StartAt= DateTime.Now });

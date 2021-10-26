@@ -12,6 +12,9 @@
             <Setter Property="Width" Value="18" />
             <Setter Property="Padding" Value="4 2"/>
             <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#666666" />
+            <Setter Property="Foreground" Value="White" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ToggleButton">
@@ -23,6 +26,7 @@
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
+                
                 <Trigger Property="IsChecked" Value="True">
                     <Setter Property="Background" Value="#3566D8" />
                     <Setter Property="Foreground" Value="White" />
@@ -31,29 +35,65 @@
                     <Setter Property="Background" Value="White" />
                     <Setter Property="Foreground" Value="Black" />
                 </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#666666" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal" Height="44" Background="{DynamicResource LightGreen}" Margin="0">
-
+        <StackPanel.Resources>
+            <Style TargetType="{x:Type TextBox}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=SelectedItem, 
+                                               ElementName=cmbBlockList}" 
+                                               Value="{x:Null}">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="{x:Type CheckBox}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=SelectedItem, 
+                                               ElementName=cmbBlockList}" 
+                                               Value="{x:Null}">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="{x:Type Image}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=SelectedItem, 
+                                               ElementName=cmbBlockList}" 
+                                               Value="{x:Null}">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </StackPanel.Resources>
+        
         <Border Width="19" Height="23" Margin="8 10 0 11" Name="scheduleColor"/>
-        <ComboBox Style="{DynamicResource SettingsComboBoxStyle}" Width="117" Height="23" Margin="0 10 0 11" 
-                                              ItemsSource="{Binding Path=Engine.UserPreferences.BlockLists, Mode=OneWay}"
+        <ComboBox Style="{DynamicResource SettingsComboBoxStyle}" Width="117" Height="23" Margin="0 10 0 11" Name="cmbBlockList"
+                  ItemsSource="{Binding Path=Engine.UserPreferences.BlockLists, Mode=OneWay}" SelectedItem="{Binding Path=Blocklist, Mode=TwoWay}"
                                               DisplayMemberPath="Name" SelectedValuePath="Name">
         </ComboBox>
-        <TextBox Width="57" Height="23" Margin="12 10 0 11" 
-                                             Text="{Binding Path=StartAt, Mode=TwoWay, StringFormat={}{0:t}}"></TextBox>
-        <TextBox Width="57" Height="23" Margin="12 10 0 11"></TextBox>
+        <TextBox Width="57" Height="23" Margin="12 10 0 11" Name="txtSTart" Text="{Binding Path=Schedule.StartAt, Mode=TwoWay, StringFormat={}{0:t}}"></TextBox>
+        <TextBox Width="57" Height="23" Margin="12 10 0 11" Text="{Binding Path=Schedule.EndAt, Mode=TwoWay, StringFormat={}{0:t}}"></TextBox>
+        
         <StackPanel Orientation="Horizontal" Margin="12 10 0 11">
-            <ToggleButton Content="S" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="M" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="W" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="F" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="S" Style="{StaticResource WeekdayButtonStyle}"></ToggleButton>
+            <ToggleButton Content="S" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="M" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="W" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="F" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="S" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
         </StackPanel>
-        <CheckBox Margin="22 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14"/>
-        <Image Margin="12 10 0 11" Source="/Images/Vector.png" Width="10.5" Height="13.5" VerticalAlignment="Center"/>
+        <CheckBox Margin="22 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14" IsChecked="{Binding Path=Schedule.IsActive}"/>
+
+        <Button Margin="12 10 0 11" Style="{DynamicResource SetingsImageButtonStyle}" Cursor="Hand" Name="btnClearSchedule" Click="btnClearSchedule_Click">
+            <Image  Source="/Images/Vector.png" Width="13.5" Height="13.5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="6 0"/>
+        </Button>
     </StackPanel>
 </UserControl>

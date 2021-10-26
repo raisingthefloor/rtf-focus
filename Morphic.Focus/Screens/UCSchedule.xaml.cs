@@ -1,4 +1,5 @@
 ﻿using Morphic.Data.Models;
+using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,6 +41,52 @@ namespace Morphic.Focus.Screens
         #endregion
 
         private Schedule _schedule;
-        public Schedule Schedule { get => _schedule; set => _schedule = value; }
+        public Schedule Schedule 
+        {
+            get
+            {
+                return _schedule;
+            }
+            set
+            {
+                _schedule = value;
+            }
+        }
+
+        private Blocklist _blocklist;
+        public Blocklist Blocklist
+        {
+            get
+            {
+                return _blocklist;
+            }
+            set
+            {
+                if (value != _blocklist)
+                {
+                    _blocklist = value;
+                    if (_blocklist != null) Schedule.BlockListName = _blocklist.Name;
+                }
+            }
+        }
+
+        private void btnClearSchedule_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LoggingService.WriteAppLog("UCSchedule -> btnClearSchedule_Click");
+
+                Schedule.BlockListName = string.Empty;
+                Schedule.StartAt = DateTime.Today;
+                Schedule.EndAt = DateTime.Today;
+                Schedule.Days.Clear();
+                Schedule.IsActive = false;
+                cmbBlockList.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
     }
 }

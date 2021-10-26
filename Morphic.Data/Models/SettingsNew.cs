@@ -17,7 +17,7 @@ namespace Morphic.Data.Models
                 if (_general == null)
                 {
                     _general = new General();
-                    _general.PropertyChanged += General_PropertyChanged;
+                    _general.PropertyChanged += _general_PropertyChanged; ;
                 }
                 return _general;
             }
@@ -26,9 +26,15 @@ namespace Morphic.Data.Models
                 if (value != _general)
                 {
                     _general = value;
-                    _general.PropertyChanged += General_PropertyChanged;
+                    _general.PropertyChanged += _general_PropertyChanged;
                 }
             }
+        }
+
+        //Propagate the User Preference changes to App Engine for App Engine to update settings json file
+        private void _general_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged();
         }
 
         private ObservableCollection<Blocklist> _blockLists;
@@ -88,7 +94,7 @@ namespace Morphic.Data.Models
                 if (_schedules == null)
                 {
                     _schedules = new Schedules();
-                    //_schedules.PropertyChanged += General_PropertyChanged;
+                    _schedules.PropertyChanged += _schedules_PropertyChanged; ;
                 }
                 return _schedules;
             }
@@ -97,9 +103,15 @@ namespace Morphic.Data.Models
                 if (value != _schedules)
                 {
                     _schedules = value;
-                    //_schedules.PropertyChanged += General_PropertyChanged;
+                    _schedules.PropertyChanged += _schedules_PropertyChanged;
                 }
             }
+        }
+
+        //Propagate the User Preference changes to App Engine for App Engine to update settings json file
+        private void _schedules_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged();
         }
 
         public Todaysschedule _todaysSchedule;
@@ -123,12 +135,6 @@ namespace Morphic.Data.Models
                     //_todaysSchedule.PropertyChanged += General_PropertyChanged;
                 }
             }
-        }
-
-        //Propagate the User Preference changes to App Engine for App Engine to update settings json file
-        private void General_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            NotifyPropertyChanged();
         }
 
         #region PropertyChanged

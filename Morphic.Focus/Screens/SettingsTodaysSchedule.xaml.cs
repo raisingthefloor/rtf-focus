@@ -21,7 +21,7 @@ namespace Morphic.Focus.Screens
     public partial class SettingsTodaysSchedule : UserControl
     {
         public string todaysWeekday { get; set; }
-        private List<FocusSchedule> focusSchedules;
+        //private List<FocusSchedule> focusSchedules;
         private List<CalendarData> calendarDataSource;
         public SettingsTodaysSchedule()
         {
@@ -29,9 +29,9 @@ namespace Morphic.Focus.Screens
 
             InitializeCalendarData();
 
-            focusSchedules = new List<FocusSchedule>();
-            focusSchedules.Add(new FocusSchedule { Id = 1, BlockListName = "Meditation Session", ListColor=Brushes.Purple });
-            focusSchedules.Add(new FocusSchedule { Id = 2, BlockListName = "Weekend blocklist", ListColor = Brushes.Blue });
+            //focusSchedules = new List<FocusSchedule>();
+            //focusSchedules.Add(new FocusSchedule { Id = 1, BlockListName = "Meditation Session", ListColor=Brushes.Purple });
+            //focusSchedules.Add(new FocusSchedule { Id = 2, BlockListName = "Weekend blocklist", ListColor = Brushes.Blue });
 
             todaysWeekday = DateTime.Today.ToString("ddd").ToUpper();
             this.DataContext = this;
@@ -79,12 +79,12 @@ namespace Morphic.Focus.Screens
             }
         }
 
-        public List<FocusSchedule> FocusSchedules
-        {
-            get
-            {
-                return focusSchedules;
-            }
-        }
+        //public List<FocusSchedule> FocusSchedules
+        //{
+        //    get
+        //    {
+        //        return focusSchedules;
+        //    }
+        //}
     }
 }

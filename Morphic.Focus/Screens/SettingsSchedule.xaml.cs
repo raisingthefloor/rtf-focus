@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Morphic.Data.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,7 +22,7 @@ namespace Morphic.Focus.Screens
     /// <summary>
     /// Interaction logic for SettingsSchedule.xaml
     /// </summary>
-    public partial class SettingsSchedule : UserControl
+    public partial class SettingsSchedule : UserControl, INotifyPropertyChanged
     {
         #region AppEngine and Constructor
         AppEngine _engine;
@@ -39,6 +42,12 @@ namespace Morphic.Focus.Screens
             Schedule3.Schedule = Engine.UserPreferences.Schedules.Schedule3;
             Schedule4.Schedule = Engine.UserPreferences.Schedules.Schedule4;
             Schedule5.Schedule = Engine.UserPreferences.Schedules.Schedule5;
+
+            Schedule1.Schedule.PropertyChanged += Schedule_PropertyChanged;
+            Schedule2.Schedule.PropertyChanged += Schedule_PropertyChanged;
+            Schedule3.Schedule.PropertyChanged += Schedule_PropertyChanged;
+            Schedule4.Schedule.PropertyChanged += Schedule_PropertyChanged;
+            Schedule5.Schedule.PropertyChanged += Schedule_PropertyChanged;
 
             if (!string.IsNullOrWhiteSpace(Schedule1.Schedule.BlockListName) &&
                 Engine.UserPreferences.BlockLists.Any(p => p.Name == Schedule1.Schedule.BlockListName))
@@ -71,27 +80,22 @@ namespace Morphic.Focus.Screens
             }
 
             var bc = new BrushConverter();
-            Schedule1.scheduleColor.Background = (Brush)bc.ConvertFrom("#662261");
-            Schedule2.scheduleColor.Background = (Brush)bc.ConvertFrom("#0080A8");
-            Schedule3.scheduleColor.Background = Brushes.Orange; //bc.ConvertFrom(  (Brush)bc.ConvertFrom("#002957");
-            Schedule4.scheduleColor.Background = (Brush)bc.ConvertFrom("#008145");
-            Schedule5.scheduleColor.Background = (Brush)bc.ConvertFrom("#ff0000");
-
-            focusSchedules = new List<FocusSchedule>();
-            focusSchedules.Add(new FocusSchedule { Id = 1, StartAt= DateTime.Now });
-            focusSchedules.Add(new FocusSchedule { Id = 2, StartAt = DateTime.Now });
-            focusSchedules.Add(new FocusSchedule { Id = 3, StartAt = DateTime.Now });
-            focusSchedules.Add(new FocusSchedule { Id = 4, StartAt = DateTime.Now });
-            focusSchedules.Add(new FocusSchedule { Id = 5, StartAt = DateTime.Now });
+            Schedule1.scheduleColor.Background = Schedule1Brush;
+            Schedule2.scheduleColor.Background = Schedule2Brush;
+            Schedule3.scheduleColor.Background = Schedule3Brush; //bc.ConvertFrom(  (Brush)bc.ConvertFrom("#002957");
+            Schedule4.scheduleColor.Background = Schedule4Brush;
+            Schedule5.scheduleColor.Background = Schedule5Brush;
 
             InitializeCalendarData();
 
             this.DataContext = this;
         }
-        #endregion
 
-        private List<FocusSchedule> focusSchedules;
-        private List<CalendarData> calendarDataSource;
+        private void Schedule_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            InitializeCalendarData();
+        }
+        #endregion
         
         private static readonly KeyValuePair<int, string>[] _breakDuration = {
             new KeyValuePair<int, string>(1, "1 min"),
@@ -125,72 +129,232 @@ namespace Morphic.Focus.Screens
             }
         }
 
+        private static BrushConverter bc = new BrushConverter();
+        private static readonly Brush Schedule1Brush = (Brush)bc.ConvertFrom("#662261");
+        private static readonly Brush Schedule2Brush = (Brush)bc.ConvertFrom("#0080A8");
+        private static readonly Brush Schedule3Brush = Brushes.Orange;
+        private static readonly Brush Schedule4Brush = (Brush)bc.ConvertFrom("#008145");
+        private static readonly Brush Schedule5Brush = (Brush)bc.ConvertFrom("#ff0000");
+
         /// <summary>
         /// This method sends color info to calendar view
         /// TODO - Logic of this method would be written
         /// </summary>
         private void InitializeCalendarData()
         {
-            calendarDataSource = new List<CalendarData>();
+            CalendarDataSource.Clear();
             
-            for (int i=1; i<=24; i++)
-                for (int j = 1; j <= 7; j++)
-                    calendarDataSource.Add(new CalendarData { Color1 = Brushes.Transparent,
+            for (int i=0; i<24; i++)
+                for (int j = 0; j < 7; j++)
+                    CalendarDataSource.Add(new CalendarData { Color1 = Brushes.Transparent,
             Color2 = Brushes.Transparent, I=i, J=j});
 
             //For Demo
-            for (int i = 10; i <= 17; i++)
-            {
-                CalendarData? item = calendarDataSource.Find(x => x.I == i && x.J == 1);
-                if (item!=null)
-                    item.Color1 = Brushes.Purple;
-            }
-            for (int i = 12; i <= 14; i++)
-            {
-                CalendarData? item = calendarDataSource.Find(x => x.I == i && x.J == 1);
-                if (item != null)
-                    item.Color2 = Brushes.Blue;
-            }
+            //for (int i = 10; i <= 17; i++)
+            //{
+            //    CalendarData? item = calendarDataSource.Find(x => x.I == i && x.J == 1);
+            //    if (item!=null)
+            //        item.Color1 = Brushes.Purple;
+            //}
+            //for (int i = 12; i <= 14; i++)
+            //{
+            //    CalendarData? item = calendarDataSource.Find(x => x.I == i && x.J == 1);
+            //    if (item != null)
+            //        item.Color2 = Brushes.Blue;
+            //}
+
+            AddSchedule(Engine.UserPreferences.Schedules.Schedule1, Schedule1Brush);
+            AddSchedule(Engine.UserPreferences.Schedules.Schedule2, Schedule2Brush);
+            AddSchedule(Engine.UserPreferences.Schedules.Schedule3, Schedule3Brush);
+            AddSchedule(Engine.UserPreferences.Schedules.Schedule4, Schedule4Brush);
+            AddSchedule(Engine.UserPreferences.Schedules.Schedule5, Schedule5Brush);
 
         }
 
-        public List<FocusSchedule> FocusSchedules
+        private void AddSchedule(Schedule schedule, Brush brush)
         {
-            get
+            //Process only if the schedule is Active
+            if (schedule.IsActive)
             {
-                return focusSchedules;
+                AddforDay(schedule, brush, schedule.IsActiveSunday, 0);
+                AddforDay(schedule, brush, schedule.IsActiveMonday, 1);
+                AddforDay(schedule, brush, schedule.IsActiveTuesday, 2);
+                AddforDay(schedule, brush, schedule.IsActiveWednesday, 3);
+                AddforDay(schedule, brush, schedule.IsActiveThursday, 4);
+                AddforDay(schedule, brush, schedule.IsActiveFriday, 5);
+                AddforDay(schedule, brush, schedule.IsActiveSaturday, 6);
             }
         }
 
-        public List<CalendarData> CalendarDataSource
+        private void AddforDay(Schedule schedule, Brush brush, bool day, int dayValue)
+        {
+            //Process for Sunday
+            if (day)
+            {
+                //Get the start and end time
+                TimeSpan startAt = schedule.StartAt.TimeOfDay;
+                TimeSpan endAt = schedule.EndAt.TimeOfDay;
+                int startHour = startAt.Hours; //12 AM = 0, 1 AM = 1, and so on
+                int endHour = endAt.Minutes == 0 ? endAt.Hours - 1 : endAt.Hours; //12:00 AM = 0, 12:10 AM = 1, 1:00 AM = 0, 1:15 AM = 1, and so on
+
+                //Check if first color slot is available
+                bool isFirstSlotAvailable = true; //Assume it is available
+                for (int i = startHour; i <= endHour; i++)
+                {
+                    //Make the check
+
+                    if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
+                    {
+                        CalendarData? item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
+                        if (item.Color1 != Brushes.Transparent)
+                        {
+                            isFirstSlotAvailable = false;
+                            break;
+                        }
+                    }
+                }
+
+                //If First Color Slot is available, assign the color to the slot
+                if (isFirstSlotAvailable)
+                {
+                    for (int i = startHour; i <= endHour; i++)
+                    {
+                        //Make the check
+                        if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
+                        {
+                            CalendarData item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
+                            item.Color1 = brush;
+                        }
+                    }
+                }
+                else
+                {
+                    //Check if second color slot is available
+                    bool isSecondSlotAvailable = true; //Assume it is available
+                    for (int i = startHour; i <= endHour; i++)
+                    {
+                        //Make the check
+                        if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
+                        {
+                            CalendarData? item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
+                            if (item.Color2 != Brushes.Transparent)
+                            {
+                                isSecondSlotAvailable = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    //If Second Color Slot is available, assign the color to the slot
+                    if (isSecondSlotAvailable)
+                    {
+                        for (int i = startHour; i <= endHour; i++)
+                        {
+                            //Make the check
+                            if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
+                            {
+                                CalendarData item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
+                                item.Color2 = brush;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private ObservableCollection<CalendarData> calendarDataSource;
+
+        public ObservableCollection<CalendarData> CalendarDataSource
         {
             get
             {
+                if (calendarDataSource == null)
+                {
+                    calendarDataSource = new ObservableCollection<CalendarData>();
+                    calendarDataSource.CollectionChanged += CalendarDataSource_CollectionChanged;
+                }
                 return calendarDataSource;
             }
+            set
+            {
+                if (value != calendarDataSource)
+                {
+                    calendarDataSource = value;
+                    calendarDataSource.CollectionChanged += CalendarDataSource_CollectionChanged; ;
+                    foreach (CalendarData item in calendarDataSource)
+                        item.PropertyChanged += Item_PropertyChanged;
+
+                }
+            }
+        }
+
+        private void Item_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged();
+        }
+
+        private void CalendarDataSource_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (CalendarData item in e.OldItems)
+                    item.PropertyChanged -= Item_PropertyChanged;
+            }
+            if (e.NewItems != null)
+            {
+                foreach (CalendarData item in e.NewItems)
+                    item.PropertyChanged += Item_PropertyChanged;
+            }
+
+            NotifyPropertyChanged();
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 
-
-    public class FocusSchedule
+    public class CalendarData : BaseClass, IEquatable<CalendarData?>
     {
-        public int Id { get; set; }
-        public string BlockListName { get; set; }
-
-        public DateTime StartAt { get; set; }
-        public TimeSpan EndAt { get; set; }
-        public List<DayOfWeek> ScheduledDays { get; set; }
-        public bool IsActive { get; set; }
-        public SolidColorBrush ListColor { get; set; }
-    }
-
-    public class CalendarData
-    {
-        public SolidColorBrush Color1 { get; set; }
-        public SolidColorBrush Color2 { get; set; }
+        public Brush Color1 { get; set; }
+        public Brush Color2 { get; set; }
 
         public int I { get; set; }
         public int J { get; set; }
 
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as CalendarData);
+        }
+
+        public bool Equals(CalendarData? other)
+        {
+            return other != null &&
+                   EqualityComparer<Brush>.Default.Equals(Color1, other.Color1) &&
+                   EqualityComparer<Brush>.Default.Equals(Color2, other.Color2) &&
+                   I == other.I &&
+                   J == other.J;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Color1, Color2, I, J);
+        }
+
+        public static bool operator ==(CalendarData? left, CalendarData? right)
+        {
+            return EqualityComparer<CalendarData>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(CalendarData? left, CalendarData? right)
+        {
+            return !(left == right);
+        }
     }
 }

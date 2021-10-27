@@ -77,40 +77,56 @@ namespace Morphic.Focus.Screens
         /// <param name="e"></param>
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            try
             {
-                if (e.OriginalSource is Hyperlink)
+                if (e.LeftButton == MouseButtonState.Pressed)
                 {
-                    try
+                    if (e.OriginalSource is Hyperlink)
                     {
-                        LoggingService.WriteAppLog("Settings -> Window_MouseMove");
-
-                        Hyperlink link = (Hyperlink)e.OriginalSource;
-
-                        if (link.Tag != null && link.Tag.ToString() == "Category")
+                        try
                         {
-                            LoggingService.WriteAppLog("Settings -> Category_Clicked");
+                            LoggingService.WriteAppLog("Settings -> Window_MouseMove");
 
-                            var run = ((Hyperlink)e.OriginalSource).Inlines.FirstOrDefault() as Run;
-                            string text = run == null ? string.Empty : run.Text;
+                            Hyperlink link = (Hyperlink)e.OriginalSource;
 
-                            CategoryListModal categoryListModal = new CategoryListModal(text);
-                            categoryListModal.ShowDialog();
-                            return;
+                            if (link.Tag != null && link.Tag.ToString() == "Category")
+                            {
+                                LoggingService.WriteAppLog("Settings -> Category_Clicked");
+
+                                var run = ((Hyperlink)e.OriginalSource).Inlines.FirstOrDefault() as Run;
+                                string text = run == null ? string.Empty : run.Text;
+
+                                CategoryListModal categoryListModal = new CategoryListModal(text);
+                                categoryListModal.ShowDialog();
+                                return;
+                            }
+
+                            if (((Hyperlink)e.OriginalSource).NavigateUri != null)
+                                Process.Start("explorer", ((Hyperlink)e.OriginalSource).NavigateUri.ToString());
                         }
-
-                        if (((Hyperlink)e.OriginalSource).NavigateUri != null)
-                            Process.Start("explorer", ((Hyperlink)e.OriginalSource).NavigateUri.ToString());
+                        catch (Exception ex)
+                        {
+                            LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                        try
+                        {
+                            this.DragMove();
+                        }
+                        catch (Exception ex)
+                        {
+
+                            LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                        }
+                        
                     }
                 }
-                else
-                {
-                    this.DragMove();
-                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
 

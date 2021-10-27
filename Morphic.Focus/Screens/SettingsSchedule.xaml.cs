@@ -149,20 +149,6 @@ namespace Morphic.Focus.Screens
                     CalendarDataSource.Add(new CalendarData { Color1 = Brushes.Transparent,
             Color2 = Brushes.Transparent, I=i, J=j});
 
-            //For Demo
-            //for (int i = 10; i <= 17; i++)
-            //{
-            //    CalendarData? item = calendarDataSource.Find(x => x.I == i && x.J == 1);
-            //    if (item!=null)
-            //        item.Color1 = Brushes.Purple;
-            //}
-            //for (int i = 12; i <= 14; i++)
-            //{
-            //    CalendarData? item = calendarDataSource.Find(x => x.I == i && x.J == 1);
-            //    if (item != null)
-            //        item.Color2 = Brushes.Blue;
-            //}
-
             AddSchedule(Engine.UserPreferences.Schedules.Schedule1, Schedule1Brush);
             AddSchedule(Engine.UserPreferences.Schedules.Schedule2, Schedule2Brush);
             AddSchedule(Engine.UserPreferences.Schedules.Schedule3, Schedule3Brush);

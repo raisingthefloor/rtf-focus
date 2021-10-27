@@ -497,4 +497,150 @@ namespace Morphic.Data.Models
         }
         #endregion
     }
+
+    public class Todaysschedule : BaseClass
+    {
+        #region Schedule1
+        private Schedule _schedule1;
+        public Schedule Schedule1
+        {
+            get
+            {
+                if (_schedule1 == null)
+                {
+                    _schedule1 = new Schedule();
+                    _schedule1.PropertyChanged += PropertyChanged;
+                }
+                return _schedule1;
+            }
+            set
+            {
+                if (value != this._schedule1)
+                {
+                    this._schedule1 = value;
+                    _schedule1.PropertyChanged += PropertyChanged;
+                }
+            }
+        }
+        #endregion
+
+        #region Schedule2
+        private Schedule _schedule2;
+        public Schedule Schedule2
+        {
+            get
+            {
+                if (_schedule2 == null)
+                {
+                    _schedule2 = new Schedule();
+                    _schedule2.PropertyChanged += PropertyChanged;
+                }
+                return _schedule2;
+            }
+            set
+            {
+                if (value != this._schedule2)
+                {
+                    this._schedule2 = value;
+                    _schedule2.PropertyChanged += PropertyChanged;
+                }
+            }
+        }
+        #endregion
+
+        #region Schedule3
+        private Schedule _schedule3;
+        public Schedule Schedule3
+        {
+            get
+            {
+                if (_schedule3 == null)
+                {
+                    _schedule3 = new Schedule();
+                    _schedule3.PropertyChanged += PropertyChanged;
+                }
+                return _schedule3;
+            }
+            set
+            {
+                if (value != this._schedule3)
+                {
+                    this._schedule3 = value;
+                    _schedule3.PropertyChanged += PropertyChanged;
+                }
+            }
+        }
+        #endregion
+
+        #region Schedule4
+        private Schedule _schedule4;
+        public Schedule Schedule4
+        {
+            get
+            {
+                if (_schedule4 == null)
+                {
+                    _schedule4 = new Schedule();
+                    _schedule4.PropertyChanged += PropertyChanged;
+                }
+                return _schedule4;
+            }
+            set
+            {
+                if (value != this._schedule4)
+                {
+                    this._schedule4 = value;
+                    _schedule4.PropertyChanged += PropertyChanged;
+                }
+            }
+        }
+        #endregion
+
+        #region Schedule5
+        private Schedule _schedule5;
+        public Schedule Schedule5
+        {
+            get
+            {
+                if (_schedule5 == null)
+                {
+                    _schedule5 = new Schedule();
+                    _schedule5.PropertyChanged += PropertyChanged;
+                }
+                return _schedule5;
+            }
+            set
+            {
+                if (value != this._schedule5)
+                {
+                    this._schedule5 = value;
+                    _schedule5.PropertyChanged += PropertyChanged;
+                }
+            }
+        }
+        #endregion
+
+        private DateTime _dateUpdated;
+
+        public DateTime DateUpdated
+        {
+            get
+            {
+                return _dateUpdated;
+            }
+            set
+            {
+                if (value != this._dateUpdated)
+                {
+                    this._dateUpdated = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private void PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged();
+        }
+    }
 }

@@ -109,6 +109,10 @@ namespace Morphic.Focus.Screens
                             LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
                         }
                     }
+                    else if (e.OriginalSource is TextBox)
+                    {
+                        return;
+                    }
                     else
                     {
                         try

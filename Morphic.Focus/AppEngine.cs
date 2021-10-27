@@ -22,15 +22,22 @@ namespace Morphic.Focus
 
         AppEngine()
         {
+            System.IO.File.Copy(Path.Combine(AppContext.BaseDirectory, Common.CATEGORIES_FILE_NAME), Common.MakeFilePath(Common.CATEGORIES_FILE_NAME), true);
             GetFocusSettings();
+
             GetCategoryies();
 
             CheckIsFocusRunning();
 
             UserPreferences.PropertyChanged += UserPreferences_PropertyChanged;
+            UserPreferences.Schedules.PropertyChanged += Schedules_PropertyChanged;
+            SetTodaysSchedule();
         }
 
-        
+        private void Schedules_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            SetTodaysSchedule(true); //Since original schedules are altered, force reset today's schedules
+        }
 
         private void UserPreferences_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
@@ -108,7 +115,7 @@ namespace Morphic.Focus
         #region User Preferences
         private UserPreferences? _userPreferences = null;
         public UserPreferences? UserPreferences
-        { 
+        {
             get
             {
                 return _userPreferences;
@@ -138,6 +145,41 @@ namespace Morphic.Focus
                 jSONHelper.Save<UserPreferences>(UserPreferences);
             }
 
+        }
+
+        private void SetTodaysSchedule(bool force = false)
+        {
+            //force=true means original schedules are altered. This basically means that we will mandatorily reset Today's Schedule
+            if (!force)
+            {
+                //We have already set today's scheduled and this is a restart of the Focus App
+                if (UserPreferences.TodaysSchedule.DateUpdated.Date == DateTime.Today.Date)
+                    return;
+            }
+
+            AssignSchedule(UserPreferences.TodaysSchedule.Schedule1, UserPreferences.Schedules.Schedule1);
+            AssignSchedule(UserPreferences.TodaysSchedule.Schedule2, UserPreferences.Schedules.Schedule2);
+            AssignSchedule(UserPreferences.TodaysSchedule.Schedule3, UserPreferences.Schedules.Schedule3);
+            AssignSchedule(UserPreferences.TodaysSchedule.Schedule4, UserPreferences.Schedules.Schedule4);
+            AssignSchedule(UserPreferences.TodaysSchedule.Schedule5, UserPreferences.Schedules.Schedule5);
+            UserPreferences.TodaysSchedule.DateUpdated = DateTime.Now;
+
+        }
+
+        void AssignSchedule(Schedule todaySchedule, Schedule schedule)
+        {
+
+            todaySchedule.BlockListName = schedule.BlockListName;
+            todaySchedule.EndAt = schedule.EndAt;
+            todaySchedule.IsActive = schedule.IsActive;
+            todaySchedule.IsActiveFriday = schedule.IsActiveFriday;
+            todaySchedule.IsActiveMonday = schedule.IsActiveMonday;
+            todaySchedule.IsActiveSaturday = schedule.IsActiveSaturday;
+            todaySchedule.IsActiveSunday = schedule.IsActiveSunday;
+            todaySchedule.IsActiveThursday = schedule.IsActiveThursday;
+            todaySchedule.IsActiveTuesday = schedule.IsActiveTuesday;
+            todaySchedule.IsActiveWednesday = schedule.IsActiveWednesday;
+            todaySchedule.StartAt = schedule.StartAt;
         }
 
         internal void GetFocusSettings()
@@ -202,13 +244,13 @@ namespace Morphic.Focus
         private Blocklist _selectedBlockList;
         public Blocklist SelectedBlockList
         {
-            get 
+            get
             {
                 //Set first item as selected item is initial selection not done yet
-                if (_selectedBlockList == null && UserPreferences.BlockLists.Count > 0) 
+                if (_selectedBlockList == null && UserPreferences.BlockLists.Count > 0)
                     SelectedBlockList = UserPreferences.BlockLists[0];
 
-                return _selectedBlockList; 
+                return _selectedBlockList;
             }
             set
             {
@@ -249,7 +291,7 @@ namespace Morphic.Focus
                 //Get the Focus Session Object
                 JSONHelper jSONHelper = new JSONHelper(Common.SESSION_FILE_NAME);
                 CurrSession1 = jSONHelper.Get<Session>();
-                IsFocusRunning = true; 
+                IsFocusRunning = true;
             }
             else
             {

@@ -105,7 +105,7 @@
                 </Grid>
 
                 <StackPanel Margin="28 0 28 30" Width="325">
-                    <Border Background="{DynamicResource LightGreen}" Margin="0" BorderThickness="0">
+                    <Border Background="{DynamicResource LightGreen}" Margin="0" BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}">
                         <StackPanel>
                             <Border Height="29" BorderThickness="0" Background="#EBF2FF">
                                 <StackPanel Orientation="Horizontal">
@@ -119,23 +119,27 @@
                                     </TextBlock>
                                 </StackPanel>
                             </Border>
-                            <ItemsControl ItemsSource="{Binding FocusSchedules}" Margin="0" >
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal" Height="44" Width="325" Background="{DynamicResource LightGreen}" Margin="0">
-                                            <Border Margin="8 10 0 11" BorderThickness="0" Background="{Binding ListColor}" Height="23" Width="20"></Border>
-                                            <TextBlock Text="{Binding BlockListName}" FontFamily="{DynamicResource SourceSansProRegular}" FontSize="12" LineHeight="15" Width="118" 
-                                                       Margin="5 10 0 11">
-                                            </TextBlock>
 
-                                            <TextBox Width="57" Height="23" Margin="8 10 0 11"></TextBox>
-                                            <TextBox Width="57" Height="23" Margin="8 10 0 11"></TextBox>
-
-                                            <CheckBox Margin="12 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                            <local:UCScheduleToday x:Name="Schedule1" 
+                                Visibility="{Binding Engine.UserPreferences.TodaysSchedule.Schedule1.BlockListName, 
+                                Converter={local:StringNullOrEmptyToVisibilityConverter}}"/>
+                            
+                            <local:UCScheduleToday x:Name="Schedule2"
+                                                   Visibility="{Binding Engine.UserPreferences.TodaysSchedule.Schedule2.BlockListName, 
+                                Converter={local:StringNullOrEmptyToVisibilityConverter}}"/>
+                            
+                            <local:UCScheduleToday x:Name="Schedule3"
+                                                   Visibility="{Binding Engine.UserPreferences.TodaysSchedule.Schedule3.BlockListName, 
+                                Converter={local:StringNullOrEmptyToVisibilityConverter}}"/>
+                            
+                            <local:UCScheduleToday x:Name="Schedule4"
+                                                   Visibility="{Binding Engine.UserPreferences.TodaysSchedule.Schedule4.BlockListName, 
+                                Converter={local:StringNullOrEmptyToVisibilityConverter}}"/>
+                            
+                            <local:UCScheduleToday x:Name="Schedule5"
+                                                   Visibility="{Binding Engine.UserPreferences.TodaysSchedule.Schedule5.BlockListName, 
+                                Converter={local:StringNullOrEmptyToVisibilityConverter}}"/>
+                            
                         </StackPanel>
                     </Border>
                 </StackPanel>

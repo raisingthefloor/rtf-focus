@@ -1,9 +1,17 @@
 {
-  "categories": [
+  "Categories": [
+  {
+      "Name": "Notifications",
+      
+      "AppsAndWebsites": [
+        
+      ]
+	  
+    },
     {
-      "name": "Communication",
-      "parent": "Email",
-      "appsAndWebsites": [
+      "Name": "Communication (Not Email)",
+      
+      "AppsAndWebsites": [
         "meet.google.com/",
         "Google Meet (desktop app)",
         "teams.microsoft.com",
@@ -52,10 +60,11 @@
         "messages.google.com/",
         "Messages by Google "
       ]
+	  
     },
     {
-      "name": "Dating",
-      "parent": "",
+      "Name": "Dating",
+      
       "appsAndWebsites": [
         "ashleymadison.com",
         "Badoo (desktop app)",
@@ -100,9 +109,9 @@
       ]
     },
     {
-      "name": "Email",
-      "parent": "",
-      "appsAndWebsites": [
+      "Name": "Email",
+      
+      "AppsAndWebsites": [
         "Airmail 5 (desktop app)",
         "att.net",
         "bluewin.ch",
@@ -186,9 +195,9 @@
       ]
     },
     {
-      "name": "Gambling",
-      "parent": "",
-      "appsAndWebsites": [
+      "Name": "Gambling",
+      
+      "AppsAndWebsites": [
         "*.*/*p=*betting*",
         "*.*/*p=*black*jack*",
         "*.*/*p=*gamble*",
@@ -364,9 +373,9 @@
       ]
     },
     {
-      "name": "Games",
-      "parent": "",
-      "appsAndWebsites": [
+      "Name": "Games",
+      
+      "AppsAndWebsites": [
         "*.*/*p=*cross*word*",
         "*.*/*p=*game*",
         "*.*/*p=*play*",
@@ -495,9 +504,9 @@
       ]
     },
     {
-      "name": "News",
-      "parent": "",
-      "appsAndWebsites": [
+      "Name": "News",
+      
+      "AppsAndWebsites": [
         "*.*/*p=*current*event*",
         "*.*/*p=*headlines*",
         "*.*/*p=*news*",
@@ -715,16 +724,16 @@
       ]
     },
     {
-      "name": "Notifcations",
-      "parent": "",
-      "appsAndWebsites": [
+      "Name": "Notifcations",
+      
+      "AppsAndWebsites": [
         "Turn on DND (macOS) or Focus Assistant (PC)"
       ]
     },
     {
-      "name": "Porn",
-      "parent": "",
-      "appsAndWebsites": [
+      "Name": "Porn",
+      
+      "AppsAndWebsites": [
         "*.xxx",
         "18videosz.com",
         "24porn.com",
@@ -941,9 +950,9 @@
       ]
     },
     {
-      "name": "Productivity (exceptions)",
-      "parent": "",
-      "appsAndWebsites": [
+      "Name": "Productivity (exceptions)",
+      
+      "AppsAndWebsites": [
         "2checkout.com",
         "accounts.google.com",
         "android.com",
@@ -1037,9 +1046,9 @@
       ]
     },
     {
-      "name": "Proxies",
-      "parent": "",
-      "appsAndWebsites": [
+      "Name": "Proxies",
+      
+      "AppsAndWebsites": [
         "*.*/",
         "*p=*proxies*\",",
         "*.*/*p=*proxy*",
@@ -1068,9 +1077,9 @@
       ]
     },
     {
-      "name": "Shopping",
-      "parent": "",
-      "appsAndWebsites": [
+      "Name": "Shopping",
+      
+      "AppsAndWebsites": [
         "*.*/buy*",
         "*.*/cart*",
         "*.*/check-out*",
@@ -1120,9 +1129,9 @@
       ]
     },
     {
-      "name": "Social Media",
-      "parent": "",
-      "appsAndWebsites": [
+      "Name": "Social Media",
+      
+      "AppsAndWebsites": [
         "4chan.org",
         "9gag.com",
         "badoo.com",
@@ -1172,9 +1181,9 @@
       ]
     },
     {
-      "name": "Videos",
-      "parent": "",
-      "appsAndWebsites": [
+      "Name": "Videos",
+      
+      "AppsAndWebsites": [
         "abc.go.com",
         "bravotv.com",
         "cbs.com",

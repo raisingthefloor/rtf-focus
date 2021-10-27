@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Morphic.Data.Models
 {
-    public class UserPreferences : INotifyPropertyChanged
+    public class UserPreferences : BaseClass
     {
         private General _general;
         public General General
@@ -123,7 +123,7 @@ namespace Morphic.Data.Models
                 if (_todaysSchedule == null)
                 {
                     _todaysSchedule = new Todaysschedule();
-                    //_todaysSchedule.PropertyChanged += General_PropertyChanged;
+                    _todaysSchedule.PropertyChanged += _todaysSchedule_PropertyChanged;
                 }
                 return _todaysSchedule;
             }
@@ -132,47 +132,16 @@ namespace Morphic.Data.Models
                 if (value != _todaysSchedule)
                 {
                     _todaysSchedule = value;
-                    //_todaysSchedule.PropertyChanged += General_PropertyChanged;
+                    _todaysSchedule.PropertyChanged += _todaysSchedule_PropertyChanged;
                 }
             }
         }
 
-        #region PropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        // This method is called by the Set accessor of each property.
-        // The CallerMemberName attribute that is applied to the optional propertyName
-        // parameter causes the property name of the caller to be substituted as an argument.
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        private void _todaysSchedule_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            NotifyPropertyChanged();
         }
-        #endregion
     }
-
-    
-
-    public class Todaysschedule
-    {
-        public ScheduleToday schedule1 { get; set; } = new ScheduleToday();
-        public ScheduleToday schedule2 { get; set; } = new ScheduleToday();
-        public ScheduleToday schedule3 { get; set; } = new ScheduleToday();
-        public ScheduleToday schedule4 { get; set; } = new ScheduleToday();
-        public ScheduleToday schedule5 { get; set; } = new ScheduleToday();
-    }
-
-    public class ScheduleToday
-    {
-        public string blockListName { get; set; } = string.Empty;
-        public string startAt { get; set; } = string.Empty;
-        public string endAt { get; set; } = string.Empty;
-        public bool isActive { get; set; }
-    }
-
-    
 
     public class Alsoblock
     {
@@ -186,5 +155,4 @@ namespace Morphic.Data.Models
         public object[] websites { get; set; }
     }
 
-    
 }

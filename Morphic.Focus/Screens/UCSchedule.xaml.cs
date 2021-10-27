@@ -79,7 +79,8 @@ namespace Morphic.Focus.Screens
                 Schedule.BlockListName = string.Empty;
                 Schedule.StartAt = DateTime.Today;
                 Schedule.EndAt = DateTime.Today;
-                Schedule.Days.Clear();
+                Schedule.IsActiveSunday = Schedule.IsActiveMonday = Schedule.IsActiveTuesday = Schedule.IsActiveWednesday = Schedule.IsActiveThursday =
+                    Schedule.IsActiveFriday = Schedule.IsActiveSaturday = false;
                 Schedule.IsActive = false;
                 cmbBlockList.SelectedIndex = -1;
             }

@@ -82,13 +82,20 @@
         <TextBox Width="57" Height="23" Margin="12 10 0 11" Text="{Binding Path=Schedule.EndAt, Mode=TwoWay, StringFormat={}{0:t}}"></TextBox>
         
         <StackPanel Orientation="Horizontal" Margin="12 10 0 11">
-            <ToggleButton Content="S" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="M" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="W" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="F" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="S" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"></ToggleButton>
+            <ToggleButton Content="S" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}" 
+                          IsChecked="{Binding Path=Schedule.IsActiveSunday}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="M" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
+                          IsChecked="{Binding Path=Schedule.IsActiveMonday}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
+                          IsChecked="{Binding Path=Schedule.IsActiveTuesday}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="W" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
+                          IsChecked="{Binding Path=Schedule.IsActiveWednesday}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
+                          IsChecked="{Binding Path=Schedule.IsActiveThursday}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="F" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
+                          IsChecked="{Binding Path=Schedule.IsActiveFriday}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="S" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
+                          IsChecked="{Binding Path=Schedule.IsActiveSaturday}"></ToggleButton>
         </StackPanel>
         <CheckBox Margin="22 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14" IsChecked="{Binding Path=Schedule.IsActive}"/>
 

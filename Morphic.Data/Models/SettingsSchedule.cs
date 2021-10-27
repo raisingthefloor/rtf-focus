@@ -216,52 +216,7 @@ namespace Morphic.Data.Models
             }
         }
 
-        private ObservableCollection<int> _days;
-
-        public ObservableCollection<int> Days
-        {
-            get
-            {
-                if (_days == null)
-                {
-                    _days = new ObservableCollection<int>();
-                    _days.CollectionChanged += _days_CollectionChanged;
-                }
-                return _days;
-            }
-            set
-            {
-                if (value != _days)
-                {
-                    _days = value;
-                    _days.CollectionChanged += _days_CollectionChanged;
-                    //foreach (string item in _appsAndWebsites)
-                    //    item.PropertyChanged += Item_PropertyChanged;
-
-                }
-            }
-        }
-
-        #region PropertyChanged
-        private void _days_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            //if (e.OldItems != null)
-            //{
-            //    foreach (AppsAndWebsites item in e.OldItems)
-            //        item.PropertyChanged -= Item_PropertyChanged;
-            //}
-            //if (e.NewItems != null)
-            //{
-            //    foreach (AppsAndWebsites item in e.NewItems)
-            //        item.PropertyChanged += Item_PropertyChanged;
-            //}
-
-            NotifyPropertyChanged();
-        }
-
         
-
-        #endregion
 
         private bool _isActive;
 
@@ -281,17 +236,133 @@ namespace Morphic.Data.Models
             }
         }
 
+        private bool _isActiveSunday;
+
+        public bool IsActiveSunday
+        {
+            get
+            {
+                return _isActiveSunday;
+            }
+            set
+            {
+                if (value != this._isActiveSunday)
+                {
+                    this._isActiveSunday = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private bool _isActiveMonday;
+
+        public bool IsActiveMonday
+        {
+            get
+            {
+                return _isActiveMonday;
+            }
+            set
+            {
+                if (value != this._isActiveMonday)
+                {
+                    this._isActiveMonday = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private bool _isActiveTuesday;
+
+        public bool IsActiveTuesday
+        {
+            get
+            {
+                return _isActiveTuesday;
+            }
+            set
+            {
+                if (value != this._isActiveTuesday)
+                {
+                    this._isActiveTuesday = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private bool _isActiveWednesday;
+
+        public bool IsActiveWednesday
+        {
+            get
+            {
+                return _isActiveWednesday;
+            }
+            set
+            {
+                if (value != this._isActiveWednesday)
+                {
+                    this._isActiveWednesday = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private bool _isActiveThursday;
+
+        public bool IsActiveThursday
+        {
+            get
+            {
+                return _isActiveThursday;
+            }
+            set
+            {
+                if (value != this._isActiveThursday)
+                {
+                    this._isActiveThursday = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private bool _isActiveFriday;
+
+        public bool IsActiveFriday
+        {
+            get
+            {
+                return _isActiveFriday;
+            }
+            set
+            {
+                if (value != this._isActiveFriday)
+                {
+                    this._isActiveFriday = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private bool _isActiveSaturday;
+
+        public bool IsActiveSaturday
+        {
+            get
+            {
+                return _isActiveSaturday;
+            }
+            set
+            {
+                if (value != this._isActiveSaturday)
+                {
+                    this._isActiveSaturday = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
         #region IEquatable
-        public static bool operator ==(Schedule left, Schedule right)
-        {
-            return EqualityComparer<Schedule>.Default.Equals(left, right);
-        }
-
-        public static bool operator !=(Schedule left, Schedule right)
-        {
-            return !(left == right);
-        }
-
         public override bool Equals(object obj)
         {
             return Equals(obj as Schedule);
@@ -303,13 +374,41 @@ namespace Morphic.Data.Models
                    BlockListName == other.BlockListName &&
                    StartAt == other.StartAt &&
                    EndAt == other.EndAt &&
-                   EqualityComparer<ObservableCollection<int>>.Default.Equals(Days, other.Days) &&
-                   IsActive == other.IsActive;
+                   IsActive == other.IsActive &&
+                   IsActiveSunday == other.IsActiveSunday &&
+                   IsActiveMonday == other.IsActiveMonday &&
+                   IsActiveTuesday == other.IsActiveTuesday &&
+                   IsActiveWednesday == other.IsActiveWednesday &&
+                   IsActiveThursday == other.IsActiveThursday &&
+                   IsActiveFriday == other.IsActiveFriday &&
+                   IsActiveSaturday == other.IsActiveSaturday;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(BlockListName, StartAt, EndAt, Days, IsActive);
+            HashCode hash = new HashCode();
+            hash.Add(BlockListName);
+            hash.Add(StartAt);
+            hash.Add(EndAt);
+            hash.Add(IsActive);
+            hash.Add(IsActiveSunday);
+            hash.Add(IsActiveMonday);
+            hash.Add(IsActiveTuesday);
+            hash.Add(IsActiveWednesday);
+            hash.Add(IsActiveThursday);
+            hash.Add(IsActiveFriday);
+            hash.Add(IsActiveSaturday);
+            return hash.ToHashCode();
+        }
+
+        public static bool operator ==(Schedule left, Schedule right)
+        {
+            return EqualityComparer<Schedule>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(Schedule left, Schedule right)
+        {
+            return !(left == right);
         }
         #endregion
     }

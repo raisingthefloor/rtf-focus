@@ -93,6 +93,37 @@ namespace Morphic.Focus.Screens
         private List<FocusSchedule> focusSchedules;
         private List<CalendarData> calendarDataSource;
         
+        private static readonly KeyValuePair<int, string>[] _breakDuration = {
+            new KeyValuePair<int, string>(1, "1 min"),
+            new KeyValuePair<int, string>(3, "3 min"),
+            new KeyValuePair<int, string>(5, "5 min"),
+            new KeyValuePair<int, string>(10, "10 min"),
+        };
+
+        public KeyValuePair<int, string>[] BreakDuration
+        {
+            get
+            {
+                return _breakDuration;
+            }
+        }
+
+        private static readonly KeyValuePair<int, string>[] _breakGap = {
+            new KeyValuePair<int, string>(15, "15 min"),
+            new KeyValuePair<int, string>(20, "20 min"),
+            new KeyValuePair<int, string>(25, "25 min"),
+            new KeyValuePair<int, string>(30, "30 min"),
+            new KeyValuePair<int, string>(45, "45 min"),
+            new KeyValuePair<int, string>(60, "60 min"),
+        };
+
+        public KeyValuePair<int, string>[] BreakGap
+        {
+            get
+            {
+                return _breakGap;
+            }
+        }
 
         /// <summary>
         /// This method sends color info to calendar view

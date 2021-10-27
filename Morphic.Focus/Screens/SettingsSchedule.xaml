@@ -56,23 +56,16 @@
                     <Border Height="20" Margin="8 12 15 0" BorderBrush="{DynamicResource GreyBorder}" BorderThickness="0 1 0 0" Background="Transparent">
                     </Border>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20">
-                        <CheckBox Height="15" Margin="0" FontFamily="{DynamicResource SourceSansProRegular}" FontSize="12">Provide short</CheckBox>
+                        <CheckBox Height="15" Margin="0" FontFamily="{DynamicResource SourceSansProRegular}" FontSize="12" 
+                                  IsChecked="{Binding Engine.UserPreferences.Schedules.Schedulebreak.IsActive}">Provide short</CheckBox>
                         <ComboBox Style="{DynamicResource SettingsComboBoxStyle}" Width="70" Height="20" Margin="4 0 0 0" 
-                              FontFamily="{DynamicResource SourceSansProRegular}" >
-                            <ComboBoxItem IsSelected="True">1 min</ComboBoxItem>
-                            <ComboBoxItem>3 min</ComboBoxItem>
-                            <ComboBoxItem>5 min</ComboBoxItem>
-                            <ComboBoxItem>10 min</ComboBoxItem>
+                              FontFamily="{DynamicResource SourceSansProRegular}" SelectedValue="{Binding Engine.UserPreferences.Schedules.Schedulebreak.BreakDuration, Mode=TwoWay}"
+                              ItemsSource="{Binding BreakDuration, Mode=OneTime}" SelectedValuePath="Key" DisplayMemberPath="Value">
                         </ComboBox>
                         <TextBlock Margin="4 0 0 0" Style="{DynamicResource SettingsSectionBody}">breaks for every</TextBlock>
                         <ComboBox Style="{DynamicResource SettingsComboBoxStyle}" Width="70" Height="20" Margin="4 0 0 0" 
-                              FontFamily="{DynamicResource SourceSansProRegular}" >
-                            <ComboBoxItem IsSelected="True">15 min</ComboBoxItem>
-                            <ComboBoxItem>20 min</ComboBoxItem>
-                            <ComboBoxItem>25 min</ComboBoxItem>
-                            <ComboBoxItem>30 min</ComboBoxItem>
-                            <ComboBoxItem>45 min</ComboBoxItem>
-                            <ComboBoxItem>60 min</ComboBoxItem>
+                              FontFamily="{DynamicResource SourceSansProRegular}" SelectedValue="{Binding Engine.UserPreferences.Schedules.Schedulebreak.BreakGap, Mode=TwoWay}"
+                              ItemsSource="{Binding BreakGap, Mode=OneTime}" SelectedValuePath="Key" DisplayMemberPath="Value">
                         </ComboBox>
                         <TextBlock Margin="4 0 0 0" Style="{DynamicResource SettingsSectionBody}" FontWeight="Bold">of scheduled Focus sessions</TextBlock>
                     </StackPanel>

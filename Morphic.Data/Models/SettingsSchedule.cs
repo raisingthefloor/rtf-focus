@@ -147,7 +147,7 @@ namespace Morphic.Data.Models
                 if (value != this._schedulebreak)
                 {
                     this._schedulebreak = value;
-                    NotifyPropertyChanged();
+                    _schedulebreak.PropertyChanged += PropertyChanged;
                 }
             }
         }
@@ -413,10 +413,88 @@ namespace Morphic.Data.Models
         #endregion
     }
 
-    public class Schedulebreak : BaseClass
-    { 
-        public bool isActive { get; set; }
-        public int breakDuration { get; set; } = 1;
-        public int breakGap { get; set; } = 15;
+    public class Schedulebreak : BaseClass, IEquatable<Schedulebreak>
+    {
+        private bool _isActive;
+
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (value != this._isActive)
+                {
+                    this._isActive = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private int _breakDuration = 1;
+        public int BreakDuration
+        {
+            get
+            {
+                return _breakDuration;
+            }
+            set
+            {
+                if (value != this._breakDuration)
+                {
+                    this._breakDuration = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private int _breakGap = 15;
+        public int BreakGap
+        {
+            get
+            {
+                return _breakGap;
+            }
+            set
+            {
+                if (value != this._breakGap)
+                {
+                    this._breakGap = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        #region IEquatable
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Schedulebreak);
+        }
+
+        public bool Equals(Schedulebreak other)
+        {
+            return other != null &&
+                   IsActive == other.IsActive &&
+                   BreakDuration == other.BreakDuration &&
+                   BreakGap == other.BreakGap;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(IsActive, BreakDuration, BreakGap);
+        }
+
+        public static bool operator ==(Schedulebreak left, Schedulebreak right)
+        {
+            return EqualityComparer<Schedulebreak>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(Schedulebreak left, Schedulebreak right)
+        {
+            return !(left == right);
+        }
+        #endregion
     }
 }

@@ -89,7 +89,9 @@ namespace Morphic.Focus.Screens
             Schedule4.scheduleColor.Background = Schedule4Brush;
             Schedule5.scheduleColor.Background = Schedule5Brush;
 
+            ResetBlockListVisibility();
             InitializeCalendarData();
+
             todaysWeekday = DateTime.Today.ToString("ddd").ToUpper();
             this.DataContext = this;
         }
@@ -97,6 +99,16 @@ namespace Morphic.Focus.Screens
         private void Schedule_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             InitializeCalendarData();
+            ResetBlockListVisibility();
+        }
+
+        private void ResetBlockListVisibility()
+        {
+            Schedule1.ResetVisibility();
+            Schedule2.ResetVisibility();
+            Schedule3.ResetVisibility();
+            Schedule4.ResetVisibility();
+            Schedule5.ResetVisibility();
         }
         #endregion
 
@@ -280,23 +292,6 @@ namespace Morphic.Focus.Screens
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
-        }
-    }
-
-    public class StringNullOrEmptyToVisibilityConverter : System.Windows.Markup.MarkupExtension, IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return string.IsNullOrEmpty(value as string)
-                ? Visibility.Collapsed : Visibility.Visible;
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return null;
-        }
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
         }
     }
 }

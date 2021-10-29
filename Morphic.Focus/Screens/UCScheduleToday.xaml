@@ -9,9 +9,7 @@
         <StackPanel.Resources>
             <Style TargetType="{x:Type TextBox}">
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding Path=IsChecked, 
-                                               ElementName=cbTodaysSchedule}" 
-                                               Value="False">
+                    <DataTrigger Binding="{Binding Path=IsChecked, ElementName=cbTodaysSchedule}" Value="False">
                         <Setter Property="IsEnabled" Value="False" />
                     </DataTrigger>
                 </Style.Triggers>

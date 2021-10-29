@@ -142,17 +142,4 @@ namespace Morphic.Data.Models
             NotifyPropertyChanged();
         }
     }
-
-    public class Alsoblock
-    {
-        public object[] apps { get; set; }
-        public object[] websites { get; set; }
-    }
-
-    public class Exceptions
-    {
-        public object[] apps { get; set; }
-        public object[] websites { get; set; }
-    }
-
 }

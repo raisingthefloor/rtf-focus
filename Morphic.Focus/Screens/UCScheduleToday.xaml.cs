@@ -67,5 +67,52 @@ namespace Morphic.Focus.Screens
                 }
             }
         }
+
+        internal void ResetVisibility()
+        {
+            this.Visibility = SetVisibility();
+        }
+
+        private Visibility SetVisibility()
+        {
+            //Hide is Schedule not available (Will likely never happen)
+            if (Schedule == null)
+            {
+                return Visibility.Collapsed;
+            }
+
+            if (string.IsNullOrWhiteSpace(Schedule.BlockListName)) //Hide if no blocklists
+            {
+                return Visibility.Collapsed;
+            }
+            else if (!IsActiveToday(Schedule)) //Hide if not active for this weekday
+            { 
+                return Visibility.Collapsed;
+            }
+            else
+                return Visibility.Visible; //Visible
+        }
+
+        private bool IsActiveToday(Schedule schedule)
+        {
+            switch (DateTime.Now.DayOfWeek)
+            {
+                case DayOfWeek.Sunday:
+                    return schedule.IsActiveSunday;
+                case DayOfWeek.Monday:
+                    return schedule.IsActiveMonday;
+                case DayOfWeek.Tuesday:
+                    return schedule.IsActiveTuesday;
+                case DayOfWeek.Wednesday:
+                    return schedule.IsActiveWednesday;
+                case DayOfWeek.Thursday:
+                    return schedule.IsActiveThursday;
+                case DayOfWeek.Friday:
+                    return schedule.IsActiveFriday;
+                case DayOfWeek.Saturday:
+                    return schedule.IsActiveSaturday;
+            }
+            return false;
+        }
     }
 }

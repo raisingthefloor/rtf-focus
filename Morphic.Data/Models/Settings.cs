@@ -7,22 +7,6 @@ using System.Threading.Tasks;
 
 namespace Morphic.Data.Models
 {
-    public class GeneralSetting : BaseModel
-    {
-        public bool DontGive5MinScheduledSessionWarning { get; set; }
-        public bool ShowCountdownTimer { get; set; }
-        public bool BlockScreen1stMinBreak { get; set; }
-    }
-
-    public class UnblockItem : BaseModel
-    {
-        public bool IsActive { get; set; }
-
-        public string? IconLocation { get; set; }
-
-        public string AppWebsiteName { get; set; }
-    }
-
     public class BlockList : BaseModel
     {
         public string Name { get; set; }

@@ -22,7 +22,7 @@ namespace Morphic.Focus
 
         AppEngine()
         {
-            System.IO.File.Copy(Path.Combine(AppContext.BaseDirectory, Common.CATEGORIES_FILE_NAME), Common.MakeFilePath(Common.CATEGORIES_FILE_NAME), true);
+            //System.IO.File.Copy(Path.Combine(AppContext.BaseDirectory, Common.CATEGORIES_FILE_NAME), Common.MakeFilePath(Common.CATEGORIES_FILE_NAME), true);
             GetFocusSettings();
 
             GetCategoryies();

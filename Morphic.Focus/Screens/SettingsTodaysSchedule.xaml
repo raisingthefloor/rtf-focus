@@ -120,25 +120,15 @@
                                 </StackPanel>
                             </Border>
 
-                            <local:UCScheduleToday x:Name="Schedule1" 
-                                Visibility="{Binding Engine.UserPreferences.TodaysSchedule.Schedule1.BlockListName, 
-                                Converter={local:StringNullOrEmptyToVisibilityConverter}}"/>
+                            <local:UCScheduleToday x:Name="Schedule1"/>
                             
-                            <local:UCScheduleToday x:Name="Schedule2"
-                                                   Visibility="{Binding Engine.UserPreferences.TodaysSchedule.Schedule2.BlockListName, 
-                                Converter={local:StringNullOrEmptyToVisibilityConverter}}"/>
+                            <local:UCScheduleToday x:Name="Schedule2"/>
                             
-                            <local:UCScheduleToday x:Name="Schedule3"
-                                                   Visibility="{Binding Engine.UserPreferences.TodaysSchedule.Schedule3.BlockListName, 
-                                Converter={local:StringNullOrEmptyToVisibilityConverter}}"/>
+                            <local:UCScheduleToday x:Name="Schedule3"/>
                             
-                            <local:UCScheduleToday x:Name="Schedule4"
-                                                   Visibility="{Binding Engine.UserPreferences.TodaysSchedule.Schedule4.BlockListName, 
-                                Converter={local:StringNullOrEmptyToVisibilityConverter}}"/>
+                            <local:UCScheduleToday x:Name="Schedule4"/>
                             
-                            <local:UCScheduleToday x:Name="Schedule5"
-                                                   Visibility="{Binding Engine.UserPreferences.TodaysSchedule.Schedule5.BlockListName, 
-                                Converter={local:StringNullOrEmptyToVisibilityConverter}}"/>
+                            <local:UCScheduleToday x:Name="Schedule5"/>
                             
                         </StackPanel>
                     </Border>

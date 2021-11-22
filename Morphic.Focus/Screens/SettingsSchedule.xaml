@@ -6,7 +6,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:Morphic.Focus.Screens"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Height="620">
+             d:DesignWidth="800">
     
 
 

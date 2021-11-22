@@ -5,16 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:Morphic.Focus.Screens"
-        mc:Ignorable="d"
-        Height="650" Width="753" Background="#FFFFFF" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True"
+        mc:Ignorable="d" Name="wdwSettings"
+        MinHeight="650" MinWidth="753" MaxWidth="753" Background="#FFFFFF" WindowStyle="None" ResizeMode="CanResize" AllowsTransparency="True"
         WindowStartupLocation="CenterScreen" Title="Customize Focus" MouseMove="Window_MouseMove">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="10"/>
+    </WindowChrome.WindowChrome>
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close"
                         Executed="CloseCommandHandler"/>
     </Window.CommandBindings>
     <Border BorderThickness="1" BorderBrush="{DynamicResource DialogBorder}">
         <!--<ScrollViewer VerticalScrollBarVisibility="Auto">-->
-        
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="204"/>
@@ -89,14 +92,15 @@
                 <Button Width="30" Height="30" HorizontalAlignment="Right" Content="&#10005;" Padding="0,0,0,0" BorderThickness="0" FontSize="20" Foreground="Black" Command="ApplicationCommands.Close"
                         Background="Transparent"></Button>
 
-                    
-                        <StackPanel Name="sPnlContent">
-                        </StackPanel>
-                    
 
+                <StackPanel Name="sPnlContent">
                 </StackPanel>
+
+
+            </StackPanel>
         </Grid>
 
-      <!--  --><!--</ScrollViewer>-->
+        <!--  -->
+        <!--</ScrollViewer>-->
     </Border>
 </Window>

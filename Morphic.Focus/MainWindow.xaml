@@ -7,7 +7,7 @@
         mc:Ignorable="d"  MinWidth="100" SizeToContent="Width" Height="64" ResizeMode="NoResize" WindowStyle="None"
         Background="Transparent" Title="Focus Button" WindowStartupLocation="CenterScreen" 
         Padding="0"
-        AllowsTransparency="True" MouseDown="Window_MouseDown">
+        AllowsTransparency="True" MouseMove="Window_MouseMove">
     <Window.Resources>
         <!--<DataTemplate x:Key="ButtonContentFocusRunning">
             <StackPanel VerticalAlignment="Center" Margin="0">
@@ -27,7 +27,7 @@
             BorderThickness="1"
             Background="Black">
 
-        <Button x:Name="btnMainFocus" Click="btnMainFocus_Click" Content="{Binding ButtonText}">
+        <Button x:Name="btnMainFocus" Click="btnMainFocus_Click" Content="{Binding ButtonText}" PreviewMouseLeftButtonDown="btnMainFocus_PreviewMouseLeftButtonDown">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>

@@ -91,15 +91,49 @@ namespace Morphic.Focus
         #endregion
 
         #region Events
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                try
+                {
+                    this.DragMove();
+                }
+                catch (Exception ex)
+                {
+
+                    LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                }
+            }
         }
 
         private void btnMainFocus_Click(object sender, RoutedEventArgs e)
         {
             _engine.ShowFocusWindow();
+
+            try
+            {
+                this.DragMove();
+            }
+            catch (Exception ex)
+            {
+
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void btnMainFocus_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                this.DragMove();
+                _engine.ShowFocusWindow();
+            }
+            catch (Exception ex)
+            {
+
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
 
         private void FocusMain_SessionUpdate(Session? currSession1)
@@ -292,9 +326,11 @@ namespace Morphic.Focus
             await Task.Delay(5000);
             scr19.Close();
         }
-        #endregion
 
-       
+
+
+
+        #endregion
 
         
     }

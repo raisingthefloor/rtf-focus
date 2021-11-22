@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,11 +43,27 @@ namespace Morphic.Focus.Screens
 
             InitializeComponent();
 
-            //Initialize right-side User Controls
+            //Width = "{Binding ActualWidth,
+            //                                     ElementName = view2}"
+
+            Binding binding = new Binding("ActualHeight");
+            binding.Source = wdwSettings;
+            binding.Converter = new WidthMinusThirtyConverter();
+
+
+        //Initialize right-side User Controls
             _objSettingsGeneral = new SettingsGeneral();
+            _objSettingsGeneral.SetBinding(UserControl.HeightProperty, binding);
+
             _objSettingsBlockLists = new SettingsBlockLists();
+            _objSettingsBlockLists.SetBinding(UserControl.HeightProperty, binding);
+            
+
             _objSettingsSchedule = new SettingsSchedule();
+            _objSettingsSchedule.SetBinding(UserControl.HeightProperty, binding);
+
             _objSettingsTodaysSchedule = new SettingsTodaysSchedule();
+            _objSettingsTodaysSchedule.SetBinding(UserControl.HeightProperty, binding);
 
             //Set the General Setting as the default View of the Setting when opened up
             _currentSelectedSetting = _objSettingsGeneral;
@@ -178,5 +195,18 @@ namespace Morphic.Focus.Screens
         #endregion
 
 
+    }
+
+    internal class WidthMinusThirtyConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ((Double)value) - 30;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -6,8 +6,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:Morphic.Focus.Screens"
              xmlns:data="clr-namespace:Morphic.Data.Models;assembly=Morphic.Data"
-             mc:Ignorable="d" 
-             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="620"
+             mc:Ignorable="d"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVis" />
@@ -161,7 +160,7 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <DockPanel Width="230" Height="23">
-                                                <CheckBox Style="{DynamicResource SettingsCheckbox}" Width="200" VerticalAlignment="Top" 
+                                                <CheckBox Style="{DynamicResource DialogCheckbox}" Width="200" VerticalAlignment="Top" 
                                                     IsChecked="{Binding Path=IsActive}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Margin="0 2 0 0">

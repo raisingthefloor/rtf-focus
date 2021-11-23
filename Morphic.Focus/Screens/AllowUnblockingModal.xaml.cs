@@ -29,12 +29,15 @@ namespace Morphic.Focus.Screens
 
         public ObservableCollection<ActiveAppsAndWebsites> AppsAppEngineList { get; set; }
 
-        public AllowUnblockingModal(ObservableCollection<ActiveAppsAndWebsites> appEngineList)
+        public string TitleDesc { get; set; }
+
+        public AllowUnblockingModal(ObservableCollection<ActiveAppsAndWebsites> appEngineList, string headerText)
         {
             InitializeComponent();
 
             AppsAppEngineList = appEngineList;
             GetInstalledApps();
+            TitleDesc = headerText;
 
             this.DataContext = this;
         }
@@ -46,9 +49,31 @@ namespace Morphic.Focus.Screens
         /// <param name="e"></param>
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            try
             {
-                this.DragMove();
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    if (e.OriginalSource is System.Windows.Controls.Primitives.Thumb)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            this.DragMove();
+                        }
+                        catch (Exception ex)
+                        {
+                            LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
 
@@ -66,8 +91,8 @@ namespace Morphic.Focus.Screens
 
             AppsLocalList = AppsLocalList.Distinct().OrderBy(p => p.Name).ToList();
 
-            
-            foreach(ActiveAppsAndWebsites item in AppsAppEngineList)
+
+            foreach (ActiveAppsAndWebsites item in AppsAppEngineList)
             {
                 ActiveAppsAndWebsites existingItem = AppsLocalList.Find(p => p.IsApp == item.IsApp && p.Name == item.Name && p.Path == item.Path);
                 if (existingItem != null) existingItem.IsActive = item.IsActive;

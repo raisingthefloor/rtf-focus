@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Morphic.Data.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,9 +28,31 @@ namespace Morphic.Focus.Screens
         #region Events
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            try
             {
-                this.DragMove();
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    if (e.OriginalSource is TextBox)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            this.DragMove();
+                        }
+                        catch (Exception ex)
+                        {
+                            LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
 

@@ -80,7 +80,7 @@ namespace Morphic.Focus.Screens
             try
             {
                 LoggingService.WriteAppLog("SettingsBlockLists -> btnBlockAddApp_Click");
-                AllowUnblockingModal allowUnblockingModal = new AllowUnblockingModal(Engine.SelectedBlockList.AlsoBlock.ActiveAppsAndWebsites);
+                AllowUnblockingModal allowUnblockingModal = new AllowUnblockingModal(Engine.SelectedBlockList.AlsoBlock.ActiveAppsAndWebsites, "Select apps to block.");
                 allowUnblockingModal.ShowDialog();
 
             }
@@ -126,7 +126,7 @@ namespace Morphic.Focus.Screens
             try
             {
                 LoggingService.WriteAppLog("SettingsBlockLists -> btnExceptionsAddApp_Click");
-                AllowUnblockingModal allowUnblockingModal = new AllowUnblockingModal(Engine.SelectedBlockList.Exceptions.ActiveAppsAndWebsites);
+                AllowUnblockingModal allowUnblockingModal = new AllowUnblockingModal(Engine.SelectedBlockList.Exceptions.ActiveAppsAndWebsites, "Select apps to keep unblocked.");
                 allowUnblockingModal.ShowDialog();
 
             }

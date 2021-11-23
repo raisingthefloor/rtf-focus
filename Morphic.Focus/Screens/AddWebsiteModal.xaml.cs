@@ -39,9 +39,31 @@ namespace Morphic.Focus.Screens
         /// <param name="e"></param>
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            try
             {
-                this.DragMove();
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    if (e.OriginalSource is TextBox)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            this.DragMove();
+                        }
+                        catch (Exception ex)
+                        {
+                            LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
 
@@ -53,7 +75,9 @@ namespace Morphic.Focus.Screens
             {
                 try
                 {
-                    string url = new UriBuilder(txtWebsiteURL.Text.Trim()).Uri.ToString();
+                    string url = new UriBuilder(txtWebsiteURL.Text.Trim())
+                    { Scheme = Uri.UriSchemeHttps, Port = -1}
+                    .Uri.ToString();
                     txtWebsiteURL.Text = url;
                     Process.Start("explorer", url);
                 }

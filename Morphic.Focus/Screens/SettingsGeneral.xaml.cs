@@ -43,7 +43,7 @@ namespace Morphic.Focus.Screens
         private void btnAddAppUnblock_Click(object sender, RoutedEventArgs e)
         {
             LoggingService.WriteAppLog("btnAddAppUnblock_Click");
-            AllowUnblockingModal unblockAddAppWebsite = new AllowUnblockingModal(Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites);
+            AllowUnblockingModal unblockAddAppWebsite = new AllowUnblockingModal(Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites, "Select apps to allow yourself to temporarily unblock.");
             unblockAddAppWebsite.ShowDialog();
         }
 

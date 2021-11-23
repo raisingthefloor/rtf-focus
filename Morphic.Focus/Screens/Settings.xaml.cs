@@ -44,14 +44,14 @@ namespace Morphic.Focus.Screens
             InitializeComponent();
 
             //Width = "{Binding ActualWidth,
-            //                                     ElementName = view2}"
+            //ElementName = view2}"
 
             Binding binding = new Binding("ActualHeight");
             binding.Source = wdwSettings;
             binding.Converter = new WidthMinusThirtyConverter();
 
 
-        //Initialize right-side User Controls
+            //Initialize right-side User Controls
             _objSettingsGeneral = new SettingsGeneral();
             _objSettingsGeneral.SetBinding(UserControl.HeightProperty, binding);
 
@@ -127,6 +127,10 @@ namespace Morphic.Focus.Screens
                         }
                     }
                     else if (e.OriginalSource is TextBox)
+                    {
+                        return;
+                    }
+                    else if (e.OriginalSource is System.Windows.Controls.Primitives.Thumb)
                     {
                         return;
                     }

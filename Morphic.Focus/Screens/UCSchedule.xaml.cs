@@ -70,6 +70,7 @@ namespace Morphic.Focus.Screens
             }
         }
 
+        public Brush BrushBrush { get; set; }
         private void btnClearSchedule_Click(object sender, RoutedEventArgs e)
         {
             try

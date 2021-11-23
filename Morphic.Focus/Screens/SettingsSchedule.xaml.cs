@@ -79,12 +79,17 @@ namespace Morphic.Focus.Screens
                 Schedule5.Blocklist = Engine.UserPreferences.BlockLists.Where(p => p.Name == Schedule5.Schedule.BlockListName).First();
             }
 
-            var bc = new BrushConverter();
-            Schedule1.scheduleColor.Background = AppEngine.Schedule1Brush;
-            Schedule2.scheduleColor.Background = AppEngine.Schedule2Brush;
-            Schedule3.scheduleColor.Background = AppEngine.Schedule3Brush; //bc.ConvertFrom(  (Brush)bc.ConvertFrom("#002957");
-            Schedule4.scheduleColor.Background = AppEngine.Schedule4Brush;
-            Schedule5.scheduleColor.Background = AppEngine.Schedule5Brush;
+            //Schedule1.scheduleColor.Background = AppEngine.Schedule1Brush;
+            //Schedule2.scheduleColor.Background = AppEngine.Schedule2Brush;
+            //Schedule3.scheduleColor.Background = AppEngine.Schedule3Brush;
+            //Schedule4.scheduleColor.Background = AppEngine.Schedule4Brush;
+            //Schedule5.scheduleColor.Background = AppEngine.Schedule5Brush;
+
+            Schedule1.BorderBrush = AppEngine.Schedule1Brush;
+            Schedule2.BorderBrush = AppEngine.Schedule2Brush;
+            Schedule3.BorderBrush = AppEngine.Schedule3Brush;
+            Schedule4.BorderBrush = AppEngine.Schedule4Brush;
+            Schedule5.BorderBrush = AppEngine.Schedule5Brush;
 
             InitializeCalendarData();
 

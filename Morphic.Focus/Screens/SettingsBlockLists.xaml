@@ -119,9 +119,9 @@
                 <x:Type TypeName="data:Penalty" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        
+
         <local:EnumDescriptionConverter x:Key="EnumDescriptionConverter"></local:EnumDescriptionConverter>
-        
+
         <DataTemplate DataType="{x:Type data:Blocklist}" x:Key="BlockListDetails">
             <Border Width="513" BorderBrush="#BFBFBF" CornerRadius="8" BorderThickness="1" Background="#F4F8FF" Margin="8" >
                 <Grid>
@@ -281,7 +281,7 @@
                     <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 25 20 0">
                         Blocklist behavior during breaks:
                     </TextBlock>
-                    
+
                     <ListView Margin="20 0 20 0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0"
                               ItemsSource="{Binding Source={StaticResource BlockBehaviorValues}}" SelectedItem="{Binding Path=BreakBehavior, Mode=TwoWay}">
                         <ListView.ItemTemplate>
@@ -371,12 +371,12 @@
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-    <StackPanel>
+        <StackPanel>
 
-        <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
-            <ItemsControl Height="auto">
-                <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,10,0,0" >Edit Blocklists</TextBlock>
-                <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 0 10">
+            <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
+                <ItemsControl Height="auto">
+                    <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,10,0,0" >Edit Blocklists</TextBlock>
+                    <TextBlock Style="{DynamicResource SettingsSectionItalicBody}" Padding="0 0 0 10">
                     
                         A blocklist is a group of apps, websites and other items that you can choose to block during a focus session. 
                     
@@ -387,24 +387,21 @@
                         </InlineUIContainer>
                     </Hyperlink>
 
-                </TextBlock>
-            </ItemsControl>
-            <TextBlock Style="{DynamicResource SettingsSectionTitle}">Select a blocklist to edit:</TextBlock>
-        </StackPanel>
+                    </TextBlock>
+                </ItemsControl>
+                <TextBlock Style="{DynamicResource SettingsSectionTitle}">Select a blocklist to edit:</TextBlock>
+            </StackPanel>
 
-        <Canvas Height="650" Margin="0 0 0 30">
+            <Canvas Height="650" Margin="0 0 0 30">
 
-            <ComboBox Name="cmbBlockList" Style="{DynamicResource SettingsAddComboBoxStyle}" Width="154" Height="23" Canvas.Left="28" Canvas.ZIndex="2" Canvas.Top="10" ItemsSource="{Binding Path=Engine.UserPreferences.BlockLists}" SelectedItem="{Binding Path=Engine.SelectedBlockList, Mode=TwoWay}"
+                <ComboBox Name="cmbBlockList" Style="{DynamicResource SettingsAddComboBoxStyle}" Width="154" Height="23" Canvas.Left="28" Canvas.ZIndex="2" Canvas.Top="10" ItemsSource="{Binding Path=Engine.UserPreferences.BlockLists}" SelectedItem="{Binding Path=Engine.SelectedBlockList, Mode=TwoWay}"
                   DisplayMemberPath="Name" SelectedValuePath="Name">
-            </ComboBox>
+                </ComboBox>
 
-            <ContentControl Content="{Binding Path=Engine.SelectedBlockList}"
+                <ContentControl Content="{Binding Path=Engine.SelectedBlockList}"
                     ContentTemplate="{StaticResource BlockListDetails}" Canvas.Top="15" Canvas.ZIndex="1"/>
+            </Canvas>
 
-
-
-        </Canvas>
-            
         </StackPanel>
     </ScrollViewer>
 </UserControl>

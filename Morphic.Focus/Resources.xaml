@@ -68,7 +68,6 @@
         <Setter Property="LineHeight" Value="23" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Padding" Value="0 10"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="{StaticResource SourceSansProBold}"/>
     </Style>
 

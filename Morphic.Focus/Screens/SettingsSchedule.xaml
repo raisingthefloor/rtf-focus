@@ -17,7 +17,7 @@
                     <TextBlock Style="{DynamicResource SettingsHeader}" Padding="0,10,0,0" >
                         <Run>Focus Schedule</Run>
                         <Hyperlink FontSize="12" NavigateUri="https://morphic.org/focus-schedules/">
-                            <TextBlock Text="Instructions "/>
+                            <TextBlock FontFamily="{DynamicResource SourceSansProRegular}" FontWeight="Normal" Text="Instructions "/>
                         </Hyperlink>
                         <Hyperlink FontSize="12" NavigateUri="https://morphic.org/focus-schedules/">
                             <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>

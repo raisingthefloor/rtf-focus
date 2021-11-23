@@ -166,7 +166,7 @@
                                                         <TextBlock Margin="0 2 0 0">
                                                             <Hyperlink Tag="Category" >
                                                                 <Run Text="{Binding Name}"/>
-                                                                <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>
+                                                                <!--<Image Source="/Images/external-link 1.png" Width="12" Height="12"/>-->
                                                             </Hyperlink>
                                                             <TextBlock.Style>
                                                                 <Style TargetType="{x:Type TextBlock}">
@@ -272,7 +272,9 @@
                     </Border>
                     <TextBlock Grid.Row="5" Grid.Column="1" TextWrapping="WrapWithOverflow" VerticalAlignment="Center"
                                FontFamily="{DynamicResource SourceSansProBold}" FontSize="13" FontStyle="Italic" FontWeight="Bold" LineHeight="16" Foreground="#8C191B" Margin="20 0 37 0">
-                        <Run>Note: You cannot change a blocklist while it is in use in an active focus session.</Run>                  
+                        <Run>Note: You cannot change a blocklist while it is in use in an active focus session.</Run>  
+                        <LineBreak/>
+                        <LineBreak/>
                         <Run>Any changes made will not take effect until the next focus session where the blocklist is used.</Run>
                     </TextBlock>
 

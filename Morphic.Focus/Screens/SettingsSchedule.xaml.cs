@@ -80,11 +80,11 @@ namespace Morphic.Focus.Screens
             }
 
             var bc = new BrushConverter();
-            Schedule1.scheduleColor.Background = Schedule1Brush;
-            Schedule2.scheduleColor.Background = Schedule2Brush;
-            Schedule3.scheduleColor.Background = Schedule3Brush; //bc.ConvertFrom(  (Brush)bc.ConvertFrom("#002957");
-            Schedule4.scheduleColor.Background = Schedule4Brush;
-            Schedule5.scheduleColor.Background = Schedule5Brush;
+            Schedule1.scheduleColor.Background = AppEngine.Schedule1Brush;
+            Schedule2.scheduleColor.Background = AppEngine.Schedule2Brush;
+            Schedule3.scheduleColor.Background = AppEngine.Schedule3Brush; //bc.ConvertFrom(  (Brush)bc.ConvertFrom("#002957");
+            Schedule4.scheduleColor.Background = AppEngine.Schedule4Brush;
+            Schedule5.scheduleColor.Background = AppEngine.Schedule5Brush;
 
             InitializeCalendarData();
 
@@ -129,13 +129,6 @@ namespace Morphic.Focus.Screens
             }
         }
 
-        private static BrushConverter bc = new BrushConverter();
-        private static readonly Brush Schedule1Brush = (Brush)bc.ConvertFrom("#662261");
-        private static readonly Brush Schedule2Brush = (Brush)bc.ConvertFrom("#0080A8");
-        private static readonly Brush Schedule3Brush = Brushes.Orange;
-        private static readonly Brush Schedule4Brush = (Brush)bc.ConvertFrom("#008145");
-        private static readonly Brush Schedule5Brush = (Brush)bc.ConvertFrom("#ff0000");
-
         /// <summary>
         /// This method sends color info to calendar view
         /// TODO - Logic of this method would be written
@@ -149,11 +142,11 @@ namespace Morphic.Focus.Screens
                     CalendarDataSource.Add(new CalendarData { Color1 = Brushes.Transparent,
             Color2 = Brushes.Transparent, I=i, J=j});
 
-            AddSchedule(Engine.UserPreferences.Schedules.Schedule1, Schedule1Brush);
-            AddSchedule(Engine.UserPreferences.Schedules.Schedule2, Schedule2Brush);
-            AddSchedule(Engine.UserPreferences.Schedules.Schedule3, Schedule3Brush);
-            AddSchedule(Engine.UserPreferences.Schedules.Schedule4, Schedule4Brush);
-            AddSchedule(Engine.UserPreferences.Schedules.Schedule5, Schedule5Brush);
+            AddSchedule(Engine.UserPreferences.Schedules.Schedule1, AppEngine.Schedule1Brush);
+            AddSchedule(Engine.UserPreferences.Schedules.Schedule2, AppEngine.Schedule2Brush);
+            AddSchedule(Engine.UserPreferences.Schedules.Schedule3, AppEngine.Schedule3Brush);
+            AddSchedule(Engine.UserPreferences.Schedules.Schedule4, AppEngine.Schedule4Brush);
+            AddSchedule(Engine.UserPreferences.Schedules.Schedule5, AppEngine.Schedule5Brush);
 
         }
 

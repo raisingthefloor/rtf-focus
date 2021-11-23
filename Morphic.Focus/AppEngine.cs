@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Media;
 
 namespace Morphic.Focus
 {
@@ -283,6 +283,15 @@ namespace Morphic.Focus
         public Session? CurrSession1 { get => _currSession1; set => _currSession1 = value; }
         #endregion
 
+        #endregion
+
+        #region Colors
+        private static readonly BrushConverter bc = new BrushConverter();
+        public static readonly Brush Schedule1Brush = (Brush)bc.ConvertFrom("#662261");
+        public static readonly Brush Schedule2Brush = (Brush)bc.ConvertFrom("#0080A8");
+        public static readonly Brush Schedule3Brush = (Brush)bc.ConvertFrom("#002957");
+        public static readonly Brush Schedule4Brush = (Brush)bc.ConvertFrom("#008145");
+        public static readonly Brush Schedule5Brush = (Brush)bc.ConvertFrom("#bf2035");
         #endregion
         public void CheckIsFocusRunning()
         {

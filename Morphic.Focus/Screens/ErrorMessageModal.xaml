@@ -24,7 +24,7 @@
             </Grid.RowDefinitions>
             <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Source="/Images/info.png" Width="23.84" Height="23.33" VerticalAlignment="Top" Margin="2 2 2 0" />
             <TextBlock Grid.Row="0" Grid.Column="1" Style="{DynamicResource TitleStyle}" FontSize="16" LineHeight="20" HorizontalAlignment="Left">
-                Changes cannot be made to an active Focus session
+                Changes cannot be made to an active Focus sessions
             </TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="1" Style="{DynamicResource ContentStyle}" Margin="0 15 0 0">
                 A Focus session cannot be changed while it is in progress. 

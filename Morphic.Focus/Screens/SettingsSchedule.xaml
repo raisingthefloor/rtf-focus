@@ -57,7 +57,7 @@
                     </Border>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20">
                         <CheckBox Height="15" Margin="0" FontFamily="{DynamicResource SourceSansProRegular}" FontSize="12" 
-                                  IsChecked="{Binding Engine.UserPreferences.Schedules.Schedulebreak.IsActive}">Provide short</CheckBox>
+                                  IsChecked="{Binding Engine.UserPreferences.Schedules.Schedulebreak.IsActive}" Style="{DynamicResource FocusCheckbox}">Provide short</CheckBox>
                         <ComboBox Style="{DynamicResource SettingsComboBoxStyle}" Width="70" Height="20" Margin="4 0 0 0" 
                               FontFamily="{DynamicResource SourceSansProRegular}" SelectedValue="{Binding Engine.UserPreferences.Schedules.Schedulebreak.BreakDuration, Mode=TwoWay}"
                               ItemsSource="{Binding BreakDuration, Mode=OneTime}" SelectedValuePath="Key" DisplayMemberPath="Value">

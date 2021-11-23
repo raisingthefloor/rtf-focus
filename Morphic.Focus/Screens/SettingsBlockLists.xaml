@@ -155,12 +155,12 @@
                     <Border Grid.Row="2" Grid.Column="0" BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}" Width="232" Height="171"  
                              CornerRadius="4" Background="White" >
                         <ScrollViewer Margin="0 0 1 0">
-                            <StackPanel Margin="9 4 8 4">
+                            <StackPanel Margin="9 4 8 4" >
                                 <ItemsControl ItemsSource="{Binding Path=Blockcategories}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <DockPanel Width="230" Height="23">
-                                                <CheckBox Style="{DynamicResource DialogCheckbox}" Width="200" VerticalAlignment="Top" 
+                                                <CheckBox Style="{DynamicResource FocusCheckbox}"  VerticalAlignment="Top" 
                                                     IsChecked="{Binding Path=IsActive}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Margin="0 2 0 0">
@@ -279,12 +279,12 @@
                     <TextBlock Style="{DynamicResource SettingsSectionTitle}" Height="15" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="20 25 20 0">
                         Blocklist behavior during breaks:
                     </TextBlock>
-
+                    
                     <ListView Margin="20 0 20 0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" BorderThickness="0"
                               ItemsSource="{Binding Source={StaticResource BlockBehaviorValues}}" SelectedItem="{Binding Path=BreakBehavior, Mode=TwoWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <RadioButton Style="{DynamicResource SettingsRadioStyle}" Content="{Binding Converter={StaticResource EnumDescriptionConverter}}" GroupName="BreakBehavior" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+                                <RadioButton Content="{Binding Converter={StaticResource EnumDescriptionConverter}}" GroupName="BreakBehavior" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}" Style="{DynamicResource FocusRadioButton}"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ItemContainerStyle>
@@ -310,7 +310,7 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <RadioButton Content="{Binding Converter={StaticResource EnumDescriptionConverter}}" GroupName="Penalty" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+                                    <RadioButton Content="{Binding Converter={StaticResource EnumDescriptionConverter}}" GroupName="Penalty" Style="{DynamicResource FocusRadioButton}" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
                                     <TextBox Width="22" Text="{Binding ElementName=lvPenalty, Path=DataContext.PenaltyValue, UpdateSourceTrigger=PropertyChanged}" Margin="3 0 0 0" PreviewTextInput="TextBox_PreviewTextInput">
                                         <TextBox.Style>
                                             <Style TargetType="{x:Type TextBox}">
@@ -402,7 +402,7 @@
 
 
         </Canvas>
-
-    </StackPanel>
+            
+        </StackPanel>
     </ScrollViewer>
 </UserControl>

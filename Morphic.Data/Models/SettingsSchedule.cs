@@ -18,7 +18,7 @@ namespace Morphic.Data.Models
                 if (_schedule1 == null)
                 {
                     _schedule1 = new Schedule();
-                    _schedule1.PropertyChanged += PropertyChanged;
+                    _schedule1.PropertyChanged += SchPropertyChanged;
                 }
                 return _schedule1;
             }
@@ -27,7 +27,7 @@ namespace Morphic.Data.Models
                 if (value != this._schedule1)
                 {
                     this._schedule1 = value;
-                    _schedule1.PropertyChanged += PropertyChanged;
+                    _schedule1.PropertyChanged += SchPropertyChanged;
                 }
             }
         }
@@ -42,7 +42,7 @@ namespace Morphic.Data.Models
                 if (_schedule2 == null)
                 {
                     _schedule2 = new Schedule();
-                    _schedule2.PropertyChanged += PropertyChanged;
+                    _schedule2.PropertyChanged += SchPropertyChanged;
                 }
                 return _schedule2;
             }
@@ -51,7 +51,7 @@ namespace Morphic.Data.Models
                 if (value != this._schedule2)
                 {
                     this._schedule2 = value;
-                    _schedule2.PropertyChanged += PropertyChanged;
+                    _schedule2.PropertyChanged += SchPropertyChanged;
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace Morphic.Data.Models
                 if (_schedule3 == null)
                 {
                     _schedule3 = new Schedule();
-                    _schedule3.PropertyChanged += PropertyChanged;
+                    _schedule3.PropertyChanged += SchPropertyChanged;
                 }
                 return _schedule3;
             }
@@ -75,7 +75,7 @@ namespace Morphic.Data.Models
                 if (value != this._schedule3)
                 {
                     this._schedule3 = value;
-                    _schedule3.PropertyChanged += PropertyChanged;
+                    _schedule3.PropertyChanged += SchPropertyChanged;
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace Morphic.Data.Models
                 if (_schedule4 == null)
                 {
                     _schedule4 = new Schedule();
-                    _schedule4.PropertyChanged += PropertyChanged;
+                    _schedule4.PropertyChanged += SchPropertyChanged;
                 }
                 return _schedule4;
             }
@@ -99,7 +99,7 @@ namespace Morphic.Data.Models
                 if (value != this._schedule4)
                 {
                     this._schedule4 = value;
-                    _schedule4.PropertyChanged += PropertyChanged;
+                    _schedule4.PropertyChanged += SchPropertyChanged;
                 }
             }
         }
@@ -114,7 +114,7 @@ namespace Morphic.Data.Models
                 if (_schedule5 == null)
                 {
                     _schedule5 = new Schedule();
-                    _schedule5.PropertyChanged += PropertyChanged;
+                    _schedule5.PropertyChanged += SchPropertyChanged;
                 }
                 return _schedule5;
             }
@@ -123,7 +123,7 @@ namespace Morphic.Data.Models
                 if (value != this._schedule5)
                 {
                     this._schedule5 = value;
-                    _schedule5.PropertyChanged += PropertyChanged;
+                    _schedule5.PropertyChanged += SchPropertyChanged;
                 }
             }
         }
@@ -138,7 +138,7 @@ namespace Morphic.Data.Models
                 if (_schedulebreak == null)
                 {
                     _schedulebreak = new Schedulebreak();
-                    _schedulebreak.PropertyChanged += PropertyChanged;
+                    _schedulebreak.PropertyChanged += SchPropertyChanged;
                 }
                 return _schedulebreak;
             }
@@ -147,13 +147,13 @@ namespace Morphic.Data.Models
                 if (value != this._schedulebreak)
                 {
                     this._schedulebreak = value;
-                    _schedulebreak.PropertyChanged += PropertyChanged;
+                    _schedulebreak.PropertyChanged += SchPropertyChanged;
                 }
             }
         }
         #endregion
 
-        private void PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void SchPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             NotifyPropertyChanged();
         }

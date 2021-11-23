@@ -97,7 +97,7 @@
             <ToggleButton Margin="4 0 0 0" Content="S" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
                           IsChecked="{Binding Path=Schedule.IsActiveSaturday}"></ToggleButton>
         </StackPanel>
-        <CheckBox Margin="22 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14" IsChecked="{Binding Path=Schedule.IsActive}"/>
+        <CheckBox Margin="22 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14" IsChecked="{Binding Path=Schedule.IsActive}" Style="{DynamicResource FocusCheckbox}"/>
 
         <Button Margin="12 10 0 11" Style="{DynamicResource SetingsImageButtonStyle}" Cursor="Hand" Name="btnClearSchedule" Click="btnClearSchedule_Click">
             <Image  Source="/Images/Vector.png" Width="13.5" Height="13.5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="6 0"/>

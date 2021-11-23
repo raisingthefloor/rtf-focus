@@ -20,7 +20,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Height="23">
-                                    <CheckBox Style="{DynamicResource SettingsCheckbox}" IsChecked="{Binding IsActive}" Content="{Binding Name}" Margin="8 8 0 0"></CheckBox>
+                                    <CheckBox Style="{DynamicResource FocusCheckbox}" IsChecked="{Binding IsActive}" Content="{Binding Name}" Margin="8 8 0 0"></CheckBox>
                                 </DockPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

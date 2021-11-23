@@ -15,9 +15,9 @@
 
         <StackPanel Name="sPnlFocusSessionBehavior" Height="auto">
             <TextBlock Style="{DynamicResource SettingsSectionTitle}">Behavior during focus sessions:</TextBlock>
-            <CheckBox Style="{DynamicResource SettingsCheckbox}" IsChecked="{Binding Path=Engine.UserPreferences.General.dontGive5MinWarning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Don't give me a 5 minute warning before scheduled focus sessions start</CheckBox>
-            <CheckBox Style="{DynamicResource SettingsCheckbox}" IsChecked="{Binding Path=Engine.UserPreferences.General.showBreakCountdownTimer}">Show count down timer in minutes for break start and end</CheckBox>
-            <CheckBox Style="{DynamicResource SettingsCheckbox}" IsChecked="{Binding Path=Engine.UserPreferences.General.blockScreen1stMinofBreak, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Block screen for the first minute of each break to encourage me to stand up and stretch</CheckBox>
+            <CheckBox Margin="0 4 0 0"  Style="{DynamicResource FocusCheckbox}" IsChecked="{Binding Path=Engine.UserPreferences.General.dontGive5MinWarning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Don't give me a 5 minute warning before scheduled focus sessions start</CheckBox>
+            <CheckBox Margin="0 4 0 0" Style="{DynamicResource FocusCheckbox}" IsChecked="{Binding Path=Engine.UserPreferences.General.showBreakCountdownTimer}">Show count down timer in minutes for break start and end</CheckBox>
+            <CheckBox Margin="0 4 0 0" Style="{DynamicResource FocusCheckbox}" IsChecked="{Binding Path=Engine.UserPreferences.General.blockScreen1stMinofBreak, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Block screen for the first minute of each break to encourage me to stand up and stretch</CheckBox>
         </StackPanel>
 
         <StackPanel Name="sPnlTempUnblock" Height="auto" Margin="0 25 0 0">
@@ -44,7 +44,7 @@ use this feature to unblock it.</TextBlock>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Width="230" Height="23">
-                                    <CheckBox Style="{DynamicResource SettingsCheckbox}" IsChecked="{Binding IsActive}" Content="{Binding Name}" Width="150" Margin="6 0"></CheckBox>
+                                    <CheckBox Style="{DynamicResource FocusCheckbox}" IsChecked="{Binding IsActive}" Content="{Binding Name}" Width="150" Margin="6 0"></CheckBox>
                                     <Button Style="{DynamicResource SetingsImageButtonStyle}" Name="btnRemoveTempUnblock" Click="btnRemoveTempUnblock_Click" Cursor="Hand">
                                         <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0"/>
                                     </Button>

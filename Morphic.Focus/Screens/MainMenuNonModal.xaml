@@ -146,11 +146,11 @@
                 <RowDefinition Height="35"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Width="30" Height="30" Content="&#10005;" FontSize="20" BorderThickness="0" Command="ApplicationCommands.Close" BorderBrush="Transparent" Foreground="Black" Background="Transparent" ></Button>
+            <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Width="30" Height="30" Content="&#10005;" FontSize="20" BorderThickness="0" Command="ApplicationCommands.Close" BorderBrush="Transparent" Foreground="Black" Background="Transparent" Cursor="Hand"></Button>
 
             <StackPanel Grid.Row="1" Grid.Column="0" Margin="25 3 25 0" Orientation="Horizontal" Height="28">
                 <TextBlock Style="{DynamicResource TitleStyle}" Margin="66 0 0 0">Start a Focus Session</TextBlock>
-                <ToggleButton x:Name="btnInfo" Margin="15 0 0 0" Content="i" Style="{StaticResource IButtonStyle}" ToolTip="Adds help text to page" Click="btnInfo_Click" IsChecked="False"></ToggleButton>
+                <ToggleButton x:Name="btnInfo" Margin="15 0 0 0" Content="i" Style="{StaticResource IButtonStyle}" ToolTip="Adds help text to page" Click="btnInfo_Click" IsChecked="False" Cursor="Hand"></ToggleButton>
             </StackPanel>
 
             <Grid Margin="25 33 25 20" Grid.Row="2" Grid.Column="0">
@@ -163,7 +163,7 @@
                     <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <CheckBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" FontSize="12" FontFamily="{DynamicResource SourceSansProRegular}" Name="chkDND" GotFocus="FocusChange" LostFocus="FocusChange" MouseEnter="MouseOver" MouseLeave="MouseOver">
+                <CheckBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" FontSize="12" Name="chkDND" GotFocus="FocusChange" LostFocus="FocusChange" MouseEnter="MouseOver" MouseLeave="MouseOver" Style="{DynamicResource FocusCheckbox}">
                     Turn on “Do Not Disturb” while focusing</CheckBox>
                 <TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource ContentStyle}" Foreground="#3566D8" Margin="20 0 0 17"
                            FontStyle="Italic" Name="txtInfo1" Visibility="Hidden">
@@ -171,10 +171,10 @@
                 </TextBlock>
 
                 <StackPanel Name="sPnlBreakSetting" Orientation="Horizontal" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" GotFocus="FocusChange" LostFocus="FocusChange" MouseEnter="MouseOver" MouseLeave="MouseOver">
-                    <CheckBox Name="chkProvide" HorizontalAlignment="Left" FontSize="12" FontFamily="{DynamicResource SourceSansProRegular}" VerticalAlignment="Center">
+                    <CheckBox Name="chkProvide" HorizontalAlignment="Left" FontSize="12" FontFamily="{DynamicResource SourceSansProRegular}" VerticalAlignment="Center" Style="{DynamicResource FocusCheckbox}">
                         Provide short</CheckBox>
                     <ComboBox Name="cmbBreakTIme" Style="{DynamicResource SettingsComboBoxStyle}" Width="54" Height="20" Margin="4 0 0 0" Padding="3 3 1 3"
-                              FontFamily="{DynamicResource SourceSansProRegular}" HorizontalAlignment="Left" >
+                              FontFamily="{DynamicResource SourceSansProRegular}" HorizontalAlignment="Left" Cursor="Hand">
                         <ComboBoxItem IsSelected="True" Tag="1">1 min</ComboBoxItem>
                         <ComboBoxItem Tag="3">3 min</ComboBoxItem>
                         <ComboBoxItem Tag="5">5 min</ComboBoxItem>
@@ -182,7 +182,7 @@
                     </ComboBox>
                     <TextBlock Name="txtEvery" Margin="4 0 0 0" Style="{DynamicResource SettingsSectionBody}" HorizontalAlignment="Left" VerticalAlignment="Center">breaks for every</TextBlock>
                     <ComboBox Name="cmbEvery" Style="{DynamicResource SettingsComboBoxStyle}" Width="60" Height="20" Margin="4 0 0 0"  Padding="3 3 1 3"
-                              FontFamily="{DynamicResource SourceSansProRegular}" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                              FontFamily="{DynamicResource SourceSansProRegular}" HorizontalAlignment="Left" VerticalAlignment="Center" Cursor="Hand">
                         <ComboBoxItem IsSelected="True" Tag="15">15 min</ComboBoxItem>
                         <ComboBoxItem Tag="20">20 min</ComboBoxItem>
                         <ComboBoxItem Tag="25">25 min</ComboBoxItem>
@@ -197,7 +197,7 @@
                     Use the dropdowns to change time
                 </TextBlock>
 
-                <CheckBox Name="chkBlockProgram" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" FontSize="12" FontFamily="{DynamicResource SourceSansProRegular}" VerticalAlignment="Center" Margin="0 15 0 0" Click="chkBlockProgram_Click">
+                <CheckBox Name="chkBlockProgram" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" FontSize="12" FontFamily="{DynamicResource SourceSansProRegular}" VerticalAlignment="Center" Margin="0 15 0 0" Click="chkBlockProgram_Click" Style="{DynamicResource FocusCheckbox}">
                     Block select programs and websites while focusing</CheckBox>
                 <StackPanel Name="sPnlBlockList" Orientation="Horizontal" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="20 0 0 0"
                             Visibility="Hidden">

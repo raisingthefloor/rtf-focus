@@ -5,24 +5,40 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Morphic.Focus.Screens"
              mc:Ignorable="d">
-    <StackPanel Orientation="Horizontal" Height="44" Width="325" Background="{DynamicResource LightGreen}" Margin="0">
-        <StackPanel.Resources>
-            <Style TargetType="{x:Type TextBox}">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding Path=IsChecked, ElementName=cbTodaysSchedule}" Value="False">
-                        <Setter Property="IsEnabled" Value="False" />
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </StackPanel.Resources>
-        <Border Margin="8 10 0 11" BorderThickness="0" Name="scheduleColor" Height="23" Width="20"></Border>
-        <TextBlock Text="{Binding Schedule.BlockListName}" FontFamily="{DynamicResource SourceSansProRegular}" FontSize="14" LineHeight="15" Width="118" 
+    <Border BorderThickness="1" BorderBrush="{DynamicResource GreyBorder}">
+        <StackPanel Orientation="Horizontal" Height="44" Width="325" Background="{DynamicResource LightGreen}" Margin="0">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBox}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsChecked, ElementName=cbTodaysSchedule}" Value="False">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderBrush" Value="Pink"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsChecked, ElementName=cbTodaysSchedule}" Value="True">
+                            <Setter Property="Background" Value="{Binding ScheduleColor}" />
+                            <Setter Property="BorderBrush" Value="{Binding ScheduleColor}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=IsChecked, ElementName=cbTodaysSchedule}" Value="False">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderBrush" Value="{Binding ScheduleColor}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Resources>
+            <Border Margin="8 10 0 11" BorderThickness="2.5" Name="scheduleColor" Height="23" Width="20" ></Border>
+            <TextBlock Text="{Binding Schedule.BlockListName}" FontFamily="{DynamicResource SourceSansProRegular}" FontSize="14" LineHeight="15" Width="118" 
                                                        Margin="5 10 0 11">
-        </TextBlock>
+            </TextBlock>
 
-        <TextBox Width="57" Height="23" Margin="8 10 0 11" Text="{Binding Path=Schedule.StartAt, Mode=TwoWay, StringFormat={}{0:t}}"></TextBox>
-        <TextBox Width="57" Height="23" Margin="8 10 0 11" Text="{Binding Path=Schedule.EndAt, Mode=TwoWay, StringFormat={}{0:t}}"></TextBox>
+            <TextBox Width="57" Height="23" Margin="8 10 0 11" Text="{Binding Path=Schedule.StartAt, Mode=TwoWay, StringFormat={}{0:t}}"></TextBox>
+            <TextBox Width="57" Height="23" Margin="8 10 0 11" Text="{Binding Path=Schedule.EndAt, Mode=TwoWay, StringFormat={}{0:t}}"></TextBox>
 
-        <CheckBox Name="cbTodaysSchedule" Margin="12 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14" IsChecked="{Binding Path=Schedule.IsActive}" Style="{DynamicResource FocusCheckbox}"/>
-    </StackPanel>
+            <CheckBox Name="cbTodaysSchedule" Margin="12 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14" IsChecked="{Binding Path=Schedule.IsActive}" Style="{DynamicResource FocusCheckbox}"/>
+        </StackPanel>
+    </Border>
 </UserControl>

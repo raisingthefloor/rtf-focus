@@ -82,12 +82,11 @@ namespace Morphic.Focus.Screens
             }
 
             //TODO - Move to Resources
-            var bc = new BrushConverter();
-            Schedule1.scheduleColor.Background = AppEngine.Schedule1Brush;
-            Schedule2.scheduleColor.Background = AppEngine.Schedule2Brush;
-            Schedule3.scheduleColor.Background = AppEngine.Schedule3Brush; //bc.ConvertFrom(  (Brush)bc.ConvertFrom("#002957");
-            Schedule4.scheduleColor.Background = AppEngine.Schedule4Brush;
-            Schedule5.scheduleColor.Background = AppEngine.Schedule5Brush;
+            Schedule1.ScheduleColor = AppEngine.Schedule1Brush;
+            Schedule2.ScheduleColor = AppEngine.Schedule2Brush;
+            Schedule3.ScheduleColor = AppEngine.Schedule3Brush;
+            Schedule4.ScheduleColor = AppEngine.Schedule4Brush;
+            Schedule5.ScheduleColor = AppEngine.Schedule5Brush;
 
             ResetBlockListVisibility();
             InitializeCalendarData();
@@ -125,6 +124,8 @@ namespace Morphic.Focus.Screens
                     {
                         Color1 = Brushes.Transparent,
                         Color2 = Brushes.Transparent,
+                        BorderColor1 = Brushes.Transparent,
+                        BorderColor2 = Brushes.Transparent,
                         I = i,
                         J = (int)DateTime.Today.DayOfWeek
                     });
@@ -140,8 +141,8 @@ namespace Morphic.Focus.Screens
         private void AddSchedule(Schedule schedule, Brush brush)
         {
             //Process only if the schedule is Active
-            if (schedule.IsActive)
-            {
+            //if (schedule.IsActive)
+            //{
                 AddforDay(schedule, brush, schedule.IsActiveSunday, 0);
                 AddforDay(schedule, brush, schedule.IsActiveMonday, 1);
                 AddforDay(schedule, brush, schedule.IsActiveTuesday, 2);
@@ -149,7 +150,7 @@ namespace Morphic.Focus.Screens
                 AddforDay(schedule, brush, schedule.IsActiveThursday, 4);
                 AddforDay(schedule, brush, schedule.IsActiveFriday, 5);
                 AddforDay(schedule, brush, schedule.IsActiveSaturday, 6);
-            }
+            //}
         }
 
         private void AddforDay(Schedule schedule, Brush brush, bool day, int dayValue)
@@ -172,7 +173,7 @@ namespace Morphic.Focus.Screens
                     if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
                     {
                         CalendarData? item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
-                        if (item.Color1 != Brushes.Transparent)
+                        if (item.BorderColor1 != Brushes.Transparent)
                         {
                             isFirstSlotAvailable = false;
                             break;
@@ -189,7 +190,8 @@ namespace Morphic.Focus.Screens
                         if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
                         {
                             CalendarData item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
-                            item.Color1 = brush;
+                            item.Color1 = schedule.IsActive ? brush : Brushes.Transparent;
+                            item.BorderColor1 = brush;
                         }
                     }
                 }
@@ -203,7 +205,7 @@ namespace Morphic.Focus.Screens
                         if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
                         {
                             CalendarData? item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
-                            if (item.Color2 != Brushes.Transparent)
+                            if (item.BorderColor2 != Brushes.Transparent)
                             {
                                 isSecondSlotAvailable = false;
                                 break;
@@ -220,7 +222,8 @@ namespace Morphic.Focus.Screens
                             if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
                             {
                                 CalendarData item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
-                                item.Color2 = brush;
+                                item.Color2 = schedule.IsActive ? brush : Brushes.Transparent;
+                                item.BorderColor2 = brush;
                             }
                         }
                     }

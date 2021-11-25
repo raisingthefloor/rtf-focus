@@ -67,7 +67,7 @@ namespace Morphic.Focus.Screens
                 }
             }
         }
-
+        public Brush ScheduleColor { get; set; }
         internal void ResetVisibility()
         {
             this.Visibility = SetVisibility();

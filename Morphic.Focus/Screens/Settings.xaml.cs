@@ -201,16 +201,5 @@ namespace Morphic.Focus.Screens
 
     }
 
-    internal class WidthMinusThirtyConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return ((Double)value) - 30;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    
 }

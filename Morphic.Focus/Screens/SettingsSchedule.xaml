@@ -7,8 +7,6 @@
              xmlns:local="clr-namespace:Morphic.Focus.Screens"
              mc:Ignorable="d" 
              d:DesignWidth="800">
-    
-
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
@@ -67,7 +65,7 @@
                               FontFamily="{DynamicResource SourceSansProRegular}" SelectedValue="{Binding Engine.UserPreferences.Schedules.Schedulebreak.BreakGap, Mode=TwoWay}"
                               ItemsSource="{Binding BreakGap, Mode=OneTime}" SelectedValuePath="Key" DisplayMemberPath="Value">
                         </ComboBox>
-                        <TextBlock Margin="4 0 0 0" Style="{DynamicResource SettingsSectionBody}" FontWeight="Bold">of scheduled Focus sessions</TextBlock>
+                        <TextBlock Margin="4 0 0 0" Style="{DynamicResource SettingsSectionBody}" FontWeight="Bold" FontStyle="Italic">of scheduled Focus sessions</TextBlock>
                     </StackPanel>
                     <Border Height="20" Margin="8 12 15 0" BorderBrush="{DynamicResource GreyBorder}" BorderThickness="0 1 0 0" Background="Transparent">
                     </Border>
@@ -165,10 +163,10 @@
                                 <DataTemplate>
                                     <Border x:Name="Data" Width="65" BorderThickness="1" BorderBrush="#DDDDDD">
                                         <StackPanel Orientation="Horizontal">
-                                            <Border Width="32" Height="14" BorderThickness="0" BorderBrush="Transparent" Background="{Binding Color1}">
+                                            <Border Width="32" Height="14" BorderThickness="2.5" BorderBrush="{Binding BorderColor1}" Background="{Binding Color1}">
 
                                             </Border>
-                                            <Border Width="32" Height="14" BorderThickness="0" BorderBrush="Transparent" Background="{Binding Color2}">
+                                            <Border Width="32" Height="14" BorderThickness="2.5" BorderBrush="{Binding BorderColor2}" Background="{Binding Color2}">
 
                                             </Border>
                                         </StackPanel>

@@ -13,8 +13,8 @@
             <Setter Property="Padding" Value="4 2"/>
             <Setter Property="FontSize" Value="10"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Background" Value="#666666" />
-            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Foreground" Value="#666666" />
+            <Setter Property="Background" Value="White" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ToggleButton">
@@ -26,81 +26,133 @@
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-
-                <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Background" Value="#3566D8" />
-                    <Setter Property="Foreground" Value="White" />
-                </Trigger>
-                <Trigger Property="IsChecked" Value="False">
-                    <Setter Property="Background" Value="White" />
-                    <Setter Property="Foreground" Value="Black" />
-                </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Background" Value="White" />
-                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="Foreground" Value="#666666" />
                 </Trigger>
+
+                <DataTrigger Binding="{Binding Path=IsChecked, ElementName=chkIsActive}" Value="True">
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="Foreground" Value="#666666" />
+                </DataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="True"/>
+                        <Condition Binding="{Binding Path=IsChecked, ElementName=chkIsActive}" Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="Background" Value="#666666" />
+                        <Setter Property="Foreground" Value="White" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="True"/>
+                        <Condition Binding="{Binding Path=IsChecked, ElementName=chkIsActive}" Value="True" />
+                        <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="Background" Value="#3566D8" />
+                        <Setter Property="Foreground" Value="White" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+                
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="True"/>
+                        <Condition Binding="{Binding Path=IsChecked, ElementName=chkIsActive}" Value="True" />
+                        <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="False"/>
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="Background" Value="White" />
+                        <Setter Property="Foreground" Value="Black" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
             </Style.Triggers>
         </Style>
+        <local:ComboItemSelectedConverter x:Key="ComboItemSelectedConverter"></local:ComboItemSelectedConverter>
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal" Height="44" Background="{DynamicResource LightGreen}" Margin="0">
         <StackPanel.Resources>
-
-            <Style TargetType="{x:Type TextBox}">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding Path=SelectedItem, 
-                                               ElementName=cmbBlockList}" 
-                                               Value="{x:Null}">
-                        <Setter Property="IsEnabled" Value="False" />
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
             <Style TargetType="{x:Type Border}">
-                <Setter Property="Background" Value="{Binding BorderBrush}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding Path=SelectedItem, 
-                                               ElementName=cmbBlockList}" 
-                                               Value="{x:Null}">
+                    <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" Value="False">
                         <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="BorderBrush" Value="Transparent" />
                     </DataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" Value="True"/>
+                            <Condition Binding="{Binding Path=IsChecked, ElementName=chkIsActive}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
+                            <Setter Property="Background" Value="{Binding ScheduleColor}" />
+                            <Setter Property="BorderBrush" Value="{Binding ScheduleColor}" />
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" Value="True"/>
+                            <Condition Binding="{Binding Path=IsChecked, ElementName=chkIsActive}" Value="False"/>
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderBrush" Value="{Binding ScheduleColor}" />
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
                 </Style.Triggers>
             </Style>
         </StackPanel.Resources>
         <Canvas Width="136" Margin="8 10 0 11">
-
             <ComboBox Style="{DynamicResource SettingsComboBoxStyle}" Width="117" Height="23" Name="cmbBlockList" 
                   ItemsSource="{Binding Path=Engine.UserPreferences.BlockLists, Mode=OneWay}" SelectedItem="{Binding Path=Blocklist, Mode=TwoWay}"
-                                              DisplayMemberPath="Name" SelectedValuePath="Name" Canvas.Left="19" Canvas.Top="0" Canvas.ZIndex="2">
-            </ComboBox>
-            <Border Width="27" Height="23" Name="scheduleColor" Canvas.Left="0" Canvas.Top="0" Canvas.ZIndex="1">
-                <!--<Border.Style>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="Background" Value="#CBE2FF"/>
-                    </Style>
-                </Border.Style>-->
-            </Border>
+                                              DisplayMemberPath="Name" SelectedValuePath="Name" Canvas.Left="19" Canvas.Top="0" Canvas.ZIndex="2"/>
+            <Border Width="27" Height="23" Name="scheduleColor" Canvas.Left="0" Canvas.Top="0" Canvas.ZIndex="1" BorderThickness="2.5" />
         </Canvas>
-        <TextBox Width="57" Height="23" Margin="12 10 0 11" Name="txtSTart" Text="{Binding Path=Schedule.StartAt, Mode=TwoWay, StringFormat={}{0:t}}"></TextBox>
-        <TextBox Width="57" Height="23" Margin="12 10 0 11" Text="{Binding Path=Schedule.EndAt, Mode=TwoWay, StringFormat={}{0:t}}"></TextBox>
+        <TextBox Width="57" Height="23" Margin="12 10 0 11" IsEnabled="{Binding Path=IsChecked, ElementName=chkIsActive}">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Text" Value="{Binding Path=Schedule.StartAt, Mode=TwoWay, StringFormat={}{0:t}}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" Value="False">
+                            <Setter Property="Text" Value=""/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <TextBox Width="57" Height="23" Margin="12 10 0 11" IsEnabled="{Binding Path=IsChecked, ElementName=chkIsActive}">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Text" Value="{Binding Path=Schedule.EndAt, Mode=TwoWay, StringFormat={}{0:t}}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" Value="False">
+                            <Setter Property="Text" Value=""/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
 
         <StackPanel Orientation="Horizontal" Margin="12 10 0 11">
-            <ToggleButton Content="S" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}" 
+            <ToggleButton Content="S" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" 
                           IsChecked="{Binding Path=Schedule.IsActiveSunday}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="M" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
-                          IsChecked="{Binding Path=Schedule.IsActiveMonday}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
-                          IsChecked="{Binding Path=Schedule.IsActiveTuesday}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="W" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
-                          IsChecked="{Binding Path=Schedule.IsActiveWednesday}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
-                          IsChecked="{Binding Path=Schedule.IsActiveThursday}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="F" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
-                          IsChecked="{Binding Path=Schedule.IsActiveFriday}"></ToggleButton>
-            <ToggleButton Margin="4 0 0 0" Content="S" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"
-                          IsChecked="{Binding Path=Schedule.IsActiveSaturday}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="M" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" IsChecked="{Binding Path=Schedule.IsActiveMonday}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" IsChecked="{Binding Path=Schedule.IsActiveTuesday}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="W" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" IsChecked="{Binding Path=Schedule.IsActiveWednesday}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="T" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" IsChecked="{Binding Path=Schedule.IsActiveThursday}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="F" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" IsChecked="{Binding Path=Schedule.IsActiveFriday}"></ToggleButton>
+            <ToggleButton Margin="4 0 0 0" Content="S" Style="{StaticResource WeekdayButtonStyle}" IsEnabled="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" IsChecked="{Binding Path=Schedule.IsActiveSaturday}"></ToggleButton>
         </StackPanel>
-        <CheckBox Margin="22 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14" IsChecked="{Binding Path=Schedule.IsActive}" Style="{DynamicResource FocusCheckbox}" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}"/>
+        <CheckBox Margin="22 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14" IsChecked="{Binding Path=Schedule.IsActive}"
+                  Style="{DynamicResource FocusCheckbox}" Name="chkIsActive" 
+                  IsEnabled="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}">
+        </CheckBox>
 
-        <Button Margin="12 10 0 11" Style="{DynamicResource SetingsImageButtonStyle}" Cursor="Hand" Name="btnClearSchedule" Click="btnClearSchedule_Click" IsEnabled="{Binding ElementName=txtSTart, Path=IsEnabled}">
+        <Button Margin="12 10 0 11" Style="{DynamicResource SetingsImageButtonStyle}" Cursor="Hand" Name="btnClearSchedule" Click="btnClearSchedule_Click" IsEnabled="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}">
             <Image  Source="/Images/Vector.png" Width="13.5" Height="13.5" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="6 0" />
         </Button>
     </StackPanel>

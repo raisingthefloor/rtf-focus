@@ -17,7 +17,7 @@ namespace Morphic.Data.Models
         public virtual BlockList BlockList { get; set; }
         public DateTime ActualStartTime { get; set; }
         public DateTime ActualEndTime { get; set; }
-        public int ScheduleID { get; set; }
+        public Schedule Schedule { get; set; }
         public DateTime LastStartTime { get; set; }
         public DateTime LastBreakStartTime { get; set; }
         public String FocusType { get; set; }

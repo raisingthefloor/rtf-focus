@@ -1,39 +1,65 @@
 ﻿using Morphic.Data.Models;
 using Morphic.Data.Services;
 using Morphic.Focus.Screens;
-using Morphic.Data.Services;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace Morphic.Focus
 {
     public class AppEngine : BaseClass
     {
-        #region AppEnding Instance
+        #region AppEngine Instance
         private static readonly AppEngine _instance = new AppEngine();
         public static AppEngine Instance { get { return _instance; } }
 
         AppEngine()
         {
-            //System.IO.File.Copy(Path.Combine(AppContext.BaseDirectory, Common.CATEGORIES_FILE_NAME), Common.MakeFilePath(Common.CATEGORIES_FILE_NAME), true);
-            GetFocusSettings();
+            try
+            {
+                #region Categories
+                //Copy Categories JSON file to user folder
+                if (!File.Exists(Common.MakeFilePath(Common.CATEGORIES_FILE_NAME)))
+                    File.Copy(Path.Combine(AppContext.BaseDirectory, Common.CATEGORIES_FILE_NAME), Common.MakeFilePath(Common.CATEGORIES_FILE_NAME), true);
 
-            GetCategoryies();
+                //Get Categories from the Categories JSON File
+                GetCategoryies();
+                #endregion
 
-            CheckIsFocusRunning();
+                #region User Preferences
+                //Load User Preference's from User's Json File
+                //If User's Json file do not exist, set the defaults and save it to the file
+                GetFocusSettings();
 
-            UserPreferences.PropertyChanged += UserPreferences_PropertyChanged;
-            UserPreferences.Schedules.PropertyChanged += Schedules_PropertyChanged;
-            SetTodaysSchedule();
+                //Notify if User Preferences or Schedules are updated
+                UserPreferences.PropertyChanged += UserPreferences_PropertyChanged;
+                UserPreferences.Schedules.PropertyChanged += Schedules_PropertyChanged;
+
+                //Set User Preferences -> Today's schedule
+                SetTodaysSchedule();
+                #endregion
+
+                #region Ongoing Sessions
+                CheckIsFocusRunning();
+                #endregion
+
+                #region Set Timers to trigger scheduled focus sessions
+                ResetSchedules();
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
 
+        #endregion
+
+        #region PropertyChanged
         private void Schedules_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             SetTodaysSchedule(true); //Since original schedules are altered, force reset today's schedules
@@ -43,6 +69,77 @@ namespace Morphic.Focus
         {
             SetFocusSettings();
         }
+        #endregion
+
+        #region Schedule-Trigger
+
+        DailyTrigger? schTrigger1 = null;
+        DailyTrigger? schTrigger2 = null;
+        DailyTrigger? schTrigger3 = null;
+        DailyTrigger? schTrigger4 = null;
+        DailyTrigger? schTrigger5 = null;
+        private void ResetSchedules()
+        {
+            try
+            {
+                //Reset Triggers
+                schTrigger1 = null;
+                schTrigger2 = null;
+                schTrigger3 = null;
+                schTrigger4 = null;
+                schTrigger5 = null;
+
+                //Set Triggers
+                SetTrigger(schTrigger1, UserPreferences.TodaysSchedule.Schedule1);
+                SetTrigger(schTrigger2, UserPreferences.TodaysSchedule.Schedule2);
+                SetTrigger(schTrigger3, UserPreferences.TodaysSchedule.Schedule3);
+                SetTrigger(schTrigger4, UserPreferences.TodaysSchedule.Schedule4);
+                SetTrigger(schTrigger5, UserPreferences.TodaysSchedule.Schedule5);
+
+
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void SetTrigger(DailyTrigger? trigger, Schedule schedule)
+        {
+            if (schedule != null) //Schedule should be non-null
+            {
+                if (schedule.IsActive) //Schedule should be active
+                {
+                    if (Helper.IsActiveToday(schedule)) //Schedule should be active today
+                    {
+                        if (!UserPreferences.General.dontGive5MinWarning) //Dialog not to be shown if disabled in General Setting
+                        {
+                            DateTime scheduleStartTime = schedule.StartAt.AddMinutes(-5); //Modal dialog to be shown 5 mins before start time
+
+                            trigger = new DailyTrigger(scheduleStartTime.Hour, scheduleStartTime.Minute, scheduleStartTime.Second); // today at scheduled time
+
+                            trigger.OnTimeTriggered += () =>
+                            {
+                                if (CurrSession1 != null && CurrSession1.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
+
+                                if (CurrSession2 != null && CurrSession2.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
+
+                                if (CurrSession1 != null && CurrSession2 != null) return; //Dialog not to be shown if two sessions are already active
+
+                                Application.Current.Dispatcher.Invoke(() =>
+                                {
+                                    ScheduledSessionModal scrScheduledSessionModal = new ScheduledSessionModal(schedule);
+                                    scrScheduledSessionModal.Show();
+                                    LoggingService.WriteAppLog("Scheduled Session Dialog Open");
+                                });
+
+                            };
+                        }
+                    }
+                }
+            }
+        }
+
 
         #endregion
 
@@ -163,7 +260,6 @@ namespace Morphic.Focus
             AssignSchedule(UserPreferences.TodaysSchedule.Schedule4, UserPreferences.Schedules.Schedule4);
             AssignSchedule(UserPreferences.TodaysSchedule.Schedule5, UserPreferences.Schedules.Schedule5);
             UserPreferences.TodaysSchedule.DateUpdated = DateTime.Now;
-
         }
 
         void AssignSchedule(Schedule todaySchedule, Schedule schedule)
@@ -198,7 +294,6 @@ namespace Morphic.Focus
                 UserPreferences = new UserPreferences();
                 jSONHelper.Save<UserPreferences>(UserPreferences);
             }
-
         }
         #endregion
 
@@ -222,7 +317,7 @@ namespace Morphic.Focus
         }
         private void GetCategoryies()
         {
-            //Get Focus Preferences from the Settings.json file
+            //Get Categories List from the categories.json file
             //If the file is not found, a new settings file is created
             //Settings are persisted in memomy as long as the Focus Tool is running
 
@@ -230,7 +325,7 @@ namespace Morphic.Focus
             JSONHelper jSONHelper = new JSONHelper(Common.CATEGORIES_FILE_NAME);
             CategoryCollection = jSONHelper.Get<CategoryCollection>();
 
-            //2. If the file is not found, a new settings file is created
+            //2. If the file is not found, a new empty categories file is created
             if (CategoryCollection == null)
             {
                 CategoryCollection = new CategoryCollection();
@@ -241,8 +336,8 @@ namespace Morphic.Focus
         #endregion
 
         #region Selected Blocklist in Settings
-        private Blocklist _selectedBlockList;
-        public Blocklist SelectedBlockList
+        private Blocklist? _selectedBlockList;
+        public Blocklist? SelectedBlockList
         {
             get
             {
@@ -281,6 +376,9 @@ namespace Morphic.Focus
 
         private Session? _currSession1 = null;
         public Session? CurrSession1 { get => _currSession1; set => _currSession1 = value; }
+
+        private Session? _currSession2 = null;
+        public Session? CurrSession2 { get => _currSession2; set => _currSession2 = value; }
         #endregion
 
         #endregion
@@ -323,5 +421,81 @@ namespace Morphic.Focus
             IsFocusRunning = false;
         }
 
+        internal void StartFocusSession(Session session)
+        {
+            try
+            {
+                LoggingService.WriteAppLog("Start Focus Session Request Received");
+
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Utility class for triggering an event every 24 hours at a specified time of day
+    /// </summary>
+    public class DailyTrigger : IDisposable
+    {
+        /// <summary>
+        /// Time of day (from 00:00:00) to trigger
+        /// </summary>
+        TimeSpan TriggerHour { get; }
+
+        /// <summary>
+        /// Task cancellation token source to cancel delayed task on disposal
+        /// </summary>
+        CancellationTokenSource CancellationToken { get; set; }
+
+        /// <summary>
+        /// Reference to the running task
+        /// </summary>
+        Task RunningTask { get; set; }
+
+        /// <summary>
+        /// Initiator
+        /// </summary>
+        /// <param name="hour">The hour of the day to trigger</param>
+        /// <param name="minute">The minute to trigger</param>
+        /// <param name="second">The second to trigger</param>
+        public DailyTrigger(int hour, int minute = 0, int second = 0)
+        {
+            TriggerHour = new TimeSpan(hour, minute, second);
+            CancellationToken = new CancellationTokenSource();
+            RunningTask = Task.Run(async () =>
+            {
+                while (true)
+                {
+                    var triggerTime = DateTime.Today + TriggerHour - DateTime.Now;
+                    if (triggerTime < TimeSpan.Zero)
+                        triggerTime = triggerTime.Add(new TimeSpan(24, 0, 0));
+                    await Task.Delay(triggerTime, CancellationToken.Token);
+                    OnTimeTriggered?.Invoke();
+                }
+            }, CancellationToken.Token);
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            CancellationToken?.Cancel();
+            CancellationToken?.Dispose();
+            CancellationToken = null;
+            RunningTask?.Dispose();
+            RunningTask = null;
+        }
+
+        /// <summary>
+        /// Triggers once every 24 hours on the specified time
+        /// </summary>
+        public event Action OnTimeTriggered;
+
+        /// <summary>
+        /// Finalized to ensure Dispose is called when out of scope
+        /// </summary>
+        ~DailyTrigger() => Dispose();
     }
 }

@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Morphic.Data.Models;
+using Morphic.Data.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,18 +15,140 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Morphic.Focus.Screens
 {
     /// <summary>
     /// Interaction logic for ScheduledSessionModal.xaml
     /// </summary>
-    public partial class ScheduledSessionModal : Window
+    public partial class ScheduledSessionModal : Window, INotifyPropertyChanged
     {
-        public ScheduledSessionModal()
+        #region Private members, AppEngine and Constructor
+        AppEngine _engine;
+        private string _titleText = string.Empty;
+        private string _buttonText = string.Empty;
+        DispatcherTimer _timer;
+        TimeSpan _time;
+
+        public AppEngine Engine { get { return _engine; } }
+
+        public ScheduledSessionModal(Schedule schedule)
         {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _engine = AppEngine.Instance;
+            }
+
+            //The schedule for which this dialog was triggered
+            Schedule = schedule;
+
+            //Start 5 min countdown timer
+            StartCountDownTimer();
+
             InitializeComponent();
+
+            this.DataContext = this;
         }
+
+        #endregion
+
+        #region Methods
+        private void StartCountDownTimer()
+        {
+            try
+            {
+                TitleText = "Your scheduled focus session starts in 5 min.";
+                ButtonText = "OK, start in 5 min";
+
+                _time = TimeSpan.FromMinutes(5); //5 min countdown timer
+
+                _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
+                {
+                    TitleText = "Your scheduled focus session starts in " + Math.Ceiling(_time.TotalMinutes) + " min.";
+                    ButtonText = "OK, start in " + Math.Ceiling(_time.TotalMinutes) + " min";
+
+                    if (_time <= TimeSpan.Zero)
+                    {
+                        if (_timer != null) _timer.Stop();
+
+                        //TODO - START A FOCUS SESSION HERE
+                        LoggingService.WriteAppLog("Scheduled Session Dialog Closed -> 5 min timer timed out");
+
+                        Engine.StartFocusSession(new Session()
+                        {
+                            ActualStartTime = DateTime.Now,
+                            ActualEndTime = Schedule.EndAt,
+                            BlockListName = Schedule.BlockListName,
+
+                            //Break
+                            ProvideBreak = Engine.UserPreferences.Schedules.Schedulebreak.IsActive,
+                            BreakDuration = Engine.UserPreferences.Schedules.Schedulebreak.BreakDuration,
+                            BreakGap = Engine.UserPreferences.Schedules.Schedulebreak.BreakGap,
+
+                            //User & Log
+                            CreatedBy = Environment.UserName,
+                            DateCreated = DateTime.Now,
+                            
+                            FocusType = "ScheduledSession",
+                            Schedule = Schedule
+                        });
+
+                        this.Close();
+                    }
+                    _time = _time.Add(TimeSpan.FromSeconds(-1));
+                }, Application.Current.Dispatcher);
+
+                _timer.Start();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+        #endregion
+
+        #region Properties
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        public Schedule Schedule { get; set; }
+
+        public string TitleText
+        {
+            get
+            {
+                return _titleText;
+            }
+            set
+            {
+                _titleText = value;
+                NotifyPropertyChanged(); // method implemented below
+            }
+        }
+
+        public string ButtonText
+        {
+            get
+            {
+                return _buttonText;
+            }
+            set
+            {
+                _buttonText = value;
+                NotifyPropertyChanged(); // method implemented below
+            }
+        }
+        #endregion
 
         #region Events
         private void Window_MouseMove(object sender, MouseEventArgs e)

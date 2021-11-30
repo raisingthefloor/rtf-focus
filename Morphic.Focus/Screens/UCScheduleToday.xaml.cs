@@ -85,7 +85,7 @@ namespace Morphic.Focus.Screens
             {
                 return Visibility.Collapsed;
             }
-            else if (!IsActiveToday(Schedule)) //Hide if not active for this weekday
+            else if (!Helper.IsActiveToday(Schedule)) //Hide if not active for this weekday
             { 
                 return Visibility.Collapsed;
             }
@@ -93,26 +93,6 @@ namespace Morphic.Focus.Screens
                 return Visibility.Visible; //Visible
         }
 
-        private bool IsActiveToday(Schedule schedule)
-        {
-            switch (DateTime.Now.DayOfWeek)
-            {
-                case DayOfWeek.Sunday:
-                    return schedule.IsActiveSunday;
-                case DayOfWeek.Monday:
-                    return schedule.IsActiveMonday;
-                case DayOfWeek.Tuesday:
-                    return schedule.IsActiveTuesday;
-                case DayOfWeek.Wednesday:
-                    return schedule.IsActiveWednesday;
-                case DayOfWeek.Thursday:
-                    return schedule.IsActiveThursday;
-                case DayOfWeek.Friday:
-                    return schedule.IsActiveFriday;
-                case DayOfWeek.Saturday:
-                    return schedule.IsActiveSaturday;
-            }
-            return false;
-        }
+        
     }
 }

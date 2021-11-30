@@ -159,7 +159,7 @@ namespace Morphic.Focus
                     {
                         ButtonText = "Focus" + Environment.NewLine + Math.Ceiling(_time.TotalMinutes);
 
-                        if (_time == TimeSpan.Zero)
+                        if (_time <= TimeSpan.Zero)
                         {
                             if (_timer != null) _timer.Stop();
 
@@ -285,11 +285,11 @@ namespace Morphic.Focus
             scr13.Close();
 
             //Src 14
-            ScheduledSessionModal scr14 = new ScheduledSessionModal();
-            scr14.Show();
+            //ScheduledSessionModal scr14 = new ScheduledSessionModal();
+            //scr14.Show();
 
-            await Task.Delay(5000);
-            scr14.Close();
+            //await Task.Delay(5000);
+            //scr14.Close();
 
             //Src 15
             SessionCompletedModal scr15 = new SessionCompletedModal();
@@ -326,9 +326,6 @@ namespace Morphic.Focus
             await Task.Delay(5000);
             scr19.Close();
         }
-
-
-
 
         #endregion
 

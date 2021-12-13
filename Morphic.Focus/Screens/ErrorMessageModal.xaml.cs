@@ -22,7 +22,15 @@ namespace Morphic.Focus.Screens
         public ErrorMessageModal()
         {
             InitializeComponent();
+
+            DataContext = this;
         }
+
+        #region Properties
+        public string TitleText { get; set; }
+        public string ContentText { get; set; }
+        public string ContentSmallText { get; set; }
+        #endregion
 
         #region Events
         private void Window_MouseMove(object sender, MouseEventArgs e)
@@ -41,10 +49,6 @@ namespace Morphic.Focus.Screens
         private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
             this.Close();
-        }
-        private void btnStopFocus_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Feature will be available soon!");
         }
         #endregion
     }

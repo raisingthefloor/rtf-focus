@@ -53,11 +53,11 @@
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Path=IsFocusRunning, UpdateSourceTrigger=PropertyChanged}" Value="true">
+                        <DataTrigger Binding="{Binding Path=Engine.IsFocusRunning, UpdateSourceTrigger=PropertyChanged}" Value="true">
                             <Setter Property="Button.Background" Value="White" />
                             <Setter Property="Button.Foreground" Value="Black" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=IsFocusRunning, UpdateSourceTrigger=PropertyChanged}" Value="false">
+                        <DataTrigger Binding="{Binding Path=Engine.IsFocusRunning, UpdateSourceTrigger=PropertyChanged}" Value="false">
                             <Setter Property="Button.Background" Value="#008145" />
                             <Setter Property="Button.Foreground" Value="White" />
                         </DataTrigger>

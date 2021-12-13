@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,6 +27,7 @@ namespace Morphic.Focus.Screens
     /// </summary>
     public partial class MainMenuNonModal : Window, INotifyPropertyChanged
     {
+        #region Members and Constructor 
         private ObservableCollection<BlockList> _blockLists = new ObservableCollection<BlockList>();
         public ObservableCollection<BlockList> BlockLists
         {
@@ -44,25 +46,27 @@ namespace Morphic.Focus.Screens
         AppEngine _engine;
         public AppEngine Engine { get { return _engine; } }
 
-        public Session? CurrSession1 { get => _engine.CurrSession1; set => _engine.CurrSession1 = value; }
+        //TODO - Review if these variables are needed
+        //public Session? CurrSession1 { get => _engine.CurrSession1; set => _engine.CurrSession1 = value; }
+        //public Session? CurrSession2 { get => _engine.CurrSession2; set => _engine.CurrSession2 = value; }
 
-        public bool IsFocusRunning
-        {
-            get
-            {
-                return _engine.IsFocusRunning;
-            }
-            set
-            {
-                _engine.IsFocusRunning = value;
-                NotifyPropertyChanged("IsFocusRunning"); // method implemented below
+        //public bool IsFocusRunning
+        //{
+        //    get
+        //    {
+        //        return _engine.IsFocusRunning;
+        //    }
+        //    set
+        //    {
+        //        _engine.IsFocusRunning = value;
+        //        NotifyPropertyChanged("IsFocusRunning"); // method implemented below
 
-                if (SessionUpdate != null)
-                {
-                    SessionUpdate(CurrSession1);
-                }
-            }
-        }
+        //        if (SessionUpdate != null)
+        //        {
+        //            SessionUpdate(CurrSession1);
+        //        }
+        //    }
+        //}
 
         public MainMenuNonModal()
         {
@@ -73,22 +77,9 @@ namespace Morphic.Focus.Screens
 
             InitializeComponent();
 
-            GetBlockLists();
             DataContext = this;
 
-            _engine.PropertyChanged += _engine_PropertyChanged;
-        }
-
-        private void _engine_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            NotifyPropertyChanged("IsFocusRunning");
-        }
-
-        #region Helper Methods
-        private void GetBlockLists()
-        {
-            //IDataService<BlockList> dataService = new GenericDataService<BlockList>(new FocusDbContextFactory());
-            BlockLists = new ObservableCollection<BlockList>(new List<BlockList>() { new BlockList() });
+            //Engine.PropertyChanged += _engine_PropertyChanged;
         }
         #endregion
 
@@ -114,11 +105,11 @@ namespace Morphic.Focus.Screens
         private void btnViewEditBlockList_Click(object sender, RoutedEventArgs e)
         {
             //Set Edit Blocklists Tab open
-            _engine.Settings.OpenBlocklist = true;
+            Engine.Settings.OpenBlocklist = true;
 
             //Hide current window and show Settings Window
             this.Hide();
-            _engine.Settings.Show();
+            Engine.Settings.Show();
         }
 
         /// <summary>
@@ -139,24 +130,18 @@ namespace Morphic.Focus.Screens
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
             //Donot set Edit Blocklists Tab open
-            _engine.Settings.OpenBlocklist = false;
+            Engine.Settings.OpenBlocklist = false;
 
             //Hide current window and show Settings Window
             this.Hide();
-            _engine.Settings.Show();
-        }
-
-        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            GetBlockLists();
+            Engine.Settings.Show();
         }
 
         private void FocusStart(object sender, RoutedEventArgs e)
         {
             try
             {
-                //Create Session Object
-                Session session = new Session()
+                Engine.StartFocusSession(new Session()
                 {
                     TurnONDND = chkDND.IsChecked ?? false,
 
@@ -166,31 +151,10 @@ namespace Morphic.Focus.Screens
 
                     BlockListName = cmbBlockList.SelectedValue == null ? "" : cmbBlockList.SelectedValue.ToString(),
 
-                    CreatedBy = Environment.UserName,
-                    DateCreated = DateTime.Now,
-
                     ActualStartTime = DateTime.Now,
-
+                    
                     SessionDuration = int.Parse(((Button)sender).Tag.ToString())
-                };
-
-                //Add to database
-                JSONHelper jSONHelper = new JSONHelper(Common.SESSION_FILE_NAME);
-                string jsonString = jSONHelper.Save(session);
-
-                if (IsFocusRunning)
-                {
-                    //Log Session
-                    LoggingService.WriteAppLog("Session Restarted : " + jsonString);
-                }
-                else
-                {
-                    //Log Session
-                    LoggingService.WriteAppLog("Session Started : " + jsonString);
-                }
-
-                CurrSession1 = session;
-                IsFocusRunning = true;
+                });
 
                 //Hide this dialog
                 this.Hide();
@@ -201,6 +165,11 @@ namespace Morphic.Focus.Screens
             }
 
         }
+
+        //private void _engine_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        //{
+        //    NotifyPropertyChanged();
+        //}
         #endregion
 
         #region Info Text Visibility
@@ -312,13 +281,16 @@ namespace Morphic.Focus.Screens
         #endregion
 
         #region INotifyPropertyChanged implement
-        //Property changed
         public event PropertyChangedEventHandler? PropertyChanged;
-        public void NotifyPropertyChanged(string name)
+
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
         #endregion

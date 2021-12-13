@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Morphic.Data.Models
 {
-    public class Session : BaseModel
+    public class Session : BaseClass
     {
         public bool TurnONDND { get; set; }
         public bool ProvideBreak { get; set; }

@@ -28,27 +28,35 @@ namespace Morphic.Focus.Screens
         AppEngine _engine;
         private string _titleText = string.Empty;
         private string _buttonText = string.Empty;
+        
         DispatcherTimer _timer;
-        TimeSpan _time;
+        TimeSpan _time = TimeSpan.Zero;
 
         public AppEngine Engine { get { return _engine; } }
 
         public ScheduledSessionModal(Schedule schedule)
         {
-            if (!DesignerProperties.GetIsInDesignMode(this))
+            try
             {
-                _engine = AppEngine.Instance;
+                if (!DesignerProperties.GetIsInDesignMode(this))
+                {
+                    _engine = AppEngine.Instance;
+                }
+
+                //The schedule for which this dialog was triggered
+                Schedule = schedule;
+
+                //Start 5 min countdown timer
+                StartCountDownTimer();
+
+                InitializeComponent();
+
+                this.DataContext = this;
             }
-
-            //The schedule for which this dialog was triggered
-            Schedule = schedule;
-
-            //Start 5 min countdown timer
-            StartCountDownTimer();
-
-            InitializeComponent();
-
-            this.DataContext = this;
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
 
         #endregion
@@ -87,9 +95,6 @@ namespace Morphic.Focus.Screens
                             BreakGap = Engine.UserPreferences.Schedules.Schedulebreak.BreakGap,
 
                             //User & Log
-                            CreatedBy = Environment.UserName,
-                            DateCreated = DateTime.Now,
-                            
                             FocusType = "ScheduledSession",
                             Schedule = Schedule
                         });
@@ -173,11 +178,68 @@ namespace Morphic.Focus.Screens
             MessageBox.Show("Feature will be available soon!");
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void StartFocus_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Feature will be available soon!");
+            try
+            {
+                //Default 5 mins
+                int minutesLeft = 5;
+
+                Button button = (Button)sender;
+
+                switch(button.Name)
+                {
+                    case "btnOK":
+                        //Get minutes from the timer
+                        if (_time == TimeSpan.Zero || Math.Ceiling(_time.TotalMinutes) >= 0)
+                            minutesLeft = Convert.ToInt32(Math.Ceiling(_time.TotalMinutes));
+                        break;
+                    case "btnNow":
+                        minutesLeft = 0;
+                        break;
+                    case "btn10Min":
+                        minutesLeft = 10;
+                        break;
+                    case "btn15Min":
+                        minutesLeft = 15;
+                        break;
+                    default:
+                        minutesLeft = 5;
+                        break;
+                }
+
+                LoggingService.WriteAppLog(String.Format("Start session after {0} min clicked", minutesLeft));
+
+                //Stop the minutes countdown timer
+                _timer.Stop(); 
+                _time = TimeSpan.Zero;
+
+                //Timer - Start a Session after x mins
+                _engine.StartFocusSession(new Session()
+                {
+                    ActualStartTime = DateTime.Now,
+                    ActualEndTime = Schedule.EndAt,
+                    BlockListName = Schedule.BlockListName,
+
+                    //Break
+                    ProvideBreak = Engine.UserPreferences.Schedules.Schedulebreak.IsActive,
+                    BreakDuration = Engine.UserPreferences.Schedules.Schedulebreak.BreakDuration,
+                    BreakGap = Engine.UserPreferences.Schedules.Schedulebreak.BreakGap,
+
+                    //User & Log
+                    FocusType = "ScheduledSession",
+                    Schedule = Schedule
+                }, minutesLeft);
+
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
         #endregion
+
 
     }
 }

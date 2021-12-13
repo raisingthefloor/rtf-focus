@@ -31,14 +31,14 @@
             <TextBlock Grid.Row="2" Grid.Column="0" Margin="25 0 25 0"  Style="{DynamicResource ModalTitle}" TextWrapping="WrapWithOverflow" Width="159" TextAlignment="Center" Text="{Binding Schedule.BlockListName}"/>
 
             <Button Grid.Row="3" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="43 20 43 0" Width="121" Command="ApplicationCommands.Close"
-                   Content="{Binding ButtonText}"/>
+                   Content="{Binding ButtonText}" Name="btnOK" Click="StartFocus_Click"/>
             
             <TextBlock Grid.Row="4" Grid.Column="0" Margin="25 20 25 0"  Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" Width="159" TextAlignment="Center">
                 No, instead start session:</TextBlock>
             <StackPanel Grid.Row="5" Grid.Column="0" Margin="25 8 25 0"  Orientation="Horizontal">
-                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="54" Click="Button_Click">Now</Button>
-                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="54" Margin="8 0 0 0" Click="Button_Click">10 min</Button>
-                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="54" Margin="8 0 0 0" Click="Button_Click">15 min</Button>
+                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="54" Name="btnNow" Click="StartFocus_Click">Now</Button>
+                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="54" Margin="8 0 0 0" Name="btn10Min" Click="StartFocus_Click">10 min</Button>
+                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="54" Margin="8 0 0 0" Name="btn15Min" Click="StartFocus_Click">15 min</Button>
             </StackPanel>
             <Border Grid.Row="6" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#c2c2c2" Margin="25 20 25 0"></Border>
             <Button Grid.Row="7" Grid.Column="0" Style="{DynamicResource SettingsButtonsGrey}" Margin="42 15 42 0" Height="25" Width="143">Skip this focus session</Button>

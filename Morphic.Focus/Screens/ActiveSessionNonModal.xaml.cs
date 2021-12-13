@@ -29,25 +29,25 @@ namespace Morphic.Focus.Screens
         AppEngine _engine;
         public AppEngine Engine { get { return _engine; } }
 
-        public Session? CurrSession1 { get => _engine.CurrSession1; set => _engine.CurrSession1 = value; }
+        //public Session? CurrSession1 { get => _engine.CurrSession1; set => _engine.CurrSession1 = value; }
 
-        public bool IsFocusRunning
-        {
-            get
-            {
-                return _engine.IsFocusRunning;
-            }
-            set
-            {
-                _engine.IsFocusRunning = value;
-                NotifyPropertyChanged("IsFocusRunning"); // method implemented below
+        //public bool IsFocusRunning
+        //{
+        //    get
+        //    {
+        //        return _engine.IsFocusRunning;
+        //    }
+        //    set
+        //    {
+        //        _engine.IsFocusRunning = value;
+        //        NotifyPropertyChanged("IsFocusRunning"); // method implemented below
 
-                if (SessionUpdate != null)
-                {
-                    SessionUpdate(CurrSession1);
-                }
-            }
-        }
+        //        if (SessionUpdate != null)
+        //        {
+        //            SessionUpdate(CurrSession1);
+        //        }
+        //    }
+        //}
 
         public ActiveSessionNonModal()
         {
@@ -98,17 +98,18 @@ namespace Morphic.Focus.Screens
         {
             try
             {
-                //Delete file and stop focus session
-                JSONHelper jSONHelper = new JSONHelper(Common.SESSION_FILE_NAME);
-                string jsonString = jSONHelper.GetJson<Session>();
+                ////Delete file and stop focus session
+                //JSONHelper jSONHelper = new JSONHelper(Common.SESSION_FILE_NAME);
+                //string jsonString = jSONHelper.GetJson<Session>();
 
                 //Log Closing Session
-                LoggingService.WriteAppLog("Session Closing : " + jsonString);
+                LoggingService.WriteAppLog("Session Closing");
 
-                File.Delete(Common.MakeFilePath(Common.SESSION_FILE_NAME));
+                Engine.StopFocusSession();
+                //File.Delete(Common.MakeFilePath(Common.SESSION_FILE_NAME));
 
-                CurrSession1 = null;
-                IsFocusRunning = false;
+                //CurrSession1 = null;
+                //IsFocusRunning = false;
 
                 //Hide this dialog
                 this.Hide();

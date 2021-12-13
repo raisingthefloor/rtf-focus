@@ -23,16 +23,16 @@
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Source="/Images/info.png" Width="23.84" Height="23.33" VerticalAlignment="Top" Margin="2 2 2 0" />
-            <TextBlock Grid.Row="0" Grid.Column="1" Style="{DynamicResource TitleStyle}" FontSize="16" LineHeight="20" HorizontalAlignment="Left">
-                Changes cannot be made to an active Focus sessions
+            <TextBlock Grid.Row="0" Grid.Column="1" Style="{DynamicResource TitleStyle}" FontSize="16" LineHeight="20" HorizontalAlignment="Left" Text="{Binding TitleText}">
+                <!--Changes cannot be made to an active Focus sessions-->
             </TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="1" Style="{DynamicResource ContentStyle}" Margin="0 15 0 0">
-                A Focus session cannot be changed while it is in progress. 
+            <TextBlock Grid.Row="1" Grid.Column="1" Style="{DynamicResource ContentStyle}" Margin="0 15 0 0" Text="{Binding ContentText}">
+                <!--A Focus session cannot be changed while it is in progress. 
                 <LineBreak/>
-                You must stop this session to make changes.
+                You must stop this session to make changes.-->
             </TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="1" Style="{DynamicResource ContentStyleSmallBlueItalic}" Margin="0 15 0 0">
-                &lt;include "stop task" message if there is as stop task&gt;
+            <TextBlock Grid.Row="2" Grid.Column="1" Style="{DynamicResource ContentStyleSmallBlueItalic}" Margin="0 15 0 0" Text="{Binding ContentSmallText}">
+                <!--&lt;include "stop task" message if there is as stop task&gt;-->
             </TextBlock>
 
             <Button Grid.Row="3" Grid.Column="1" Style="{DynamicResource FocusButtonOK}" Margin="0 24 0 0" HorizontalAlignment="Right">

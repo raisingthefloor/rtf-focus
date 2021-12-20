@@ -72,8 +72,8 @@ namespace Morphic.Focus
 
         #region Properties
 
-        //public Session? CurrSession1 { get => _engine.CurrSession1; set => _engine.CurrSession1 = value; }
-        //public Session? CurrSession2 { get => _engine.CurrSession2; set => _engine.CurrSession2 = value; }
+        //public Session? Session1 { get => _engine.Session1; set => _engine.Session1 = value; }
+        //public Session? Session2 { get => _engine.Session2; set => _engine.Session2 = value; }
 
         //public bool IsFocusRunning
         //{
@@ -148,79 +148,11 @@ namespace Morphic.Focus
             }
         }
 
-        private void FocusMain_SessionUpdate()
-        {
-            ////Reset Button Text / Countdown Timer
-            //_time = TimeSpan.Zero;
-            //if (_timer != null) _timer.Stop();
-
-            //if (Engine.IsFocusRunning)
-            //{
-            //    double nextBreakGap = -1;
-            //    //Set nextBreakGap
-            //    if (Engine.CurrSession1 != null) 
-            //    {
-            //        if (Engine.CurrSession1.SessionDuration == 0) 
-            //        {
-            //            nextBreakGap = 0;
-            //        }
-            //        else
-            //        {
-            //            nextBreakGap = Engine.CurrSession1.BreakGap;
-            //        }
-            //    }
-
-            //    if (Engine.CurrSession2 != null)
-            //    {
-            //        if (Engine.CurrSession2.SessionDuration == 0)
-            //        {
-            //            if (nextBreakGap < 0)
-            //                nextBreakGap = 0;
-            //        }
-            //        else
-            //        {
-            //            if (nextBreakGap <= 0 || Engine.CurrSession1.BreakGap < nextBreakGap) 
-            //                nextBreakGap = Engine.CurrSession1.BreakGap;
-            //        }
-            //    }
-
-            //    if (nextBreakGap == -1)
-            //        ButtonText = "Focus";
-            //    else if (nextBreakGap == 0)
-            //        ButtonText = "Focus till Stop";
-            //    else
-            //    {
-            //        ButtonText = "Focus" + Environment.NewLine + nextBreakGap;
-
-            //        _time = TimeSpan.FromMinutes(nextBreakGap);
-
-            //        _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
-            //        {
-            //            ButtonText = "Focus" + Environment.NewLine + Math.Ceiling(_time.TotalMinutes);
-
-            //            if (_time <= TimeSpan.Zero)
-            //            {
-            //                if (_timer != null) _timer.Stop();
-
-            //                new ShortBreakModal().ShowDialog();
-            //            }
-            //            _time = _time.Add(TimeSpan.FromSeconds(-1));
-            //        }, Application.Current.Dispatcher);
-
-            //        _timer.Start();
-            //    }
-            //}
-            //else
-            //{
-            //    ButtonText = "Focus";
-            //}
-        }
-
         private void Engine_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             NotifyPropertyChanged();
 
-            //if (e.PropertyName == "IsFocusRunning" || e.PropertyName == "CurrSession1" || e.PropertyName == "CurrSession2")
+            //if (e.PropertyName == "IsFocusRunning" || e.PropertyName == "Session1" || e.PropertyName == "Session2")
             //    FocusMain_SessionUpdate();
 
             if (e.PropertyName == "TimeTillNextBreak")
@@ -237,7 +169,7 @@ namespace Morphic.Focus
                 }
                 else
                 {
-                    ButtonText = "Focus" + Environment.NewLine +  new TimeSpan(0, (int)Math.Ceiling(Engine.TimeTillNextBreak.TotalMinutes), 0).ToString("hh':'mm"); //Math.Ceiling(Engine.TimeTillNextBreak.TotalMinutes);
+                    ButtonText = "Focus" + Environment.NewLine +  Engine.TimeTillNextBreakHHMM; //Math.Ceiling(Engine.TimeTillNextBreak.TotalMinutes);
                 }
             }
             else

@@ -44,7 +44,7 @@ namespace Morphic.BlockService
         {
             try
             {
-                IsFocusRunning = File.Exists(Common.MakeFilePath(Common.SESSION1_FILE_NAME));
+                IsFocusRunning = File.Exists(Common.MakeFilePath(Common.SESSION_FILE_NAME));
 
                 //Setup Service
                 this.ServiceName = "BlockingService";
@@ -61,11 +61,11 @@ namespace Morphic.BlockService
 
                 LoggingService.WriteServiceLog("Service Launched");
 
-                watcher = new FileSystemWatcher(Path.GetDirectoryName(Common.MakeFilePath(Common.SESSION1_FILE_NAME)));
+                watcher = new FileSystemWatcher(Path.GetDirectoryName(Common.MakeFilePath(Common.SESSION_FILE_NAME)));
                 watcher.Created += Watcher_Created;
                 watcher.Deleted += Watcher_Deleted;
 
-                watcher.Filter = Common.SESSION1_FILE_NAME;
+                watcher.Filter = Common.SESSION_FILE_NAME;
                 watcher.EnableRaisingEvents = true;
                 LoggingService.WriteAppLog("Watching started");
             }

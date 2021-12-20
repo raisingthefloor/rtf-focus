@@ -9,18 +9,281 @@ namespace Morphic.Data.Models
 {
     public class Session : BaseClass
     {
-        public bool TurnONDND { get; set; }
-        public bool ProvideBreak { get; set; }
-        public int BreakDuration { get; set; }
-        public int BreakGap { get; set; }
-        public string BlockListName { get; set; }
-        public virtual BlockList BlockList { get; set; }
-        public DateTime ActualStartTime { get; set; }
-        public DateTime ActualEndTime { get; set; }
-        public Schedule Schedule { get; set; }
-        public DateTime LastStartTime { get; set; }
-        public DateTime LastBreakStartTime { get; set; }
-        public String FocusType { get; set; }
-        public int SessionDuration { get; set; }
+        private bool _turnONDND;
+        private bool _provideBreak;
+
+        public bool TurnONDND
+        {
+            get
+            {
+                return _turnONDND;
+            }
+            set
+            {
+                if (value != this._turnONDND)
+                {
+                    this._turnONDND = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public bool ProvideBreak
+        {
+            get
+            {
+                return _provideBreak;
+            }
+            set
+            {
+                if (value != this._provideBreak)
+                {
+                    this._provideBreak = value;
+                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("NextBreakTime");
+                }
+            }
+        }
+
+        private int _breakDuration;
+        private int _breakGap;
+        private int _sessionDuration;
+
+        public int BreakDuration
+        {
+            get
+            {
+                return _breakDuration;
+            }
+            set
+            {
+                if (value != this._breakDuration)
+                {
+                    this._breakDuration = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        public int BreakGap
+        {
+            get
+            {
+                return _breakGap;
+            }
+            set
+            {
+                if (value != this._breakGap)
+                {
+                    this._breakGap = value;
+                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("NextBreakTime");
+                }
+            }
+        }
+        public int SessionDuration
+        {
+            get
+            {
+                return _sessionDuration;
+            }
+            set
+            {
+                if (value != this._sessionDuration)
+                {
+                    this._sessionDuration = value;
+                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("NextBreakTime");
+                    NotifyPropertyChanged("EndTime");
+                }
+            }
+        }
+
+        private string _blockListName;
+
+        public string BlockListName
+        {
+            get
+            {
+                return _blockListName;
+            }
+            set
+            {
+                if (value != this._blockListName)
+                {
+                    this._blockListName = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string _focusType;
+
+        public string FocusType
+        {
+            get
+            {
+                return _focusType;
+            }
+            set
+            {
+                if (value != this._focusType)
+                {
+                    this._focusType = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private DateTime _actualStartTime;
+
+        public DateTime ActualStartTime
+        {
+            get
+            {
+                return _actualStartTime;
+            }
+            set
+            {
+                if (value != this._actualStartTime)
+                {
+                    this._actualStartTime = value;
+                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("NextBreakTime");
+                    NotifyPropertyChanged("EndTime");
+                }
+            }
+        }
+
+        private DateTime _actualEndTime;
+
+        public DateTime ActualEndTime
+        {
+            get
+            {
+                return _actualEndTime;
+            }
+            set
+            {
+                if (value != this._actualEndTime)
+                {
+                    this._actualEndTime = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private DateTime _lastStartTime;
+
+        public DateTime LastStartTime
+        {
+            get
+            {
+                return _lastStartTime;
+            }
+            set
+            {
+                if (value != this._lastStartTime)
+                {
+                    this._lastStartTime = value;
+                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("NextBreakTime");
+                    NotifyPropertyChanged("RunForHRMM");
+                }
+            }
+        }
+
+        private DateTime _lastBreakStartTime;
+
+        public DateTime LastBreakStartTime
+        {
+            get
+            {
+                return _lastBreakStartTime;
+            }
+            set
+            {
+                if (value != this._lastBreakStartTime)
+                {
+                    this._lastBreakStartTime = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public DateTime NextBreakTime
+        {
+            get
+            {
+                //If it is Focus until Stop
+                if (SessionDuration == 0)
+                    return DateTime.MinValue;
+                else
+                {
+                    if (ProvideBreak) //If breaks are required
+                        return
+                            new[] {
+                                    LastStartTime.AddMinutes(BreakGap), //Next Break Time
+                                    ActualStartTime.AddMinutes(SessionDuration) //Session End Time
+                            }.Min(); //Minimum of Session End Time and next Break time
+                    else
+                        return ActualStartTime.AddMinutes(SessionDuration); //Session End Time
+                }
+            }
+        }
+
+        public String RunForHRMM
+        {
+            get
+            {
+                TimeSpan ts = DateTime.Now - LastStartTime;
+
+                if (ts.Hours > 0)
+                    return ts.Hours + " hr " + ts.Minutes + " minutes ";
+                else
+                    return ts.Minutes + " minutes ";
+            }
+        }
+
+        public String EndTime
+        {
+            get
+            {
+                //If it is focus till stop
+                if (SessionDuration == 0)
+                    return string.Empty;
+
+                return ActualStartTime.AddMinutes(SessionDuration).ToString("hh:mm tt");
+            }
+        }
+
+        #region Schedule
+        private Schedule _schedule;
+        public Schedule Schedule
+        {
+            get
+            {
+                //if (_schedule == null)
+                //{
+                //    _schedule = new Schedule();
+                //    _schedule.PropertyChanged += PropertyChanged;
+                //}
+                return _schedule;
+            }
+            set
+            {
+                if (value != this._schedule)
+                {
+                    this._schedule = value;
+                    _schedule.PropertyChanged += PropertyChanged;
+                }
+            }
+        }
+
+        private void PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged();
+        }
+        #endregion
+
     }
 }

@@ -29,34 +29,25 @@ namespace Morphic.Focus.Screens
         AppEngine _engine;
         public AppEngine Engine { get { return _engine; } }
 
-        //public Session? CurrSession1 { get => _engine.CurrSession1; set => _engine.CurrSession1 = value; }
-
-        //public bool IsFocusRunning
-        //{
-        //    get
-        //    {
-        //        return _engine.IsFocusRunning;
-        //    }
-        //    set
-        //    {
-        //        _engine.IsFocusRunning = value;
-        //        NotifyPropertyChanged("IsFocusRunning"); // method implemented below
-
-        //        if (SessionUpdate != null)
-        //        {
-        //            SessionUpdate(CurrSession1);
-        //        }
-        //    }
-        //}
-
         public ActiveSessionNonModal()
         {
-            if (!DesignerProperties.GetIsInDesignMode(this))
+            try
             {
-                _engine = AppEngine.Instance;
-            }
+                if (!DesignerProperties.GetIsInDesignMode(this))
+                {
+                    _engine = AppEngine.Instance;
+                }
 
-            InitializeComponent();
+                InitializeComponent();
+
+                DataContext = this;
+
+                
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
 
         #region Events
@@ -98,19 +89,11 @@ namespace Morphic.Focus.Screens
         {
             try
             {
-                ////Delete file and stop focus session
-                //JSONHelper jSONHelper = new JSONHelper(Common.SESSION_FILE_NAME);
-                //string jsonString = jSONHelper.GetJson<Session>();
-
                 //Log Closing Session
                 LoggingService.WriteAppLog("Session Closing");
 
-                Engine.StopFocusSession();
-                //File.Delete(Common.MakeFilePath(Common.SESSION_FILE_NAME));
-
-                //CurrSession1 = null;
-                //IsFocusRunning = false;
-
+                Engine.StopFocusSession(Engine.Session1);
+                
                 //Hide this dialog
                 this.Hide();
             }
@@ -120,13 +103,7 @@ namespace Morphic.Focus.Screens
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Feature will be available soon!");
-        }
         #endregion
-
-
 
         #region INotifyPropertyChanged implement
         //Property changed
@@ -138,8 +115,38 @@ namespace Morphic.Focus.Screens
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
+
         #endregion
 
-        
+        private void btnStopFocus2_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //Log Closing Session
+                LoggingService.WriteAppLog("Session Closing");
+
+                Engine.StopFocusSession(Engine.Session2);
+
+                //Hide this dialog
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void StartSecondSession(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.Hide();
+                _engine.FocusMain.Show();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
     }
 }

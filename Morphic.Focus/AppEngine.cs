@@ -17,6 +17,7 @@ namespace Morphic.Focus
     public class AppEngine : BaseClass
     {
         #region AppEngine Instance
+        private static readonly object locker = new object();
         private static readonly AppEngine _instance = new AppEngine();
         public static AppEngine Instance { get { return _instance; } }
 
@@ -48,8 +49,8 @@ namespace Morphic.Focus
 
                 #region Ongoing Sessions
                 CheckIsFocusRunning();
-                //CurrSession1.PropertyChanged += CurrSession1_PropertyChanged;
-                //CurrSession2.PropertyChanged += CurrSession2_PropertyChanged;
+                //Session1.PropertyChanged += Session1_PropertyChanged;
+                //Session2.PropertyChanged += Session2_PropertyChanged;
                 #endregion
 
                 #region Set Timers to trigger scheduled focus sessions
@@ -73,6 +74,8 @@ namespace Morphic.Focus
             SetTodaysSchedule(true); //Since original schedules are altered, force reset today's schedules
         }
 
+        
+
         private void UserPreferences_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             SetFocusSettings();
@@ -82,22 +85,10 @@ namespace Morphic.Focus
         {
             try
             {
-                Session session = null;
-                string filePath = string.Empty;
+                Session session = (Session)sender;
+                string filePath = Common.GetSessionFilePath(session);
 
-                switch (e.PropertyName)
-                {
-                    case "CurrSession1":
-                        session = CurrSession1;
-                        filePath = Common.SESSION1_FILE_NAME;
-                        break;
-                    case "CurrSession2":
-                        session = CurrSession2;
-                        filePath = Common.SESSION2_FILE_NAME;
-                        break;
-                }
-
-                //1. Get Focus Session1 file from the session2.json file
+                //1. Get Focus Session file 
                 JSONHelper jSONHelper = new JSONHelper(filePath);
 
                 //2. If the file is not found, a new settings file is created
@@ -166,11 +157,11 @@ namespace Morphic.Focus
 
                             trigger.OnTimeTriggered += () =>
                             {
-                                if (CurrSession1 != null && CurrSession1.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
+                                if (Session1 != null && Session1.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
 
-                                if (CurrSession2 != null && CurrSession2.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
+                                if (Session2 != null && Session2.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
 
-                                if (CurrSession1 != null && CurrSession2 != null) return; //Dialog not to be shown if two sessions are already active
+                                if (Session1 != null && Session2 != null) return; //Dialog not to be shown if two sessions are already active
 
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {
@@ -413,7 +404,11 @@ namespace Morphic.Focus
 
         #endregion
 
-        #region To Review
+        #region Session
+
+        private List<Session> _lstSession = new List<Session>();
+        public List<Session> LstSession { get => _lstSession; set => _lstSession = value; }
+
         private bool _isFocusRunning = false;
         public bool IsFocusRunning
         {
@@ -431,92 +426,30 @@ namespace Morphic.Focus
             }
         }
 
-        private Session? _currSession1 = null;
-        public Session? CurrSession1
+        public Session? Session1
         {
             get
             {
-                return _currSession1;
-            }
-            set
-            {
-                if (value != _currSession1)
+                lock (locker)
                 {
-                    _currSession1 = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        private Session? _currSession2 = null;
-        public Session? CurrSession2
-        {
-            get
-            {
-                return _currSession2;
-            }
-            set
-            {
-                if (value != _currSession2)
-                {
-                    _currSession2 = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-
-        public DateTime Session1NextBreakTime
-        {
-            get
-            {
-                //Session 1 is running
-                if (CurrSession1 != null)
-                {
-                    //If it is Focus until Stop
-                    if (CurrSession1.SessionDuration == 0)
-                        return DateTime.MinValue;
+                    if (LstSession.Count >= 1)
+                        return LstSession[0];
                     else
-                    {
-                        if (CurrSession1.ProvideBreak) //If breaks are required
-                            return
-                                new[] {
-                                    CurrSession1.LastStartTime.AddMinutes(CurrSession1.BreakGap), //Next Break Time
-                                    CurrSession1.ActualStartTime.AddMinutes(CurrSession1.SessionDuration) //Session End Time
-                                }.Min(); //Minimum of Session End Time and next Break time
-                        else
-                            return CurrSession1.LastStartTime.AddMinutes(CurrSession1.SessionDuration); //Session End Time
-                    }
+                        return null;
                 }
-
-                return DateTime.MinValue;
             }
         }
-
-        public DateTime Session2NextBreakTime
+        public Session? Session2
         {
             get
             {
-                //Session 2 is running
-                if (CurrSession2 != null)
+                lock (locker)
                 {
-                    //If it is Focus until Stop
-                    if (CurrSession2.SessionDuration == 0)
-                        return DateTime.MinValue;
+                    if (LstSession.Count == 2)
+                        return LstSession[1];
                     else
-                    {
-                        if (CurrSession2.ProvideBreak) //If breaks are required
-                            return
-                                new[] {
-                                    CurrSession2.LastStartTime.AddMinutes(CurrSession2.BreakGap), //Next Break Time
-                                    CurrSession2.ActualStartTime.AddMinutes(CurrSession2.SessionDuration) //Session End Time
-                                }.Min(); //Minimum of Session End Time and next Break time
-                        else
-                            return CurrSession2.LastStartTime.AddMinutes(CurrSession2.SessionDuration); //Session End Time
-                    }
+                        return null;
                 }
-
-                return DateTime.MinValue;
             }
         }
 
@@ -524,14 +457,14 @@ namespace Morphic.Focus
         {
             get
             {
-                //If only Session 2 is running
-                if (Session1NextBreakTime == DateTime.MinValue && Session2NextBreakTime != DateTime.MinValue) return Session2NextBreakTime;
-
-                //If only Session 1 is running
-                if (Session1NextBreakTime != DateTime.MinValue && Session2NextBreakTime == DateTime.MinValue) return Session1NextBreakTime;
-
-                //If both the sessions are running
-                return new[] { Session1NextBreakTime, Session2NextBreakTime }.Min();
+                if (LstSession.Count == 0)
+                    return DateTime.MinValue;
+                else if (LstSession.Count == 1)
+                    return Session1.NextBreakTime;
+                else if (LstSession.Count == 2)
+                    return new[] { Session1.NextBreakTime, Session2.NextBreakTime }.Min();
+                else
+                    return DateTime.MinValue;
             }
         }
 
@@ -548,7 +481,18 @@ namespace Morphic.Focus
                 {
                     _timeTillNextBreak = value;
                     NotifyPropertyChanged();
+                    NotifyPropertyChanged("TimeTillNextBreakHHMM");
+                    NotifyPropertyChanged("Session1");
+                    NotifyPropertyChanged("Session2");
                 }
+            }
+        }
+
+        public string TimeTillNextBreakHHMM
+        {
+            get
+            {
+                return new TimeSpan(0, (int)Math.Ceiling(TimeTillNextBreak.TotalMinutes), 0).ToString("hh':'mm");
             }
         }
 
@@ -563,18 +507,18 @@ namespace Morphic.Focus
                 else
                 {
 
-                    if (CurrSession1 != null && CurrSession2 == null) //If only session 1 is running
+                    if (Session1 != null && Session2 == null) //If only session 1 is running
                     {
-                        return CurrSession1.SessionDuration == 0; //Is the session duration set to zero
+                        return Session1.SessionDuration == 0; //Is the session duration set to zero
                     }
-                    else if (CurrSession2 != null && CurrSession1 == null) //If only session 2 is running
+                    else if (Session2 != null && Session1 == null) //If only session 2 is running
                     {
-                        return CurrSession2.SessionDuration == 0; //Is the session duration set to zero
+                        return Session2.SessionDuration == 0; //Is the session duration set to zero
                     }
-                    else if (CurrSession1 != null && CurrSession2 != null) //Both Sessions are running
+                    else if (Session1 != null && Session2 != null) //Both Sessions are running
                     {
                         //Return true only when both sessions are of type Focus Till Stop
-                        return CurrSession1.SessionDuration == 0 && CurrSession2.SessionDuration == 0;
+                        return Session1.SessionDuration == 0 && Session2.SessionDuration == 0;
                     }
                     return false; //default
                 }
@@ -593,195 +537,158 @@ namespace Morphic.Focus
         public static readonly Brush Schedule4Brush = (Brush)bc.ConvertFrom("#008145");
         public static readonly Brush Schedule5Brush = (Brush)bc.ConvertFrom("#bf2035");
         #endregion
+
+        #region Action Methods
+
         public void CheckIsFocusRunning()
         {
-            CheckSessionRunning("CurrSession1", Common.SESSION1_FILE_NAME);
-            CheckSessionRunning("CurrSession2", Common.SESSION2_FILE_NAME);
-        }
 
-        private void CheckSessionRunning(string currSessionName, string filepath)
-        {
-            Session? session = null;
-
-            //Get the Session data from the file
-            if (File.Exists(Common.MakeFilePath(filepath)))
+            string[] sessionFiles = Common.GetSessionFiles();
+            foreach (string sessionFile in sessionFiles)
             {
+                Session? session = null;
+
+                //Get the Session data from the file
                 //Get the Focus Session Object
-                JSONHelper jSONHelper = new JSONHelper(filepath);
+                JSONHelper jSONHelper = new JSONHelper(sessionFile);
                 session = jSONHelper.Get<Session>();
+
+                if (session != null)
+                {
+                    if (session.SessionDuration == 0) //If it is Focus Till Stop
+                    {
+                        LstSession.Add(session);
+                        session.PropertyChanged += CurrSession_PropertyChanged;
+                        IsFocusRunning = true;
+                        session.LastStartTime = DateTime.Now;
+                        ResetFocusButtonTimer();
+                    }
+                    else //If it is a fixed time session, check if end time has passed
+                    {
+                        if (DateTime.Now > session.ActualStartTime.AddMinutes(session.SessionDuration))
+                        {
+                            //Log Closing Session
+                            LoggingService.WriteAppLog("Session Closing");
+
+                            File.Delete(Common.MakeFilePath(sessionFile));
+                            session = null;
+                        }
+                        else
+                        {
+                            StartFocusSession(session);
+                        }
+                    }
+                }
+
+
             }
 
-            switch (currSessionName)
-            {
-                case "CurrSession1":
-                    if (session != null)
-                    {
-
-                        if (session.SessionDuration == 0) //If it is Focus Till Stop
-                        {
-                            CurrSession1 = session;
-                            CurrSession1.PropertyChanged += CurrSession_PropertyChanged;
-                            IsFocusRunning = true;
-                            CurrSession1.LastStartTime = DateTime.Now;
-                            ResetFocusButtonTimer();
-                        }
-                        else //If it is a fixed time session, check if end time has passed
-                        {
-                            if (DateTime.Now > session.ActualStartTime.AddMinutes(session.SessionDuration))
-                            {
-                                //Log Closing Session
-                                LoggingService.WriteAppLog("Session Closing");
-
-                                File.Delete(Common.MakeFilePath(filepath));
-                            }
-                            else
-                            {
-                                CurrSession1 = session;
-                                CurrSession1.PropertyChanged += CurrSession_PropertyChanged;
-                                IsFocusRunning = true;
-                                CurrSession1.LastStartTime = DateTime.Now;
-                                ResetFocusButtonTimer();
-                            }
-                        }
-                    }
-
-                    if (!File.Exists(Common.MakeFilePath(filepath)))
-                    {
-                        if (CurrSession1 != null) CurrSession1.PropertyChanged -= CurrSession_PropertyChanged;
-                        CurrSession1 = null;
-                    }
-                    break;
-
-                case "CurrSession2":
-                    if (session != null)
-                    {
-                        if (session.SessionDuration == 0) //If it is Focus Till Stop
-                        {
-                            CurrSession2 = session;
-                            CurrSession2.PropertyChanged += CurrSession_PropertyChanged;
-                            IsFocusRunning = true;
-                            CurrSession2.LastStartTime = DateTime.Now;
-                            ResetFocusButtonTimer();
-                        }
-                        else //If it is a fixed time session, check if end time has passed
-                        {
-                            if (DateTime.Now > session.ActualStartTime.AddMinutes(session.SessionDuration))
-                            {
-                                //Log Closing Session
-                                LoggingService.WriteAppLog("Session Closing");
-
-                                File.Delete(Common.MakeFilePath(filepath));
-                            }
-                            else
-                            {
-                                CurrSession2 = session;
-                                CurrSession2.PropertyChanged += CurrSession_PropertyChanged;
-                                IsFocusRunning = true;
-                                CurrSession2.LastStartTime = DateTime.Now;
-                                ResetFocusButtonTimer();
-                            }
-                        }
-                    }
-                    if (!File.Exists(Common.MakeFilePath(filepath)))
-                    {
-                        if (CurrSession2 != null) CurrSession2.PropertyChanged -= CurrSession_PropertyChanged;
-                        CurrSession2 = null;
-                    }
-                    break;
-            }
         }
+
 
         internal void StopFocusSession()
         {
-            //Todo - Work for second session
-            //Delete file and stop focus session
-            JSONHelper jSONHelper = new JSONHelper(Common.SESSION1_FILE_NAME);
-            string jsonString = jSONHelper.GetJson<Session>();
+            ////Todo - Work for second session
+            ////Delete file and stop focus session
+            //JSONHelper jSONHelper = new JSONHelper(Common.SESSION_FILE_NAME);
+            //string jsonString = jSONHelper.GetJson<Session>();
 
-            //Log Closing Session
-            LoggingService.WriteAppLog("Session Closing : " + jsonString);
+            ////Log Closing Session
+            //LoggingService.WriteAppLog("Session Closing : " + jsonString);
 
-            File.Delete(Common.MakeFilePath(Common.SESSION1_FILE_NAME)); //TODO - Work for second session
+            //File.Delete(Common.MakeFilePath(Common.SESSION_FILE_NAME)); //TODO - Work for second session
 
-            CurrSession1.PropertyChanged -= CurrSession_PropertyChanged;
-            CurrSession1 = null;
-            IsFocusRunning = false;
-            ResetFocusButtonTimer();
+            //Session1.PropertyChanged -= CurrSession_PropertyChanged;
+            //Session1 = null;
+            //IsFocusRunning = false;
+            //ResetFocusButtonTimer();
         }
 
-        internal void StartFocusSession(Session session)
+        internal void StopFocusSession(Session session)
         {
             try
             {
-                session.LastStartTime = DateTime.Now;
+                //Delete file and stop focus session
+                JSONHelper jSONHelper = new JSONHelper(Common.GetSessionFilePath(session));
+                string jsonString = jSONHelper.GetJson<Session>();
 
-                LoggingService.WriteAppLog("Start Focus Session Request Received");
+                //Log Closing Session
+                LoggingService.WriteAppLog("Session Closing : " + jsonString);
 
-                //Do not start a session, if two sessions are already running
-                if (CurrSession1 != null && CurrSession2 != null)
-                {
-                    LoggingService.WriteAppLog("Session cannot be started. Two Sessions already running.");
+                File.Delete(Common.GetSessionFilePath(session));
 
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        ErrorMessageModal errorMessageModal = new ErrorMessageModal()
-                        {
-                            TitleText = "Two Focus sessions already running",
-                            ContentText = "More than two Focus Sessions cannot run for the same time. Try closing one of the running Focus Session."
-                        };
-                        errorMessageModal.ShowDialog();
-
-                    });
-
-                    return;
-                }
-
-                string jsonString = string.Empty;
-
-                //Fill Session variables
-                if (CurrSession1 == null)
-                {
-                    //Add to json file
-                    JSONHelper jSONHelper = new JSONHelper(Common.SESSION1_FILE_NAME);
-                    jsonString = jSONHelper.Save(session);
-
-                    CurrSession1 = session;
-                    CurrSession1.PropertyChanged += CurrSession_PropertyChanged;
-                    IsFocusRunning = true;
-                }
-                else if (CurrSession2 == null)
-                {
-                    //Add to json file
-                    JSONHelper jSONHelper = new JSONHelper(Common.SESSION2_FILE_NAME);
-                    jsonString = jSONHelper.Save(session);
-
-                    CurrSession2 = session;
-                    CurrSession2.PropertyChanged += CurrSession_PropertyChanged;
-                    IsFocusRunning = true;
-                }
-                else //TODO - Review if this is needed
-                {
-
-                }
-
-                //TODO - Review this
-                if (IsFocusRunning)
-                {
-                    //Log Session
-                    LoggingService.WriteAppLog("Session Restarted : " + jsonString);
-                }
-                else
-                {
-                    //Log Session
-                    LoggingService.WriteAppLog("Session Started : " + jsonString);
-                }
-
-                //Reset Timer
+                session.PropertyChanged -= CurrSession_PropertyChanged;
+                LstSession.Remove(session);
+                session = null;
+                IsFocusRunning = LstSession.Count > 0;
                 ResetFocusButtonTimer();
             }
             catch (Exception ex)
             {
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        internal void StartFocusSession(Session session)
+        {
+            lock (locker)
+            {
+                try
+                {
+                    session.LastStartTime = DateTime.Now;
+
+                    LoggingService.WriteAppLog("Start Focus Session Request Received");
+
+                    //Do not start a session, if two sessions are already running
+                    if (LstSession.Count >= 2)
+                    {
+                        LoggingService.WriteAppLog("Session cannot be started. Two Sessions already running.");
+
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            ErrorMessageModal errorMessageModal = new ErrorMessageModal()
+                            {
+                                TitleText = "Two Focus sessions already running",
+                                ContentText = "More than two Focus Sessions cannot run for the same time. Try closing one of the running Focus Session."
+                            };
+                            errorMessageModal.ShowDialog();
+
+                        });
+
+                        return;
+                    }
+
+                    string jsonString = string.Empty;
+
+                    //Fill Session variables
+                    //save session data
+                    //Add to json file
+                    JSONHelper jSONHelper = new JSONHelper(Common.GetSessionFilePath(session));
+                    jsonString = jSONHelper.Save(session);
+
+                    LstSession.Add(session);
+                    session.PropertyChanged += CurrSession_PropertyChanged;
+                    IsFocusRunning = true;
+
+                    ////TODO - Review this
+                    //if (IsFocusRunning)
+                    //{
+                    //    //Log Session
+                    //    LoggingService.WriteAppLog("Session Restarted : " + jsonString);
+                    //}
+                    //else
+                    //{
+                    //    //Log Session
+                    //    LoggingService.WriteAppLog("Session Started : " + jsonString);
+                    //}
+
+                    //Reset Timer
+                    ResetFocusButtonTimer();
+                }
+                catch (Exception ex)
+                {
+                    LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                }
             }
         }
 
@@ -819,11 +726,11 @@ namespace Morphic.Focus
                         if (focusDispatchTimer.Timer != null) focusDispatchTimer.Timer.Stop();
 
                         //TODO Initiate any action upon time completion
-                        if (CurrSession1 != null)
+                        if (Session1 != null)
                         {
-                            if (CurrSession1.SessionDuration > 0)
+                            if (Session1.SessionDuration > 0)
                             {
-                                if (DateTime.Now >= CurrSession1.ActualStartTime.AddMinutes(CurrSession1.SessionDuration))
+                                if (DateTime.Now >= Session1.ActualStartTime.AddMinutes(Session1.SessionDuration))
                                 {
                                     StopFocusSession();
                                 }
@@ -833,11 +740,11 @@ namespace Morphic.Focus
                             else
                                 new ShortBreakModal().ShowDialog();
                         }
-                        else if (CurrSession2 != null)
+                        else if (Session2 != null)
                         {
-                            if (CurrSession2.SessionDuration > 0)
+                            if (Session2.SessionDuration > 0)
                             {
-                                if (DateTime.Now >= CurrSession2.ActualStartTime.AddMinutes(CurrSession2.SessionDuration))
+                                if (DateTime.Now >= Session2.ActualStartTime.AddMinutes(Session2.SessionDuration))
                                 {
                                     StopFocusSession();
                                 }
@@ -902,6 +809,9 @@ namespace Morphic.Focus
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
+
+        #endregion
+
     }
 
     /// <summary>
@@ -976,3 +886,4 @@ namespace Morphic.Focus
         public bool IsCountdownTimer { get; set; } = false;
     }
 }
+

@@ -5,20 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Morphic.Focus.Screens"
         mc:Ignorable="d"
-        Width="393" Height="400" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Currently Running Focus Session(s)"
-        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen">
+        Height="400" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Currently Running Focus Session(s)" Width="auto"
+        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <local:NullVisibilityConverter x:Key="NullVisibilityConverter"></local:NullVisibilityConverter>
+        <local:InvertVisibilityConverter x:Key="InvertVisibilityConverter"></local:InvertVisibilityConverter>
+    </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
     </Window.CommandBindings>
-    <Border CornerRadius="18" BorderThickness="1" BorderBrush="{DynamicResource FrontEndDialogBorder}" Background="{DynamicResource LightGreen}" Padding="0" Margin="0">
+    <Border CornerRadius="18" BorderThickness="1" BorderBrush="{DynamicResource FrontEndDialogBorder}" Background="{DynamicResource LightGreen}" Padding="0" Margin="0" Width="auto">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="58"></RowDefinition>
                 <RowDefinition Height="126"></RowDefinition>
-                <RowDefinition Height="45"></RowDefinition>
-                <RowDefinition Height="17"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="45"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
@@ -27,41 +31,72 @@
             <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Width="30" Height="30" Content="&#10005;" FontSize="20" BorderThickness="0" Cursor="Hand" Command="ApplicationCommands.Close" Foreground="Black" Background="Transparent" BorderBrush="Transparent"></Button>
 
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="25 3 25 0" Height="28" HorizontalAlignment="Center" Style="{DynamicResource TitleStyle}">Currently Running Focus Session(s)</TextBlock>
-            
-            <TextBlock Grid.Row="2" Grid.Column="0" Margin="25 0" Height="58" HorizontalAlignment="Center" Padding="78 20" Style="{DynamicResource ContentStyleBig}" Foreground="#3566D8" ToolTip="Sample Text. Will be modified.">Your next break is in 12 minutes</TextBlock>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Margin="25 0" Height="58" HorizontalAlignment="Center" Padding="78 20" Style="{DynamicResource ContentStyleBig}" Foreground="#3566D8" Text="{Binding Engine.TimeTillNextBreakHHMM, StringFormat=Your next break is in {0} minutes}"></TextBlock>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Width="auto" HorizontalAlignment="Center" Margin="25 0">
 
 
-            <Border Grid.Row="3" Grid.Column="0" Margin="74 0" Height="126" Width="243" BorderBrush="Black" BorderThickness="1">
-                <StackPanel>
-                <Grid Height="54" VerticalAlignment="Top" Margin="0 20 0 0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="18"></RowDefinition>
-                        <RowDefinition Height="18"></RowDefinition>
-                        <RowDefinition Height="18"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Focus session has run for :</TextBlock>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}"  ToolTip="Sample Text. Will be modified.">1 hr 12 minutes</TextBlock>
-                    
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Using blocklist :</TextBlock>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}"  ToolTip="Sample Text. Will be modified.">Starter Blocklist</TextBlock>
+                <Border Height="126" BorderBrush="Black" Width="auto" BorderThickness="1"  Padding="10 0"
+                        Visibility="{Binding Engine.Session1, Converter={StaticResource NullVisibilityConverter}}">
+                    <StackPanel HorizontalAlignment="Stretch">
+                        <Grid Height="54" VerticalAlignment="Stretch" Margin="0 15 0 0" Width="auto" HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="18"></RowDefinition>
+                                <RowDefinition Height="18"></RowDefinition>
+                                <RowDefinition Height="18"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Focus session has run for :</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session1.RunForHRMM}" Width="auto"></TextBlock>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Focus session ends at :</TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}"  ToolTip="Sample Text. Will be modified.">12:05 PM</TextBlock>
-                    </Grid>
-                <Button Name="btnStopFocus" Click="btnStopFocus_Click" Style="{DynamicResource SettingsButtonsGrey}" Margin="0 20 0 0" Height="25" Width="123">Stop focus session</Button>
-                </StackPanel>
-            </Border>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Using blocklist :</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session1.BlockListName}" Width="auto"></TextBlock>
 
-            <Button Click="Button_Click" Grid.Row="4" Grid.Column="0" Style="{DynamicResource SettingsButtonsLightGreen}" Margin="0 20 0 0" Height="25" Width="176">Start a second focus session</Button>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Focus session ends at :</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session1.EndTime}" Width="auto"></TextBlock>
+                        </Grid>
+                        <Button Name="btnStopFocus" Click="btnStopFocus_Click" Style="{DynamicResource SettingsButtonsGrey}" Margin="0 20 0 0" Height="25" Width="123">Stop focus session</Button>
+                    </StackPanel>
+                </Border>
+                <Border Name="brdSession2" Height="126" BorderBrush="Black" Width="auto" BorderThickness="1" Padding="10 0" Margin="10 0 0 0"
+                        Visibility="{Binding Engine.Session2, Converter={StaticResource NullVisibilityConverter}}" >
+                    <StackPanel HorizontalAlignment="Stretch">
+                        <Grid Height="54" VerticalAlignment="Stretch" Margin="0 15 0 0" Width="auto" HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="18"></RowDefinition>
+                                <RowDefinition Height="18"></RowDefinition>
+                                <RowDefinition Height="18"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Focus session has run for :</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session2.RunForHRMM}" Width="auto"></TextBlock>
 
-            <Border Grid.Row="5" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#A3A3A3" Margin="0 15 0 0"></Border>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Using blocklist :</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session2.BlockListName}" Width="auto"></TextBlock>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Focus session ends at :</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session2.EndTime}" Width="auto"></TextBlock>
+                        </Grid>
+                        <Button Name="btnStopFocus2" Click="btnStopFocus2_Click" Style="{DynamicResource SettingsButtonsGrey}" Margin="0 20 0 0" Height="25" Width="123">Stop focus session</Button>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <Button Grid.Row="4" Grid.Column="0" Style="{DynamicResource SettingsButtonsLightGreen}" Margin="0 20 0 0" Height="25" Width="176"
+                    Visibility="{Binding ElementName=brdSession2, Path=Visibility, Converter={StaticResource InvertVisibilityConverter}}"
+                    Click="StartSecondSession">Start a second focus session</Button>
+
+            <Border Grid.Row="5" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#A3A3A3" Margin="0 15 0 0"
+                    Visibility="{Binding ElementName=brdSession2, Path=Visibility, Converter={StaticResource InvertVisibilityConverter}}"></Border>
 
             <Button Grid.Row="6" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="0 15 0 0" Height="25" Width="176" Command="ApplicationCommands.Close">OK</Button>
-            
+
             <Button Name="btnSettings" Grid.Row="8" Grid.Column="0" Width="auto" Style="{DynamicResource SettingsButtonBottom}" Margin="0" Padding="15 8 0 9" Cursor="Hand" HorizontalContentAlignment="Left" Click="btnSettings_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/Gear.png" Width="20" Height="20" VerticalAlignment="Center"/>

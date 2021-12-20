@@ -20,7 +20,7 @@ using System.Windows.Shapes;
 
 namespace Morphic.Focus.Screens
 {
-    public delegate void EventHandler(Session? currSession1);
+    public delegate void EventHandler(Session? Session1);
 
     /// <summary>
     /// Interaction logic for FocusMain.xaml
@@ -47,8 +47,8 @@ namespace Morphic.Focus.Screens
         public AppEngine Engine { get { return _engine; } }
 
         //TODO - Review if these variables are needed
-        //public Session? CurrSession1 { get => _engine.CurrSession1; set => _engine.CurrSession1 = value; }
-        //public Session? CurrSession2 { get => _engine.CurrSession2; set => _engine.CurrSession2 = value; }
+        //public Session? Session1 { get => _engine.Session1; set => _engine.Session1 = value; }
+        //public Session? Session2 { get => _engine.Session2; set => _engine.Session2 = value; }
 
         //public bool IsFocusRunning
         //{
@@ -63,7 +63,7 @@ namespace Morphic.Focus.Screens
 
         //        if (SessionUpdate != null)
         //        {
-        //            SessionUpdate(CurrSession1);
+        //            SessionUpdate(Session1);
         //        }
         //    }
         //}

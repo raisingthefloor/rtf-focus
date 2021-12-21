@@ -11,6 +11,16 @@ namespace Morphic.Data.Models
     {
         private bool _turnONDND;
         private bool _provideBreak;
+        private int _breakDuration;
+        private int _breakGap;
+        private int _sessionDuration;
+        private string _blockListName;
+        private string _focusType;
+        private DateTime _actualStartTime;
+        private DateTime _actualEndTime;
+        private DateTime _lastStartTime;
+        private DateTime _lastBreakStartTime;
+        private Schedule _schedule;
 
         public bool TurnONDND
         {
@@ -27,7 +37,6 @@ namespace Morphic.Data.Models
                 }
             }
         }
-
         public bool ProvideBreak
         {
             get
@@ -44,11 +53,6 @@ namespace Morphic.Data.Models
                 }
             }
         }
-
-        private int _breakDuration;
-        private int _breakGap;
-        private int _sessionDuration;
-
         public int BreakDuration
         {
             get
@@ -97,9 +101,6 @@ namespace Morphic.Data.Models
                 }
             }
         }
-
-        private string _blockListName;
-
         public string BlockListName
         {
             get
@@ -115,9 +116,6 @@ namespace Morphic.Data.Models
                 }
             }
         }
-
-        private string _focusType;
-
         public string FocusType
         {
             get
@@ -133,9 +131,6 @@ namespace Morphic.Data.Models
                 }
             }
         }
-
-        private DateTime _actualStartTime;
-
         public DateTime ActualStartTime
         {
             get
@@ -153,9 +148,6 @@ namespace Morphic.Data.Models
                 }
             }
         }
-
-        private DateTime _actualEndTime;
-
         public DateTime ActualEndTime
         {
             get
@@ -171,9 +163,6 @@ namespace Morphic.Data.Models
                 }
             }
         }
-
-        private DateTime _lastStartTime;
-
         public DateTime LastStartTime
         {
             get
@@ -191,9 +180,6 @@ namespace Morphic.Data.Models
                 }
             }
         }
-
-        private DateTime _lastBreakStartTime;
-
         public DateTime LastBreakStartTime
         {
             get
@@ -209,7 +195,6 @@ namespace Morphic.Data.Models
                 }
             }
         }
-
         public DateTime NextBreakTime
         {
             get
@@ -230,7 +215,6 @@ namespace Morphic.Data.Models
                 }
             }
         }
-
         public String RunForHRMM
         {
             get
@@ -243,7 +227,6 @@ namespace Morphic.Data.Models
                     return ts.Minutes + " minutes ";
             }
         }
-
         public String EndTime
         {
             get
@@ -257,7 +240,6 @@ namespace Morphic.Data.Models
         }
 
         #region Schedule
-        private Schedule _schedule;
         public Schedule Schedule
         {
             get

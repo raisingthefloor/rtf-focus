@@ -5,11 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Morphic.Focus.Screens"
         mc:Ignorable="d"
-        Height="400" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Currently Running Focus Session(s)" Width="auto"
+        Height="auto" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Currently Running Focus Session(s)" Width="auto"
         MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <local:NullVisibilityConverter x:Key="NullVisibilityConverter"></local:NullVisibilityConverter>
         <local:InvertVisibilityConverter x:Key="InvertVisibilityConverter"></local:InvertVisibilityConverter>
+        <Style TargetType="{x:Type TextBlock}" x:Key="ContentStyleActiveSession" BasedOn="{StaticResource ContentStyle}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Engine.Session2}" Value="{x:Null}">
+                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Button}" x:Key="SettingsButtonsGreyActiveSession" BasedOn="{StaticResource SettingsButtonsGrey}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Engine.Session2}" Value="{x:Null}">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
@@ -20,10 +36,10 @@
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="58"></RowDefinition>
-                <RowDefinition Height="126"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="55"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
             </Grid.RowDefinitions>
@@ -35,11 +51,10 @@
             <TextBlock Grid.Row="2" Grid.Column="0" Margin="25 0" Height="58" HorizontalAlignment="Center" Padding="78 20" Style="{DynamicResource ContentStyleBig}" Foreground="#3566D8" Text="{Binding Engine.TimeTillNextBreakHHMM, StringFormat=Your next break is in {0} minutes}"></TextBlock>
 
             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Width="auto" HorizontalAlignment="Center" Margin="25 0">
-
-
-                <Border Height="126" BorderBrush="Black" Width="auto" BorderThickness="1"  Padding="10 0"
+                <Border Height="auto" BorderBrush="Black" Width="auto" BorderThickness="1"  Padding="10 0"
                         Visibility="{Binding Engine.Session1, Converter={StaticResource NullVisibilityConverter}}">
                     <StackPanel HorizontalAlignment="Stretch">
+                        <TextBlock Style="{DynamicResource ModalTitle}" Margin="6 15 0 0" Visibility="{Binding Engine.Session2, Converter={StaticResource NullVisibilityConverter}}">Focus Session 1</TextBlock>
                         <Grid Height="54" VerticalAlignment="Stretch" Margin="0 15 0 0" Width="auto" HorizontalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -50,21 +65,24 @@
                                 <RowDefinition Height="18"></RowDefinition>
                                 <RowDefinition Height="18"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Focus session has run for :</TextBlock>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyleActiveSession}" >Focus session has run for :</TextBlock>
                             <TextBlock Grid.Row="0" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session1.RunForHRMM}" Width="auto"></TextBlock>
 
-                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Using blocklist :</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyleActiveSession}" >Using blocklist :</TextBlock>
                             <TextBlock Grid.Row="1" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session1.BlockListName}" Width="auto"></TextBlock>
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Focus session ends at :</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyleActiveSession}" >Focus session ends at :</TextBlock>
                             <TextBlock Grid.Row="2" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session1.EndTime}" Width="auto"></TextBlock>
                         </Grid>
-                        <Button Name="btnStopFocus" Click="btnStopFocus_Click" Style="{DynamicResource SettingsButtonsGrey}" Margin="0 20 0 0" Height="25" Width="123">Stop focus session</Button>
+                        <Button Name="btnStopFocus" Click="btnStopFocus_Click" Style="{DynamicResource SettingsButtonsGreyActiveSession}" Margin="0 20 0 10" Height="25" Width="123" >Stop focus session</Button>
                     </StackPanel>
                 </Border>
-                <Border Name="brdSession2" Height="126" BorderBrush="Black" Width="auto" BorderThickness="1" Padding="10 0" Margin="10 0 0 0"
+                <Border Name="brdSession2" Height="auto" BorderBrush="Black" Width="auto" BorderThickness="1" Padding="10 0" Margin="10 0 0 0"
                         Visibility="{Binding Engine.Session2, Converter={StaticResource NullVisibilityConverter}}" >
                     <StackPanel HorizontalAlignment="Stretch">
+
+                        <TextBlock Style="{DynamicResource ModalTitle}" Margin="6 15 0 0">Focus Session 2</TextBlock>
                         <Grid Height="54" VerticalAlignment="Stretch" Margin="0 15 0 0" Width="auto" HorizontalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -75,27 +93,35 @@
                                 <RowDefinition Height="18"></RowDefinition>
                                 <RowDefinition Height="18"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Focus session has run for :</TextBlock>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session2.RunForHRMM}" Width="auto"></TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" >Focus session has run for :</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session2.RunForHRMM}" Width="auto" TextAlignment="Left"></TextBlock>
 
-                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Using blocklist :</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session2.BlockListName}" Width="auto"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" >Using blocklist :</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session2.BlockListName}" Width="auto" TextAlignment="Left"></TextBlock>
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" TextAlignment="Right">Focus session ends at :</TextBlock>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session2.EndTime}" Width="auto"></TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" >Focus session ends at :</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session2.EndTime}" Width="auto" TextAlignment="Left"></TextBlock>
                         </Grid>
-                        <Button Name="btnStopFocus2" Click="btnStopFocus2_Click" Style="{DynamicResource SettingsButtonsGrey}" Margin="0 20 0 0" Height="25" Width="123">Stop focus session</Button>
+                        <Button Name="btnStopFocus2" Click="btnStopFocus2_Click" Style="{DynamicResource SettingsButtonsGrey}" Margin="0 20 0 0" Height="25" Width="123" HorizontalAlignment="Right">Stop focus session</Button>
                     </StackPanel>
                 </Border>
             </StackPanel>
-            <Button Grid.Row="4" Grid.Column="0" Style="{DynamicResource SettingsButtonsLightGreen}" Margin="0 20 0 0" Height="25" Width="176"
-                    Visibility="{Binding ElementName=brdSession2, Path=Visibility, Converter={StaticResource InvertVisibilityConverter}}"
-                    Click="StartSecondSession">Start a second focus session</Button>
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Margin="0 20 0 0" HorizontalAlignment="Center" Visibility="{Binding ElementName=brdSession2, Path=Visibility, Converter={StaticResource InvertVisibilityConverter}}">
+                <TextBlock Width="{Binding Path=ActualWidth, ElementName=txtWhatsThis}" Margin="15 0 0 0"></TextBlock>
+                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="176" Click="StartSecondSession">
+                    Start a second focus session
+                </Button>
+                <TextBlock x:Name="txtWhatsThis" Style="{DynamicResource SettingsHeader}" Margin="15 0 0 0" LineHeight="15">
+                    <Hyperlink FontSize="12" NavigateUri="https://morphic.org/why-2-focus-sessions/">
+                        <TextBlock FontFamily="{DynamicResource SourceSansProRegular}" FontWeight="Normal" Text="Why do this?"/>
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
 
             <Border Grid.Row="5" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#A3A3A3" Margin="0 15 0 0"
                     Visibility="{Binding ElementName=brdSession2, Path=Visibility, Converter={StaticResource InvertVisibilityConverter}}"></Border>
 
-            <Button Grid.Row="6" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="0 15 0 0" Height="25" Width="176" Command="ApplicationCommands.Close">OK</Button>
+            <Button Grid.Row="6" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="0 15 0 15" Height="25" Width="176" Command="ApplicationCommands.Close">OK</Button>
 
             <Button Name="btnSettings" Grid.Row="8" Grid.Column="0" Width="auto" Style="{DynamicResource SettingsButtonBottom}" Margin="0" Padding="15 8 0 9" Cursor="Hand" HorizontalContentAlignment="Left" Click="btnSettings_Click">
                 <StackPanel Orientation="Horizontal">

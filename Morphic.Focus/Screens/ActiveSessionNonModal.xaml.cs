@@ -4,6 +4,7 @@ using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -55,7 +56,33 @@ namespace Morphic.Focus.Screens
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                this.DragMove();
+                if (e.OriginalSource is Hyperlink)
+                {
+                    try
+                    {
+                        LoggingService.WriteAppLog("Active Session -> Why do this?");
+
+                        Hyperlink link = (Hyperlink)e.OriginalSource;
+
+                        if (((Hyperlink)e.OriginalSource).NavigateUri != null)
+                            Process.Start("explorer", ((Hyperlink)e.OriginalSource).NavigateUri.ToString());
+                    }
+                    catch (Exception ex)
+                    {
+                        LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        this.DragMove();
+                    }
+                    catch (Exception ex)
+                    {
+                        LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                    }
+                }
             }
         }
 

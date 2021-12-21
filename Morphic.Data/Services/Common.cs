@@ -41,7 +41,7 @@ namespace Morphic.Data.Services
 
         public static string GetSessionFilePath(Session session)
         {
-            return MakeFilePath(string.Format(SESSION_FILE_NAME, session.ActualStartTime.ToString("yyMMdd_hhmmss_tt")));
+            return MakeFilePath(string.Format(SESSION_FILE_NAME, session.ActualStartTime.ToString("yyMMdd_HHmmss")));
         }
     }
 }

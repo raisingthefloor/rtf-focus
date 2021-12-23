@@ -48,7 +48,7 @@
 
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="25 3 25 0" Height="28" HorizontalAlignment="Center" Style="{DynamicResource TitleStyle}">Currently Running Focus Session(s)</TextBlock>
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Margin="25 0" Height="58" HorizontalAlignment="Center" Padding="78 20" Style="{DynamicResource ContentStyleBig}" Foreground="#3566D8" Text="{Binding Engine.TimeTillNextBreakHHMM, StringFormat=Your next break is in {0} minutes}"></TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="0" Margin="25 0" Height="58" HorizontalAlignment="Center" Padding="78 20" Style="{DynamicResource ContentStyleBig}" Foreground="#3566D8" Text="{Binding BreakStatusText}"></TextBlock>
 
             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Width="auto" HorizontalAlignment="Center" Margin="25 0">
                 <Border Height="auto" BorderBrush="Black" Width="auto" BorderThickness="1"  Padding="10 0"

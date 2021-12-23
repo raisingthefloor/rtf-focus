@@ -156,20 +156,28 @@ namespace Morphic.Focus
             //    FocusMain_SessionUpdate();
 
             if (e.PropertyName == "TimeTillNextBreak")
-                UpdateButtonText();
+                UpdateButtonText(true);
+            else if (e.PropertyName == "TimeTillNextBreakEnds")
+                UpdateButtonText(false);
         }
 
-        private void UpdateButtonText()
+        private void UpdateButtonText(bool isFocus)
         {
             if (Engine.IsFocusRunning)
             {
+                string timerText = isFocus ? Engine.TimeTillNextBreakHHMM : Engine.TimeTillNextBreakEndsHHMM;
+                string focusBreakText = isFocus ? "Focus" : "Break";
+
                 if (Engine.IsFocusTillStop)
                 {
                     ButtonText = "Focus till Stop";
                 }
                 else
                 {
-                    ButtonText = "Focus" + Environment.NewLine +  Engine.TimeTillNextBreakHHMM; //Math.Ceiling(Engine.TimeTillNextBreak.TotalMinutes);
+                    if (Engine.UserPreferences.General.showBreakCountdownTimer)
+                        ButtonText = focusBreakText + Environment.NewLine + timerText;
+                    else
+                        ButtonText = focusBreakText;
                 }
             }
             else

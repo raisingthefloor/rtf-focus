@@ -22,14 +22,14 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Margin="25 20 25 0"  Style="{DynamicResource TitleStyle}" Height="23" FontSize="18">Time for a break!</TextBlock>
-            <Button Grid.Row="1" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="43 20 43 0" Width="121" Command="ApplicationCommands.Close">
+            <Button Grid.Row="1" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="43 20 43 0" Width="121" Click="StartBreak">
                 OK</Button>
-            <TextBlock Grid.Row="2" Grid.Column="0" Margin="25 20 25 0"  Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" Width="159" TextAlignment="Center">
+            <TextBlock Grid.Row="2" Grid.Column="0" Margin="25 20 25 0"  Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" Width="159" TextAlignment="Center" Visibility="{Binding Show5min}">
                 I want to focus a little longer. Remind me to break again in:</TextBlock>
-            <StackPanel Grid.Row="3" Grid.Column="0" Margin="25 8 25 0"  Orientation="Horizontal">
-                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Click="Button_Click">5 min</Button>
-                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Margin="8 0 0 0" Click="Button_Click">10 min</Button>
-                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Margin="8 0 0 0" Click="Button_Click">15 min</Button>
+            <StackPanel Grid.Row="3" Grid.Column="0" Margin="25 8 25 0"  Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Name="btn5Min" Click="btn5Min_Click" Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Visibility="{Binding Show5min}">5 min</Button>
+                <Button Name="btn10Min" Click="btn10Min_Click" Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Margin="8 0 0 0" Visibility="{Binding Show10min}">10 min</Button>
+                <Button Name="btn15Min" Click="btn15Min_Click" Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Margin="8 0 0 0" Visibility="{Binding Show15min}">15 min</Button>
             </StackPanel>
             <Border Grid.Row="4" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#c2c2c2" Margin="25 20 25 0"></Border>
             <Button Grid.Row="5" Grid.Column="0" Name="btnStopFocus" Click="btnStopFocus_Click" Style="{DynamicResource SettingsButtonsGrey}" Margin="43 15 43 0" Height="25" Width="121">Stop focus session</Button>

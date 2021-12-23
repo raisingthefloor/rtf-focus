@@ -46,28 +46,6 @@ namespace Morphic.Focus.Screens
         AppEngine _engine;
         public AppEngine Engine { get { return _engine; } }
 
-        //TODO - Review if these variables are needed
-        //public Session? Session1 { get => _engine.Session1; set => _engine.Session1 = value; }
-        //public Session? Session2 { get => _engine.Session2; set => _engine.Session2 = value; }
-
-        //public bool IsFocusRunning
-        //{
-        //    get
-        //    {
-        //        return _engine.IsFocusRunning;
-        //    }
-        //    set
-        //    {
-        //        _engine.IsFocusRunning = value;
-        //        NotifyPropertyChanged("IsFocusRunning"); // method implemented below
-
-        //        if (SessionUpdate != null)
-        //        {
-        //            SessionUpdate(Session1);
-        //        }
-        //    }
-        //}
-
         public MainMenuNonModal()
         {
             if (!DesignerProperties.GetIsInDesignMode(this))

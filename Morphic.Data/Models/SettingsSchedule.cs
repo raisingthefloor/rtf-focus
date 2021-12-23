@@ -193,6 +193,7 @@ namespace Morphic.Data.Models
                 if (value != this._startAt)
                 {
                     this._startAt = value;
+                    EndAt = DateTime.Today.Add(EndAt.TimeOfDay);
                     NotifyPropertyChanged();
                 }
             }
@@ -211,6 +212,7 @@ namespace Morphic.Data.Models
                 if (value != this._endAt)
                 {
                     this._endAt = value;
+                    StartAt = DateTime.Today.Add(StartAt.TimeOfDay);
                     NotifyPropertyChanged();
                 }
             }

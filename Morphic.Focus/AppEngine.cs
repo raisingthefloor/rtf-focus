@@ -64,6 +64,10 @@ namespace Morphic.Focus
             }
         }
 
+        
+
+
+
 
 
         #endregion
@@ -74,7 +78,7 @@ namespace Morphic.Focus
             SetTodaysSchedule(true); //Since original schedules are altered, force reset today's schedules
         }
 
-        
+
 
         private void UserPreferences_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
@@ -132,8 +136,6 @@ namespace Morphic.Focus
                 SetTrigger(schTrigger3, UserPreferences.TodaysSchedule.Schedule3);
                 SetTrigger(schTrigger4, UserPreferences.TodaysSchedule.Schedule4);
                 SetTrigger(schTrigger5, UserPreferences.TodaysSchedule.Schedule5);
-
-
             }
             catch (Exception ex)
             {
@@ -227,6 +229,51 @@ namespace Morphic.Focus
             set => _settings = value;
         }
 
+        LockedScreenNonModal _lockedScreenNonModal = null;
+
+        public LockedScreenNonModal LockedScreenNonModal
+        {
+            get
+            {
+                if (_lockedScreenNonModal == null)
+                {
+                    _lockedScreenNonModal = new LockedScreenNonModal() { Topmost = true, ShowInTaskbar = false };
+                }
+
+                return _lockedScreenNonModal;
+            }
+            set => _lockedScreenNonModal = value;
+        }
+
+        LongBreakModal _longBreakModal = null;
+        public LongBreakModal LongBreakModal
+        {
+            get
+            {
+                if (_longBreakModal == null)
+                {
+                    _longBreakModal = new LongBreakModal() { ShowInTaskbar = false };
+                }
+
+                return _longBreakModal;
+            }
+            set => _longBreakModal = value;
+        }
+
+        ShortBreakModal _shortBreakModal = null;
+        public ShortBreakModal ShortBreakModal
+        {
+            get
+            {
+                if (_shortBreakModal == null)
+                {
+                    _shortBreakModal = new ShortBreakModal() { ShowInTaskbar = false };
+                }
+
+                return _shortBreakModal;
+            }
+            set => _shortBreakModal = value;
+        }
         internal void ShowFocusWindow()
         {
             if (IsFocusRunning)
@@ -430,26 +477,26 @@ namespace Morphic.Focus
         {
             get
             {
-                lock (locker)
-                {
-                    if (LstSession.Count >= 1)
-                        return LstSession[0];
-                    else
-                        return null;
-                }
+                //lock (locker)
+                //{
+                if (LstSession.Count >= 1)
+                    return LstSession[0];
+                else
+                    return null;
+                //}
             }
         }
         public Session? Session2
         {
             get
             {
-                lock (locker)
-                {
-                    if (LstSession.Count == 2)
-                        return LstSession[1];
-                    else
-                        return null;
-                }
+                //lock (locker)
+                //{
+                if (LstSession.Count == 2)
+                    return LstSession[1];
+                else
+                    return null;
+                //}
             }
         }
 
@@ -459,12 +506,27 @@ namespace Morphic.Focus
             {
                 if (LstSession.Count == 0)
                     return DateTime.MinValue;
-                else if (LstSession.Count == 1)
+                else //if (LstSession.Count == 1)
                     return Session1.NextBreakTime;
-                else if (LstSession.Count == 2)
-                    return new[] { Session1.NextBreakTime, Session2.NextBreakTime }.Min();
-                else
+                //else if (LstSession.Count == 2)
+                //    return new[] { Session1.NextBreakTime, Session2.NextBreakTime }.Min();
+                //else
+                //    return DateTime.MinValue;
+            }
+        }
+
+        public DateTime NextBreakEndsTime
+        {
+            get
+            {
+                if (LstSession.Count == 0)
                     return DateTime.MinValue;
+                else //if (LstSession.Count == 1)
+                    return Session1.LastBreakStartTime.AddMinutes(Session1.BreakDuration);
+                //else if (LstSession.Count == 2)
+                //    return new[] { Session1.NextBreakTime, Session2.NextBreakTime }.Min();
+                //else
+                //    return DateTime.MinValue;
             }
         }
 
@@ -481,7 +543,6 @@ namespace Morphic.Focus
                 {
                     _timeTillNextBreak = value;
                     NotifyPropertyChanged();
-                    NotifyPropertyChanged("TimeTillNextBreakHHMM");
                     NotifyPropertyChanged("Session1");
                     NotifyPropertyChanged("Session2");
                 }
@@ -496,6 +557,32 @@ namespace Morphic.Focus
             }
         }
 
+        private TimeSpan _timeTillNextBreakEnds = TimeSpan.Zero;
+        public TimeSpan TimeTillNextBreakEnds
+        {
+            get
+            {
+                return _timeTillNextBreakEnds;
+            }
+            set
+            {
+                if (value != _timeTillNextBreakEnds)
+                {
+                    _timeTillNextBreakEnds = value;
+                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("Session1");
+                    NotifyPropertyChanged("Session2");
+                }
+            }
+        }
+
+        public string TimeTillNextBreakEndsHHMM
+        {
+            get
+            {
+                return new TimeSpan(0, (int)Math.Ceiling(TimeTillNextBreakEnds.TotalMinutes), 0).ToString("hh':'mm");
+            }
+        }
         public bool IsFocusTillStop
         {
             get
@@ -540,9 +627,11 @@ namespace Morphic.Focus
 
         #region Action Methods
 
+        /// <summary>
+        /// Upon Application Start
+        /// </summary>
         public void CheckIsFocusRunning()
         {
-
             string[] sessionFiles = Common.GetSessionFiles();
             foreach (string sessionFile in sessionFiles)
             {
@@ -555,73 +644,60 @@ namespace Morphic.Focus
 
                 if (session != null)
                 {
-                    if (session.SessionDuration == 0) //If it is Focus Till Stop
+                    if (DateTime.Now > session.ActualStartTime.AddMinutes(session.SessionDuration))
                     {
-                        LstSession.Add(session);
-                        session.PropertyChanged += CurrSession_PropertyChanged;
-                        IsFocusRunning = true;
-                        session.LastStartTime = DateTime.Now;
-                        ResetFocusButtonTimer();
-                    }
-                    else //If it is a fixed time session, check if end time has passed
-                    {
-                        if (DateTime.Now > session.ActualStartTime.AddMinutes(session.SessionDuration))
-                        {
-                            //Log Closing Session
-                            LoggingService.WriteAppLog("Session Closing");
+                        //Log Closing Session
+                        LoggingService.WriteAppLog("Session Closing");
 
-                            File.Delete(Common.MakeFilePath(sessionFile));
-                            session = null;
-                        }
-                        else
-                        {
-                            StartFocusSession(session);
-                        }
+                        File.Delete(Common.MakeFilePath(sessionFile));
+                        session = null;
+                    }
+                    else
+                    {
+                        StartFocusSession(session);
                     }
                 }
-
-
             }
-
         }
 
-
-        internal void StopFocusSession()
-        {
-            ////Todo - Work for second session
-            ////Delete file and stop focus session
-            //JSONHelper jSONHelper = new JSONHelper(Common.SESSION_FILE_NAME);
-            //string jsonString = jSONHelper.GetJson<Session>();
-
-            ////Log Closing Session
-            //LoggingService.WriteAppLog("Session Closing : " + jsonString);
-
-            //File.Delete(Common.MakeFilePath(Common.SESSION_FILE_NAME)); //TODO - Work for second session
-
-            //Session1.PropertyChanged -= CurrSession_PropertyChanged;
-            //Session1 = null;
-            //IsFocusRunning = false;
-            //ResetFocusButtonTimer();
-        }
-
-        internal void StopFocusSession(Session session)
+        /// <summary>
+        /// Delayed Session Start
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="minutesLeft"></param>
+        internal void StartFocusSession(Session session, int minutesLeft)
         {
             try
             {
-                //Delete file and stop focus session
-                JSONHelper jSONHelper = new JSONHelper(Common.GetSessionFilePath(session));
-                string jsonString = jSONHelper.GetJson<Session>();
+                //Start Session immediately
+                if (minutesLeft == 0)
+                {
+                    StartFocusSession(session);
+                    return;
+                }
 
-                //Log Closing Session
-                LoggingService.WriteAppLog("Session Closing : " + jsonString);
+                //Start Session after x mins
+                FocusDispatchTimer focusDispatchTimer = new FocusDispatchTimer();
 
-                File.Delete(Common.GetSessionFilePath(session));
+                //Countdown - Start Session after x min
+                focusDispatchTimer.Time = TimeSpan.FromMinutes(minutesLeft);
 
-                session.PropertyChanged -= CurrSession_PropertyChanged;
-                LstSession.Remove(session);
-                session = null;
-                IsFocusRunning = LstSession.Count > 0;
-                ResetFocusButtonTimer();
+                focusDispatchTimer.Timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
+                {
+                    //Start Session after x mins
+                    if (focusDispatchTimer.Time <= TimeSpan.Zero)
+                    {
+                        if (focusDispatchTimer.Timer != null) focusDispatchTimer.Timer.Stop();
+
+                        StartFocusSession(session);
+
+                        LstFocusDispatchTimer.Remove(focusDispatchTimer);
+                    }
+                    focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
+                }, Application.Current.Dispatcher);
+
+                focusDispatchTimer.Timer.Start();
+                LstFocusDispatchTimer.Add(focusDispatchTimer);
             }
             catch (Exception ex)
             {
@@ -682,8 +758,8 @@ namespace Morphic.Focus
                     //    LoggingService.WriteAppLog("Session Started : " + jsonString);
                     //}
 
-                    //Reset Timer
-                    ResetFocusButtonTimer();
+                    //Reset Break Timer if this is the first session that has started
+                    if (LstSession.Count == 1) StartFocusToBreakTimer(true);
                 }
                 catch (Exception ex)
                 {
@@ -692,13 +768,98 @@ namespace Morphic.Focus
             }
         }
 
-        private void ResetFocusButtonTimer()
+        internal void StopAllFocusSession()
+        {
+            try
+            {
+                foreach (Session session in LstSession.ToList())
+                {
+                    StopFocusSession(session);
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        internal void StopFocusSession(Session session)
+        {
+            try
+            {
+                //Delete file and stop focus session
+                JSONHelper jSONHelper = new JSONHelper(Common.GetSessionFilePath(session));
+                string jsonString = jSONHelper.GetJson<Session>();
+
+                //Log Closing Session
+                LoggingService.WriteAppLog("Session Closing : " + jsonString);
+
+                File.Delete(Common.GetSessionFilePath(session));
+
+                session.PropertyChanged -= CurrSession_PropertyChanged;
+                LstSession.Remove(session);
+                session = null;
+                IsFocusRunning = LstSession.Count > 0;
+
+                if (LstSession.Count == 0) StopFocusTimer();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        internal void StartBreakSequence()
+        {
+            try
+            {
+                LoggingService.WriteAppLog("Start Break Session Request Received");
+
+                lock (locker)
+                {
+                    DateTime datetimeNow = DateTime.Now; //Start of Break time for one or both sessions
+
+                    //1 - Set Last Break Start time for all running sessions
+                    foreach (Session session in LstSession.ToList())
+                    {
+                        session.LastBreakStartTime = datetimeNow;
+                    }
+
+                    //For first minute start
+                    if (UserPreferences.General.blockScreen1stMinofBreak)
+                    {
+                        OpenLockComputerNonModalScreen();
+                    }
+
+                    StartBreakToFocusTimer(); //Parameter true indicates a break is to be started
+                }
+                ////2 - As per Flowchart Point 3, focus-break-focus sequence follows the focus session that started earlier
+                //if (Session1 != null) // Again confirm we have Session 1 object
+                //{
+                //    int breakduration = Session1.BreakDuration;
+                //}
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        internal void ShortBreakRemindInMins(int mins)
+        {
+            lock (locker)
+            {
+                StartFocusToBreakTimer(true, mins);
+            }
+        }
+
+        private void StartFocusToBreakTimer(bool isBreak = false, int breakGap = 0)
         {
             try
             {
                 FocusDispatchTimer? focusDispatchTimer = null;
 
-                //Get existing countdown timer
+                //Get countdown dispatch timer
                 if (LstFocusDispatchTimer.Exists(p => p.IsCountdownTimer))
                 {
                     focusDispatchTimer = LstFocusDispatchTimer.Find(p => p.IsCountdownTimer);
@@ -713,54 +874,79 @@ namespace Morphic.Focus
                 focusDispatchTimer.Time = TimeSpan.Zero;
 
                 //Set countdown time
-                if (NextBreakTime == DateTime.MinValue)
-                    TimeTillNextBreak = focusDispatchTimer.Time = new TimeSpan(0, 120, 0); //Long Break TODO Review from specs
-                else
-                    TimeTillNextBreak = focusDispatchTimer.Time = (NextBreakTime - DateTime.Now).Duration();
+                if (breakGap == 0)
+                {
+                    if (NextBreakTime == DateTime.MinValue)
+                        TimeTillNextBreak = focusDispatchTimer.Time = new TimeSpan(0, 120, 0); //Long Break TODO Review from specs
+                    else
+                        TimeTillNextBreak = focusDispatchTimer.Time = (NextBreakTime - DateTime.Now).Duration();
+                }
+                else //Extended Session from break dialog
+                {
+                    TimeTillNextBreak = focusDispatchTimer.Time = new TimeSpan(0, breakGap, 0);
+                }
+
+                //TODO Review
+                //Set Break Type
+                if (isBreak)
+                {
+                    focusDispatchTimer.Type = TimeTillNextBreak.TotalMinutes == 120 ? TimerType.CountdownToLongBreak : TimerType.CountdownToShortBreak;
+                }
 
                 focusDispatchTimer.Timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
                 {
-                    //Start Countdown timer
+                    //Timer finishes
                     if (focusDispatchTimer.Time <= TimeSpan.Zero)
                     {
-                        if (focusDispatchTimer.Timer != null) focusDispatchTimer.Timer.Stop();
-
-                        //TODO Initiate any action upon time completion
-                        if (Session1 != null)
+                        lock (locker)
                         {
-                            if (Session1.SessionDuration > 0)
+                            //Stop the timer
+                            if (focusDispatchTimer.Timer != null)
+                                focusDispatchTimer.Timer.Stop();
+
+                            //Stop focus session if the end time has reached
+                            foreach (Session session in LstSession.ToList())
                             {
-                                if (DateTime.Now >= Session1.ActualStartTime.AddMinutes(Session1.SessionDuration))
+                                if (session != null)
                                 {
-                                    StopFocusSession();
+                                    if (session.SessionDuration > 0)
+                                    {
+                                        if (DateTime.Now >= session.ActualStartTime.AddMinutes(session.SessionDuration))
+                                        {
+                                            StopFocusSession(session); //Stop the Session if End time has reached
+                                        }
+                                    }
+                                }
+                            }
+
+                            //Open Short/Long Break Modal
+                            if (LstSession.Count > 0)
+                            {
+                                if ((DateTime.Now - Session1.LastStartTime).TotalMinutes >= 120) //If focussing for more than 120 mins
+                                {
+                                    Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        LoggingService.WriteAppLog("Show long break modal");
+                                        LongBreakModal.ShowDialog(); //Show long break modal
+                                    });
                                 }
                                 else
-                                    new ShortBreakModal().ShowDialog();
-                            }
-                            else
-                                new ShortBreakModal().ShowDialog();
-                        }
-                        else if (Session2 != null)
-                        {
-                            if (Session2.SessionDuration > 0)
-                            {
-                                if (DateTime.Now >= Session2.ActualStartTime.AddMinutes(Session2.SessionDuration))
                                 {
-                                    StopFocusSession();
+                                    Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        LoggingService.WriteAppLog("Show short break modal");
+                                        ShortBreakModal.ShowDialog(); //Show short break modal
+                                    });
                                 }
-                                else
-                                    new ShortBreakModal().ShowDialog();
                             }
-                            else
-                                new ShortBreakModal().ShowDialog();
-                        }
 
-                        LstFocusDispatchTimer.Remove(focusDispatchTimer);
+                            LstFocusDispatchTimer.Remove(focusDispatchTimer);
+                        }
                     }
                     TimeTillNextBreak = focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
                 }, Application.Current.Dispatcher);
 
-                focusDispatchTimer.Timer.Start();
+                focusDispatchTimer.Timer.Start(); //Start Countdown timer
                 LstFocusDispatchTimer.Add(focusDispatchTimer);
             }
             catch (Exception ex)
@@ -770,31 +956,145 @@ namespace Morphic.Focus
 
         }
 
-        internal void StartFocusSession(Session session, int minutesLeft)
+        private void StartBreakToFocusTimer()
         {
             try
             {
-                //Start Session immediately
-                if (minutesLeft == 0)
+                FocusDispatchTimer? focusDispatchTimer = null;
+
+                //Get countdown dispatch timer
+                if (LstFocusDispatchTimer.Exists(p => p.IsCountdownTimer))
                 {
-                    StartFocusSession(session);
-                    return;
+                    focusDispatchTimer = LstFocusDispatchTimer.Find(p => p.IsCountdownTimer);
+                }
+                else
+                {
+                    focusDispatchTimer = new FocusDispatchTimer() { IsCountdownTimer = true };
                 }
 
-                //Start Session after x mins
-                FocusDispatchTimer focusDispatchTimer = new FocusDispatchTimer();
+                //Reset existing time & timer
+                if (focusDispatchTimer.Timer != null) focusDispatchTimer.Timer.Stop();
+                focusDispatchTimer.Time = TimeSpan.Zero;
 
-                //Countdown - Start Session after x min
-                focusDispatchTimer.Time = TimeSpan.FromMinutes(minutesLeft);
+                //Set countdown time
+                if (NextBreakEndsTime == DateTime.MinValue)
+                    TimeTillNextBreakEnds = focusDispatchTimer.Time = new TimeSpan(0, 0, 0); //Todo Review
+                else
+                    TimeTillNextBreakEnds = focusDispatchTimer.Time = (NextBreakEndsTime - DateTime.Now).Duration();
+
+                //Set Break Type
+
+                focusDispatchTimer.Type = TimerType.CountdownToBreakEnd;
 
                 focusDispatchTimer.Timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
                 {
-                    //Start Session after x mins
+                    //Timer finishes
+                    if (focusDispatchTimer.Time <= TimeSpan.Zero)
+                    {
+                        lock (locker)
+                        {
+                            //Stop the timer
+                            if (focusDispatchTimer.Timer != null)
+                                focusDispatchTimer.Timer.Stop();
+
+                            //Stop focus session if the end time has reached
+                            foreach (Session session in LstSession.ToList())
+                            {
+                                if (session != null)
+                                {
+                                    if (session.SessionDuration > 0)
+                                    {
+                                        if (DateTime.Now >= session.ActualStartTime.AddMinutes(session.SessionDuration))
+                                        {
+                                            StopFocusSession(session); //Stop the Session if End time has reached
+                                        }
+                                    }
+                                }
+                            }
+
+                            //Open Break End Modal
+                            if (LstSession.Count > 0)
+                            {
+                                if (focusDispatchTimer.Type == TimerType.CountdownToShortBreak)
+                                {
+                                    //Application.Current.Dispatcher.Invoke(() =>
+                                    //{
+                                    //    LoggingService.WriteAppLog("Show short break modal");
+                                    //    new ShortBreakModal().ShowDialog(); //Show short break modal
+                                    //});
+                                }
+                                else if (focusDispatchTimer.Type == TimerType.CountdownToLongBreak)
+                                {
+                                    //TODO
+                                }
+                                else if (focusDispatchTimer.Type == TimerType.CountdownToBreakEnd)
+                                {
+                                    //TODO
+                                }
+                            }
+
+                            LstFocusDispatchTimer.Remove(focusDispatchTimer);
+                        }
+                    }
+                    TimeTillNextBreakEnds = focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
+                }, Application.Current.Dispatcher);
+
+                focusDispatchTimer.Timer.Start(); //Start Countdown timer
+                LstFocusDispatchTimer.Add(focusDispatchTimer);
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+
+        }
+
+        private void StopFocusTimer()
+        {
+            try
+            {
+                FocusDispatchTimer? focusDispatchTimer = null;
+
+                //Get countdown dispatch timer
+                if (LstFocusDispatchTimer.Exists(p => p.IsCountdownTimer))
+                {
+                    focusDispatchTimer = LstFocusDispatchTimer.Find(p => p.IsCountdownTimer);
+
+                    //Reset existing time & timer
+                    if (focusDispatchTimer.Timer != null) focusDispatchTimer.Timer.Stop();
+                    TimeTillNextBreak = focusDispatchTimer.Time = TimeSpan.Zero;
+
+                    LstFocusDispatchTimer.Remove(focusDispatchTimer);
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void OpenLockComputerNonModalScreen()
+        {
+            try
+            {
+                //Show Locked Screen
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    LockedScreenNonModal.Show();
+                });
+
+                //Show lock screen for 1 min
+                FocusDispatchTimer focusDispatchTimer = new FocusDispatchTimer();
+                focusDispatchTimer.Time = TimeSpan.FromMinutes(1);
+
+                focusDispatchTimer.Timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
+                {
+                    //Close lock screen after 1 min
                     if (focusDispatchTimer.Time <= TimeSpan.Zero)
                     {
                         if (focusDispatchTimer.Timer != null) focusDispatchTimer.Timer.Stop();
 
-                        StartFocusSession(session);
+                        LockedScreenNonModal.Hide();
 
                         LstFocusDispatchTimer.Remove(focusDispatchTimer);
                     }
@@ -809,7 +1109,6 @@ namespace Morphic.Focus
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
-
         #endregion
 
     }
@@ -884,6 +1183,16 @@ namespace Morphic.Focus
         public TimeSpan Time { get; set; } = TimeSpan.Zero;
 
         public bool IsCountdownTimer { get; set; } = false;
+        public TimerType Type { get; set; } = TimerType.Other;
+
+    }
+
+    public enum TimerType
+    {
+        CountdownToShortBreak,
+        CountdownToLongBreak,
+        CountdownToBreakEnd,
+        Other
     }
 }
 

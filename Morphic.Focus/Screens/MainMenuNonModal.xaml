@@ -146,8 +146,8 @@
                 <RowDefinition Height="35"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Width="30" Height="30" Content="&#10005;" FontSize="20" BorderThickness="0" Command="ApplicationCommands.Close" BorderBrush="Transparent" Foreground="Black" Background="Transparent" Cursor="Hand"></Button>
-
+            <Button Grid.Row="0" Grid.Column="0" Command="ApplicationCommands.Close" Style="{DynamicResource CloseButtonStyle}"/>
+            
             <StackPanel Grid.Row="1" Grid.Column="0" Margin="25 3 25 0" Orientation="Horizontal" Height="28">
                 <TextBlock Style="{DynamicResource TitleStyle}" Margin="66 0 0 0">Start a Focus Session</TextBlock>
                 <ToggleButton x:Name="btnInfo" Margin="15 0 0 0" Content="i" Style="{StaticResource IButtonStyle}" ToolTip="Adds help text to page" Click="btnInfo_Click" IsChecked="False" Cursor="Hand"></ToggleButton>

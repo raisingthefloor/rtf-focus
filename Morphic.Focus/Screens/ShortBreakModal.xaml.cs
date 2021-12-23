@@ -55,7 +55,7 @@ namespace Morphic.Focus.Screens
         /// <param name="e"></param>
         private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
         private void btnStopFocus_Click(object sender, RoutedEventArgs e)
         {
@@ -68,7 +68,7 @@ namespace Morphic.Focus.Screens
                     Engine.StopFocusSession(Engine.Session1);
 
                 //Hide this dialog
-                this.Close();
+                this.Hide();
             }
             catch (Exception ex)
             {
@@ -144,8 +144,14 @@ namespace Morphic.Focus.Screens
             {
                 Task.Factory.StartNew(() => Engine.StartBreakSequence());
 
+                //This is the forth reminder and now we need to reset visibility of buttons
+                if (Show5min == Visibility.Collapsed)
+                {
+                    Show5min = Show10min = Show15min = Visibility.Visible;
+                }
+
                 //Closes this dialog
-                this.Close();
+                this.Hide();
             }
             catch (Exception ex)
             {

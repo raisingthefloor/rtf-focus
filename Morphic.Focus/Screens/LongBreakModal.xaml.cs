@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Morphic.Data.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +21,25 @@ namespace Morphic.Focus.Screens
     /// </summary>
     public partial class LongBreakModal : Window
     {
+        AppEngine _engine;
+        public AppEngine Engine { get { return _engine; } }
         public LongBreakModal()
         {
-            InitializeComponent();
+            try
+            {
+                if (!DesignerProperties.GetIsInDesignMode(this))
+                {
+                    _engine = AppEngine.Instance;
+                }
+
+                InitializeComponent();
+
+                DataContext = this;
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
 
         #region Events
@@ -29,7 +47,14 @@ namespace Morphic.Focus.Screens
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                this.DragMove();
+                try
+                {
+                    this.DragMove();
+                }
+                catch (Exception ex)
+                {
+                    LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                }
             }
         }
 
@@ -40,19 +65,86 @@ namespace Morphic.Focus.Screens
         /// <param name="e"></param>
         private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
         private void btnStopFocus_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Feature will be available soon!");
+            try
+            {
+                //Log Closing Session
+                LoggingService.WriteAppLog("Session Closing");
+
+                Engine.StopFocusSession(Engine.Session1);
+
+                //Hide this dialog
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
 
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btn15Min_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Feature will be available soon!");
+            try
+            {
+                Task.Factory.StartNew(() => Engine.StartBreakSequence(15));
+
+                //Closes this dialog
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
+
+        private void btn30Min_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Task.Factory.StartNew(() => Engine.StartBreakSequence(30));
+
+                //Closes this dialog
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void btn60Min_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Task.Factory.StartNew(() => Engine.StartBreakSequence(60));
+
+                //Closes this dialog
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void btnRegularBreak_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Task.Factory.StartNew(() => Engine.StartBreakSequence(Engine.Session1.BreakDuration));
+
+                //Closes this dialog
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
         #endregion
     }
 }

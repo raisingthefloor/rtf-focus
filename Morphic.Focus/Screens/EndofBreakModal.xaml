@@ -22,11 +22,11 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Margin="25 20 25 0"  Style="{DynamicResource TitleStyle}" Height="23" FontSize="18">End of break!</TextBlock>
-            <Button Grid.Row="1" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="43 20 43 0" Width="121" Command="ApplicationCommands.Close">
+            <Button Click="StartFocus" Grid.Row="1" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="43 20 43 0" Width="121" Command="ApplicationCommands.Close">
                 OK, back to focus</Button>
             <TextBlock Grid.Row="2" Grid.Column="0" Margin="25 20 25 0"  Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" Width="159" TextAlignment="Center">
                 Or, extend my break by...</TextBlock>
-            <StackPanel Grid.Row="3" Grid.Column="0" Margin="25 8 25 0"  Orientation="Horizontal">
+            <StackPanel Grid.Row="3" Grid.Column="0" Margin="25 8 25 0"  Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Click="Button_Click">1 min</Button>
                 <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Margin="8 0 0 0" Click="Button_Click">5 min</Button>
                 <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Margin="8 0 0 0" Click="Button_Click">15 min</Button>

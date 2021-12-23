@@ -44,7 +44,7 @@
                 <RowDefinition Height="35"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Width="30" Height="30" Content="&#10005;" FontSize="20" BorderThickness="0" Cursor="Hand" Command="ApplicationCommands.Close" Foreground="Black" Background="Transparent" BorderBrush="Transparent"></Button>
+            <Button Grid.Row="0" Grid.Column="0" Command="ApplicationCommands.Close" Style="{DynamicResource CloseButtonStyle}"/>
 
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="25 3 25 0" Height="28" HorizontalAlignment="Center" Style="{DynamicResource TitleStyle}">Currently Running Focus Session(s)</TextBlock>
 

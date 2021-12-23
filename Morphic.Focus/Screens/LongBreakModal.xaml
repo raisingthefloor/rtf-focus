@@ -27,15 +27,18 @@
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="25 20 25 0"  Style="{DynamicResource ContentStyle}" Width="189" TextAlignment="Center">
                 Would you like to take a longer break?</TextBlock>
 
-            <StackPanel Grid.Row="2" Grid.Column="0" Margin="25 8 25 0" Orientation="Horizontal">
-                <Button Style="{DynamicResource FocusButtonOK}" Height="25" Width="61" Margin="8 0 0 0" Click="Button_Click">15 min</Button>
-                <Button Style="{DynamicResource FocusButtonOK}" Height="25" Width="61" Margin="10 0 0 0" Click="Button_Click">30 min</Button>
-                <Button Style="{DynamicResource FocusButtonOK}" Height="25" Width="45" Margin="10 0 0 0" Click="Button_Click">1 hr</Button>
+            <StackPanel Grid.Row="2" Grid.Column="0" Margin="25 8 25 0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Name="btn15Min" Click="btn15Min_Click" Style="{DynamicResource FocusButtonOK}" Height="25" Width="61" Margin="8 0 0 0" >15 min</Button>
+                <Button Name="btn30Min" Click="btn30Min_Click" Style="{DynamicResource FocusButtonOK}" Height="25" Width="61" Margin="10 0 0 0" >30 min</Button>
+                <Button Name="btn60Min" Click="btn60Min_Click" Style="{DynamicResource FocusButtonOK}" Height="25" Width="45" Margin="10 0 0 0" >1 hr</Button>
             </StackPanel>
 
-            <Button Grid.Row="3" Grid.Column="0" Style="{DynamicResource SettingsButtonsLightGreen}" Margin="25 15 25 0" Width="190" >
-                <TextBlock FontFamily="{DynamicResource SourceSansProBold}" FontWeight="Bold" FontSize="12" LineHeight="15" Foreground="#095930">
-                    Continue with <Underline>5</Underline> minute break
+            <Button Name="btnRegularBreak" Click="btnRegularBreak_Click" Grid.Row="3" Grid.Column="0" Style="{DynamicResource SettingsButtonsLightGreen}" Margin="25 15 25 0" Width="190" >
+                <TextBlock FontFamily="{DynamicResource SourceSansProBold}" FontWeight="Bold" FontSize="12" LineHeight="15" Foreground="#095930"
+                           >
+                    <Run>Continue with </Run>
+                    <Underline><Run Text="{Binding Engine.Session1.BreakDuration}"></Run></Underline> 
+                    <Run>minute break</Run>
                 </TextBlock>
             </Button>
 

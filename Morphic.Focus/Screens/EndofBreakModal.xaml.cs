@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Morphic.Data.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +21,19 @@ namespace Morphic.Focus.Screens
     /// </summary>
     public partial class EndofBreakModal : Window
     {
+        AppEngine _engine;
+        public AppEngine Engine { get { return _engine; } }
+
         public EndofBreakModal()
         {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _engine = AppEngine.Instance;
+            }
+
             InitializeComponent();
+
+            DataContext = this;
         }
 
         #region Events
@@ -29,7 +41,14 @@ namespace Morphic.Focus.Screens
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                this.DragMove();
+                try
+                {
+                    this.DragMove();
+                }
+                catch (Exception ex)
+                {
+                    LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                }
             }
         }
 
@@ -44,7 +63,36 @@ namespace Morphic.Focus.Screens
         }
         private void btnStopFocus_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Feature will be available soon!");
+            try
+            {
+                //Log Closing Session
+                LoggingService.WriteAppLog("Session Closing");
+
+                if (Engine.Session1 != null)
+                    Engine.StopFocusSession(Engine.Session1);
+
+                //Hide this dialog
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void StartFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Task.Factory.StartNew(() => Engine.StartFocusSequence());
+
+                //Closes this dialog
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
 
         #endregion
@@ -53,5 +101,7 @@ namespace Morphic.Focus.Screens
         {
             MessageBox.Show("Feature will be available soon!");
         }
+
+        
     }
 }

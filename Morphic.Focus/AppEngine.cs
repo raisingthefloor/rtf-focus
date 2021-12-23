@@ -70,6 +70,8 @@ namespace Morphic.Focus
 
 
 
+
+
         #endregion
 
         #region PropertyChanged
@@ -273,6 +275,22 @@ namespace Morphic.Focus
                 return _shortBreakModal;
             }
             set => _shortBreakModal = value;
+        }
+
+
+        EndofBreakModal _endofBreakModal = null;
+        public EndofBreakModal EndofBreakModal
+        {
+            get
+            {
+                if (_endofBreakModal == null)
+                {
+                    _endofBreakModal = new EndofBreakModal() { ShowInTaskbar = false };
+                }
+
+                return _endofBreakModal;
+            }
+            set => _endofBreakModal = value;
         }
         internal void ShowFocusWindow()
         {
@@ -802,6 +820,8 @@ namespace Morphic.Focus
                 IsFocusRunning = LstSession.Count > 0;
 
                 if (LstSession.Count == 0) StopFocusTimer();
+
+                FocusStatus.Hide();
             }
             catch (Exception ex)
             {
@@ -809,7 +829,7 @@ namespace Morphic.Focus
             }
         }
 
-        internal void StartBreakSequence()
+        internal void StartBreakSequence(int longBreak = 0)
         {
             try
             {
@@ -831,13 +851,8 @@ namespace Morphic.Focus
                         OpenLockComputerNonModalScreen();
                     }
 
-                    StartBreakToFocusTimer(); //Parameter true indicates a break is to be started
+                    StartBreakToFocusTimer(longBreak); //Parameter true indicates a break is to be started
                 }
-                ////2 - As per Flowchart Point 3, focus-break-focus sequence follows the focus session that started earlier
-                //if (Session1 != null) // Again confirm we have Session 1 object
-                //{
-                //    int breakduration = Session1.BreakDuration;
-                //}
             }
             catch (Exception ex)
             {
@@ -853,6 +868,30 @@ namespace Morphic.Focus
             }
         }
 
+        internal void StartFocusSequence()
+        {
+            LoggingService.WriteAppLog("Start Focus Session Request Received");
+
+            lock (locker)
+            {
+                DateTime datetimeNow = DateTime.Now; //Start of Break time for one or both sessions
+
+                //1 - Set Last Break Start time for all running sessions
+                foreach (Session session in LstSession.ToList())
+                {
+                    session.LastStartTime = datetimeNow;
+                }
+
+                if (LstSession.Count >= 1) StartFocusToBreakTimer(true);
+            }
+        }
+
+        /// <summary>
+        /// breakGap = 0 (default)
+        /// breakGap <> 0, a focus session is extended by clicking 5,10,15 min buttons
+        /// </summary>
+        /// <param name="isBreak"></param>
+        /// <param name="breakGap"></param>
         private void StartFocusToBreakTimer(bool isBreak = false, int breakGap = 0)
         {
             try
@@ -904,6 +943,7 @@ namespace Morphic.Focus
                             if (focusDispatchTimer.Timer != null)
                                 focusDispatchTimer.Timer.Stop();
 
+                            //Todo Review
                             //Stop focus session if the end time has reached
                             foreach (Session session in LstSession.ToList())
                             {
@@ -922,7 +962,7 @@ namespace Morphic.Focus
                             //Open Short/Long Break Modal
                             if (LstSession.Count > 0)
                             {
-                                if ((DateTime.Now - Session1.LastStartTime).TotalMinutes >= 120) //If focussing for more than 120 mins
+                                if ((DateTime.Now - Session1.LastStartTime).TotalMinutes >= 2) //If focussing for more than 120 mins
                                 {
                                     Application.Current.Dispatcher.Invoke(() =>
                                     {
@@ -956,7 +996,7 @@ namespace Morphic.Focus
 
         }
 
-        private void StartBreakToFocusTimer()
+        private void StartBreakToFocusTimer(int longBreak)
         {
             try
             {
@@ -977,11 +1017,17 @@ namespace Morphic.Focus
                 focusDispatchTimer.Time = TimeSpan.Zero;
 
                 //Set countdown time
-                if (NextBreakEndsTime == DateTime.MinValue)
-                    TimeTillNextBreakEnds = focusDispatchTimer.Time = new TimeSpan(0, 0, 0); //Todo Review
+                if (longBreak == 0) //default
+                {
+                    if (NextBreakEndsTime == DateTime.MinValue)
+                        TimeTillNextBreakEnds = focusDispatchTimer.Time = new TimeSpan(0, 0, 0); //Todo Review
+                    else
+                        TimeTillNextBreakEnds = focusDispatchTimer.Time = (NextBreakEndsTime - DateTime.Now).Duration();
+                }
                 else
-                    TimeTillNextBreakEnds = focusDispatchTimer.Time = (NextBreakEndsTime - DateTime.Now).Duration();
-
+                {
+                    TimeTillNextBreakEnds = focusDispatchTimer.Time = new TimeSpan(0, longBreak, 0); //Longer Break
+                }
                 //Set Break Type
 
                 focusDispatchTimer.Type = TimerType.CountdownToBreakEnd;
@@ -1015,22 +1061,11 @@ namespace Morphic.Focus
                             //Open Break End Modal
                             if (LstSession.Count > 0)
                             {
-                                if (focusDispatchTimer.Type == TimerType.CountdownToShortBreak)
+                                Application.Current.Dispatcher.Invoke(() =>
                                 {
-                                    //Application.Current.Dispatcher.Invoke(() =>
-                                    //{
-                                    //    LoggingService.WriteAppLog("Show short break modal");
-                                    //    new ShortBreakModal().ShowDialog(); //Show short break modal
-                                    //});
-                                }
-                                else if (focusDispatchTimer.Type == TimerType.CountdownToLongBreak)
-                                {
-                                    //TODO
-                                }
-                                else if (focusDispatchTimer.Type == TimerType.CountdownToBreakEnd)
-                                {
-                                    //TODO
-                                }
+                                    LoggingService.WriteAppLog("Break end");
+                                    EndofBreakModal.ShowDialog(); //Show long break modal
+                                });
                             }
 
                             LstFocusDispatchTimer.Remove(focusDispatchTimer);

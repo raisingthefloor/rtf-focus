@@ -30,14 +30,6 @@ namespace Morphic.Focus.Screens
             grdMain.Width = this.Width;
         }
 
-        private void Window_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                this.DragMove();
-            }
-        }
-
         /// <summary>
         /// Hide this window
         /// </summary>

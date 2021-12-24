@@ -64,14 +64,6 @@ namespace Morphic.Focus
             }
         }
 
-        
-
-
-
-
-
-
-
         #endregion
 
         #region PropertyChanged
@@ -79,8 +71,6 @@ namespace Morphic.Focus
         {
             SetTodaysSchedule(true); //Since original schedules are altered, force reset today's schedules
         }
-
-
 
         private void UserPreferences_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
@@ -777,7 +767,7 @@ namespace Morphic.Focus
                     //}
 
                     //Reset Break Timer if this is the first session that has started
-                    if (LstSession.Count == 1) StartFocusToBreakTimer(true);
+                    if (LstSession.Count == 1) StartFocusToBreakTimer();
                 }
                 catch (Exception ex)
                 {
@@ -864,7 +854,7 @@ namespace Morphic.Focus
         {
             lock (locker)
             {
-                StartFocusToBreakTimer(true, mins);
+                StartFocusToBreakTimer(mins);
             }
         }
 
@@ -882,7 +872,7 @@ namespace Morphic.Focus
                     session.LastStartTime = datetimeNow;
                 }
 
-                if (LstSession.Count >= 1) StartFocusToBreakTimer(true);
+                if (LstSession.Count >= 1) StartFocusToBreakTimer();
             }
         }
 
@@ -892,7 +882,7 @@ namespace Morphic.Focus
         /// </summary>
         /// <param name="isBreak"></param>
         /// <param name="breakGap"></param>
-        private void StartFocusToBreakTimer(bool isBreak = false, int breakGap = 0)
+        private void StartFocusToBreakTimer(int breakGap = 0)
         {
             try
             {
@@ -927,10 +917,10 @@ namespace Morphic.Focus
 
                 //TODO Review
                 //Set Break Type
-                if (isBreak)
-                {
-                    focusDispatchTimer.Type = TimeTillNextBreak.TotalMinutes == 120 ? TimerType.CountdownToLongBreak : TimerType.CountdownToShortBreak;
-                }
+                //if (isBreak)
+                //{
+                //    focusDispatchTimer.Type = TimeTillNextBreak.TotalMinutes == 120 ? TimerType.CountdownToLongBreak : TimerType.CountdownToShortBreak;
+                //}
 
                 focusDispatchTimer.Timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
                 {
@@ -962,7 +952,8 @@ namespace Morphic.Focus
                             //Open Short/Long Break Modal
                             if (LstSession.Count > 0)
                             {
-                                if ((DateTime.Now - Session1.LastStartTime).TotalMinutes >= 2) //If focussing for more than 120 mins
+                                //TODO - Change 30 to 120
+                                if ((DateTime.Now - Session1.LastStartTime).TotalMinutes >= 30) //If focussing for more than 120 mins
                                 {
                                     Application.Current.Dispatcher.Invoke(() =>
                                     {
@@ -996,7 +987,7 @@ namespace Morphic.Focus
 
         }
 
-        private void StartBreakToFocusTimer(int longBreak)
+        private void StartBreakToFocusTimer(int breakDuration = 0)
         {
             try
             {
@@ -1017,7 +1008,7 @@ namespace Morphic.Focus
                 focusDispatchTimer.Time = TimeSpan.Zero;
 
                 //Set countdown time
-                if (longBreak == 0) //default
+                if (breakDuration == 0) //default
                 {
                     if (NextBreakEndsTime == DateTime.MinValue)
                         TimeTillNextBreakEnds = focusDispatchTimer.Time = new TimeSpan(0, 0, 0); //Todo Review
@@ -1026,7 +1017,7 @@ namespace Morphic.Focus
                 }
                 else
                 {
-                    TimeTillNextBreakEnds = focusDispatchTimer.Time = new TimeSpan(0, longBreak, 0); //Longer Break
+                    TimeTillNextBreakEnds = focusDispatchTimer.Time = new TimeSpan(0, breakDuration, 0); //Longer Break or break extension
                 }
                 //Set Break Type
 
@@ -1105,6 +1096,14 @@ namespace Morphic.Focus
             catch (Exception ex)
             {
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        internal void EndBreakRemindInMins(int mins)
+        {
+            lock (locker)
+            {
+                StartBreakToFocusTimer(mins);
             }
         }
 

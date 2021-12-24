@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Morphic.Focus.Screens"
         mc:Ignorable="d"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Screen is blocked"
-        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
     </Window.CommandBindings>

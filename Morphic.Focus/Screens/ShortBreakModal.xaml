@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Morphic.Focus.Screens"
         mc:Ignorable="d"
-        Width="209" Height="251" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Time for a break!"
-        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Topmost="True">
+        Width="209" Height="auto" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Time for a break!"
+        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Topmost="True" SizeToContent="WidthAndHeight">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
     </Window.CommandBindings>
@@ -32,7 +32,7 @@
                 <Button Name="btn15Min" Click="btn15Min_Click" Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="47" Margin="8 0 0 0" Visibility="{Binding Show15min}">15 min</Button>
             </StackPanel>
             <Border Grid.Row="4" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#c2c2c2" Margin="25 20 25 0"></Border>
-            <Button Grid.Row="5" Grid.Column="0" Name="btnStopFocus" Click="btnStopFocus_Click" Style="{DynamicResource SettingsButtonsGrey}" Margin="43 15 43 0" Height="25" Width="121">Stop focus session</Button>
+            <Button Grid.Row="5" Grid.Column="0" Name="btnStopFocus" Click="btnStopFocus_Click" Style="{DynamicResource SettingsButtonsGrey}" Margin="43 15 43 20" Height="25" Width="121">Stop focus session</Button>
         </Grid>
     </Border>
 </Window>

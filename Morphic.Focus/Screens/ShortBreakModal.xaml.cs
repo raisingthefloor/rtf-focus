@@ -25,7 +25,7 @@ namespace Morphic.Focus.Screens
         AppEngine _engine;
         public AppEngine Engine { get { return _engine; } }
 
-        
+
 
         public ShortBreakModal()
         {
@@ -80,7 +80,7 @@ namespace Morphic.Focus.Screens
         {
             try
             {
-                SetButtonVisibility();
+                HideButtonVisibility();
                 Task.Factory.StartNew(() => Engine.ShortBreakRemindInMins(1)); //TODO set 5 instead of 1
                 this.Hide();
             }
@@ -94,7 +94,7 @@ namespace Morphic.Focus.Screens
         {
             try
             {
-                SetButtonVisibility();
+                HideButtonVisibility();
                 Task.Factory.StartNew(() => Engine.ShortBreakRemindInMins(10));
                 this.Hide();
             }
@@ -108,7 +108,7 @@ namespace Morphic.Focus.Screens
         {
             try
             {
-                SetButtonVisibility();
+                HideButtonVisibility();
                 Task.Factory.StartNew(() => Engine.ShortBreakRemindInMins(15));
                 this.Hide();
             }
@@ -118,7 +118,70 @@ namespace Morphic.Focus.Screens
             }
         }
 
-        private void SetButtonVisibility()
+
+
+        private void StartBreak(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Task.Factory.StartNew(() => Engine.StartBreakSequence());
+
+                ShowButtonVisibility();
+
+                //Closes this dialog
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+        #endregion
+
+        #region Properties
+
+        private Visibility _show5min = Visibility.Visible;
+        private Visibility _show10min = Visibility.Visible;
+        private Visibility _show15min = Visibility.Visible;
+
+        public Visibility Show5min
+        {
+            get => _show5min;
+            set
+            {
+                if (_show5min != value)
+                {
+                    _show5min = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        public Visibility Show10min
+        {
+            get => _show10min;
+            set
+            {
+                if (_show10min != value)
+                {
+                    _show10min = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        public Visibility Show15min
+        {
+            get => _show15min;
+            set
+            {
+                if (_show15min != value)
+                {
+                    _show15min = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private void HideButtonVisibility()
         {
             if (Show15min == Visibility.Visible)
             {
@@ -138,71 +201,10 @@ namespace Morphic.Focus.Screens
 
         }
 
-        private void StartBreak(object sender, RoutedEventArgs e)
+        private void ShowButtonVisibility()
         {
-            try
-            {
-                Task.Factory.StartNew(() => Engine.StartBreakSequence());
-
-                //This is the forth reminder and now we need to reset visibility of buttons
-                if (Show5min == Visibility.Collapsed)
-                {
-                    Show5min = Show10min = Show15min = Visibility.Visible;
-                }
-
-                //Closes this dialog
-                this.Hide();
-            }
-            catch (Exception ex)
-            {
-                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
-            }
+            Show5min = Show10min = Show15min = Visibility.Visible;
         }
-        #endregion
-
-        #region Properties
-
-        private Visibility _show5min = Visibility.Visible;
-        private Visibility _show10min = Visibility.Visible;
-        private Visibility _show15min = Visibility.Visible;
-
-        public Visibility Show5min 
-        { 
-            get => _show5min;
-            set 
-            {
-                if (_show5min != value)
-                {
-                    _show5min = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-        public Visibility Show10min 
-        { 
-            get => _show10min; 
-            set
-            {
-                if (_show10min != value)
-                {
-                    _show10min = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-        public Visibility Show15min 
-        { 
-            get => _show15min; 
-            set
-            {
-                if (_show15min != value)
-                {
-                    _show15min = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
         #endregion
 
         #region INotifyPropertyChanged implement

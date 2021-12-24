@@ -219,7 +219,7 @@ namespace Morphic.Data.Models
         {
             get
             {
-                TimeSpan ts = DateTime.Now - LastStartTime;
+                TimeSpan ts = DateTime.Now - ActualStartTime;
 
                 if (ts.Hours > 0)
                     return ts.Hours + " hr " + ts.Minutes + " minutes ";

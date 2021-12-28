@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Morphic.Focus.Screens"
         mc:Ignorable="d"
         Width="255" Height="254" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="You've been focusing for 2 hours or more."
-        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Topmost="True">
+        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Topmost="True" Closing="Window_Closing">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
     </Window.CommandBindings>

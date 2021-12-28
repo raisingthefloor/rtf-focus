@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Morphic.Focus.Screens"
         mc:Ignorable="d"
         Width="209" Height="auto" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Time for a break!"
-        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Topmost="True" SizeToContent="WidthAndHeight">
+        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Topmost="True" SizeToContent="WidthAndHeight" Closing="Window_Closing">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
     </Window.CommandBindings>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Name="wdwSettings"
         MinHeight="650" MinWidth="753" MaxWidth="753" Background="#FFFFFF" WindowStyle="None" ResizeMode="CanResize" AllowsTransparency="True"
-        WindowStartupLocation="CenterScreen" Title="Customize Focus" MouseMove="Window_MouseMove">
+        WindowStartupLocation="CenterScreen" Title="Customize Focus" MouseMove="Window_MouseMove" Closing="wdwSettings_Closing">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="10"/>
     </WindowChrome.WindowChrome>

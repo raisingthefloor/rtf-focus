@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Morphic.Focus.Screens"
         mc:Ignorable="d"
-        Width="252" Height="251" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Focus Session Completed"
-        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Topmost="True">
+        Width="252" Height="auto" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Focus Session Completed"
+        MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Topmost="True" Closing="Window_Closing" IsVisibleChanged="Window_IsVisibleChanged" SizeToContent="WidthAndHeight">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
     </Window.CommandBindings>
@@ -28,21 +28,21 @@
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="25 20 25 0"  Style="{DynamicResource ContentStyle}" Width="125" TextAlignment="Center">
                 You’ve been focusing for:</TextBlock>
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Margin="25 0 25 0"  Style="{DynamicResource ModalTitle}" Width="125" TextAlignment="Center">
-                2 hours 15 minutes</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="0" Margin="25 0 25 0"  Style="{DynamicResource ModalTitle}" Width="125" TextAlignment="Center" Text="{Binding Session.RunForHRMM}"/>
+            
 
-            <Button Grid.Row="3" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="25 15 25 0" Width="121" Command="ApplicationCommands.Close">
+            <Button Click="EndSession" Grid.Row="3" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="25 15 25 0" Width="121" >
                 OK</Button>
 
             <Border Grid.Row="4" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#a3a3a3" Margin="25 20 25 0"></Border>
-            
-            <TextBlock Grid.Row="5" Grid.Column="0" Margin="25 15 25 0"  Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" Width="159" TextAlignment="Center">
+
+            <TextBlock Grid.Row="5" Grid.Column="0" Margin="25 15 25 0"  Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" Width="159" TextAlignment="Center" Visibility="{Binding Show5min}">
                 I want to focus a little longer. Extend focus session for:</TextBlock>
             
-            <StackPanel Grid.Row="6" Grid.Column="0" Margin="25 8 25 0"  Orientation="Horizontal">
-                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="61" Click="Button_Click">5 min</Button>
-                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="61" Margin="8 0 0 0" Click="Button_Click">10 min</Button>
-                <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="61" Margin="8 0 0 0" Click="Button_Click">15 min</Button>
+            <StackPanel Grid.Row="6" Grid.Column="0" Margin="25 8 25 0"  Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Name="btn5Min" Click="btn5Min_Click"  Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="61" Visibility="{Binding Show5min}">5 min</Button>
+                <Button Name="btn10Min" Click="btn10Min_Click" Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="61" Margin="8 0 0 0" Visibility="{Binding Show10min}">10 min</Button>
+                <Button Name="btn15Min" Click="btn15Min_Click" Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="61" Margin="8 0 0 0" Visibility="{Binding Show15min}">15 min</Button>
             </StackPanel>
         </Grid>
     </Border>

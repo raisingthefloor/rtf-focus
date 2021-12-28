@@ -120,7 +120,7 @@ namespace Morphic.Focus.Screens
                 //Log Closing Session
                 LoggingService.WriteAppLog("Session Closing");
 
-                Engine.StopFocusSession(Engine.Session1);
+                Engine.EndSession(Engine.Session1, true);
                 
                 //Hide this dialog
                 this.Hide();
@@ -144,41 +144,6 @@ namespace Morphic.Focus.Screens
             if (e.PropertyName == "TimeTillNextBreakEnds")
                 BreakStatusText = string.Format("Your break ends in {0}", Engine.TimeTillNextBreakEndsHHMM);
         }
-
-        private string _breakStatusText = string.Empty;
-        public string BreakStatusText
-        {
-            get
-            {
-                return _breakStatusText;
-            }
-            set
-            {
-                if (_breakStatusText != value)
-                {
-                    _breakStatusText = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        #endregion
-
-        #region INotifyPropertyChanged implement
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        // This method is called by the Set accessor of each property.
-        // The CallerMemberName attribute that is applied to the optional propertyName
-        // parameter causes the property name of the caller to be substituted as an argument.
-        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        #endregion
-
         private void btnStopFocus2_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -186,7 +151,7 @@ namespace Morphic.Focus.Screens
                 //Log Closing Session
                 LoggingService.WriteAppLog("Session Closing");
 
-                Engine.StopFocusSession(Engine.Session2);
+                Engine.EndSession(Engine.Session2, true);
 
                 //Hide this dialog
                 this.Hide();
@@ -209,5 +174,41 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
+
+        #endregion
+
+        #region Properties
+        private string _breakStatusText = string.Empty;
+        public string BreakStatusText
+        {
+            get
+            {
+                return _breakStatusText;
+            }
+            set
+            {
+                if (_breakStatusText != value)
+                {
+                    _breakStatusText = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region INotifyPropertyChanged implement
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
     }
 }

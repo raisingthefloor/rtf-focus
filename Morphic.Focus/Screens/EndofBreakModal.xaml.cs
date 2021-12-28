@@ -70,7 +70,7 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog("Session Closing");
 
                 if (Engine.Session1 != null)
-                    Engine.StopFocusSession(Engine.Session1);
+                    Engine.EndSession(Engine.Session1, true);
 
                 //Hide this dialog
                 this.Hide();
@@ -102,7 +102,7 @@ namespace Morphic.Focus.Screens
             try
             {
                 HideButtonVisibility();
-                Task.Factory.StartNew(() => Engine.EndBreakRemindInMins(1)); 
+                Task.Factory.StartNew(() => Engine.EndBreakRemindInMins(1));
                 this.Hide();
             }
             catch (Exception ex)
@@ -116,7 +116,7 @@ namespace Morphic.Focus.Screens
             try
             {
                 HideButtonVisibility();
-                Task.Factory.StartNew(() => Engine.EndBreakRemindInMins(5)); 
+                Task.Factory.StartNew(() => Engine.EndBreakRemindInMins(5));
                 this.Hide();
             }
             catch (Exception ex)
@@ -223,5 +223,10 @@ namespace Morphic.Focus.Screens
             }
         }
         #endregion
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true; //Do not allow the window to close
+        }
     }
 }

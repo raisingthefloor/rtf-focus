@@ -196,9 +196,14 @@ namespace Morphic.Focus.Screens
             this.Hide();
             _engine.ShowFocusWindow();
         }
+
         #endregion
 
-
+        private void wdwSettings_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true; //Do not allow the window to close
+            this.Hide();
+        }
     }
 
     

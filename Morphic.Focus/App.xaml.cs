@@ -82,7 +82,7 @@ namespace Morphic.Focus
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            AppEngine.Instance.StopAllFocusSession();
+            //AppEngine.Instance.StopAllFocusSession();
         }
     }
 }

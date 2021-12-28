@@ -102,6 +102,7 @@ namespace Morphic.Focus
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
+
         #endregion
 
         #region Schedule-Trigger
@@ -282,6 +283,21 @@ namespace Morphic.Focus
             }
             set => _endofBreakModal = value;
         }
+
+        //SessionCompletedModal _sessionCompletedModal = null;
+        //public SessionCompletedModal SessionCompletedModal
+        //{
+        //    get
+        //    {
+        //        if (_sessionCompletedModal == null)
+        //        {
+        //            _sessionCompletedModal = new SessionCompletedModal() { ShowInTaskbar = false };
+        //        }
+
+        //        return _sessionCompletedModal;
+        //    }
+        //    set => _sessionCompletedModal = value;
+        //}
         internal void ShowFocusWindow()
         {
             if (IsFocusRunning)
@@ -782,7 +798,7 @@ namespace Morphic.Focus
             {
                 foreach (Session session in LstSession.ToList())
                 {
-                    StopFocusSession(session);
+                    OpenSessionCompletedModal(session);
                 }
             }
             catch (Exception ex)
@@ -791,7 +807,73 @@ namespace Morphic.Focus
             }
         }
 
-        internal void StopFocusSession(Session session)
+        internal void OpenSessionCompletedModal(Session session)
+        {
+            try
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    LoggingService.WriteAppLog("Open Session Completed Modal");
+                    new SessionCompletedModal(session).ShowDialog(); //Show session completed modal
+                });
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        internal void EndSession(Session session, bool isEarlyEnding = false)
+        {
+            try
+            {
+                if (isEarlyEnding)
+                {
+                    if (string.IsNullOrWhiteSpace(session.BlockListName))
+                    {
+                        EndSession(session);
+                    }
+                    else
+                    {
+                        if (UserPreferences.BlockLists.Any(p => p.Name.ToLowerInvariant() == session.BlockListName.ToLowerInvariant()))
+                        {
+                            Blocklist blockList = UserPreferences.BlockLists.Where(p => p.Name.ToLowerInvariant() == session.BlockListName.ToLowerInvariant()).First();
+
+                            if (blockList.Penalty == Penalty.None)
+                            { 
+                                EndSession(session);
+                            }
+                            else if (blockList.Penalty == Penalty.Restart)
+                            {
+                                Application.Current.Dispatcher.Invoke(() =>
+                                {
+                                    LoggingService.WriteAppLog("Show Stop Focus Restart Modal");
+                                    new StopFocusRestartModal().ShowDialog(); //Show Stop Focus Restart Modal
+                                });
+                            }
+                            else if (blockList.Penalty == Penalty.Type)
+                            {
+                                Application.Current.Dispatcher.Invoke(() =>
+                                {
+                                    LoggingService.WriteAppLog("Show Stop Focus Random Char Modal");
+                                    new StopFocusRandomCharModal().ShowDialog(); //Show Stop Focus Restart Modal
+                                });
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    EndSession(session);
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        internal void EndSession(Session session)
         {
             try
             {
@@ -816,6 +898,14 @@ namespace Morphic.Focus
             catch (Exception ex)
             {
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        internal void EndSessionRemindInMins(int mins)
+        {
+            lock (locker)
+            {
+                StartFocusToBreakTimer(mins);
             }
         }
 
@@ -943,7 +1033,7 @@ namespace Morphic.Focus
                                     {
                                         if (DateTime.Now >= session.ActualStartTime.AddMinutes(session.SessionDuration))
                                         {
-                                            StopFocusSession(session); //Stop the Session if End time has reached
+                                            OpenSessionCompletedModal(session); //Stop the Session if End time has reached
                                         }
                                     }
                                 }
@@ -1043,7 +1133,7 @@ namespace Morphic.Focus
                                     {
                                         if (DateTime.Now >= session.ActualStartTime.AddMinutes(session.SessionDuration))
                                         {
-                                            StopFocusSession(session); //Stop the Session if End time has reached
+                                            OpenSessionCompletedModal(session); //Stop the Session if End time has reached
                                         }
                                     }
                                 }

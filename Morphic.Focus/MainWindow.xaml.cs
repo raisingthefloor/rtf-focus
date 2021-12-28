@@ -201,5 +201,10 @@ namespace Morphic.Focus
             }
         }
         #endregion
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true; //Do not allow the window to close
+        }
     }
 }

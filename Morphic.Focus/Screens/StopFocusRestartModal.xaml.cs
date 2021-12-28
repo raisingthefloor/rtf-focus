@@ -42,11 +42,18 @@ namespace Morphic.Focus.Screens
         {
             this.Close();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Feature will be available soon!");
-        }
         #endregion
+
+        private void HideMe(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void RestartComputer(object sender, RoutedEventArgs e)
+        {
+            //Opens up Win Menu
+            KeyboardSend.OpenPowerBar();
+            this.Close();
+        }
     }
 }

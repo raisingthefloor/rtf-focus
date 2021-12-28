@@ -74,7 +74,7 @@ namespace Morphic.Focus.Screens
                 //Log Closing Session
                 LoggingService.WriteAppLog("Session Closing");
 
-                Engine.StopFocusSession(Engine.Session1);
+                Engine.EndSession(Engine.Session1, true);
 
                 //Hide this dialog
                 this.Hide();
@@ -146,5 +146,10 @@ namespace Morphic.Focus.Screens
         }
 
         #endregion
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true; //Do not allow the window to close
+        }
     }
 }

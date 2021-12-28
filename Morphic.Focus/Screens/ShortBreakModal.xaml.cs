@@ -24,9 +24,6 @@ namespace Morphic.Focus.Screens
     {
         AppEngine _engine;
         public AppEngine Engine { get { return _engine; } }
-
-
-
         public ShortBreakModal()
         {
             if (!DesignerProperties.GetIsInDesignMode(this))
@@ -55,7 +52,7 @@ namespace Morphic.Focus.Screens
         /// <param name="e"></param>
         private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            this.Hide();
+            HideWindow();
         }
         private void btnStopFocus_Click(object sender, RoutedEventArgs e)
         {
@@ -65,10 +62,10 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog("Session Closing");
 
                 if (Engine.Session1 != null)
-                    Engine.StopFocusSession(Engine.Session1);
+                    Engine.EndSession(Engine.Session1, true);
 
                 //Hide this dialog
-                this.Hide();
+                HideWindow();
             }
             catch (Exception ex)
             {
@@ -82,7 +79,7 @@ namespace Morphic.Focus.Screens
             {
                 HideButtonVisibility();
                 Task.Factory.StartNew(() => Engine.ShortBreakRemindInMins(1)); //TODO set 5 instead of 1
-                this.Hide();
+                HideWindow();
             }
             catch (Exception ex)
             {
@@ -96,7 +93,7 @@ namespace Morphic.Focus.Screens
             {
                 HideButtonVisibility();
                 Task.Factory.StartNew(() => Engine.ShortBreakRemindInMins(10));
-                this.Hide();
+                HideWindow();
             }
             catch (Exception ex)
             {
@@ -110,7 +107,7 @@ namespace Morphic.Focus.Screens
             {
                 HideButtonVisibility();
                 Task.Factory.StartNew(() => Engine.ShortBreakRemindInMins(15));
-                this.Hide();
+                HideWindow();
             }
             catch (Exception ex)
             {
@@ -129,12 +126,17 @@ namespace Morphic.Focus.Screens
                 ShowButtonVisibility();
 
                 //Closes this dialog
-                this.Hide();
+                HideWindow();
             }
             catch (Exception ex)
             {
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
+        }
+
+        private void HideWindow()
+        {
+            this.Hide();
         }
         #endregion
 
@@ -221,5 +223,10 @@ namespace Morphic.Focus.Screens
             }
         }
         #endregion
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true; //Do not allow the window to close
+        }
     }
 }

@@ -28,19 +28,19 @@ namespace Morphic.Focus.Screens
     public partial class MainMenuNonModal : Window, INotifyPropertyChanged
     {
         #region Members and Constructor 
-        private ObservableCollection<BlockList> _blockLists = new ObservableCollection<BlockList>();
-        public ObservableCollection<BlockList> BlockLists
-        {
-            get
-            {
-                return _blockLists;
-            }
-            set
-            {
-                _blockLists = value;
-                NotifyPropertyChanged("BlockLists"); // method implemented below
-            }
-        }
+        //private ObservableCollection<BlockList> _blockLists = new ObservableCollection<BlockList>();
+        //public ObservableCollection<BlockList> BlockLists
+        //{
+        //    get
+        //    {
+        //        return _blockLists;
+        //    }
+        //    set
+        //    {
+        //        _blockLists = value;
+        //        NotifyPropertyChanged("BlockLists"); // method implemented below
+        //    }
+        //}
         public event EventHandler SessionUpdate;
         
         AppEngine _engine;
@@ -272,5 +272,11 @@ namespace Morphic.Focus.Screens
             }
         }
         #endregion
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true; //Do not allow the window to close
+            this.Hide();
+        }
     }
 }

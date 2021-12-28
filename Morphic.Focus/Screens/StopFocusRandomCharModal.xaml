@@ -38,7 +38,7 @@
 
             <TextBox Grid.Row="2" Grid.Column="0" Margin="30 8 30 0" Height="25" Width="249"></TextBox>
 
-            <Button Grid.Row="3" Grid.Column="0" Style="{DynamicResource SettingsButtonsGrey}" Margin="25 10 25 0" Height="25" Width="143" IsEnabled="False">Stop focus session</Button>
+            <Button Grid.Row="3" Grid.Column="0" Style="{DynamicResource SettingsButtonsGrey}" Margin="25 10 25 0" Height="25" Width="143" IsEnabled="True" Click="Button_Click">Stop focus session</Button>
 
             <Border Grid.Row="4" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#a3a3a3" Margin="25 15 25 0"></Border>
 

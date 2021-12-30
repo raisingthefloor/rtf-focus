@@ -36,15 +36,14 @@ namespace Morphic.BlockService
         /// </summary>
         private static readonly long s_maxInMemoryData = 128000000;
 
-        private static FileSystemWatcher watcher = null;
-
-        private static bool IsFocusRunning { get; set; }
+        static AppEngine _engine;
+        public static AppEngine Engine { get { return _engine; } }
         //Set Session file watcher
         public BlockingService()
         {
             try
             {
-                IsFocusRunning = File.Exists(Common.MakeFilePath(Common.SESSION_FILE_NAME));
+                _engine = AppEngine.Instance;
 
                 //Setup Service
                 this.ServiceName = "BlockingService";
@@ -60,59 +59,22 @@ namespace Morphic.BlockService
                 EventLog.WriteEntry("Log Start");
 
                 LoggingService.WriteServiceLog("Service Launched");
-
-                watcher = new FileSystemWatcher(Path.GetDirectoryName(Common.MakeFilePath(Common.SESSION_FILE_NAME)));
-                watcher.Created += Watcher_Created;
-                watcher.Deleted += Watcher_Deleted;
-
-                watcher.Filter = Common.SESSION_FILE_NAME;
-                watcher.EnableRaisingEvents = true;
-                LoggingService.WriteAppLog("Watching started");
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry(ex.Message + ex.StackTrace);
-                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
+                //EventLog.WriteEntry(ex.Message + ex.StackTrace);
+                LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
             }
         }
 
-        private void Watcher_Deleted(object sender, FileSystemEventArgs e)
-        {
-            try
-            {
-                EventLog.WriteEntry("Focus End");
-                LoggingService.WriteAppLog("Focus End");
-                IsFocusRunning = false;
-            }
-            catch (Exception ex)
-            {
-                EventLog.WriteEntry(ex.Message + ex.StackTrace);
-                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
-            }
-        }
-
-        private void Watcher_Created(object sender, FileSystemEventArgs e)
-        {
-            try
-            {
-                EventLog.WriteEntry("Focus Start");
-                LoggingService.WriteAppLog("Focus Start");
-                IsFocusRunning = true;
-
-            }
-            catch (Exception ex)
-            {
-                EventLog.WriteEntry(ex.Message + ex.StackTrace);
-                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
-            }
-        }
+        
 
         private static FirewallResponse OnFirewallCheck(FirewallRequest request)
         {
             try
             {
                 //If Focus is not running, do not filter anything
-                if (!IsFocusRunning) return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
+                if (!Engine.IsFocusRunning) return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
 
                 // Only filter chrome, msedge and firefox
                 var filtering = request.BinaryAbsolutePath.IndexOf("chrome", StringComparison.OrdinalIgnoreCase) != -1 ||
@@ -155,7 +117,7 @@ namespace Morphic.BlockService
             }
             catch (Exception ex)
             {
-                LoggingService.WriteAppLog("Exception :" + ex.Message + ex.StackTrace);
+                LoggingService.WriteServiceLog("Exception :" + ex.Message + ex.StackTrace);
             }
             return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
         }
@@ -173,37 +135,51 @@ namespace Morphic.BlockService
         private static void OnNewMessage(HttpMessageInfo messageInfo)
         {
 
-            if (messageInfo.BodyContentType != string.Empty)
-            {
-                Console.WriteLine("New message with content of type: {0}\n\t{1}\n\t{2}", messageInfo.BodyContentType, messageInfo.Url, messageInfo.MessageProtocol);
-            }
-            else
-            {
-                Console.WriteLine("New message: {0}\n\t{1}", messageInfo.Url, messageInfo.MessageProtocol);
-            }
+            //if (messageInfo.BodyContentType != string.Empty)
+            //{
+            //    Console.WriteLine("New message with content of type: {0}\n\t{1}\n\t{2}", messageInfo.BodyContentType, messageInfo.Url, messageInfo.MessageProtocol);
+            //}
+            //else
+            //{
+            //    Console.WriteLine("New message: {0}\n\t{1}", messageInfo.Url, messageInfo.MessageProtocol);
+            //}
 
             // Block only this casino website.
             if (messageInfo.Url.Host.Contains("facebook.com"))
             {
-                messageInfo.MessageType = MessageType.Response;
-                messageInfo.ProxyNextAction = ProxyNextAction.DropConnection;
-                messageInfo.BodyContentType = "text/html";
-                messageInfo.Body = s_blockPageBytes;
+                //messageInfo.MessageType = MessageType.Response;
+                //messageInfo.ProxyNextAction = ProxyNextAction.DropConnection;
+                //messageInfo.BodyContentType = "text/html";
+                //messageInfo.Body = s_blockPageBytes;
+                RedirectToMorphic(messageInfo);
                 return;
             }
 
             // Block only this casino website.
             if (messageInfo.Url.Host.Contains("youtube.com"))
             {
-                messageInfo.MessageType = MessageType.Response;
-                messageInfo.ProxyNextAction = ProxyNextAction.DropConnection;
-                messageInfo.BodyContentType = "text/html";
-                messageInfo.Body = s_blockPageBytes;
+                //messageInfo.MessageType = MessageType.Response;
+                //messageInfo.ProxyNextAction = ProxyNextAction.DropConnection;
+                //messageInfo.BodyContentType = "text/html";
+                //messageInfo.Body = s_blockPageBytes;
+                RedirectToMorphic(messageInfo);
                 return;
             }
 
             // By default, allow and ignore content, but not any responses to this content.
             messageInfo.ProxyNextAction = ProxyNextAction.AllowAndIgnoreContentAndResponse;
+        }
+
+        private static bool RedirectToMorphic(HttpMessageInfo messageInfo)
+        {
+            if (messageInfo.MessageType == MessageType.Request)
+            {
+                messageInfo.MakeTemporaryRedirect("https://morphic.org/websiteblocked/");
+                messageInfo.ProxyNextAction = ProxyNextAction.DropConnection;
+                return true;
+            }
+
+            return false;
         }
 
         private static void OnStreamedContentInspection(HttpMessageInfo messageInfo, StreamOperation operation, Memory<byte> buffer, out bool dropConnection)
@@ -290,7 +266,7 @@ namespace Morphic.BlockService
                 LoggerProxy.Default.OnError += (msg) =>
                 {
                     Console.WriteLine("ERRO: {0}", msg);
-                    LoggingService.WriteAppLog("ERRO: " + msg);
+                    LoggingService.WriteServiceLog("ERRO: " + msg);
                     //Log("ERRO: "+ msg);
                 };
 
@@ -312,7 +288,7 @@ namespace Morphic.BlockService
                 // Give it a kick.
                 proxyServer.Start(0);
 
-                LoggingService.WriteAppLog("Service Started");
+                LoggingService.WriteServiceLog("Service Started");
 
                 // And you're up and running.
                 Console.WriteLine("Proxy Running");
@@ -323,7 +299,7 @@ namespace Morphic.BlockService
             catch (Exception ex)
             {
                 EventLog.WriteEntry(ex.Message + ex.StackTrace);
-                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
+                LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
             }
         }
 
@@ -332,7 +308,7 @@ namespace Morphic.BlockService
             try
             {
                 
-                LoggingService.WriteAppLog("On Start");
+                LoggingService.WriteServiceLog("On Start");
                 StartBlock();
                 this.EventLog.WriteEntry("Started");
                 base.OnStart(args);
@@ -340,7 +316,7 @@ namespace Morphic.BlockService
             catch (Exception ex)
             {
                 EventLog.WriteEntry(ex.Message + ex.StackTrace);
-                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
+                LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
             }
         }
 
@@ -348,7 +324,7 @@ namespace Morphic.BlockService
         {
             try
             {
-                LoggingService.WriteAppLog("On Stop");
+                LoggingService.WriteServiceLog("On Stop");
 
                 // Stop if you must.
                 proxyServer.Stop();
@@ -356,7 +332,7 @@ namespace Morphic.BlockService
             }
             catch (Exception ex)
             {
-                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
+                LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
             }
         }
 
@@ -364,14 +340,21 @@ namespace Morphic.BlockService
         {
             try
             {
-                LoggingService.WriteAppLog("On Pause");
+                LoggingService.WriteServiceLog("On Pause");
                 base.OnPause();
             }
             catch (Exception ex)
             {
-                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
+                LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
             }
             
+        }
+
+        internal void TestStartupAndStop(string[] args)
+        {
+            this.OnStart(args);
+            Console.ReadLine();
+            this.OnStop();
         }
     }
 }

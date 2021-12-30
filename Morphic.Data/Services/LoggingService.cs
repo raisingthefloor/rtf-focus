@@ -14,25 +14,19 @@ namespace Morphic.Data.Services
         public static void WriteAppLog(string message)
         {
             //Get Log File Path
-            string path = Common.MakeFilePath(Common.LOG_FILE_NAME);
-            string folder = Path.GetDirectoryName(path);
-            Directory.CreateDirectory(folder);
-
-            //Write to Log File
-            lock (locker)
-            {
-                StreamWriter SW;
-                SW = File.AppendText(path);
-                SW.WriteLine();
-                SW.WriteLine(DateTime.Now.ToString() + " " + message);
-                SW.Close();
-            }
+            string path = Common.MakeFilePath(Common.LOG_FILE_NAME); 
+            WriteLog(message, path);
         }
 
         public static void WriteServiceLog(string message)
         {
             //Get Log File Path
             string path = Common.MakeFilePath(Common.SERVICE_LOG_FILE_NAME);
+            WriteLog(message, path);
+        }
+
+        private static void WriteLog(string message, string path)
+        {
             string folder = Path.GetDirectoryName(path);
             Directory.CreateDirectory(folder);
 
@@ -46,5 +40,6 @@ namespace Morphic.Data.Services
                 SW.Close();
             }
         }
+
     }
 }

@@ -67,7 +67,7 @@ namespace Morphic.BlockService
             }
         }
 
-        
+
 
         private static FirewallResponse OnFirewallCheck(FirewallRequest request)
         {
@@ -75,11 +75,24 @@ namespace Morphic.BlockService
             {
                 //If Focus is not running, do not filter anything
                 if (!Engine.IsFocusRunning) return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
+                if (Engine.IsBreakRunning)
+                {
+                    if (Engine.Session1Blocklist != null)
+                    {
+                        if (Engine.Session1Blocklist.BreakBehavior == Data.Models.BreakBehavior.Blocked)
+                            return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
+                    }
+                    else
+                    {
+                        return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
+                    }
+                }
 
                 // Only filter chrome, msedge and firefox
                 var filtering = request.BinaryAbsolutePath.IndexOf("chrome", StringComparison.OrdinalIgnoreCase) != -1 ||
                     request.BinaryAbsolutePath.IndexOf("msedge", StringComparison.OrdinalIgnoreCase) != -1 ||
-                    request.BinaryAbsolutePath.IndexOf("firefox", StringComparison.OrdinalIgnoreCase) != -1;
+                    request.BinaryAbsolutePath.IndexOf("firefox", StringComparison.OrdinalIgnoreCase) != -1 ||
+                    request.BinaryAbsolutePath.IndexOf("opera", StringComparison.OrdinalIgnoreCase) != -1;
 
                 //var filtering = true;
 
@@ -92,13 +105,13 @@ namespace Morphic.BlockService
                         request.RemotePort == s_altHttpsPortNetworkOrder
                         )
                     {
-                        // Let's allow chrome to access TCP 80 and 443, but block all other ports.
+                        // Let's allow browser to access TCP 80 and 443, but block all other ports.
                         //Console.WriteLine("Filtering application {0} destined for {1}", request.BinaryAbsolutePath, (ushort)IPAddress.HostToNetworkOrder((short)request.RemotePort));
                         return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.FilterApplication);
                     }
                     else
                     {
-                        // Let's allow chrome to access TCP 80 and 443, but ignore all other
+                        // Let's allow browser to access TCP 80 and 443, but ignore all other
                         // ports. We want to allow non 80/443 requests to go through because
                         // this example now demonstrates the replay API, which will cause
                         // a bunch of browser tabs to open whenever you visit my website.
@@ -144,27 +157,55 @@ namespace Morphic.BlockService
             //    Console.WriteLine("New message: {0}\n\t{1}", messageInfo.Url, messageInfo.MessageProtocol);
             //}
 
-            // Block only this casino website.
-            if (messageInfo.Url.Host.Contains("facebook.com"))
+            //if (messageInfo.Url.Host.Contains("www.instagram"))
+            //{
+
+
+            foreach (Uri exceptionSite in Engine.ExceptionSites)
             {
-                //messageInfo.MessageType = MessageType.Response;
-                //messageInfo.ProxyNextAction = ProxyNextAction.DropConnection;
-                //messageInfo.BodyContentType = "text/html";
-                //messageInfo.Body = s_blockPageBytes;
-                RedirectToMorphic(messageInfo);
-                return;
+                if (Uri.Compare(messageInfo.Url, exceptionSite, UriComponents.Host, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    messageInfo.ProxyNextAction = ProxyNextAction.AllowAndIgnoreContentAndResponse;
+                    return;
+                }
             }
 
-            // Block only this casino website.
-            if (messageInfo.Url.Host.Contains("youtube.com"))
+            foreach (Uri blockSite in Engine.BlockSites)
             {
-                //messageInfo.MessageType = MessageType.Response;
-                //messageInfo.ProxyNextAction = ProxyNextAction.DropConnection;
-                //messageInfo.BodyContentType = "text/html";
-                //messageInfo.Body = s_blockPageBytes;
-                RedirectToMorphic(messageInfo);
-                return;
+                if (Uri.Compare(messageInfo.Url, blockSite, UriComponents.Host, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    RedirectToMorphic(messageInfo);
+                    return;
+                }
             }
+            //}
+            //    if (messageInfo.Url.Host.Contains("instagram"))
+            //    {
+            //        var result = Uri.Compare(messageInfo.Url, uri2,
+            //UriComponents.Host | UriComponents.PathAndQuery,
+            //UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase);
+
+            //    }
+
+            //// Block only this casino website.
+            //if (Engine.ExceptionSites.Contains(messageInfo.Url.Host.ToLowerInvariant()))
+            //{
+            //    messageInfo.ProxyNextAction = ProxyNextAction.AllowAndIgnoreContentAndResponse;
+            //    return;
+            //}
+
+            //if (Engine.BlockSites.Contains(messageInfo.Url.Host.ToLowerInvariant()))
+            //{
+            //    RedirectToMorphic(messageInfo);
+            //    return;
+            //}
+
+
+            //if (messageInfo.Url.Host.Contains("facebook.com"))
+            //{
+            //    RedirectToMorphic(messageInfo);
+            //    return;
+            //}
 
             // By default, allow and ignore content, but not any responses to this content.
             messageInfo.ProxyNextAction = ProxyNextAction.AllowAndIgnoreContentAndResponse;
@@ -259,7 +300,7 @@ namespace Morphic.BlockService
 
                 LoggerProxy.Default.OnWarning += (msg) =>
                 {
-                    Console.WriteLine("WARN: {0}", msg);
+                    //Console.WriteLine("WARN: {0}", msg);
                     //Log("WARN: "+ msg);
                 };
 
@@ -307,7 +348,7 @@ namespace Morphic.BlockService
         {
             try
             {
-                
+
                 LoggingService.WriteServiceLog("On Start");
                 StartBlock();
                 this.EventLog.WriteEntry("Started");
@@ -347,7 +388,7 @@ namespace Morphic.BlockService
             {
                 LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
             }
-            
+
         }
 
         internal void TestStartupAndStop(string[] args)

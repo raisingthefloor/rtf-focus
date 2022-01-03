@@ -104,7 +104,7 @@ namespace Morphic.Focus.Screens
                         {
                             IsActive = true,
                             IsApp = false,
-                            Name = url.Host,
+                            Name = url.NormalizeUrl(),
                             Path = string.Empty
                         });
                 }

@@ -11,6 +11,7 @@ namespace Morphic.Data.Models
     {
         private bool _turnONDND;
         private bool _provideBreak;
+        private bool _isBreakRunning = false;
         private int _breakDuration;
         private int _breakGap;
         private int _sessionDuration;
@@ -231,13 +232,38 @@ namespace Morphic.Data.Models
         {
             get
             {
-                //If it is focus till stop
-                if (SessionDuration == 0)
-                    return string.Empty;
+                if (Schedule != null)
+                {
+                    return Schedule.EndAt.ToString("hh:mm tt");
+                }
+                else
+                {
+                    //If it is focus till stop
+                    if (SessionDuration == 0)
+                        return string.Empty;
 
-                return ActualStartTime.AddMinutes(SessionDuration).ToString("hh:mm tt");
+                    return ActualStartTime.AddMinutes(SessionDuration).ToString("hh:mm tt");
+                }
             }
         }
+
+        public bool IsBreakRunning
+        {
+            get
+            {
+                return _isBreakRunning;
+            }
+            set
+            {
+                if (value != this._isBreakRunning)
+                {
+                    this._isBreakRunning = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        
 
         #region Schedule
         public Schedule Schedule

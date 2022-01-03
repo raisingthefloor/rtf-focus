@@ -768,6 +768,7 @@ namespace Morphic.Focus
 
                     LstSession.Add(session);
                     session.PropertyChanged += CurrSession_PropertyChanged;
+                    session.IsBreakRunning = false;
                     IsFocusRunning = true;
 
                     ////TODO - Review this
@@ -923,6 +924,7 @@ namespace Morphic.Focus
                     foreach (Session session in LstSession.ToList())
                     {
                         session.LastBreakStartTime = datetimeNow;
+                        session.IsBreakRunning = true;
                     }
 
                     //For first minute start
@@ -931,7 +933,7 @@ namespace Morphic.Focus
                         OpenLockComputerNonModalScreen();
                     }
 
-                    StartBreakToFocusTimer(longBreak); //Parameter true indicates a break is to be started
+                    StartBreakToFocusTimer(longBreak);
                 }
             }
             catch (Exception ex)
@@ -960,6 +962,7 @@ namespace Morphic.Focus
                 foreach (Session session in LstSession.ToList())
                 {
                     session.LastStartTime = datetimeNow;
+                    session.IsBreakRunning = false;
                 }
 
                 if (LstSession.Count >= 1) StartFocusToBreakTimer();
@@ -1014,6 +1017,7 @@ namespace Morphic.Focus
 
                 focusDispatchTimer.Timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
                 {
+                    
                     //Timer finishes
                     if (focusDispatchTimer.Time <= TimeSpan.Zero)
                     {

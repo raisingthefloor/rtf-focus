@@ -1,0 +1,133 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Jesse Nicholson</Authors>
+    <Company>Technik Empire</Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Copyright>Copyright 2017-Present (c) Jesse Nicholson. All rights reserved.</Copyright>
+    <PackageLicenseUrl>https://www.mozilla.org/en-US/MPL/2.0/</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/TechnikEmpire/CitadelCore</PackageProjectUrl>
+    <PackageIconUrl />
+    <RepositoryUrl>https://github.com/TechnikEmpire/CitadelCore</RepositoryUrl>
+    <PackageTags>proxy filtering content-filtering transparent-proxy</PackageTags>
+    <PackageReleaseNotes>Ensure that we copy response headers only once. It appears that response headers related to content can vanish after we've read the content stream, so to avoid this, we read just once on initial response.
+
+Fixes an issue where the Headers property of HttpMessageInfo objects can be null, which causes null reference exceptions when calling various methods. Changed to always initialize this property with a valid reference, and to perform null checks when accessing internally.</PackageReleaseNotes>
+    <Title>CitadelCore</Title>
+    <Summary>Transparent filtering HTTP/S and Websocket/WebsocketSecure proxy.</Summary>
+    <Description>Transparent filtering HTTP/S and Websocket/WebsocketSecure proxy.</Description>
+    <Version>4.2.5</Version>
+    <AssemblyVersion>4.2.5.0</AssemblyVersion>
+    <FileVersion>4.2.5.0</FileVersion>    
+  </PropertyGroup>
+
+  <ItemGroup Label="dotnet pack instructions">
+    <Content Include="build\*.targets">
+      <Pack>true</Pack>
+      <PackagePath>build\</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="CollectRuntimeOutputs" BeforeTargets="_GetPackageFiles">
+    <!-- Collect these items inside a target that runs after build but before packaging. -->
+    <ItemGroup>
+      <Content Include="$(OutputPath)\*.pdb;">
+        <Pack>true</Pack>
+        <PackagePath>build\</PackagePath>
+      </Content>
+    </ItemGroup>
+  </Target>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Debug\netstandard2.0\CitadelCore.xml</DocumentationFile>
+    <DefineConstants>TRACE;DEBUG;VERBOSE_WARNINGS</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Release\netstandard2.0\CitadelCore.xml</DocumentationFile>
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Contrib\**" />
+    <Compile Remove="Websockets\**" />
+    <EmbeddedResource Remove="Contrib\**" />
+    <EmbeddedResource Remove="Websockets\**" />
+    <None Remove="Contrib\**" />
+    <None Remove="Websockets\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="CitadelCore.Websockets.Client.Managed" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.WebSockets.Server" Version="0.1.0" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.8.4" />
+    <PackageReference Include="StreamExtended" Version="[1.0.81]" />
+    <PackageReference Include="System.Memory" Version="4.5.1" />
+  </ItemGroup>
+
+  <!-- If you want to bundle the websocket lib internally!
+  <ItemGroup>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\ClientWebSocket.cs">
+      <Link>ManagedWebsockets\ClientWebSocket.cs</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\ClientWebSocketOptions.cs">
+      <Link>ManagedWebsockets\ClientWebSocketOptions.cs</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\HttpKnownHeaderNames.cs">
+      <Link>ManagedWebsockets\HttpKnownHeaderNames.cs</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\ManagedWebSocket.cs">
+      <Link>ManagedWebsockets\ManagedWebSocket.cs</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\NET45Shims.cs">
+      <Link>ManagedWebsockets\NET45Shims.cs</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\NetEventSource.WebSockets.cs">
+      <Link>ManagedWebsockets\NetEventSource.WebSockets.cs</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\SecurityProtocol.cs">
+      <Link>ManagedWebsockets\SecurityProtocol.cs</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\SR.cs">
+      <Link>ManagedWebsockets\SR.cs</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\StringExtensions.cs">
+      <Link>ManagedWebsockets\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\SystemClientWebSocket.cs">
+      <Link>ManagedWebsockets\SystemClientWebSocket.cs</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\UriScheme.cs">
+      <Link>ManagedWebsockets\UriScheme.cs</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\WebSocketHandle.Managed.cs">
+      <Link>ManagedWebsockets\WebSocketHandle.Managed.cs</Link>
+    </Compile>
+    <Compile Include="$(ProjectDir)..\Contrib\System.Net.Websockets.Client.Managed\System.Net.WebSockets.Client.Managed\WebSocketValidate.cs">
+      <Link>ManagedWebsockets\WebSocketValidate.cs</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  -->
+  
+</Project>

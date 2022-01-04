@@ -9,15 +9,15 @@ namespace Morphic.BlockService
     {
         static void Main(string[] args)
         {
-            if (Environment.UserInteractive)
-            {
-                BlockingService service1 = new BlockingService();
-                service1.TestStartupAndStop(args);
-            }
-            else
-            {
+            //if (Environment.UserInteractive)
+            //{
+            //    BlockingService service1 = new BlockingService();
+            //    service1.TestStartupAndStop(args);
+            //}
+            //else
+            //{
                 ServiceBase.Run(new BlockingService());
-            }
+            //}
         }
     }
 }

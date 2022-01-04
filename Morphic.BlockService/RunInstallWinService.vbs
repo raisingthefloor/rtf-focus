@@ -5,10 +5,12 @@ programDir=  property("CustomActionData")
 WshShell.CurrentDirectory = programDir
 
 installcommand = programDir & "Blocking Service\installservice.bat"
-WshShell.Run ("cmd /c " & """""" & installcommand & """""")
+WshShell.Run ("cmd /k " & """""" & installcommand & """""")
+
+WshShell.Sleep 20000
 
 startcommand = programDir & "Blocking Service\startservice.bat"
-WshShell.Run ("cmd /c " & """""" & startcommand & """""")
+WshShell.Run ("cmd /k " & """""" & startcommand & """""")
 
 
 Set WshShell = Nothing

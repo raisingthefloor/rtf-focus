@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="categories.json" />
     <None Remove="FocusIcon.ico" />
     <None Remove="Fonts\OFL.txt" />
     <None Remove="Fonts\SourceSansPro-Black.ttf" />
@@ -116,7 +117,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="FocusIcon.ico" />
+    <Content Include="categories.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="FocusIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\external-link 1.png" />
     <Resource Include="Images\Gear.png" />
     <Resource Include="Images\info.png" />

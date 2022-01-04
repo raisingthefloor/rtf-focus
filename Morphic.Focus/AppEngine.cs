@@ -999,7 +999,7 @@ namespace Morphic.Focus
                 if (breakGap == 0)
                 {
                     if (NextBreakTime == DateTime.MinValue)
-                        TimeTillNextBreak = focusDispatchTimer.Time = new TimeSpan(0, 120, 0); //Long Break TODO Review from specs
+                        TimeTillNextBreak = focusDispatchTimer.Time = new TimeSpan(0, 60, 0); //Long Break TODO Review from specs
                     else
                         TimeTillNextBreak = focusDispatchTimer.Time = (NextBreakTime - DateTime.Now).Duration();
                 }
@@ -1012,7 +1012,7 @@ namespace Morphic.Focus
                 //Set Break Type
                 //if (isBreak)
                 //{
-                //    focusDispatchTimer.Type = TimeTillNextBreak.TotalMinutes == 120 ? TimerType.CountdownToLongBreak : TimerType.CountdownToShortBreak;
+                //    focusDispatchTimer.Type = TimeTillNextBreak.TotalMinutes == 60 ? TimerType.CountdownToLongBreak : TimerType.CountdownToShortBreak;
                 //}
 
                 focusDispatchTimer.Timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
@@ -1046,8 +1046,8 @@ namespace Morphic.Focus
                             //Open Short/Long Break Modal
                             if (LstSession.Count > 0)
                             {
-                                //TODO - Change 30 to 120
-                                if ((DateTime.Now - Session1.LastStartTime).TotalMinutes >= 30) //If focussing for more than 120 mins
+                                
+                                if ((DateTime.Now - Session1.LastStartTime).TotalMinutes >= Common.LongBreakDuration) //If focussing for more than 120 mins
                                 {
                                     Application.Current.Dispatcher.Invoke(() =>
                                     {

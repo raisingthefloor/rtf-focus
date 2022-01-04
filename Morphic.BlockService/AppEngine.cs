@@ -122,7 +122,7 @@ namespace Morphic.BlockService
             {
                 GetFocusAndSessionSettings();
 
-                watcher = new FileSystemWatcher(Path.GetDirectoryName(Common.MakeFilePath(Common.SESSION_FILE_NAME)));
+                watcher = new FileSystemWatcher(Path.GetDirectoryName(Common.GetWinRootFolder()));
                 watcher.NotifyFilter = NotifyFilters.Attributes
                                  | NotifyFilters.CreationTime
                                  | NotifyFilters.DirectoryName
@@ -274,15 +274,22 @@ namespace Morphic.BlockService
 
         internal void GetFocusAndSessionSettings()
         {
-            //Get Focus Preferences from the Settings.json file
-            //If the file is not found, a new settings file is created
-            //Settings are persisted in memomy as long as the Focus Tool is running
+            try
+            {
+                //Get Focus Preferences from the Settings.json file
+                //If the file is not found, a new settings file is created
+                //Settings are persisted in memomy as long as the Focus Tool is running
 
-            //1. Get Focus Preferences from the Settings.json file
-            JSONHelper jSONHelper = new JSONHelper(Common.SETTINGS_FILE_NAME);
-            UserPreferences = jSONHelper.Get<UserPreferences>();
+                //1. Get Focus Preferences from the Settings.json file
+                JSONHelper jSONHelper = new JSONHelper(Common.SETTINGS_FILE_NAME);
+                UserPreferences = jSONHelper.Get<UserPreferences>();
 
-            CheckIsFocusRunning();
+                CheckIsFocusRunning();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
+            }
         }
     }
 }

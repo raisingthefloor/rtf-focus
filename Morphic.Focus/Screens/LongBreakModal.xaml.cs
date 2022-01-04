@@ -89,7 +89,7 @@ namespace Morphic.Focus.Screens
         {
             try
             {
-                Task.Factory.StartNew(() => Engine.StartBreakSequence(15));
+                Task.Factory.StartNew(() => Engine.StartBreakSequence(Common.Min15));
 
                 //Closes this dialog
                 this.Hide();
@@ -104,7 +104,7 @@ namespace Morphic.Focus.Screens
         {
             try
             {
-                Task.Factory.StartNew(() => Engine.StartBreakSequence(30));
+                Task.Factory.StartNew(() => Engine.StartBreakSequence(Common.Min30));
 
                 //Closes this dialog
                 this.Hide();
@@ -119,7 +119,7 @@ namespace Morphic.Focus.Screens
         {
             try
             {
-                Task.Factory.StartNew(() => Engine.StartBreakSequence(60));
+                Task.Factory.StartNew(() => Engine.StartBreakSequence(Common.Min60));
 
                 //Closes this dialog
                 this.Hide();

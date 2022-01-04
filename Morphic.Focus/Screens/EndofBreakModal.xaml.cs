@@ -102,7 +102,7 @@ namespace Morphic.Focus.Screens
             try
             {
                 HideButtonVisibility();
-                Task.Factory.StartNew(() => Engine.EndBreakRemindInMins(1));
+                Task.Factory.StartNew(() => Engine.EndBreakRemindInMins(Common.Min1));
                 this.Hide();
             }
             catch (Exception ex)
@@ -116,7 +116,7 @@ namespace Morphic.Focus.Screens
             try
             {
                 HideButtonVisibility();
-                Task.Factory.StartNew(() => Engine.EndBreakRemindInMins(5));
+                Task.Factory.StartNew(() => Engine.EndBreakRemindInMins(Common.Min5));
                 this.Hide();
             }
             catch (Exception ex)
@@ -130,7 +130,7 @@ namespace Morphic.Focus.Screens
             try
             {
                 HideButtonVisibility();
-                Task.Factory.StartNew(() => Engine.EndBreakRemindInMins(15));
+                Task.Factory.StartNew(() => Engine.EndBreakRemindInMins(Common.Min15));
                 this.Hide();
             }
             catch (Exception ex)

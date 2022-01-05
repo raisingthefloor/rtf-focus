@@ -11,8 +11,8 @@ namespace Morphic.Data.Services
 {
     public class Common
     {
-        public static string LOG_FILE_NAME = "win-focus-{0:d}.log";
-        public static string SERVICE_LOG_FILE_NAME = "win-focus-service-{0:d}.log";
+        public static string LOG_FILE_NAME = "win-focus-{0:yy-MM-dd}.log";
+        public static string SERVICE_LOG_FILE_NAME = "win-focus-service-{0:yy-MM-dd}.log";
         public static string SESSION_FILE_NAME = "session-{0}.json";
         public static string SESSION_SEARCH = "session*";
         public static string SETTINGS_FILE_NAME = "settings.json";

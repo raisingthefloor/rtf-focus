@@ -26,6 +26,7 @@
   <ItemGroup>
     <None Remove="categories.json" />
     <None Remove="FocusIcon.ico" />
+    <None Remove="FocusIcon128.ico" />
     <None Remove="Fonts\OFL.txt" />
     <None Remove="Fonts\SourceSansPro-Black.ttf" />
     <None Remove="Fonts\SourceSansPro-BlackItalic.ttf" />
@@ -121,6 +122,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="FocusIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FocusIcon128.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\external-link 1.png" />

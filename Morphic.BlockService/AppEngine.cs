@@ -122,7 +122,7 @@ namespace Morphic.BlockService
             {
                 GetFocusAndSessionSettings();
 
-                watcher = new FileSystemWatcher(Path.GetDirectoryName(Common.GetWinRootFolder()));
+                watcher = new FileSystemWatcher(Common.GetWinRootFolder());
                 watcher.NotifyFilter = NotifyFilters.Attributes
                                  | NotifyFilters.CreationTime
                                  | NotifyFilters.DirectoryName
@@ -202,14 +202,6 @@ namespace Morphic.BlockService
         {
             try
             {
-                var http = new UriBuilder("instagram.com").Uri;
-                var https = new UriBuilder("www.instagram.com").Uri;
-
-                var result = Uri.Compare(http,
-                    https,
-                    UriComponents.Host | UriComponents.PathAndQuery,
-                    UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase);
-
                 string[] sessionFiles = Common.GetSessionFiles();
                 LstSession.Clear();
                 BlockSites.Clear();
@@ -218,6 +210,7 @@ namespace Morphic.BlockService
                 if (sessionFiles.Length == 0)
                 {
                     IsFocusRunning = false;
+                    LoggingService.WriteServiceLog("Focus not Running");
                     return;
                 }
 

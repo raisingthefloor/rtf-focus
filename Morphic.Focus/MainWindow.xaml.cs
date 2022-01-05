@@ -31,8 +31,6 @@ namespace Morphic.Focus
         #region Members and Constructor
 
         private string _buttonText = "Focus";
-        DispatcherTimer _timer;
-        TimeSpan _time;
         AppEngine _engine;
         public AppEngine Engine { get { return _engine; } }
 

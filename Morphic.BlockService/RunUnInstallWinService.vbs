@@ -6,5 +6,5 @@ WshShell.CurrentDirectory = programDir
 
 command = programDir & "Blocking Service\uninstallservice.bat"
 msgbox command
-WshShell.Run ("cmd /k " & """""" & command & """""")
+WshShell.Run ("cmd /c " & """""" & command & """""")
 Set WshShell = Nothing

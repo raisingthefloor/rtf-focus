@@ -46,7 +46,7 @@ namespace Morphic.BlockService
                 _engine = AppEngine.Instance;
 
                 //Setup Service
-                this.ServiceName = "BlockingService";
+                this.ServiceName = "FocusService";
                 this.CanStop = true;
                 this.CanPauseAndContinue = true;
 

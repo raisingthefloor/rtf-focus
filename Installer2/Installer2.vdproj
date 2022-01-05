@@ -45,7 +45,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7DECC8336CB14E2491CDEF89C5BD6D18"
+        "MsmKey" = "8:_7265345C66FA4CA5BE52719F490EDC98"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -296,10 +296,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7DECC8336CB14E2491CDEF89C5BD6D18"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7265345C66FA4CA5BE52719F490EDC98"
             {
-            "SourcePath" = "8:..\\Morphic.Focus\\FocusIcon.ico"
-            "TargetName" = "8:FocusIcon.ico"
+            "SourcePath" = "8:..\\Morphic.Focus\\FocusIcon128.ico"
+            "TargetName" = "8:FocusIcon128.ico"
             "Tag" = "8:"
             "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
             "Condition" = "8:"
@@ -525,15 +525,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Morphic Focus"
-        "ProductCode" = "8:{EFB207BB-52DC-45C5-B023-276481917671}"
-        "PackageCode" = "8:{5834C208-369E-4065-8BDB-977026C65B8C}"
+        "ProductCode" = "8:{70F43D74-70B0-47B8-81BC-D4BCA4EC5372}"
+        "PackageCode" = "8:{2BDE50FF-9883-4DB3-9149-86545A19F4D0}"
         "UpgradeCode" = "8:{FA6CD905-D080-44C9-8B46-2E9FA3408312}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.0.0"
+        "ProductVersion" = "8:8.0.0"
         "Manufacturer" = "8:Raising The Floor"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -543,7 +543,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Windows Morphic Focus Tool"
         "ARPURLINFOABOUT" = "8:https://morphic.org/"
-        "ARPPRODUCTICON" = "8:_7DECC8336CB14E2491CDEF89C5BD6D18"
+        "ARPPRODUCTICON" = "8:_7265345C66FA4CA5BE52719F490EDC98"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -646,7 +646,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_EE426AE008964A8E8F9C950FC59B8020"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9B1AC99CE93F48379FEFC26F526AE9DF"
             {
             "Name" = "8:Morphic Focus"
             "Arguments" = "8:"
@@ -657,7 +657,7 @@
             "Target" = "8:_5864A4BD9F6C45A19B07712A059B1581"
             "Folder" = "8:_1A30662872EC4913AB34FA8FB47B383B"
             "WorkingFolder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
-            "Icon" = "8:_7DECC8336CB14E2491CDEF89C5BD6D18"
+            "Icon" = "8:_7265345C66FA4CA5BE52719F490EDC98"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F9B6667EF4144864BF00961DEC477F0D"
@@ -671,7 +671,7 @@
             "Target" = "8:_5864A4BD9F6C45A19B07712A059B1581"
             "Folder" = "8:_8885814747A147139702EDCF9AFE5598"
             "WorkingFolder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
-            "Icon" = "8:_7DECC8336CB14E2491CDEF89C5BD6D18"
+            "Icon" = "8:_7265345C66FA4CA5BE52719F490EDC98"
             "Feature" = "8:"
             }
         }
@@ -1075,7 +1075,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5864A4BD9F6C45A19B07712A059B1581"
             {
-            "SourcePath" = "8:..\\Morphic.Focus\\obj\\Release\\net5.0-windows\\win-x86\\apphost.exe"
+            "SourcePath" = "8:..\\Morphic.Focus\\obj\\Debug\\net6.0-windows\\win-x86\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
@@ -1104,7 +1104,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D32BA587927F4A279C624831F3FF70A1"
             {
-            "SourcePath" = "8:..\\Morphic.BlockService\\obj\\Release\\net5.0\\win-x86\\apphost.exe"
+            "SourcePath" = "8:..\\Morphic.BlockService\\obj\\Debug\\net6.0\\win-x86\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DB358C21B0B3465384E3474672E60AA5"

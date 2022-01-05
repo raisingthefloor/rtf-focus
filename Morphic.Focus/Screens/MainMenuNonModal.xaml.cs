@@ -28,20 +28,6 @@ namespace Morphic.Focus.Screens
     public partial class MainMenuNonModal : Window, INotifyPropertyChanged
     {
         #region Members and Constructor 
-        //private ObservableCollection<BlockList> _blockLists = new ObservableCollection<BlockList>();
-        //public ObservableCollection<BlockList> BlockLists
-        //{
-        //    get
-        //    {
-        //        return _blockLists;
-        //    }
-        //    set
-        //    {
-        //        _blockLists = value;
-        //        NotifyPropertyChanged("BlockLists"); // method implemented below
-        //    }
-        //}
-        public event EventHandler SessionUpdate;
         
         AppEngine _engine;
         public AppEngine Engine { get { return _engine; } }
@@ -127,7 +113,9 @@ namespace Morphic.Focus.Screens
                     BreakDuration = int.Parse(((ComboBoxItem)cmbBreakTIme.SelectedItem).Tag.ToString()),
                     BreakGap = int.Parse(((ComboBoxItem)cmbEvery.SelectedItem).Tag.ToString()),
 
-                    BlockListName = cmbBlockList.SelectedValue == null ? "" : cmbBlockList.SelectedValue.ToString(),
+                    BlockListName = chkBlockProgram.IsChecked ?? false ?
+                        (cmbBlockList.SelectedValue == null ? "" : cmbBlockList.SelectedValue.ToString()) :
+                        "",
 
                     ActualStartTime = DateTime.Now,
                     

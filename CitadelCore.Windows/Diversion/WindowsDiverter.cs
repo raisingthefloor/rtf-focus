@@ -795,6 +795,8 @@ namespace CitadelCore.Windows.Diversion
             else
             {
                 FirewallResponse response = null;
+
+                if (connInfo == null) return;
                 if (connInfo == null || connInfo.OwnerPid == 4 || connInfo.OwnerPid == 0)
                 {
                     var firewallRequest = new FirewallRequest("SYSTEM", tcpHeader->SrcPort, tcpHeader->DstPort, connInfo.OwnerPid);

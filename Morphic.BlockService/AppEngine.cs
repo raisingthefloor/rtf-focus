@@ -38,12 +38,30 @@ namespace Morphic.BlockService
             }
         }
 
+        private List<string> _blockApps = new List<string>();
+        public List<string> BlockApps
+        {
+            get
+            {
+                return _blockApps;
+            }
+        }
+
         private List<Uri> _exceptionSites = new List<Uri>();
         public List<Uri> ExceptionSites
         {
             get
             {
                 return _exceptionSites;
+            }
+        }
+
+        private List<string> _exceptionApps = new List<string>();
+        public List<string> ExceptionApps
+        {
+            get
+            {
+                return _exceptionApps;
             }
         }
 
@@ -103,7 +121,7 @@ namespace Morphic.BlockService
                 string blocklistName = Session1.Schedule != null ?
                             (Session1.Schedule.BlockListName != null ? Session1.Schedule.BlockListName : string.Empty)
                             : Session1.BlockListName;
-                
+
                 if (!string.IsNullOrWhiteSpace(blocklistName))
                 {
                     if (UserPreferences.BlockLists.Any(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()))
@@ -206,6 +224,8 @@ namespace Morphic.BlockService
                 LstSession.Clear();
                 BlockSites.Clear();
                 ExceptionSites.Clear();
+                BlockApps.Clear();
+                ExceptionApps.Clear();
 
                 if (sessionFiles.Length == 0)
                 {
@@ -241,28 +261,27 @@ namespace Morphic.BlockService
                                 {
                                     blockList.AlsoBlock.ActiveAppsAndWebsites.Where(p => p.IsActive && !p.IsApp).ToList().ForEach(p => BlockSites.Add(new UriBuilder(p.Name).Uri));
                                     blockList.Exceptions.ActiveAppsAndWebsites.Where(p => p.IsActive && !p.IsApp).ToList().ForEach(p => ExceptionSites.Add(new UriBuilder(p.Name).Uri));
+
+                                    blockList.AlsoBlock.ActiveAppsAndWebsites.Where(p => p.IsActive && p.IsApp).ToList().ForEach(p => BlockApps.Add(p.Name.ToLowerInvariant().Trim()));
+                                    blockList.Exceptions.ActiveAppsAndWebsites.Where(p => p.IsActive && p.IsApp).ToList().ForEach(p => ExceptionApps.Add(p.Name.ToLowerInvariant().Trim()));
                                 }
                             }
                         }
 
-                        if (DateTime.Now <= session.ActualStartTime.AddMinutes(session.SessionDuration))
-                        {
-                            IsFocusRunning = true;
-                            LoggingService.WriteServiceLog("Focus Running");
-                        }
-                        else
-                        {
-                            IsFocusRunning = false;
-                            LoggingService.WriteServiceLog("Focus not Running");
-                        }
+
+                        IsFocusRunning = true;
+                        LoggingService.WriteServiceLog("Focus Running");
                     }
                 }
+
+                //Add Temporary Unblock
+                UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Where(p => p.IsActive && !p.IsApp).ToList().ForEach(p => ExceptionSites.Add(new UriBuilder(p.Name).Uri));
+                UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Where(p => p.IsActive && p.IsApp).ToList().ForEach(p => ExceptionApps.Add(p.Name.ToLowerInvariant().Trim()));
             }
             catch (Exception ex)
             {
                 LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
             }
-
         }
 
         internal void GetFocusAndSessionSettings()

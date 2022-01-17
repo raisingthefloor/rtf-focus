@@ -63,12 +63,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B0880062A2D1405D9B4F074D14528E6F"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_B0B2447354514AD1B804A71ABAFDB595"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -221,7 +215,7 @@
             "SourcePath" = "8:..\\Morphic.BlockService\\bin\\Release\\net5.0\\publish\\x64\\WinDivert64.sys"
             "TargetName" = "8:WinDivert64.sys"
             "Tag" = "8:"
-            "Folder" = "8:_FB46C2432ADC4790A6D415594BA03CB8"
+            "Folder" = "8:_DB642DEBF5F74CB4BAA0697C912C188B"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -241,7 +235,7 @@
             "SourcePath" = "8:..\\Morphic.BlockService\\installservice.bat"
             "TargetName" = "8:installservice.bat"
             "Tag" = "8:"
-            "Folder" = "8:_DB358C21B0B3465384E3474672E60AA5"
+            "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -261,7 +255,7 @@
             "SourcePath" = "8:..\\Morphic.BlockService\\bin\\Release\\net5.0\\publish\\x64\\WinDivert.dll"
             "TargetName" = "8:WinDivert.dll"
             "Tag" = "8:"
-            "Folder" = "8:_FB46C2432ADC4790A6D415594BA03CB8"
+            "Folder" = "8:_DB642DEBF5F74CB4BAA0697C912C188B"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -281,7 +275,7 @@
             "SourcePath" = "8:..\\Morphic.BlockService\\RunInstallWinService.vbs"
             "TargetName" = "8:RunInstallWinService.vbs"
             "Tag" = "8:"
-            "Folder" = "8:_DB358C21B0B3465384E3474672E60AA5"
+            "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -321,7 +315,7 @@
             "SourcePath" = "8:..\\Morphic.BlockService\\RunUnInstallWinService.vbs"
             "TargetName" = "8:RunUnInstallWinService.vbs"
             "Tag" = "8:"
-            "Folder" = "8:_DB358C21B0B3465384E3474672E60AA5"
+            "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -341,27 +335,7 @@
             "SourcePath" = "8:..\\Morphic.BlockService\\bin\\Release\\net5.0\\publish\\x86\\WinDivert.dll"
             "TargetName" = "8:WinDivert.dll"
             "Tag" = "8:"
-            "Folder" = "8:_BF3D6EAEEAE745B082DE22721B73C66B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B0880062A2D1405D9B4F074D14528E6F"
-            {
-            "SourcePath" = "8:..\\Morphic.BlockService\\startservice.bat"
-            "TargetName" = "8:startservice.bat"
-            "Tag" = "8:"
-            "Folder" = "8:_DB358C21B0B3465384E3474672E60AA5"
+            "Folder" = "8:_74FCB72560CD45A388BB37CA4B6AB83C"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -381,7 +355,7 @@
             "SourcePath" = "8:..\\Morphic.BlockService\\bin\\Release\\net5.0\\publish\\x86\\WinDivert32.sys"
             "TargetName" = "8:WinDivert32.sys"
             "Tag" = "8:"
-            "Folder" = "8:_BF3D6EAEEAE745B082DE22721B73C66B"
+            "Folder" = "8:_74FCB72560CD45A388BB37CA4B6AB83C"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -401,7 +375,7 @@
             "SourcePath" = "8:..\\Morphic.BlockService\\uninstallservice.bat"
             "TargetName" = "8:uninstallservice.bat"
             "Tag" = "8:"
-            "Folder" = "8:_DB358C21B0B3465384E3474672E60AA5"
+            "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -421,7 +395,7 @@
             "SourcePath" = "8:..\\Morphic.BlockService\\bin\\Release\\net5.0\\publish\\x86\\WinDivert64.sys"
             "TargetName" = "8:WinDivert64.sys"
             "Tag" = "8:"
-            "Folder" = "8:_BF3D6EAEEAE745B082DE22721B73C66B"
+            "Folder" = "8:_74FCB72560CD45A388BB37CA4B6AB83C"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -474,37 +448,26 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_DB358C21B0B3465384E3474672E60AA5"
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_74FCB72560CD45A388BB37CA4B6AB83C"
                     {
-                    "Name" = "8:Blocking Service"
+                    "Name" = "8:x86"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
-                    "Property" = "8:_23D1B706ADE942048D96B2943A0DCD69"
+                    "Property" = "8:_F3612C5B1209453D80CEE8681393F9BF"
                         "Folders"
                         {
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_BF3D6EAEEAE745B082DE22721B73C66B"
-                            {
-                            "Name" = "8:x86"
-                            "AlwaysCreate" = "11:FALSE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_F3612C5B1209453D80CEE8681393F9BF"
-                                "Folders"
-                                {
-                                }
-                            }
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_FB46C2432ADC4790A6D415594BA03CB8"
-                            {
-                            "Name" = "8:x64"
-                            "AlwaysCreate" = "11:FALSE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_202ECE741ED44577ADE4AFB1BA50147B"
-                                "Folders"
-                                {
-                                }
-                            }
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_DB642DEBF5F74CB4BAA0697C912C188B"
+                    {
+                    "Name" = "8:x64"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_202ECE741ED44577ADE4AFB1BA50147B"
+                        "Folders"
+                        {
                         }
                     }
                 }
@@ -526,7 +489,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Morphic Focus"
         "ProductCode" = "8:{0819EFA3-337A-42C3-B14E-1F0F9E36440D}"
-        "PackageCode" = "8:{4887A1AF-66DC-4F88-8B0F-5F898E26364A}"
+        "PackageCode" = "8:{99E19149-75F9-4362-9F16-0F3D8A2F996B}"
         "UpgradeCode" = "8:{FA6CD905-D080-44C9-8B46-2E9FA3408312}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1075,7 +1038,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5864A4BD9F6C45A19B07712A059B1581"
             {
-            "SourcePath" = "8:..\\Morphic.Focus\\obj\\Debug\\net6.0-windows\\win-x86\\apphost.exe"
+            "SourcePath" = "8:..\\Morphic.Focus\\obj\\Release\\net6.0-windows\\win-x86\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
@@ -1104,10 +1067,10 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D32BA587927F4A279C624831F3FF70A1"
             {
-            "SourcePath" = "8:..\\Morphic.BlockService\\obj\\Debug\\net6.0\\win-x86\\apphost.exe"
+            "SourcePath" = "8:..\\Morphic.BlockService\\obj\\Release\\net6.0\\win-x86\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_DB358C21B0B3465384E3474672E60AA5"
+            "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"

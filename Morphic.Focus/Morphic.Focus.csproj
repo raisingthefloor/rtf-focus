@@ -5,7 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <AssemblyName>Focus</AssemblyName>
-    <StartupObject>Morphic.Focus.App</StartupObject>
+    <StartupObject>Morphic.Focus.Program</StartupObject>
     <Nullable>enable</Nullable>
     <Company>Raising the Floor</Company>
     <Authors>Morphic</Authors>
@@ -18,8 +18,7 @@
     <None Remove="Screens\NewFolder\**" />
     <Page Remove="Screens\NewFolder\**" />
   </ItemGroup>
-
-  <ItemGroup>
+    <ItemGroup>
     <Compile Remove="Screens\CustomizeFocus.xaml.cs" />
   </ItemGroup>
 

@@ -20,6 +20,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Windows.Interop;
 
 namespace Morphic.Focus
 {
@@ -59,12 +60,6 @@ namespace Morphic.Focus
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
-
-
-        //private PropertyChangedEventHandler _engine_PropertyChanged(object sender, object e)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         #endregion
 
@@ -203,6 +198,49 @@ namespace Morphic.Focus
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             e.Cancel = true; //Do not allow the window to close
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainWindow.WindowHandle = new WindowInteropHelper(Application.Current.MainWindow).Handle;
+            HwndSource.FromHwnd(MainWindow.WindowHandle)?.AddHook(new HwndSourceHook(HandleMessages));
+        }
+
+        public static IntPtr WindowHandle { get; private set; }
+
+        internal static void HandleParameter(string[] args)
+        {
+            // Do stuff with the args
+            if (Application.Current?.MainWindow is MainWindow mainWindow)
+                if (args.Count() > 0)
+                    mainWindow.ButtonText = string.Join("\r\n", args);
+                else
+                    mainWindow.ButtonText = string.Join("\r\n", "No args");
+                
+        }
+
+        private static IntPtr HandleMessages
+        (IntPtr handle, int message, IntPtr wParameter, IntPtr lParameter, ref Boolean handled)
+        {
+            var data = UnsafeNative.GetMessage(message, lParameter);
+
+            if (data != null)
+            {
+                if (Application.Current.MainWindow == null)
+                    return IntPtr.Zero;
+
+                if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
+                    Application.Current.MainWindow.WindowState = WindowState.Normal;
+
+                UnsafeNative.SetForegroundWindow(new WindowInteropHelper
+                                                (Application.Current.MainWindow).Handle);
+
+                var args = data.Split(' ');
+                HandleParameter(args);
+                handled = true;
+            }
+
+            return IntPtr.Zero;
         }
     }
 }

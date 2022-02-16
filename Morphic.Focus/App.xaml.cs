@@ -17,7 +17,7 @@ namespace Morphic.Focus
     {
         public App()
         {
-            SingleInstanceWatcher();
+            //SingleInstanceWatcher();
         }
 
         private const string UniqueEventName = "09F57308-E5FF-4DD5-A295-5053E86159E2";
@@ -77,7 +77,7 @@ namespace Morphic.Focus
         {
             base.OnStartup(e);
 
-            LoggingService.WriteAppLog("Application Launched");
+            //LoggingService.WriteAppLog("Application Launched");
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)

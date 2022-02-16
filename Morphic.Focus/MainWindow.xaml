@@ -7,7 +7,7 @@
         mc:Ignorable="d"  MinWidth="100" SizeToContent="Width" Height="64" ResizeMode="NoResize" WindowStyle="None"
         Background="Transparent" Title="Focus Button" WindowStartupLocation="CenterScreen" 
         Padding="0"
-        AllowsTransparency="True" MouseMove="Window_MouseMove" Closing="Window_Closing">
+        AllowsTransparency="True" MouseMove="Window_MouseMove" Closing="Window_Closing" Loaded="Window_Loaded">
     <Window.Resources>
         <!--<DataTemplate x:Key="ButtonContentFocusRunning">
             <StackPanel VerticalAlignment="Center" Margin="0">

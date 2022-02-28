@@ -158,10 +158,10 @@ namespace Morphic.BlockService
             try
             {
                 //If Focus is not running, do not filter anything
-                Console.WriteLine("Engine.IsFocusRunning : " + Engine.IsFocusRunning);
+                //LoggingService.WriteServiceLog("Engine.IsFocusRunning : " + Engine.IsFocusRunning);
                 if (!Engine.IsFocusRunning) return;
 
-                Console.WriteLine("Engine.IsBreakRunning : " + Engine.IsBreakRunning);
+                //LoggingService.WriteServiceLog("Engine.IsBreakRunning : " + Engine.IsBreakRunning);
                 if (Engine.IsBreakRunning)
                 {
                     if (Engine.Session1Blocklist != null)
@@ -175,10 +175,10 @@ namespace Morphic.BlockService
                     }
                 }
 
-                Console.WriteLine("Engine.BlockApps : ");
-                Engine.BlockApps.ForEach(p => Console.WriteLine(p));
-                Console.WriteLine("Engine.ExceptionApps : ");
-                Engine.ExceptionApps.ForEach(p => Console.WriteLine(p));
+                //Console.WriteLine("Engine.BlockApps : ");
+                //Engine.BlockApps.ForEach(p => Console.WriteLine(p));
+                //Console.WriteLine("Engine.ExceptionApps : ");
+                //Engine.ExceptionApps.ForEach(p => Console.WriteLine(p));
 
                 //Get the list of apps to be blocked
                 if (Engine.BlockApps.Count == 0) return; //Return if no apps are to be blocked
@@ -209,7 +209,7 @@ namespace Morphic.BlockService
                                     }
                                     catch (Exception ex)
                                     {
-                                        LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
+                                        //LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
                                     }
                                 }
 
@@ -221,14 +221,14 @@ namespace Morphic.BlockService
                                 }
                                 catch (Exception ex)
                                 {
-                                    LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
+                                    //LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
                                     try
                                     {
-                                        exeName = GetMainModuleFilepath(proc.Id).Replace("\\", "/");
+                                        exeName = (GetMainModuleFilepath(proc.Id)??string.Empty).Replace("\\", "/");
                                     }
                                     catch (Exception ex2)
                                     {
-                                        LoggingService.WriteServiceLog("Exception" + ex2.Message + ex2.StackTrace);
+                                        //LoggingService.WriteServiceLog("Exception" + ex2.Message + ex2.StackTrace);
                                         exeName = proc.ProcessName + ".exe";
                                     }
                                 }
@@ -239,9 +239,9 @@ namespace Morphic.BlockService
                                 }
                                 catch (Exception ex)
                                 {
-                                    LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
+                                    //LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
                                 }
-
+                                //LoggingService.WriteServiceLog("exeName : " + exeName);
                                 if (!String.IsNullOrWhiteSpace(exeName))
                                 {
                                     if (Engine.BlockApps.Contains(exeName) && !Engine.ExceptionApps.Contains(exeName))
@@ -250,21 +250,22 @@ namespace Morphic.BlockService
                                         {
                                             //bool IsProcOwnerAdmin = IsProcessOwnerAdmin(currentProc.ProcessName); todo
 
-                                            if (exeName.Contains("notepad++"))
-                                            {
-                                                Console.WriteLine("GetProcessOwner(currentProc.Id) : " + GetProcessOwner(currentProc.Id));
-                                                Console.WriteLine("GetLastUserLoggedOn : " + GetLastUserLoggedOn());
-                                            }
+                                            //if (exeName.Contains("notepad++"))
+                                            //{
+                                            //    Console.WriteLine("GetProcessOwner(currentProc.Id) : " + GetProcessOwner(currentProc.Id));
+                                            //    Console.WriteLine("GetLastUserLoggedOn : " + GetLastUserLoggedOn());
+                                            //}
 
-                                            if (!GetLastUserLoggedOn().Contains(GetProcessOwner(currentProc.Id)))
-                                            {
-                                                return;
-                                            }
+                                            //if (!GetLastUserLoggedOn().Contains(GetProcessOwner(currentProc.Id)))
+                                            //{
+                                            //    return;
+                                            //}
                                             currentProc.Kill();
+                                            LaunchFocusApp(exeName);
                                         }
                                         catch (Exception ex)
                                         {
-                                            LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
+                                            //LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
                                         }
 
                                     }
@@ -273,14 +274,47 @@ namespace Morphic.BlockService
                         }
                         catch (Exception ex)
                         {
-                            LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
+                            //LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
+                    //LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
                 }
+            }
+            catch (Exception ex)
+            {
+                //LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void LaunchFocusApp(string exeName)
+        {
+            try
+            {
+                string filepath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Focus.exe");
+                ////Process p = new Process();
+                ////p.StartInfo.FileName = ;
+                ////p.StartInfo.Arguments = exeName;
+                LoggingService.WriteServiceLog("Process : " + filepath + " " + exeName);
+                ////p.Start();
+
+                //Process.Start(filepath, exeName);
+
+                //var proc = "Focus";
+                //var processName = proc.Replace(".vshost", "");
+                //var runningProcess = Process.GetProcesses()
+                //    .FirstOrDefault(x => (x.ProcessName == processName ||
+                //                    x.ProcessName == proc ||
+                //                    x.ProcessName == proc + ".vshost"));
+
+                //if (runningProcess != null)
+                //{
+                //    UnsafeNative.SendMessage(runningProcess.MainWindowHandle, exeName);
+                //}
+
+                ProcessHandler.CreateProcessAsUser(filepath, exeName).Start();
             }
             catch (Exception ex)
             {

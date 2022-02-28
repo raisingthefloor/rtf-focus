@@ -202,8 +202,8 @@ namespace Morphic.Focus
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            MainWindow.WindowHandle = new WindowInteropHelper(Application.Current.MainWindow).Handle;
-            HwndSource.FromHwnd(MainWindow.WindowHandle)?.AddHook(new HwndSourceHook(HandleMessages));
+            WindowHandle = new WindowInteropHelper(Application.Current.MainWindow).Handle;
+            HwndSource.FromHwnd(WindowHandle)?.AddHook(new HwndSourceHook(HandleMessages));
         }
 
         public static IntPtr WindowHandle { get; private set; }
@@ -213,9 +213,10 @@ namespace Morphic.Focus
             // Do stuff with the args
             if (Application.Current?.MainWindow is MainWindow mainWindow)
                 if (args.Count() > 0)
-                    mainWindow.ButtonText = string.Join("\r\n", args);
-                else
-                    mainWindow.ButtonText = string.Join("\r\n", "No args");
+                    new BlockedAppModal(string.Join("\r\n", args)).ShowDialog();
+                    //mainWindow.ButtonText = string.Join("\r\n", args);
+                //else
+                //    mainWindow.ButtonText = string.Join("\r\n", "No args");
                 
         }
 

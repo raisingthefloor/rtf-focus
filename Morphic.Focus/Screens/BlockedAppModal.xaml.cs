@@ -1,6 +1,7 @@
 ﻿using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +21,28 @@ namespace Morphic.Focus.Screens
     /// </summary>
     public partial class BlockedAppModal : Window
     {
+        AppEngine _engine;
+        public AppEngine Engine { get { return _engine; } }
+
         public BlockedAppModal()
         {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _engine = AppEngine.Instance;
+            }
+
             InitializeComponent();
+
+            DataContext = this;
         }
+
+        public BlockedAppModal(string appName) : this()
+        {
+            AppName = appName;
+
+        }
+
+        public string AppName { get; set; }
 
         #region Events
         private void Window_MouseMove(object sender, MouseEventArgs e)
@@ -65,15 +84,25 @@ namespace Morphic.Focus.Screens
         {
             this.Close();
         }
-        private void btnStopFocus_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Feature will be available soon!");
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Feature will be available soon!");
-        }
         #endregion
+
+        private void btnStopFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //Log Closing Session
+                LoggingService.WriteAppLog("Session Closing");
+
+                if (Engine.Session1 != null)
+                    Engine.EndSession(Engine.Session1, true);
+
+                //Hide this dialog
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
     }
 }

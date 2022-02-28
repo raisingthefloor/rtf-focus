@@ -32,8 +32,8 @@
                 <TextBlock Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" TextAlignment="Center" Margin="0 15 0 0">
                 Type the following characters in the space below:</TextBlock>
 
-                <TextBlock Style="{DynamicResource ModalTitle}" TextWrapping="WrapWithOverflow" TextAlignment="Center">
-                GwEUf45HBLDKSG56BNBFdbNBIV110nWI</TextBlock>
+                <TextBlock Style="{DynamicResource ModalTitle}" TextWrapping="WrapWithOverflow" TextAlignment="Center" Text="{Binding RandomChars}">
+                </TextBlock>
             </StackPanel>
 
             <TextBox Grid.Row="2" Grid.Column="0" Margin="30 8 30 0" Height="25" Width="249"></TextBox>

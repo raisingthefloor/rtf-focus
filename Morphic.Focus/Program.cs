@@ -24,10 +24,10 @@ namespace Morphic.Focus
                 var app = new App();
                 app.InitializeComponent();
                 var window = new MainWindow();
-                //MainWindow.HandleParameter(args);
+                MainWindow.HandleParameter(args);
                 app.Run(window);
 
-                //MainWindow.HandleParameter(args);
+                MainWindow.HandleParameter(args);
                 return; // In this case we just proceed on loading the program
             }
 

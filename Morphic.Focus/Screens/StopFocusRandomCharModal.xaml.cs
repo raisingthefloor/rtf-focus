@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,12 +19,40 @@ namespace Morphic.Focus.Screens
     /// <summary>
     /// Interaction logic for StopFocusRandomCharModal.xaml
     /// </summary>
-    public partial class StopFocusRandomCharModal : Window
+    public partial class StopFocusRandomCharModal : Window, INotifyPropertyChanged
     {
+        AppEngine _engine;
+        public AppEngine Engine { get { return _engine; } }
+
         public StopFocusRandomCharModal()
         {
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _engine = AppEngine.Instance;
+            }
+
             InitializeComponent();
+
+            RandomChars = new Guid().ToString();
+            DataContext = this;
         }
+
+        public string RandomChars { get; set; }
+
+        #region INotifyPropertyChanged implement
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
 
         #region Events
         private void Window_MouseMove(object sender, MouseEventArgs e)

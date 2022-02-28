@@ -39,7 +39,7 @@
 
             <Border Grid.Row="3" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#a3a3a3" Margin="25 20 25 0"></Border>
 
-            <Button Grid.Row="4" Grid.Column="0" Style="{DynamicResource SettingsButtonsLightGreen}" Margin="25 15 25 0" Height="25" Width="176" Click="HideMe">Nevermind, go back</Button>
+            <Button Grid.Row="4" Grid.Column="0" Style="{DynamicResource SettingsButtonsLightGreen}" Margin="25 15 25 0" Height="25" Width="176" Command="ApplicationCommands.Close">Nevermind, go back</Button>
 
             <TextBlock Grid.Row="5" Grid.Column="0" Margin="25 20 25 0" Style="{DynamicResource ContentStyle}" TextAlignment="Center">
                 <Hyperlink>Show me the blocklist that requires this ...</Hyperlink>

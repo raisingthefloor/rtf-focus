@@ -676,6 +676,14 @@ namespace Morphic.Focus
                         File.Delete(Common.MakeFilePath(sessionFile));
                         session = null;
                     }
+                    else if (session.IsMarkedForClose)
+                    {
+                        //Log Closing Session
+                        LoggingService.WriteAppLog("Session Closing - Restart marked for Close");
+
+                        File.Delete(Common.MakeFilePath(sessionFile));
+                        session = null;
+                    }
                     else
                     {
                         StartFocusSession(session);
@@ -849,7 +857,11 @@ namespace Morphic.Focus
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {
                                     LoggingService.WriteAppLog("Show Stop Focus Restart Modal");
-                                    new StopFocusRestartModal().ShowDialog(); //Show Stop Focus Restart Modal
+                                    new StopFocusRestartModal()
+                                    {
+                                        ApplicableBlocklist = blockList,
+                                        Session = session
+                                    }.ShowDialog(); //Show Stop Focus Restart Modal
                                 });
                             }
                             else if (blockList.Penalty == Penalty.Type)

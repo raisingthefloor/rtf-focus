@@ -12,6 +12,7 @@ namespace Morphic.Data.Models
         private bool _turnONDND;
         private bool _provideBreak;
         private bool _isBreakRunning = false;
+        private bool _isMarkedForClose = false;    
         private int _breakDuration;
         private int _breakGap;
         private int _sessionDuration;
@@ -263,7 +264,23 @@ namespace Morphic.Data.Models
             }
         }
 
-        
+        public bool IsMarkedForClose
+        {
+            get
+            {
+                return _isMarkedForClose;
+            }
+            set
+            {
+                if (value != this._isMarkedForClose)
+                {
+                    this._isMarkedForClose = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+
 
         #region Schedule
         public Schedule Schedule

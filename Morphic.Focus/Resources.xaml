@@ -565,9 +565,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="4" Background="#F0F2F5" BorderBrush="#666666" BorderThickness="1">
+                    <Border CornerRadius="4" Background="#F0F2F5" BorderBrush="#666666" BorderThickness="1" Name="border">
                         <ContentPresenter x:Name="contentPresenter" Height="15" TextBlock.FontFamily="{StaticResource SourceSansProBold}" TextBlock.FontWeight="Bold" TextBlock.FontSize="12" TextBlock.LineHeight="15" TextBlock.Foreground="Black" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

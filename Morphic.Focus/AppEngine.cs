@@ -841,7 +841,7 @@ namespace Morphic.Focus
                             Blocklist blockList = UserPreferences.BlockLists.Where(p => p.Name.ToLowerInvariant() == session.BlockListName.ToLowerInvariant()).First();
 
                             if (blockList.Penalty == Penalty.None)
-                            { 
+                            {
                                 EndSession(session);
                             }
                             else if (blockList.Penalty == Penalty.Restart)
@@ -857,7 +857,12 @@ namespace Morphic.Focus
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {
                                     LoggingService.WriteAppLog("Show Stop Focus Random Char Modal");
-                                    new StopFocusRandomCharModal().ShowDialog(); //Show Stop Focus Restart Modal
+                                    new StopFocusRandomCharModal()
+                                    {
+                                        PenaltyValue = blockList.PenaltyValue,
+                                        ApplicableBlocklist = blockList,
+                                        Session = session
+                                    }.ShowDialog(); //Show Stop Focus Restart Modal
                                 });
                             }
                         }
@@ -1017,7 +1022,7 @@ namespace Morphic.Focus
 
                 focusDispatchTimer.Timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
                 {
-                    
+
                     //Timer finishes
                     if (focusDispatchTimer.Time <= TimeSpan.Zero)
                     {
@@ -1046,7 +1051,7 @@ namespace Morphic.Focus
                             //Open Short/Long Break Modal
                             if (LstSession.Count > 0)
                             {
-                                
+
                                 if ((DateTime.Now - Session1.LastStartTime).TotalMinutes >= Common.LongBreakDuration) //If focussing for more than 120 mins
                                 {
                                     Application.Current.Dispatcher.Invoke(() =>

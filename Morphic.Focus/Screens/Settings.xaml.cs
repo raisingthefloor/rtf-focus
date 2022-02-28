@@ -86,6 +86,8 @@ namespace Morphic.Focus.Screens
             }
         }
 
+        
+
         #region Events
         /// <summary>
         /// Let the Window be dragged using mouse-press

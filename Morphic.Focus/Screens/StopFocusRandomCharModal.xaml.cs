@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Morphic.Data.Models;
+using Morphic.Data.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -33,11 +35,69 @@ namespace Morphic.Focus.Screens
 
             InitializeComponent();
 
-            RandomChars = new Guid().ToString();
             DataContext = this;
         }
 
-        public string RandomChars { get; set; }
+        #region Properties
+        private Blocklist? _applicableBlocklist = null;
+        public Blocklist ApplicableBlocklist 
+        { 
+            get
+            {
+                return _applicableBlocklist;
+            }
+            set
+            {
+                if (_applicableBlocklist != value)
+                {
+                    _applicableBlocklist = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private int _penaltyValue = 0;
+        public int PenaltyValue
+        {
+            get
+            {
+                return _penaltyValue;
+            }
+            set
+            {
+                if (_penaltyValue != value)
+                {
+                    _penaltyValue = value;
+                    NotifyPropertyChanged("RandomChars");
+                }
+            }
+        }
+
+        private string _randomChars = string.Empty;
+        public string RandomChars
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_randomChars) || _randomChars.Length != PenaltyValue)
+                {
+                    _randomChars = RandomString(PenaltyValue);
+                }
+
+                return _randomChars;
+            }
+        }
+
+        private static Random random = new Random();
+
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        public Session Session  { get; set; }
+        #endregion
 
         #region INotifyPropertyChanged implement
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -57,9 +117,39 @@ namespace Morphic.Focus.Screens
         #region Events
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
+            
+
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                this.DragMove();
+                if (e.OriginalSource is Hyperlink)
+                {
+                    try
+                    {
+                        LoggingService.WriteAppLog("Stop Focus Random Char -> Show me the blocklist");
+
+                        //Set Edit Blocklists Tab open
+                        Engine.Settings.OpenBlocklist = true;
+                        Engine.SelectedBlockList = ApplicableBlocklist;
+
+                        //Hide current window and show Settings Window
+                        Engine.Settings.Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        this.DragMove();
+                    }
+                    catch (Exception ex)
+                    {
+                        LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                    }
+                }
             }
         }
 
@@ -73,10 +163,25 @@ namespace Morphic.Focus.Screens
             this.Close();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void StopSession(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Feature will be available soon!");
+            try
+            {
+                Engine.EndSession(Session);
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void EnableDisableStopFocusButton(object sender, TextChangedEventArgs e)
+        {
+            btnStopSession.IsEnabled = txtRandomChars.Text == RandomChars;
         }
         #endregion
+
+
     }
 }

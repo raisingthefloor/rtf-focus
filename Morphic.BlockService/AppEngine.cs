@@ -251,7 +251,7 @@ namespace Morphic.BlockService
                             (session.Schedule.BlockListName != null ? session.Schedule.BlockListName : string.Empty)
                             : session.BlockListName;
 
-                        //Update BlockSites & ExceptionSites
+                        //Update BlockSitesApps & ExceptionSitesApps
                         if (!string.IsNullOrWhiteSpace(blocklistName))
                         {
                             if (UserPreferences.BlockLists.Any(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()))
@@ -277,6 +277,8 @@ namespace Morphic.BlockService
                 //Add Temporary Unblock
                 UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Where(p => p.IsActive && !p.IsApp).ToList().ForEach(p => ExceptionSites.Add(new UriBuilder(p.Name).Uri));
                 UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Where(p => p.IsActive && p.IsApp).ToList().ForEach(p => ExceptionApps.Add(p.Name.ToLowerInvariant().Trim()));
+
+                
             }
             catch (Exception ex)
             {

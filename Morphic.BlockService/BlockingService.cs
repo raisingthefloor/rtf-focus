@@ -84,6 +84,9 @@ namespace Morphic.BlockService
                 //EventLog.WriteEntry("Log Start");
 
                 LoggingService.WriteServiceLog("Service Launched");
+
+                //Kill Running Apps
+                BlockApps();
             }
             catch (Exception ex)
             {
@@ -105,7 +108,7 @@ namespace Morphic.BlockService
                 // whatsoever way we see fit, though the design was to allow users to choose logging mechanisms.
                 LoggerProxy.Default.OnInfo += (msg) =>
                 {
-                    Console.WriteLine("INFO: {0}", msg);
+                    //Console.WriteLine("INFO: {0}", msg);
                 };
 
                 LoggerProxy.Default.OnWarning += (msg) =>
@@ -117,7 +120,7 @@ namespace Morphic.BlockService
                 LoggerProxy.Default.OnError += (msg) =>
                 {
                     Console.WriteLine("ERRO: {0}", msg);
-                    LoggingService.WriteServiceLog("ERRO: " + msg);
+                    //LoggingService.WriteServiceLog("ERRO: " + msg);
                     //Log("ERRO: "+ msg);
                 };
 
@@ -154,6 +157,11 @@ namespace Morphic.BlockService
             }
         }
         private void ProcessWatcher_EventArrived(object sender, EventArrivedEventArgs e)
+        {
+            BlockApps();
+        }
+
+        public static void BlockApps()
         {
             try
             {
@@ -224,7 +232,7 @@ namespace Morphic.BlockService
                                     //LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
                                     try
                                     {
-                                        exeName = (GetMainModuleFilepath(proc.Id)??string.Empty).Replace("\\", "/");
+                                        exeName = (GetMainModuleFilepath(proc.Id) ?? string.Empty).Replace("\\", "/");
                                     }
                                     catch (Exception ex2)
                                     {
@@ -244,6 +252,8 @@ namespace Morphic.BlockService
                                 //LoggingService.WriteServiceLog("exeName : " + exeName);
                                 if (!String.IsNullOrWhiteSpace(exeName))
                                 {
+                                    exeName = exeName.ToLowerInvariant();
+                                    
                                     if (Engine.BlockApps.Contains(exeName) && !Engine.ExceptionApps.Contains(exeName))
                                     {
                                         try
@@ -289,7 +299,7 @@ namespace Morphic.BlockService
             }
         }
 
-        private void LaunchFocusApp(string exeName)
+        private static void LaunchFocusApp(string exeName)
         {
             try
             {
@@ -457,7 +467,7 @@ namespace Morphic.BlockService
             return strFileName;
         }
 
-        private bool UWPCallback(IntPtr hwnd, IntPtr lparam)
+        private static bool UWPCallback(IntPtr hwnd, IntPtr lparam)
         {
             try
             {
@@ -570,6 +580,7 @@ namespace Morphic.BlockService
             {
                 //If Focus is not running, do not filter anything
                 if (!Engine.IsFocusRunning) return new FirewallResponse(CitadelCore.Net.Proxy.FirewallAction.DontFilterApplication);
+                
                 if (Engine.IsBreakRunning)
                 {
                     if (Engine.Session1Blocklist != null)

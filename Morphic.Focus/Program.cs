@@ -1,13 +1,9 @@
 ﻿using Morphic.Data.Services;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Morphic.Focus
 {
@@ -26,8 +22,12 @@ namespace Morphic.Focus
             //If this is the first instance
             if (runningProcess == null)
             {
-                //Thread thread = new Thread(LaunchWatcherApp);
-                //thread.Start();
+                // Create a timer with a two second interval.
+                LaunchWatcherAppTimer = new System.Timers.Timer(2000);
+                // Hook up the Elapsed event for the timer. 
+                LaunchWatcherAppTimer.Elapsed += LaunchWatcherAppTimer_Elapsed;
+                LaunchWatcherAppTimer.AutoReset = true;
+                LaunchWatcherAppTimer.Enabled = true;
 
                 var app = new App();
                 app.InitializeComponent();
@@ -36,55 +36,65 @@ namespace Morphic.Focus
                 app.Run(window);
 
                 MainWindow.HandleParameter(args);
+
+
+
                 return; // In this case we just proceed on loading the program
             }
 
             //If this is the second instance
             if (args.Length > 0)
                 UnsafeNative.SendMessage(runningProcess.MainWindowHandle, string.Join(" ", args));
+
+            LaunchWatcherAppTimer.Stop();
+            LaunchWatcherAppTimer.Dispose();
         }
 
-        //private static void LaunchWatcherApp(object? obj)
-        //{
-        //    while (true)
-        //    {
-        //        try
-        //        {
-        //            if (!ProcessHelpers.IsRunning("Morphic.FocusWatch"))
-        //            {
-        //                string appLocation = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Morphic.FocusWatch.exe");
+        private static void LaunchWatcherAppTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        {
+            try
+            {
+                LaunchWatcherApp();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
+            }
+        }
 
-        //                //Process.Start(appLocation);
+        private static System.Timers.Timer LaunchWatcherAppTimer;
+        
+        private static void LaunchWatcherApp()
+        {
+            try
+            {
+                if (!ProcessHelpers.IsRunning("Morphic.FocusWatch"))
+                {
+                    string appLocation = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Morphic.FocusWatch.exe");
+                    LoggingService.WriteAppLog("appLocation : " + appLocation);
 
-        //                //Thread.Sleep(3000);
+                    using (var managementClass = new ManagementClass("Win32_Process"))
+                    {
+                        var processInfo = new ManagementClass("Win32_ProcessStartup");
+                        processInfo.Properties["CreateFlags"].Value = 0x00000008;
 
-        //                using (var managementClass = new ManagementClass("Win32_Process"))
-        //                {
-        //                    var processInfo = new ManagementClass("Win32_ProcessStartup");
-        //                    processInfo.Properties["CreateFlags"].Value = 0x00000008;
+                        var inParameters = managementClass.GetMethodParameters("Create");
+                        inParameters["CommandLine"] = appLocation;
+                        inParameters["ProcessStartupInformation"] = processInfo;
 
-        //                    var inParameters = managementClass.GetMethodParameters("Create");
-        //                    inParameters["CommandLine"] = appLocation;
-        //                    inParameters["ProcessStartupInformation"] = processInfo;
-
-        //                    var result = managementClass.InvokeMethod("Create", inParameters, null);
-        //                    //if ((result != null) && ((uint)result.Properties["ReturnValue"].Value != 0))
-        //                    //{
-        //                    //    Console.WriteLine("Process ID: {0}", result.Properties["ProcessId"].Value);
-        //                    //}
-        //                }
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
-        //        }
-        //    }
-        //}
+                        var result = managementClass.InvokeMethod("Create", inParameters, null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
+            }
+        }
     }
 
-    //public static class ProcessHelpers
-    //{
-    //    public static bool IsRunning(string name) => Process.GetProcessesByName(name).Length > 0;
-    //}
+    public static class ProcessHelpers
+    {
+        public static bool IsRunning(string name) => Process.GetProcessesByName(name).Length > 0;
+    }
 }

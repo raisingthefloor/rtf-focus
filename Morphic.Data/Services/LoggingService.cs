@@ -25,6 +25,13 @@ namespace Morphic.Data.Services
             WriteLog(message, path);
         }
 
+        public static void WriteLightAppLog(string message)
+        {
+            //Get Log File Path
+            string path = Common.MakeFilePath(Common.LIGHTAPP_LOG_FILE_NAME);
+            WriteLog(message, path);
+        }
+
         private static void WriteLog(string message, string path)
         {
             string folder = Path.GetDirectoryName(path);

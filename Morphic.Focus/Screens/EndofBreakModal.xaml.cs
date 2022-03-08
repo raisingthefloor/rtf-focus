@@ -40,17 +40,17 @@ namespace Morphic.Focus.Screens
         #region Events
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                try
-                {
-                    this.DragMove();
-                }
-                catch (Exception ex)
-                {
-                    LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
-                }
-            }
+            //if (e.LeftButton == MouseButtonState.Pressed)
+            //{
+            //    try
+            //    {
+            //        this.DragMove();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            //    }
+            //}
         }
 
         /// <summary>

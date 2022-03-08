@@ -1,25 +1,11 @@
-﻿using Morphic.Data.Models;
+﻿using Morphic.Data.Services;
 using Morphic.Focus.Screens;
-using Morphic.Data.Services;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 
 namespace Morphic.Focus
@@ -64,22 +50,6 @@ namespace Morphic.Focus
         #endregion
 
         #region Properties
-
-        //public Session? Session1 { get => _engine.Session1; set => _engine.Session1 = value; }
-        //public Session? Session2 { get => _engine.Session2; set => _engine.Session2 = value; }
-
-        //public bool IsFocusRunning
-        //{
-        //    get
-        //    {
-        //        return _engine.IsFocusRunning;
-        //    }
-        //    set
-        //    {
-        //        _engine.IsFocusRunning = value;
-        //        NotifyPropertyChanged("IsFocusRunning"); // method implemented below
-        //    }
-        //}
 
         public string ButtonText
         {
@@ -197,7 +167,9 @@ namespace Morphic.Focus
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            e.Cancel = true; //Do not allow the window to close
+            //Do not allow the window to close if focus is running
+            if (Engine.IsFocusRunning)
+                e.Cancel = true; 
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

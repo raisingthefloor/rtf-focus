@@ -524,6 +524,17 @@ namespace Morphic.Focus
             }
         }
 
+        public bool IsFocusWithBreaks
+        {
+            get
+            {
+                if (LstSession.Count == 0)
+                    return false;
+                else
+                    return Session1.ProvideBreak;
+            }
+        }
+
         public DateTime NextBreakTime
         {
             get
@@ -581,6 +592,14 @@ namespace Morphic.Focus
             }
         }
 
+        public string TimeTillNextBreakMM
+        {
+            get
+            {
+                return new TimeSpan(0, (int)Math.Ceiling(TimeTillNextBreak.TotalMinutes), 0).ToString("%m");
+            }
+        }
+
         private TimeSpan _timeTillNextBreakEnds = TimeSpan.Zero;
         public TimeSpan TimeTillNextBreakEnds
         {
@@ -605,6 +624,14 @@ namespace Morphic.Focus
             get
             {
                 return new TimeSpan(0, (int)Math.Ceiling(TimeTillNextBreakEnds.TotalMinutes), 0).ToString("hh':'mm");
+            }
+        }
+
+        public string TimeTillNextBreakEndsMM
+        {
+            get
+            {
+                return new TimeSpan(0, (int)Math.Ceiling(TimeTillNextBreakEnds.TotalMinutes), 0).ToString("%m");
             }
         }
         public bool IsFocusTillStop
@@ -911,7 +938,14 @@ namespace Morphic.Focus
 
                 if (LstSession.Count == 0) StopFocusTimer();
 
-                FocusStatus.Hide();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (FocusStatus.Visibility == Visibility.Visible)
+                    {
+                        FocusStatus.Hide();
+                        FocusMain.Show();
+                    }
+                });
             }
             catch (Exception ex)
             {
@@ -1016,7 +1050,7 @@ namespace Morphic.Focus
                 if (breakGap == 0)
                 {
                     if (NextBreakTime == DateTime.MinValue)
-                        TimeTillNextBreak = focusDispatchTimer.Time = new TimeSpan(0, 60, 0); //Long Break TODO Review from specs
+                        TimeTillNextBreak = focusDispatchTimer.Time = new TimeSpan(0, Common.LongBreakDuration, 0); //Long Break TODO Review from specs
                     else
                         TimeTillNextBreak = focusDispatchTimer.Time = (NextBreakTime - DateTime.Now).Duration();
                 }

@@ -81,6 +81,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E7189B074B47485B8874F298E7C82492"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_F45F03028E444BD29D8C8B924090C602"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -488,15 +494,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Morphic Focus"
-        "ProductCode" = "8:{8707E9D3-631B-4B1C-B7D8-223C48944C5E}"
-        "PackageCode" = "8:{3657FB36-E797-451E-B4DD-CDCDD3ECD399}"
+        "ProductCode" = "8:{4D151A08-26D7-4BB1-B710-F8B8441022EA}"
+        "PackageCode" = "8:{88525C78-FED7-4608-B565-4B4235D6E1F0}"
         "UpgradeCode" = "8:{FA6CD905-D080-44C9-8B46-2E9FA3408312}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:11.0.0"
+        "ProductVersion" = "8:12.0.0"
         "Manufacturer" = "8:Raising The Floor"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1038,7 +1044,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5864A4BD9F6C45A19B07712A059B1581"
             {
-            "SourcePath" = "8:..\\Morphic.Focus\\obj\\Debug\\net6.0-windows\\win-x86\\apphost.exe"
+            "SourcePath" = "8:..\\Morphic.Focus\\obj\\Release\\net6.0-windows\\win-x86\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
@@ -1067,7 +1073,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D32BA587927F4A279C624831F3FF70A1"
             {
-            "SourcePath" = "8:..\\Morphic.BlockService\\obj\\Debug\\net6.0\\win-x86\\apphost.exe"
+            "SourcePath" = "8:..\\Morphic.BlockService\\obj\\Release\\net6.0\\win-x86\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
@@ -1088,6 +1094,35 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{185EB51A-6930-45F1-A02A-89ECF8E33432}"
+            "ShowKeyOutput" = "11:TRUE"
+            "PublishProfilePath" = "8:Properties\\PublishProfiles\\FolderProfile.pubxml"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E7189B074B47485B8874F298E7C82492"
+            {
+            "SourcePath" = "8:..\\Morphic.FocusWatch\\obj\\Release\\net6.0\\win-x86\\apphost.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:Release|Any CPU"
+            "OutputGroupCanonicalName" = "8:PublishItems"
+            "OutputProjectGuid" = "8:{780A6DE9-9E38-446F-8529-9EF66571CB87}"
             "ShowKeyOutput" = "11:TRUE"
             "PublishProfilePath" = "8:Properties\\PublishProfiles\\FolderProfile.pubxml"
                 "ExcludeFilters"

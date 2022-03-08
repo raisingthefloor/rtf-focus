@@ -115,7 +115,7 @@
         <TextBox Width="57" Height="23" Margin="12 10 0 11" IsEnabled="{Binding Path=IsChecked, ElementName=chkIsActive}">
             <TextBox.Style>
                 <Style TargetType="TextBox">
-                    <Setter Property="Text" Value="{Binding Path=Schedule.StartAt, Mode=TwoWay, StringFormat={}{0:t}}"/>
+                    <Setter Property="Text" Value="{Binding Path=Schedule.StartAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:t}}"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" Value="False">
                             <Setter Property="Text" Value=""/>
@@ -127,7 +127,7 @@
         <TextBox Width="57" Height="23" Margin="12 10 0 11" IsEnabled="{Binding Path=IsChecked, ElementName=chkIsActive}">
             <TextBox.Style>
                 <Style TargetType="TextBox">
-                    <Setter Property="Text" Value="{Binding Path=Schedule.EndAt, Mode=TwoWay, StringFormat={}{0:t}}"/>
+                    <Setter Property="Text" Value="{Binding Path=Schedule.EndAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:t}}"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" Value="False">
                             <Setter Property="Text" Value=""/>

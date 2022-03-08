@@ -49,14 +49,14 @@ namespace Morphic.Focus.Screens
                     }
                     else
                     {
-                        try
-                        {
-                            this.DragMove();
-                        }
-                        catch (Exception ex)
-                        {
-                            LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
-                        }
+                        //try
+                        //{
+                        //    this.DragMove();
+                        //}
+                        //catch (Exception ex)
+                        //{
+                        //    LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+                        //}
 
                     }
                 }

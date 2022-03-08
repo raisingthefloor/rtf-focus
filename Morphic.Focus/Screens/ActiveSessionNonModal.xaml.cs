@@ -139,10 +139,13 @@ namespace Morphic.Focus.Screens
             //    FocusMain_SessionUpdate();
 
             if (e.PropertyName == "TimeTillNextBreak")
-                BreakStatusText = string.Format("Your next break today is in {0}", Engine.TimeTillNextBreakHHMM);
+                if (Engine.IsFocusWithBreaks)
+                    BreakStatusText = string.Format("Your next break is in {0} minutes", Engine.TimeTillNextBreakMM);
+                else
+                    BreakStatusText = String.Empty;
 
             if (e.PropertyName == "TimeTillNextBreakEnds")
-                BreakStatusText = string.Format("Your break ends in {0}", Engine.TimeTillNextBreakEndsHHMM);
+                BreakStatusText = string.Format("Your break ends in {0} minutes", Engine.TimeTillNextBreakEndsMM);
         }
         private void btnStopFocus2_Click(object sender, RoutedEventArgs e)
         {

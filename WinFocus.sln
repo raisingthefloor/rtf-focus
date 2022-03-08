@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CitadelCore", "CitadelCore\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinDivertSharp", "WinDivertSharp\WinDivertSharp.csproj", "{326A5B32-8FF6-4825-B266-956019FAD293}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Morphic.FocusWatch", "Morphic.FocusWatch\Morphic.FocusWatch.csproj", "{780A6DE9-9E38-446F-8529-9EF66571CB87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,14 @@ Global
 		{326A5B32-8FF6-4825-B266-956019FAD293}.Release|Any CPU.Build.0 = Release|Any CPU
 		{326A5B32-8FF6-4825-B266-956019FAD293}.Release|x86.ActiveCfg = Release|Any CPU
 		{326A5B32-8FF6-4825-B266-956019FAD293}.Release|x86.Build.0 = Release|Any CPU
+		{780A6DE9-9E38-446F-8529-9EF66571CB87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{780A6DE9-9E38-446F-8529-9EF66571CB87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{780A6DE9-9E38-446F-8529-9EF66571CB87}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{780A6DE9-9E38-446F-8529-9EF66571CB87}.Debug|x86.Build.0 = Debug|Any CPU
+		{780A6DE9-9E38-446F-8529-9EF66571CB87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{780A6DE9-9E38-446F-8529-9EF66571CB87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{780A6DE9-9E38-446F-8529-9EF66571CB87}.Release|x86.ActiveCfg = Release|Any CPU
+		{780A6DE9-9E38-446F-8529-9EF66571CB87}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

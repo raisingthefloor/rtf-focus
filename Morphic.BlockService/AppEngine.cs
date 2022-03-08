@@ -140,7 +140,7 @@ namespace Morphic.BlockService
             {
                 GetFocusAndSessionSettings();
 
-                watcher = new FileSystemWatcher(Common.GetWinRootFolder());
+                watcher = new FileSystemWatcher(Common.GetAppDataAppFolder());
                 watcher.NotifyFilter = NotifyFilters.Attributes
                                  | NotifyFilters.CreationTime
                                  | NotifyFilters.DirectoryName

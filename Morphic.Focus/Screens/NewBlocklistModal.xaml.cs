@@ -47,10 +47,10 @@ namespace Morphic.Focus.Screens
         /// <param name="e"></param>
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                this.DragMove();
-            }
+            //if (e.LeftButton == MouseButtonState.Pressed)
+            //{
+            //    this.DragMove();
+            //}
         }
 
         private void btnCreateBlockList_Click(object sender, RoutedEventArgs e)

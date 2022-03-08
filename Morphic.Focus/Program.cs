@@ -26,8 +26,8 @@ namespace Morphic.Focus
             //If this is the first instance
             if (runningProcess == null)
             {
-                Thread thread = new Thread(LaunchWatcherApp);
-                thread.Start();
+                //Thread thread = new Thread(LaunchWatcherApp);
+                //thread.Start();
 
                 var app = new App();
                 app.InitializeComponent();
@@ -44,47 +44,47 @@ namespace Morphic.Focus
                 UnsafeNative.SendMessage(runningProcess.MainWindowHandle, string.Join(" ", args));
         }
 
-        private static void LaunchWatcherApp(object? obj)
-        {
-            while (true)
-            {
-                try
-                {
-                    if (!ProcessHelpers.IsRunning("Morphic.FocusWatch"))
-                    {
-                        string appLocation = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Morphic.FocusWatch.exe");
+        //private static void LaunchWatcherApp(object? obj)
+        //{
+        //    while (true)
+        //    {
+        //        try
+        //        {
+        //            if (!ProcessHelpers.IsRunning("Morphic.FocusWatch"))
+        //            {
+        //                string appLocation = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Morphic.FocusWatch.exe");
 
-                        //Process.Start(appLocation);
+        //                //Process.Start(appLocation);
 
-                        //Thread.Sleep(3000);
+        //                //Thread.Sleep(3000);
 
-                        using (var managementClass = new ManagementClass("Win32_Process"))
-                        {
-                            var processInfo = new ManagementClass("Win32_ProcessStartup");
-                            processInfo.Properties["CreateFlags"].Value = 0x00000008;
+        //                using (var managementClass = new ManagementClass("Win32_Process"))
+        //                {
+        //                    var processInfo = new ManagementClass("Win32_ProcessStartup");
+        //                    processInfo.Properties["CreateFlags"].Value = 0x00000008;
 
-                            var inParameters = managementClass.GetMethodParameters("Create");
-                            inParameters["CommandLine"] = appLocation;
-                            inParameters["ProcessStartupInformation"] = processInfo;
+        //                    var inParameters = managementClass.GetMethodParameters("Create");
+        //                    inParameters["CommandLine"] = appLocation;
+        //                    inParameters["ProcessStartupInformation"] = processInfo;
 
-                            var result = managementClass.InvokeMethod("Create", inParameters, null);
-                            //if ((result != null) && ((uint)result.Properties["ReturnValue"].Value != 0))
-                            //{
-                            //    Console.WriteLine("Process ID: {0}", result.Properties["ProcessId"].Value);
-                            //}
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
-                }
-            }
-        }
+        //                    var result = managementClass.InvokeMethod("Create", inParameters, null);
+        //                    //if ((result != null) && ((uint)result.Properties["ReturnValue"].Value != 0))
+        //                    //{
+        //                    //    Console.WriteLine("Process ID: {0}", result.Properties["ProcessId"].Value);
+        //                    //}
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            LoggingService.WriteAppLog("Exception" + ex.Message + ex.StackTrace);
+        //        }
+        //    }
+        //}
     }
 
-    public static class ProcessHelpers
-    {
-        public static bool IsRunning(string name) => Process.GetProcessesByName(name).Length > 0;
-    }
+    //public static class ProcessHelpers
+    //{
+    //    public static bool IsRunning(string name) => Process.GetProcessesByName(name).Length > 0;
+    //}
 }

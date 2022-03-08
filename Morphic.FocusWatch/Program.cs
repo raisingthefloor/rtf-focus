@@ -20,27 +20,27 @@ namespace Morphic.FocusWatch
         {
             try
             {
-                SingleInstanceWatcher();
+                //SingleInstanceWatcher();
 
-                CheckIsFocusRunning();
+                //CheckIsFocusRunning();
 
-                watcher = new FileSystemWatcher(Common.GetAppDataAppFolder());
-                watcher.NotifyFilter = NotifyFilters.Attributes
-                                 | NotifyFilters.CreationTime
-                                 | NotifyFilters.DirectoryName
-                                 | NotifyFilters.FileName
-                                 | NotifyFilters.LastAccess
-                                 | NotifyFilters.LastWrite
-                                 | NotifyFilters.Security
-                                 | NotifyFilters.Size;
+                //watcher = new FileSystemWatcher(Common.GetAppDataAppFolder());
+                //watcher.NotifyFilter = NotifyFilters.Attributes
+                //                 | NotifyFilters.CreationTime
+                //                 | NotifyFilters.DirectoryName
+                //                 | NotifyFilters.FileName
+                //                 | NotifyFilters.LastAccess
+                //                 | NotifyFilters.LastWrite
+                //                 | NotifyFilters.Security
+                //                 | NotifyFilters.Size;
 
-                watcher.Created += Watcher_Created;
-                watcher.Deleted += Watcher_Deleted;
-                watcher.Renamed += Watcher_Renamed;
-                watcher.Changed += Watcher_Changed;
+                //watcher.Created += Watcher_Created;
+                //watcher.Deleted += Watcher_Deleted;
+                //watcher.Renamed += Watcher_Renamed;
+                //watcher.Changed += Watcher_Changed;
 
-                watcher.Filter = "*.json";
-                watcher.EnableRaisingEvents = true;
+                //watcher.Filter = "*.json";
+                //watcher.EnableRaisingEvents = true;
             }
             catch (Exception ex)
             {
@@ -48,25 +48,25 @@ namespace Morphic.FocusWatch
             }
 
             //Start watching for app close
-            while (true)
-            {
-                try
-                {
-                    if (!ProcessHelpers.IsRunning("Focus"))
-                    {
-                        if (IsFocusRunning)
-                        {
-                            string appLocation = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Focus.exe");
-                            Process.Start(appLocation);
-                        }
-                        Thread.Sleep(3000);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LoggingService.WriteLightAppLog("Exception" + ex.Message + ex.StackTrace);
-                }
-            }
+            //while (true)
+            //{
+            //    try
+            //    {
+            //        if (!ProcessHelpers.IsRunning("Focus"))
+            //        {
+            //            if (IsFocusRunning)
+            //            {
+            //                string appLocation = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Focus.exe");
+            //                Process.Start(appLocation);
+            //            }
+            //            Thread.Sleep(3000);
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        LoggingService.WriteLightAppLog("Exception" + ex.Message + ex.StackTrace);
+            //    }
+            //}
         }
 
         private const string UniqueEventName = "09F57308-E5FF-4DD5-A295-7773E86151E3";

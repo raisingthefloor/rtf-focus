@@ -159,24 +159,7 @@ namespace Morphic.BlockService
         private void ProcessWatcher_EventArrived(object sender, EventArrivedEventArgs e)
         {
             BlockApps();
-
-            //LaunchWatcherApp();
         }
-
-        //private static void LaunchWatcherApp()
-        //{
-        //    try
-        //    {
-        //        string filepath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Morphic.FocusWatch.exe");
-        //        LoggingService.WriteServiceLog("Process : " + filepath);
-                
-        //        ProcessHandler.CreateProcessAsUser(filepath, "").Start();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
-        //    }
-        //}
 
         public static void BlockApps()
         {

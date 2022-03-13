@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Morphic.Focus.Screens"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              >
     <UserControl.Resources>
@@ -112,10 +113,18 @@
                                               DisplayMemberPath="Name" SelectedValuePath="Name" Canvas.Left="19" Canvas.Top="0" Canvas.ZIndex="2"/>
             <Border Width="27" Height="23" Name="scheduleColor" Canvas.Left="0" Canvas.Top="0" Canvas.ZIndex="1" BorderThickness="2.5" />
         </Canvas>
-        <TextBox Width="57" Height="23" Margin="12 10 0 11" IsEnabled="{Binding Path=IsChecked, ElementName=chkIsActive}">
+        
+        <TextBox Width="57" Height="23" Margin="12 10 0 11" IsEnabled="{Binding Path=IsChecked, ElementName=chkIsActive}"
+                 TextChanged="DateChanged">
             <TextBox.Style>
                 <Style TargetType="TextBox">
-                    <Setter Property="Text" Value="{Binding Path=Schedule.StartAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:t}}"/>
+                    <Setter Property="Text">
+                        <Setter.Value>
+                            <Binding Path="Schedule.StartAt" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" 
+                                     StringFormat="{}{0:t}">
+                            </Binding>
+                        </Setter.Value>
+                    </Setter>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" Value="False">
                             <Setter Property="Text" Value=""/>
@@ -124,10 +133,16 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <TextBox Width="57" Height="23" Margin="12 10 0 11" IsEnabled="{Binding Path=IsChecked, ElementName=chkIsActive}">
+        <TextBox Width="57" Height="23" Margin="12 10 0 11" IsEnabled="{Binding Path=IsChecked, ElementName=chkIsActive}" TextChanged="DateChanged">
             <TextBox.Style>
                 <Style TargetType="TextBox">
-                    <Setter Property="Text" Value="{Binding Path=Schedule.EndAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:t}}"/>
+                    <Setter Property="Text">
+                        <Setter.Value>
+                            <Binding Path="Schedule.EndAt" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" 
+                                     StringFormat="{}{0:t}">
+                            </Binding>
+                        </Setter.Value>
+                    </Setter>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" Value="False">
                             <Setter Property="Text" Value=""/>

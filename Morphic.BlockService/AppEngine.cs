@@ -134,6 +134,29 @@ namespace Morphic.BlockService
                 return null;
             }
         }
+
+        public Blocklist Session2Blocklist
+        {
+            get
+            {
+                if (Session2 == null) return null;
+
+                string blocklistName = Session2.Schedule != null ?
+                            (Session2.Schedule.BlockListName != null ? Session2.Schedule.BlockListName : string.Empty)
+                            : Session2.BlockListName;
+
+                if (!string.IsNullOrWhiteSpace(blocklistName))
+                {
+                    if (UserPreferences.BlockLists.Any(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()))
+                    {
+                        Blocklist blockList = UserPreferences.BlockLists.Where(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()).First();
+                        return blockList;
+                    }
+                }
+
+                return null;
+            }
+        }
         AppEngine()
         {
             try

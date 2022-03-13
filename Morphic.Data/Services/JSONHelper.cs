@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text.Json;
+using System.Threading;
 
 namespace Morphic.Data.Services
 {
@@ -62,7 +63,20 @@ namespace Morphic.Data.Services
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 string jsonString = JsonSerializer.Serialize<T>(obj, options);
 
-                File.WriteAllText(path, jsonString);
+                for (int i = 1; i <= 100; ++i)
+                {
+                    try
+                    {
+                        File.WriteAllText(path, jsonString);
+                        break;
+                    }
+                    catch (System.IO.IOException ex) when (i <= 100)
+                    {
+                        // You may check error code to filter some exceptions, not every error
+                        // can be recovered.
+                        Thread.Sleep(1000);
+                    }
+                }
                 return jsonString;
             }
         }

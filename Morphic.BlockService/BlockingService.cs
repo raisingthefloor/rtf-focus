@@ -119,7 +119,7 @@ namespace Morphic.BlockService
 
                 LoggerProxy.Default.OnError += (msg) =>
                 {
-                    Console.WriteLine("ERRO: {0}", msg);
+                    //Console.WriteLine("ERRO: {0}", msg);
                     //LoggingService.WriteServiceLog("ERRO: " + msg);
                     //Log("ERRO: "+ msg);
                 };
@@ -331,7 +331,6 @@ namespace Morphic.BlockService
                 LoggingService.WriteServiceLog("Exception" + ex.Message + ex.StackTrace);
             }
         }
-
         private static string GetLastUserLoggedOn()
         {
             try

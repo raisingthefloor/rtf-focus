@@ -160,8 +160,15 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <DockPanel Width="230" Height="23">
-                                                <CheckBox Style="{DynamicResource FocusCheckbox}"  VerticalAlignment="Top" 
-                                                    IsChecked="{Binding Path=IsActive}">
+                                                <CheckBox Style="{DynamicResource FocusCheckbox}"  VerticalAlignment="Top"  
+                                                          Validation.Error="EditBlocklistError" Validation.ErrorTemplate="{x:Null}">
+                                                    <CheckBox.IsChecked>
+                                                        <Binding Path="IsActive" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                                            <Binding.ValidationRules>
+                                                                <local:EditBlocklistErrorValidationRule/>
+                                                            </Binding.ValidationRules>
+                                                        </Binding>
+                                                    </CheckBox.IsChecked>
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Margin="0 2 0 0">
                                                             <Hyperlink Tag="Category" >
@@ -292,7 +299,15 @@
                               ItemsSource="{Binding Source={StaticResource BlockBehaviorValues}}" SelectedItem="{Binding Path=BreakBehavior, Mode=TwoWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <RadioButton Content="{Binding Converter={StaticResource EnumDescriptionConverter}}" GroupName="BreakBehavior" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}" Style="{DynamicResource FocusRadioButton}"/>
+                                <RadioButton Content="{Binding Converter={StaticResource EnumDescriptionConverter}}" GroupName="BreakBehavior" Style="{DynamicResource FocusRadioButton}" Validation.Error="EditBlocklistError" Validation.ErrorTemplate="{x:Null}">
+                                    <RadioButton.IsChecked>
+                                        <Binding Path="IsSelected" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                            <Binding.ValidationRules>
+                                                <local:EditBlocklistErrorValidationRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </RadioButton.IsChecked>
+                                </RadioButton>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ItemContainerStyle>
@@ -318,8 +333,16 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <RadioButton Content="{Binding Converter={StaticResource EnumDescriptionConverter}}" GroupName="Penalty" Style="{DynamicResource FocusRadioButton}" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
-                                    <TextBox Width="22" Text="{Binding ElementName=lvPenalty, Path=DataContext.PenaltyValue, UpdateSourceTrigger=PropertyChanged}" Margin="3 0 0 0" PreviewTextInput="TextBox_PreviewTextInput">
+                                    <RadioButton Content="{Binding Converter={StaticResource EnumDescriptionConverter}}" GroupName="Penalty" Style="{DynamicResource FocusRadioButton}" Validation.Error="EditBlocklistError" Validation.ErrorTemplate="{x:Null}">
+                                        <RadioButton.IsChecked>
+                                            <Binding Path="IsSelected" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                                <Binding.ValidationRules>
+                                                    <local:EditBlocklistErrorValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </RadioButton.IsChecked>
+                                    </RadioButton>
+                                    <TextBox Width="22" Margin="3 0 0 0" PreviewTextInput="TextBox_PreviewTextInput" Validation.Error="EditBlocklistError" Validation.ErrorTemplate="{x:Null}">
                                         <TextBox.Style>
                                             <Style TargetType="{x:Type TextBox}">
                                                 <Style.Triggers>
@@ -338,6 +361,13 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </TextBox.Style>
+                                        <TextBox.Text>
+                                            <Binding ElementName="lvPenalty" Path="DataContext.PenaltyValue" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                                <Binding.ValidationRules>
+                                                    <local:EditBlocklistErrorValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
                                     </TextBox>
                                     <TextBlock Margin="6,0,0,0">random characters
                                         <TextBlock.Style>
@@ -405,7 +435,10 @@
                 </ComboBox>
 
                 <ContentControl Content="{Binding Path=Engine.SelectedBlockList}"
-                    ContentTemplate="{StaticResource BlockListDetails}" Canvas.Top="15" Canvas.ZIndex="1"/>
+                    ContentTemplate="{StaticResource BlockListDetails}" Canvas.Top="15" Canvas.ZIndex="1">
+
+                </ContentControl>
+
             </Canvas>
 
         </StackPanel>

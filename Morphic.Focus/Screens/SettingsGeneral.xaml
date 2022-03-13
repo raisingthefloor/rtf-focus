@@ -15,9 +15,33 @@
 
         <StackPanel Name="sPnlFocusSessionBehavior" Height="auto">
             <TextBlock Style="{DynamicResource SettingsSectionTitle}">Behavior during focus sessions:</TextBlock>
-            <CheckBox Margin="0 4 0 0"  Style="{DynamicResource FocusCheckbox}" IsChecked="{Binding Path=Engine.UserPreferences.General.dontGive5MinWarning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Don't give me a 5 minute warning before scheduled focus sessions start</CheckBox>
-            <CheckBox Margin="0 4 0 0" Style="{DynamicResource FocusCheckbox}" IsChecked="{Binding Path=Engine.UserPreferences.General.showBreakCountdownTimer}">Show count down timer in minutes for break start and end</CheckBox>
-            <CheckBox Margin="0 4 0 0" Style="{DynamicResource FocusCheckbox}" IsChecked="{Binding Path=Engine.UserPreferences.General.blockScreen1stMinofBreak, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Block screen for the first minute of each break to encourage me to stand up and stretch</CheckBox>
+            <CheckBox Margin="0 4 0 0"  Style="{DynamicResource FocusCheckbox}" Validation.Error="EditGeneralError" Validation.ErrorTemplate="{x:Null}">
+                <CheckBox.IsChecked>
+                    <Binding Path="Engine.UserPreferences.General.dontGive5MinWarning" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <local:EditGeneralErrorValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </CheckBox.IsChecked>
+                Don't give me a 5 minute warning before scheduled focus sessions start</CheckBox>
+            <CheckBox Margin="0 4 0 0" Style="{DynamicResource FocusCheckbox}" Validation.Error="EditGeneralError" Validation.ErrorTemplate="{x:Null}">
+                <CheckBox.IsChecked>
+                    <Binding Path="Engine.UserPreferences.General.showBreakCountdownTimer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <local:EditGeneralErrorValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </CheckBox.IsChecked>
+                Show count down timer in minutes for break start and end</CheckBox>
+            <CheckBox Margin="0 4 0 0" Style="{DynamicResource FocusCheckbox}" Validation.Error="EditGeneralError" Validation.ErrorTemplate="{x:Null}">
+                <CheckBox.IsChecked>
+                    <Binding Path="Engine.UserPreferences.General.blockScreen1stMinofBreak" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <local:EditGeneralErrorValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </CheckBox.IsChecked>
+                Block screen for the first minute of each break to encourage me to stand up and stretch</CheckBox>
         </StackPanel>
 
         <StackPanel Name="sPnlTempUnblock" Height="auto" Margin="0 25 0 0">
@@ -44,7 +68,15 @@ use this feature to unblock it.</TextBlock>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Width="230" Height="23">
-                                    <CheckBox Style="{DynamicResource FocusCheckbox}" IsChecked="{Binding IsActive}" Content="{Binding Name}" Width="150" Margin="6 0"></CheckBox>
+                                    <CheckBox Style="{DynamicResource FocusCheckbox}" Content="{Binding Name}" Width="150" Margin="6 0" Validation.Error="EditGeneralError" Validation.ErrorTemplate="{x:Null}">
+                                        <CheckBox.IsChecked>
+                                            <Binding Path="IsActive" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                                                <Binding.ValidationRules>
+                                                    <local:EditGeneralErrorValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </CheckBox.IsChecked>
+                                    </CheckBox>
                                     <Button Style="{DynamicResource SetingsImageButtonStyle}" Name="btnRemoveTempUnblock" Click="btnRemoveTempUnblock_Click" Cursor="Hand">
                                         <Image Source="/Images/Remove Icon.png" Width="8" Height="8" HorizontalAlignment="Right" Margin="6 0"/>
                                     </Button>

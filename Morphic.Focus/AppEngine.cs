@@ -45,6 +45,9 @@ namespace Morphic.Focus
 
                 //Set User Preferences -> Today's schedule
                 SetTodaysSchedule();
+
+                //Set Default Blocklists
+                SetDefaultBlocklists();
                 #endregion
 
                 #region Ongoing Sessions
@@ -62,6 +65,123 @@ namespace Morphic.Focus
             {
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
+        }
+
+        private void SetDefaultBlocklists()
+        {
+            try
+            {
+                if (UserPreferences != null)
+                {
+                    //Add No Entertain Blocklist
+                    if (!UserPreferences.BlockLists.Any(p => p.IsDefault && p.Name == "No Entertain"))
+                    {
+                        AddNoEntertain();
+                    }
+
+                    //Add No Entertain or Social Blocklist
+                    if (!UserPreferences.BlockLists.Any(p => p.IsDefault && p.Name == "No Entertain or Social"))
+                    {
+                        AddNoEntertainorSocial();
+                    }
+
+                    //Add Only Work, Comm OK
+                    if (!UserPreferences.BlockLists.Any(p => p.IsDefault && p.Name == "Only Work, Comm OK"))
+                    {
+                        AddOnlyWorkCommOK();
+                    }
+
+                    //Add Only Work, No Comm Blocklist
+                    if (!UserPreferences.BlockLists.Any(p => p.IsDefault && p.Name == "Only Work, No Comm"))
+                    {
+                        AddOnlyWorkNoComm();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void AddOnlyWorkNoComm()
+        {
+            Blocklist blocklist = new Blocklist() { Name = "Only Work, No Comm", IsDefault = true };
+
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Notifications", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Email", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Communication (Not Email)", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Games", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Proxies", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Videos", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Social Media", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Shopping", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Porn", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "News", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Gambling", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Dating", IsActive = true });
+
+            UserPreferences.BlockLists.Add(blocklist);
+        }
+
+        private void AddOnlyWorkCommOK()
+        {
+            Blocklist blocklist = new Blocklist() { Name = "Only Work, Comm OK", IsDefault=true };
+
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Notifications", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Email", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Communication (Not Email)", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Games", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Proxies", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Videos", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Social Media", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Shopping", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Porn", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "News", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Gambling", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Dating", IsActive = true });
+
+            UserPreferences.BlockLists.Add(blocklist);
+        }
+
+        private void AddNoEntertainorSocial()
+        {
+            Blocklist blocklist = new Blocklist() { Name = "No Entertain or Social", IsDefault=true };
+
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Notifications", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Email", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Communication (Not Email)", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Games", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Proxies", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Videos", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Social Media", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Shopping", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Porn", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "News", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Gambling", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Dating", IsActive = false });
+
+            UserPreferences.BlockLists.Add(blocklist);
+        }
+
+        private void AddNoEntertain()
+        {
+            Blocklist blocklist = new Blocklist() { Name = "No Entertain", IsDefault=true };
+
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Notifications", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Email", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Communication (Not Email)", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Games", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Proxies", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Videos", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Social Media", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Shopping", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Porn", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "News", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Gambling", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Dating", IsActive = false });
+
+            UserPreferences.BlockLists.Add(blocklist);
         }
 
         #endregion
@@ -112,7 +232,7 @@ namespace Morphic.Focus
         DailyTrigger? schTrigger3 = null;
         DailyTrigger? schTrigger4 = null;
         DailyTrigger? schTrigger5 = null;
-        private void ResetSchedules()
+        public void ResetSchedules()
         {
             try
             {
@@ -663,6 +783,51 @@ namespace Morphic.Focus
             }
         }
 
+        public Blocklist? Session1Blocklist
+        {
+            get
+            {
+                if (Session1 == null) return null;
+
+                string blocklistName = Session1.Schedule != null ?
+                            (Session1.Schedule.BlockListName != null ? Session1.Schedule.BlockListName : string.Empty)
+                            : Session1.BlockListName;
+
+                if (!string.IsNullOrWhiteSpace(blocklistName))
+                {
+                    if (UserPreferences.BlockLists.Any(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()))
+                    {
+                        Blocklist blockList = UserPreferences.BlockLists.Where(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()).First();
+                        return blockList;
+                    }
+                }
+
+                return null;
+            }
+        }
+
+        public Blocklist? Session2Blocklist
+        {
+            get
+            {
+                if (Session2 == null) return null;
+
+                string blocklistName = Session2.Schedule != null ?
+                            (Session2.Schedule.BlockListName != null ? Session2.Schedule.BlockListName : string.Empty)
+                            : Session2.BlockListName;
+
+                if (!string.IsNullOrWhiteSpace(blocklistName))
+                {
+                    if (UserPreferences.BlockLists.Any(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()))
+                    {
+                        Blocklist blockList = UserPreferences.BlockLists.Where(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()).First();
+                        return blockList;
+                    }
+                }
+
+                return null;
+            }
+        }
         #endregion
 
         #endregion
@@ -713,9 +878,31 @@ namespace Morphic.Focus
                     }
                     else
                     {
+                        InvokeStartSessionErrorDialog();
                         StartFocusSession(session);
                     }
                 }
+            }
+        }
+
+        private void InvokeStartSessionErrorDialog()
+        {
+            try
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ErrorMessageModal errorMessageModal = new ErrorMessageModal()
+                    {
+                        TitleText = "One or more Focus sessions are active",
+                        ContentText = $"You started at least one Focus session before you last logged out or restarted this computer."
+                    };
+
+                    errorMessageModal.ShowDialog();
+                });
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
 

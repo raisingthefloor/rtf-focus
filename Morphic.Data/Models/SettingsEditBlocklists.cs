@@ -197,6 +197,23 @@ namespace Morphic.Data.Models
         }
         #endregion
 
+        private bool _isDefault = false;
+
+        public bool IsDefault
+        {
+            get
+            {
+                return _isDefault;
+            }
+            set
+            {
+                if (value != this._isDefault)
+                {
+                    this._isDefault = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
     }
 
     public enum BreakBehavior

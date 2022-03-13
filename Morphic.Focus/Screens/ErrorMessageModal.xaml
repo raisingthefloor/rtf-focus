@@ -35,7 +35,7 @@
                 <!--&lt;include "stop task" message if there is as stop task&gt;-->
             </TextBlock>
 
-            <Button Grid.Row="3" Grid.Column="1" Style="{DynamicResource FocusButtonOK}" Margin="0 24 0 0" HorizontalAlignment="Right">
+            <Button Grid.Row="3" Grid.Column="1" Style="{DynamicResource FocusButtonOK}" Margin="0 24 0 0" HorizontalAlignment="Right" Command="ApplicationCommands.Close">
                 OK
             </Button>
         </Grid>

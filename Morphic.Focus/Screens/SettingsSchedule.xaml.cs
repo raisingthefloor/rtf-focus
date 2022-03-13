@@ -1,8 +1,10 @@
 ﻿using Morphic.Data.Models;
+using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -51,7 +53,7 @@ namespace Morphic.Focus.Screens
             Schedule4.Schedule.PropertyChanged += Schedule_PropertyChanged;
             Schedule5.Schedule.PropertyChanged += Schedule_PropertyChanged;
 
-            //Set the Bloacklists property of the Schedule UserControl
+            //Set the Blocklists property of the Schedule UserControl
             if (!string.IsNullOrWhiteSpace(Schedule1.Schedule.BlockListName) &&
                 Engine.UserPreferences.BlockLists.Any(p => p.Name == Schedule1.Schedule.BlockListName))
             {
@@ -103,6 +105,28 @@ namespace Morphic.Focus.Screens
         private void Schedule_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             InitializeCalendarData();
+        }
+
+        private void InvokeScheduleErrorDialog()
+        {
+            try
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ErrorMessageModal errorMessageModal = new ErrorMessageModal()
+                    {
+                        TitleText = "Two Focus session already scheduled",
+                        ContentText = $"More than two Focus sessions cannot be scheduled for the same time.{Environment.NewLine}Try editing your schedule."
+                    };
+
+                    errorMessageModal.ShowDialog();
+
+                });
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
         #endregion
 
@@ -195,7 +219,6 @@ namespace Morphic.Focus.Screens
                 for (int i = startHour; i <= endHour; i++)
                 {
                     //Make the check
-
                     if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
                     {
                         CalendarData? item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
@@ -263,6 +286,10 @@ namespace Morphic.Focus.Screens
                             }
                         }
                     }
+                    else
+                    {
+                        InvokeScheduleErrorDialog();
+                    }
                 }
             }
         }
@@ -293,6 +320,7 @@ namespace Morphic.Focus.Screens
             }
         }
 
+        
         private void Item_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             NotifyPropertyChanged();
@@ -368,4 +396,6 @@ namespace Morphic.Focus.Screens
             return !(left == right);
         }
     }
+
+    
 }

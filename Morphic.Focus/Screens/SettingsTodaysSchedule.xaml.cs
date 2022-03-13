@@ -1,4 +1,5 @@
 ﻿using Morphic.Data.Models;
+using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -98,6 +99,7 @@ namespace Morphic.Focus.Screens
         private void Schedule_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             InitializeCalendarData();
+            Engine.ResetSchedules();
             ResetBlockListVisibility();
         }
 
@@ -227,7 +229,33 @@ namespace Morphic.Focus.Screens
                             }
                         }
                     }
+                    else
+                    {
+                        InvokeScheduleErrorDialog();
+                    }
                 }
+            }
+        }
+
+        private void InvokeScheduleErrorDialog()
+        {
+            try
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ErrorMessageModal errorMessageModal = new ErrorMessageModal()
+                    {
+                        TitleText = "Two Focus session already scheduled",
+                        ContentText = $"More than two Focus sessions cannot be scheduled for the same time.{Environment.NewLine}Try editing your schedule."
+                    };
+
+                    errorMessageModal.ShowDialog();
+
+                });
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
 

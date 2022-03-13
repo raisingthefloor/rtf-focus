@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Morphic.Data.Services
@@ -40,8 +41,23 @@ namespace Morphic.Data.Services
             //Write to Log File
             lock (locker)
             {
-                StreamWriter SW;
-                SW = File.AppendText(path);
+                StreamWriter SW = StreamWriter.Null;
+
+                for (int i = 1; i <= 100; ++i)
+                {
+                    try
+                    {
+                        SW = File.AppendText(path);
+                        break;
+                    }
+                    catch (System.IO.IOException ex) when (i <= 100)
+                    {
+                        // You may check error code to filter some exceptions, not every error
+                        // can be recovered.
+                        Thread.Sleep(1000);
+                    }
+                }
+                
                 SW.WriteLine();
                 SW.WriteLine(DateTime.Now.ToString() + " " + message);
                 SW.Close();

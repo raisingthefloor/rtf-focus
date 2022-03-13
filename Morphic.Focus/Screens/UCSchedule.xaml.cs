@@ -3,6 +3,7 @@ using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,5 +91,47 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
         }
+
+        private void DateChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (Schedule.EndAt.TimeOfDay != TimeSpan.Zero && Schedule.StartAt.TimeOfDay != TimeSpan.Zero)
+                {
+                    if (Schedule.EndAt.TimeOfDay < Schedule.StartAt.TimeOfDay)
+                    {
+                        InvokeStartEndDateErrorDialog();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void InvokeStartEndDateErrorDialog()
+        {
+            try
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ErrorMessageModal errorMessageModal = new ErrorMessageModal()
+                    {
+                        TitleText = "ERROR",
+                        ContentText = $"The end time must come later than the start time."
+                    };
+
+                    errorMessageModal.ShowDialog();
+
+                });
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        
     }
 }

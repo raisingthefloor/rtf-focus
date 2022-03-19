@@ -1,16 +1,14 @@
 {
   "Categories": [
-  {
+    {
       "Name": "Notifications",
-      
-      "AppsAndWebsites": [
-        
-      ]
-	  
+      "AppsAndWebsites": [],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": []
+      }
     },
     {
       "Name": "Communication (Not Email)",
-      
       "AppsAndWebsites": [
         "meet.google.com/",
         "Google Meet (desktop app)",
@@ -59,13 +57,297 @@
         "Messenger (desktop app)",
         "messages.google.com/",
         "Messages by Google "
-      ]
-	  
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "http://meet.google.com/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Google Meet",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://teams.microsoft.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Microsoft Teams",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://skype.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Skype",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://slack.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Slack",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://zoom.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Zoom",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Zoho.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Zoho Meeting",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://goto.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "GoToMeeting",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://eyeson.com/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Eyeson",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://meet.jit.si/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Jitsi Meet",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://webex.com/video-conferencing",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Cisco Webex Meetings",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Google Hangouts Chat",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Hangouts.google.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Yammer",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://yammer.com/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Chanty",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://chanty.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rocket.chat/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "RocketChat",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://discord.com/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Discord",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mattermost.com/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Mattermost",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://flock.com/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Flock",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ryver.com/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Ryver",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://flowdock.com/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Flowdock",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://app.glip.com/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "RingCentral",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fleep.io/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Fleep",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Messages (Mac desktop app)",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://messenger.com/desktop",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Messenger",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://messages.google.com/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Messages by Google ",
+            "IsApp": false,
+            "Path": null
+          }
+        ]
+      }
     },
     {
       "Name": "Dating",
-      
-      "appsAndWebsites": [
+      "AppsAndWebsites": [
         "ashleymadison.com",
         "Badoo (desktop app)",
         "benaughty.com",
@@ -106,11 +388,254 @@
         "tinder.com",
         "weareher.com",
         "zoosk.com"
-      ]
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "http://ashleymadison.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Badoo",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://benaughty.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://blackpeoplemeet.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bumble.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://chemistry.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://christianconnection.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://christianmingle.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://clover.co",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://coffeemeetsbagel.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cupid.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://date.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://datehookup.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://eharmony.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://elitesingles.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Fire",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://friendfinder.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://grindr.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://happn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hinge.co",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://howaboutwe.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://jdate.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lavalife.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lumenapp.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://match.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://muzmatch.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://okcupid.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ourtime.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://plentyoffish.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pof.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://scruff.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://seniorpeoplemeet.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://shaadi.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://silversingles.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://speeddate.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theinnercircle.co",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theleague.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tinder.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://weareher.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://zoosk.com",
+            "IsApp": false,
+            "Path": null
+          }
+        ]
+      }
     },
     {
       "Name": "Email",
-      
       "AppsAndWebsites": [
         "Airmail 5 (desktop app)",
         "att.net",
@@ -192,11 +717,494 @@
         "webmail.shaw.ca",
         "xfinity.com",
         "zoho.com"
-      ]
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "Airmail 5",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://att.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bluewin.ch",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://businessemail.rediff.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Canary Mail",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://centurylink.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Clean",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Email",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Edison",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Mail (deskto app)",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://email.bol.uol.com.br",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://email.freenet.de",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://email.ig.com.br",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://email.telstra.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://email.uol.com.br",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://excite.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fastmail.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://freemail.t-online.de",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gmail.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gmx.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gmx.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hotmail.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hushmail.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://icloud.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://juno.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://laposte.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://libero.it",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lycos.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Mail for Gmail",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Mailbird",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.aol.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.aol.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.comcast.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.google.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.qq.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.rambler.ru",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.rediff.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.ru",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.tim.it",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.tiscali.it",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.yahoo.co.jp",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.yahoo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.yandex.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mail.ziggo.nl",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mailfence.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Mia for Gmail",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Newtown",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://optus.com.au",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://outlook.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Outlook.live.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Outlook",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Polymail",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://protonmail.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rms.orange.fr",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://runbox.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sky.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sparkmailapp.com/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Spark mail",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Spike",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://spectrum.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://t-online.de",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tele2.nl",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Terra.com.br",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thunderbird.net/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://verizon.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://virgilio.it",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://virginmedia.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://web.de",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://webmail.aliceadsl.fr",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://webmail.bell.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://webmail.comcast.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://webmail.cox.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://webmail.earthlink.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://webmail.free.fr",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://webmail.optimum.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://webmail.sfr.fr",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://webmail.shaw.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xfinity.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://zoho.com",
+            "IsApp": false,
+            "Path": null
+          }
+        ]
+      }
     },
     {
       "Name": "Gambling",
-      
       "AppsAndWebsites": [
         "*.*/*p=*betting*",
         "*.*/*p=*black*jack*",
@@ -367,14 +1375,1049 @@
         "Windrawwin.com",
         "Xtreme Slots : Vegas Casino (desktop app)",
         "Pokie Magic Vegas Slots (desktop app)",
-        "Texas Hold’em Poker : Pokerist (desktop app)",
+        "Texas Hold\uFFFDem Poker : Pokerist (desktop app)",
         "BetMGM Online Casino for PC (desktop app)",
         "DoubleU Casino (desktop app)"
-      ]
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*betting*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*black*jack*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*gamble*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*gambling*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*lottery*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*lotto*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*slots*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*betting*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*black*jack*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*gamble*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*gambling*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*lottery*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*lotto*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*slots*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://5dimes.eu",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://5dimes.mobi",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://888.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://888casino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://888poker.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://adda52.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://asianbookie.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://askgamblers.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://attheraces.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bet-at-home.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bet365.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bet365affiliates.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://betfair.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bethard.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://betonline.ag",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://betting.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bettingpartners.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://betway.co.ke",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://betway.co.za",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://betway.co.zm",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://betway.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://betway.com.gh",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://betwayzambia.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bodog.eu",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bonus.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bovada.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bovada.lv",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bovadasportsbook.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://calottery.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://canadasportsbetting.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cardplayer.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cardschat.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://casino-review.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://casino-x.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://casino.info",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://casino.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://casinobonus2.co",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://casinochan.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://casinoonlineca.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://casinos.co",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://classyslots.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://covers.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://desertnightscasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://desertnightscasino.us",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dreamvegas.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dunder.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://europacasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://flalottery.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://freelotto.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://freeslots4u.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://galottery.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gambling.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gamblingsites.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gamblingsites.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://genesiscasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://goldennugget.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://goldennuggetcasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gtbets.eu",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hopa.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hypercasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hypercasino.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://illinoislottery.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://intercasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://intertops.eu",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://jackpotcity.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://jackpotcity.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://jackpotcitycasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://jackpotparty.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://legalbettingreview.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://legitgamblingsites.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://leovegas.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lgbaffiliate.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lincolncasino.eu",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lincolncasinoonline.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lincolnflashcasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lincolnslotscasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lokicasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lotterypost.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://luckydays.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://magicred.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mansion.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mansioncasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://megamillions.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mgmresorts.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://miamicasinoclub.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://miamiclubcasino.im",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://miamiclubcasino.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://miamiclubcasinos.us",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://michiganlottery.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mybookie.ag",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nbso.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://neoonlinecasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://new-casino.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nightrush.biz",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nightrush.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nightrush.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nightrush.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nylottery.ny.gov",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://oddchecker.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://oddsshark.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://officefootballpool.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://officepools.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://olg.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://online-sweepstakes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://onlinecasinohex.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://onlinegambling.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://paddypower.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://palottery.state.pa.us",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://paonlinecasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://partyaccount.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://partycasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://partypoker.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pch.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pickmonitor.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://playamo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://playnow.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pokernews.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://realcasinocanada.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://redstagcasino.eu",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://redstagcasinoonline.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://royalpanda.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rubyfortune.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rubyfortunecasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rubyfortunecasino.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sloto-cash-casino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://slotscapital.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://slotscapital.lv",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://slotscapital.us",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://soccerpunter.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://soccervista.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://spincasino.co.uk",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://spincasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://spinpalace.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://spinpalace.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sportingbet.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sportsbetting.ag",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sportsbettingdime.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sportsbookreview.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sportsinteraction.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thesportsgeek.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://txlottery.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://unibet.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://unibet.eu",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://uptown-acescasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://uptownaces.casino",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://uptownaces.eu",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://uptownacescasino.us",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://uptownacesonlinecasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://uptownpokiescasino.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://uptownpokiesonline.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://vegasinsider.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://williamhill.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Windrawwin.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Xtreme Slots : Vegas Casino",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Pokie Magic Vegas Slots",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Texas Hold\uFFFDem Poker : Pokerist",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "BetMGM Online Casino for PC",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "DoubleU Casino",
+            "IsApp": true,
+            "Path": null
+          }
+        ]
+      }
     },
     {
       "Name": "Games",
-      
       "AppsAndWebsites": [
         "*.*/*p=*cross*word*",
         "*.*/*p=*game*",
@@ -474,7 +2517,7 @@
         "stadia.google.com",
         "Store.steampowered.com",
         "Steam Desktop Portal (desktop app)",
-        "Desktop+ for Steam (desktop app)",
+        "Desktop\u002B for Steam (desktop app)",
         "sudoku.com",
         "sudoku.game",
         "sudoku.name",
@@ -501,11 +2544,764 @@
         "Hold Em (desktop app)",
         "Purble Place (desktop app)",
         "Spider Solitaire (desktop app)"
-      ]
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*cross*word*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*game*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*play*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*solitaire*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*cross*word*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*game*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*play*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*solitaire*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://247solitaire.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://7sudoku.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://addictinggames.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://arkadium.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://armorgames.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://battle.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bestcrosswords.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bicyclecards.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bigfishgames.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://blizzard.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://boardgamegeek.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://boatloadpuzzles.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bulbagarden.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bungie.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://callofduty.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cardgames.io",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://chess.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dictionary.com/games*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://diversions.thestar.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ea.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://easports.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://elderscrollonline.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://epicgames.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://eurogamer.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://eveonline.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://finalfantasyxiv.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://free-spider-solitaire.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://freeonlinegames.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://frontier.co.uk",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gamehouse.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gamepedia.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://games.aarp.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://games.corusent.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://games.latimes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://games.msn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://games.readersdigest.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://games.washingtonpost.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gamesgames.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gamespot.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gamesradar.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://giantbomb.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hattrick.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://icy-veins.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ign.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://itch.io",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://jigsawexplorer.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://jigsawplanet.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://jigzone.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://kiloo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://kongregate.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://leagueoflegends.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Minecraft.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Minecraft",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://minesweeperonline.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://miniclip.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mmo-champion.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mtggoldfish.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://n4g.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://newgrounds.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nexusmods.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nintendo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://onelook.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://onlinegames.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pcgamer.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://penny-arcade.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://planetminecraft.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://playbuzz.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://playok.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Playstation.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Playstation Now",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pogo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pokemon.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://puzzlemaster.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://puzzles.chron.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://puzzles.usatoday.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ravensburger.us",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://riddles.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://roblox.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rockpapershotgun.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rockstargames.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rubiks.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://runescape.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://seriouspuzzles.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://solitaire-web-app.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://solitr.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sporcle.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://square-enix.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://stadia.google.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Store.steampowered.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Steam Desktop Portal",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Desktop\u002B for Steam",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sudoku.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sudoku.game",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sudoku.name",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://swtor.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thejigsawpuzzles.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thesimsresource.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://travian.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://twitch.tv",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ubisoft.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://websudoku.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wizards.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wordplays.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://worldofsolitaire.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://worldoftanks.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wowhead.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Xbox.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Xbox",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Apple Arcade desktop apps",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "3D Pinball",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Chess Titans",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "FreeCell",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Hearts",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "InkBall",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Hold Em",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Purble Place",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Spider Solitaire",
+            "IsApp": true,
+            "Path": null
+          }
+        ]
+      }
     },
     {
       "Name": "News",
-      
       "AppsAndWebsites": [
         "*.*/*p=*current*event*",
         "*.*/*p=*headlines*",
@@ -721,18 +3517,1314 @@
         "wtop.com",
         "Zdnet.com",
         "News (macOS PC desktop app)"
-      ]
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*current*event*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*headlines*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*news*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*current*event*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*headlines*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*news*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://9to5mac.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://abc.net.au",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://abc13.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://abc7news.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://abcnews.go.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://accuweather.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ajc.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://al.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://alarabiya.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://aljazeera.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://aljazeera.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://anandtech.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://apnews.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://arstechnica.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://auspost.com.au",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://axios.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://azcentral.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bbc.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bloomberg.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://boingboing.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://boredpanda.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://boston.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bostonglobe.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://breitbart.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://business-standard.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://businessinsider.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://buzzfeed.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://buzzfeednews.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://c-span.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://canoe.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cbslocal.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cbsnews.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cgtn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://chicagotribune.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://chinadaily.com.cn",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://chron.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://citynews.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cnbc.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cnet.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cnn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cp24.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ctvnews.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dailycaller.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dailymail.co.uk",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dallasnews.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://deccanchronicle.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://deccanherald.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://denverpost.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dowjones.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://drudgereport.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dutchnews.nl",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dw.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ebaumsworld.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://economist.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://edmontonjournal.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://engadget.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://eureporter.co",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://euronews.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://financialexpress.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fivethirtyeight.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://forbes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fortune.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://foxbusiness.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://foxnews.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://freep.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ft.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gizmodo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://globaltv.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://good.is",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hackernoon.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hbr.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hindustantimes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hollywoodreporter.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://huffpost.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://inc.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://independent.co.uk",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://indianexpress.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://indiatimes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://infoworld.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://inquisitr.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://irishtimes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://irna.ir",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://krebsonsecurity.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ktla.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://latimes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://leaderpost.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://livemint.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://macleans.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://makeuseof.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mashable.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mathrubhumi.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://menshealth.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mercurynews.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://miamiherald.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://militarytimes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://moneysense.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://montrealgazette.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://msnbc.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nationalgeographic.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nationalpost.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nationalreview.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nature.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nautil.us",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nbclosangeles.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nbcnews.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nbcnewyork.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://newindianexpress.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://news.cbc.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://news.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://news.com.au",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://news.google.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://news.lycos.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://news.msn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://news.yahoo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://news.ycombinator.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://news12.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://newsday.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://newsmax.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://newsnow.co.uk",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://newsvine.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://newsweek.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://newyorker.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nj.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://npr.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nybooks.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nydailynews.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nymag.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nypost.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nytimes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://observer.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://oprahmag.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://oregonlive.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ottawacitizen.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ottawasun.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://parade.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pcmag.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://phys.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://politico.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://politico.eu",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://propublica.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://psychologytoday.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rappler.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rd.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://reuters.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rollingstone.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rt.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sciencebulletin.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sciencedaily.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://seattlepi.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://seattletimes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sfchronicle.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sfgate.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://shutterstock.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://slashdot.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://smh.com.au",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://smithsonianmag.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://spectrum.ieee.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://startribune.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://stltoday.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://suntimes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://techcrunch.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://techmeme.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://the-sun.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theage.com.au",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theatlantic.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thebeaverton.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thechronicleherald.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thedailybeast.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theepochtimes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theglobeandmail.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theguardian.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thehill.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thehindu.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thehindubusinessline.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thelocal.es",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thenextweb.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theonion.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theregister.co.uk",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theroot.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thestar.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thesun.co.uk",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theverge.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thewalrus.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theweek.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://time.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://torontostar.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://torontosun.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tribuneindia.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://upworthy.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://usatoday.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://usnews.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://vancouversun.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://vice.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://viralnova.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://voat.co",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://voxeurop.eu",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://washingtonexaminer.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://washingtonpost.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://washingtontimes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://weather.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://westword.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wgntv.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wired.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://worth.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wsj.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wtop.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Zdnet.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://News (macOS PC desktop app)",
+            "IsApp": false,
+            "Path": null
+          }
+        ]
+      }
     },
     {
       "Name": "Notifcations",
-      
       "AppsAndWebsites": [
         "Turn on DND (macOS) or Focus Assistant (PC)"
-      ]
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "http://Turn on DND (macOS) or Focus Assistant (PC)",
+            "IsApp": false,
+            "Path": null
+          }
+        ]
+      }
     },
     {
       "Name": "Porn",
-      
       "AppsAndWebsites": [
         "*.xxx",
         "18videosz.com",
@@ -947,11 +5039,1292 @@
         "zbporn.com",
         "zzcartoon.com",
         "zzgays.com"
-      ]
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "http://*.xxx",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://18videosz.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://24porn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://3movs.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://4tube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://adulttime.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://alljapanesepass.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://allofgfs.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://alohatube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://alotporn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://alphaporno.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://anon-v.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://anyshemale.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://arabianchicks.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://avn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://baberotica.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://babes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://badoinkvr.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bang.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bangbrosnetwork.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bdsmstreak.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://beeg.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://best-paypornsites.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bestpornbabes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://besttrannypornsites.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bestxxxsites.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bigtits.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bobs-tube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://boysfood.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://braincash.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://brazzers.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://brokestraightboys.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://camhub.cc",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cams.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cliphunter.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://clips4sale.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://czechvr.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dansmovies.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://daredorm.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ddfnetwork.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://definebabe.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://deviantclip.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://digitalplayground.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dorcelclub.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://drtuber.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://eggporncomics.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://empflix.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://eporner.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://eroxia.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://evilangel.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://extremetube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fakehub.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fakku.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fantasti.cc",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fapster.xxx",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://forhertube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://free18.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://freepornfull.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fuq.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fux.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gayfuror.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gaymaletube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gaytube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gelbooru.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gfrevenge.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://girlsway.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gotgayporn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://h2porn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://handjobhub.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hardsextube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hclips.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://helixstudios.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hentai-foundry.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hentaicore.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hentaigasm.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hentaihaven.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hentaipulse.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hotgoo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hotsouthindiansex.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hustler.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://iknowthatgirl.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://imlive.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ixxx.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://iyalc.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://japanhdv.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://javhd.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://jerkmate.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://jizzhut.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://jizzonline.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://justusboys.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://keezmovies.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://kinkyfamily.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://kporno.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lesbian8.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://letsjerk.is",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lovehomeporn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://lubetube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://luckycrush.live",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://madthumbs.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://manporn.xxx",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://maxim.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://maxiporn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://metaporn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mofosex.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mogosnetwork.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://motherless.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://moviefap.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://myporngay.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://netfapx.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://newsensations.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nonktube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nubiles.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nuvid.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://orgasm.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://perfectgirls.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://perfectgonzo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pervclips.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://playboy.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://porcore.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://porn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://porn300.xxx",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://porn7.xxx",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://porndroids.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornerbros.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornfuror.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornhd.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornheed.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornhost.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornhub.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornhubselect.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornmate.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornmd.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornmilo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornotube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornoxo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornprosnetwork.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornrabbit.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornrox.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornstarnetwork.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://porntube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pornxio.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://proporn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://punishbang.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://punishtube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://realitykings.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://redporn.xxx",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://redtube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rk.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rockettube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rude.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sankakucomplex.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sexlikereal.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sexvid.xxx",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://shameless.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://shemailhd.sex",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://shooshtime.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://slutload.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://slutroulette.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://spankbang.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://spankwire.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://stripchat.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://submityourflicks.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://submityourtapes.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sunporno.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://teamskeet.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://theporndude.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thumbzilla.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tiava.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tnaflix.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://topfreepornvideos.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://toppornsites.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tranny.one",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tube8.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tubegalore.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tubegals.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tubev.sex",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://twilightsex.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://twistysnetwork.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://videosz.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://viewdesisex.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://virtualtaboo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://vporn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://vrcock.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://vrcosplay.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://vrporn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://vrsmash.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wankzvr.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://watch-my-gf.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://watch-my-gf.me",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://watchindianporn.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://watchmyexgf.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://watchmygf.me",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://watchmygf.tv",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xbabe.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xhamster.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xmoviesforyou.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xnxx.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xnxxhamster.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xpaja.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xtube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xvideos.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xxvids.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xxx.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xxxaporn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xxxbunker.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xxxvideos247.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://youjizz.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://youporn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://youporngay.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://yuvutu.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://zbporn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://zzcartoon.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://zzgays.com",
+            "IsApp": false,
+            "Path": null
+          }
+        ]
+      }
     },
     {
       "Name": "Productivity (exceptions)",
-      
       "AppsAndWebsites": [
         "2checkout.com",
         "accounts.google.com",
@@ -1043,14 +6416,557 @@
         "zapier.com",
         "zendesk.com",
         "zoho.com"
-      ]
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "http://2checkout.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://accounts.google.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://android.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://apple.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://asana.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://basecamp.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bluepay.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://box.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://braintreepayments.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://britannica.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bufferapp.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://calendar.google.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://chanty.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://chargebee.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://chrome.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://coursera.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cyfe.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dictionary.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://docs.google.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://drive.google.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dropbox.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://elance.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://evernote.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://expensify.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://firefox.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fiverr.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://freedcamp.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://freelancer.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://freshdesk.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://getcoldturkey.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://getdpd.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://getpocket.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://github.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gitlab.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://google.com/analytics/*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://google.com/webmaster/*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gsuite.google.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hangouts.google.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hemingwayapp.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hootsuite.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hubspot.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://icloud.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ifreelance.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ifttt.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://live.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://merriam-webster.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://microsoft.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://microsoftonline.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mozilla.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://msnd.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://odesk.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://office.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://office365.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://onedesk.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://paymoapp.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://paypal.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://peopleperhour.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://podio.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://prezi.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://proofhub.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://quip.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://salesforce.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://shopify.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://simplyhired.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Skype.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Skype",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://slack.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://spiceworks.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://squarespace.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://squareup.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://stackoverflow.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://stripe.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://superuser.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://teams.microsoft.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://teamwork.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thesaurus.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://todoist.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://toggl.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://trello.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://upwork.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://w3schools.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://webex.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wetransfer.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wikipedia.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wordpress.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://workzone.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wrike.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://zapier.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://zendesk.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://zoho.com",
+            "IsApp": false,
+            "Path": null
+          }
+        ]
+      }
     },
     {
       "Name": "Proxies",
-      
       "AppsAndWebsites": [
         "*.*/",
-        "*p=*proxies*\",",
+        "*p=*proxies*\u0022,",
         "*.*/*p=*proxy*",
         "*.*/*p=*vpn*",
         "*.*/*q=*proxies*",
@@ -1074,11 +6990,164 @@
         "youtubeproxy.site",
         "zend2.com",
         "zpn.im"
-      ]
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "http://*.*/",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*p=*proxies*\u0022,",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*proxy*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*p=*vpn*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*proxies*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*proxy*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/*q=*vpn*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*proxy*.*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://expressvpn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://filterbypass.me",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hide.me",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hidemyass.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hidester.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ipvanish.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://kproxy.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://le-vpn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nordvpn.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://proxfree.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://proxysite.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://toolur.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://vpnbook.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://whoer.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://youtubeproxy.site",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://zend2.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://zpn.im",
+            "IsApp": false,
+            "Path": null
+          }
+        ]
+      }
     },
     {
       "Name": "Shopping",
-      
       "AppsAndWebsites": [
         "*.*/buy*",
         "*.*/cart*",
@@ -1126,11 +7195,290 @@
         "westelm.com",
         "wish.com",
         "zappos.com"
-      ]
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "http://*.*/buy*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/cart*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/check-out*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/checkout*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://*.*/purchase*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://alibaba.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://aliexpress.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://amazon.*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bestbuy.*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://boohoo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://craigslist.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ebay.*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://etsy.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://facebook.com/marketplace*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fashionnova.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://forever21.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://gilt.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://google.*/shopping*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://groupon.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ikea.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://kijiji.*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://macys.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://necessaryclothing.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://overstock.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://priceline.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://qvc.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://rakuten.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://riverisland.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sephora.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://shop.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://shop.mango.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://shop.nordstrom.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://shopbop.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://shophq.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://shopzilla.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://snapdeal.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://soap.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://staples.*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://target.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://thinkgeek.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tuftandneedle.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://uniqlo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://walmart.*",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://westelm.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wish.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://zappos.com",
+            "IsApp": false,
+            "Path": null
+          }
+        ]
+      }
     },
     {
       "Name": "Social Media",
-      
       "AppsAndWebsites": [
         "4chan.org",
         "9gag.com",
@@ -1178,11 +7526,290 @@
         "Anywhere for Facebook (desktop app)",
         "FreeChat for WhatsApp (desktop app)",
         "Twitter(desktop app)"
-      ]
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "http://4chan.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://9gag.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://badoo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://chatroulette.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://classmates.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://digg.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://facebook.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fark.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://foursquare.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://funnyordie.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hello.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hotornot.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://imgur.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://indiegogo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://indiehackers.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://instagram.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://kickstarter.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://kiwibox.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://line.me",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://linkedin.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mastodon.social",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://myspace.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://orkut.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://pinterest.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://producthunt.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://qzone.qq.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://reddit.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://renren.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://skype.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://skyrock.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://snapchat.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tagged.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://taringa.net",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://telegram.org",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://the-dots.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tieba.baidu.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tumblr.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://twitter.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://viber.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://vk.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://weibo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Yy.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Messenger",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Anywhere for Facebook",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "FreeChat for WhatsApp",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Twitter",
+            "IsApp": true,
+            "Path": null
+          }
+        ]
+      }
     },
     {
       "Name": "Videos",
-      
       "AppsAndWebsites": [
         "abc.go.com",
         "bravotv.com",
@@ -1216,7 +7843,203 @@
         "xfinity.com",
         "Youtube.com",
         "Friendly Streaming Browser (desktop app)"
-      ]
+      ],
+      "CollAppsAndWebsites": {
+        "ActiveAppsAndWebsites": [
+          {
+            "IsActive": true,
+            "Name": "http://abc.go.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://bravotv.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://cbs.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://crackle.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://crave.ca",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://dailymotion.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://directv.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://disneyplus.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fox.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://fubo.tv",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hbonow.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://hulu.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://mondomedia.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Netflix.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Netflix",
+            "IsApp": true,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://newgrounds.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://nick.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://philo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://primevideo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sky.co.uk",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sky.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sling.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://sproutvideo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://starz.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://ted.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://tv.yahoo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://twitch.tv",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://vimeo.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://wimp.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://xfinity.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "http://Youtube.com",
+            "IsApp": false,
+            "Path": null
+          },
+          {
+            "IsActive": true,
+            "Name": "Friendly Streaming Browser",
+            "IsApp": true,
+            "Path": null
+          }
+        ]
+      }
     }
   ]
 }

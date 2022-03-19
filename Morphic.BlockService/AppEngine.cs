@@ -85,6 +85,22 @@ namespace Morphic.BlockService
             }
         }
 
+        private CategoryCollection? _categoryCollection = null;
+        public CategoryCollection? CategoryCollection
+        {
+            get
+            {
+                return _categoryCollection;
+            }
+            set
+            {
+                if (_categoryCollection != value)
+                {
+                    _categoryCollection = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
         public Session? Session1
         {
             get
@@ -287,6 +303,20 @@ namespace Morphic.BlockService
 
                                     blockList.AlsoBlock.ActiveAppsAndWebsites.Where(p => p.IsActive && p.IsApp).ToList().ForEach(p => BlockApps.Add(p.Name.ToLowerInvariant().Trim()));
                                     blockList.Exceptions.ActiveAppsAndWebsites.Where(p => p.IsActive && p.IsApp).ToList().ForEach(p => ExceptionApps.Add(p.Name.ToLowerInvariant().Trim()));
+
+                                    foreach(Blockcategory blockCategory in blockList.Blockcategories.Where(p => p.IsActive))
+                                    {
+                                        Category category = CategoryCollection.Categories
+                                            .Where(p => p.Name.ToLowerInvariant().Trim() == blockCategory.Name.ToLowerInvariant().Trim()).First();
+
+                                        category.CollAppsAndWebsites.ActiveAppsAndWebsites
+                                            .Where(p => p.IsActive && !p.IsApp).ToList()
+                                            .ForEach(p => BlockSites.Add(new UriBuilder(p.Name.Trim()).Uri));
+
+                                        category.CollAppsAndWebsites.ActiveAppsAndWebsites
+                                            .Where(p => p.IsActive && p.IsApp).ToList()
+                                            .ForEach(p => BlockApps.Add(p.Name.ToLowerInvariant().Trim()));
+                                    }
                                 }
                             }
                         }
@@ -300,8 +330,6 @@ namespace Morphic.BlockService
                 //Add Temporary Unblock
                 UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Where(p => p.IsActive && !p.IsApp).ToList().ForEach(p => ExceptionSites.Add(new UriBuilder(p.Name).Uri));
                 UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites.Where(p => p.IsActive && p.IsApp).ToList().ForEach(p => ExceptionApps.Add(p.Name.ToLowerInvariant().Trim()));
-
-                
             }
             catch (Exception ex)
             {
@@ -318,8 +346,12 @@ namespace Morphic.BlockService
                 //Settings are persisted in memomy as long as the Focus Tool is running
 
                 //1. Get Focus Preferences from the Settings.json file
-                JSONHelper jSONHelper = new JSONHelper(Common.SETTINGS_FILE_NAME);
-                UserPreferences = jSONHelper.Get<UserPreferences>();
+                JSONHelper settingHelper = new JSONHelper(Common.SETTINGS_FILE_NAME);
+                UserPreferences = settingHelper.Get<UserPreferences>();
+
+                //2. Get Categories
+                JSONHelper categoryHelper = new JSONHelper(Common.CATEGORIES_FILE_NAME);
+                CategoryCollection = categoryHelper.Get<CategoryCollection>();
 
                 CheckIsFocusRunning();
             }

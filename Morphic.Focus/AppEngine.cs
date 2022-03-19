@@ -26,8 +26,9 @@ namespace Morphic.Focus
             try
             {
                 #region Categories
+                //TODO - Add versioning to json to prevent copy of the file each time program loads
                 //Copy Categories JSON file to user folder
-                if (!File.Exists(Common.MakeFilePath(Common.CATEGORIES_FILE_NAME)))
+                //if (!File.Exists(Common.MakeFilePath(Common.CATEGORIES_FILE_NAME)))
                     File.Copy(Path.Combine(AppContext.BaseDirectory, Common.CATEGORIES_FILE_NAME), Common.MakeFilePath(Common.CATEGORIES_FILE_NAME), true);
 
                 //Get Categories from the Categories JSON File
@@ -120,6 +121,7 @@ namespace Morphic.Focus
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "News", IsActive = true });
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Gambling", IsActive = true });
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Dating", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Productivity (exceptions)", IsActive = false });
 
             UserPreferences.BlockLists.Add(blocklist);
         }
@@ -140,6 +142,7 @@ namespace Morphic.Focus
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "News", IsActive = true });
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Gambling", IsActive = true });
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Dating", IsActive = true });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Productivity (exceptions)", IsActive = true });
 
             UserPreferences.BlockLists.Add(blocklist);
         }
@@ -160,6 +163,7 @@ namespace Morphic.Focus
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "News", IsActive = false });
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Gambling", IsActive = true });
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Dating", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Productivity (exceptions)", IsActive = false });
 
             UserPreferences.BlockLists.Add(blocklist);
         }
@@ -180,6 +184,7 @@ namespace Morphic.Focus
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "News", IsActive = false });
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Gambling", IsActive = true });
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Dating", IsActive = false });
+            blocklist.Blockcategories.Add(new Blockcategory() { Name = "Productivity (exceptions)", IsActive = false });
 
             UserPreferences.BlockLists.Add(blocklist);
         }
@@ -567,6 +572,33 @@ namespace Morphic.Focus
                 CategoryCollection = new CategoryCollection();
                 jSONHelper.Save<CategoryCollection>(CategoryCollection);
             }
+
+            //Migration Code - Keep it commented
+            //foreach (Category category in CategoryCollection.Categories)
+            //{
+            //    foreach (string name in category.AppsAndWebsites)
+            //    {
+            //        if (name.Contains("(desktop app)"))
+            //        {
+            //            category.CollAppsAndWebsites.ActiveAppsAndWebsites.Add(new ActiveAppsAndWebsites()
+            //            {
+            //                IsActive = true,
+            //                IsApp = true,
+            //                Name = name.Replace("(desktop app)", "").Trim()
+            //            });
+            //        }
+            //        else
+            //        {
+            //            category.CollAppsAndWebsites.ActiveAppsAndWebsites.Add(new ActiveAppsAndWebsites()
+            //            {
+            //                IsActive = true,
+            //                IsApp = false,
+            //                Name = "http://" + name
+            //            });
+            //        }
+            //    }
+            //}
+            //jSONHelper.Save<CategoryCollection>(CategoryCollection);
         }
 
         #endregion

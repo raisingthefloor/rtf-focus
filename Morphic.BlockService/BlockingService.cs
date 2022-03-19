@@ -304,26 +304,9 @@ namespace Morphic.BlockService
             try
             {
                 string filepath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Focus.exe");
-                ////Process p = new Process();
-                ////p.StartInfo.FileName = ;
-                ////p.StartInfo.Arguments = exeName;
+                //string filepath = Path.Combine(@"E:\Focus\Focus.NET\rtf - focus - windows\Morphic.Focus\bin\Debug\net6.0 - windows", "Focus.exe");
                 LoggingService.WriteServiceLog("Process : " + filepath + " " + exeName);
-                ////p.Start();
-
-                //Process.Start(filepath, exeName);
-
-                //var proc = "Focus";
-                //var processName = proc.Replace(".vshost", "");
-                //var runningProcess = Process.GetProcesses()
-                //    .FirstOrDefault(x => (x.ProcessName == processName ||
-                //                    x.ProcessName == proc ||
-                //                    x.ProcessName == proc + ".vshost"));
-
-                //if (runningProcess != null)
-                //{
-                //    UnsafeNative.SendMessage(runningProcess.MainWindowHandle, exeName);
-                //}
-
+                
                 ProcessHandler.CreateProcessAsUser(filepath, exeName).Start();
             }
             catch (Exception ex)
@@ -597,7 +580,11 @@ namespace Morphic.BlockService
                 var filtering = request.BinaryAbsolutePath.IndexOf("chrome", StringComparison.OrdinalIgnoreCase) != -1 ||
                     request.BinaryAbsolutePath.IndexOf("msedge", StringComparison.OrdinalIgnoreCase) != -1 ||
                     request.BinaryAbsolutePath.IndexOf("firefox", StringComparison.OrdinalIgnoreCase) != -1 ||
-                    request.BinaryAbsolutePath.IndexOf("opera", StringComparison.OrdinalIgnoreCase) != -1;
+                    request.BinaryAbsolutePath.IndexOf("opera", StringComparison.OrdinalIgnoreCase) != -1 ||
+                    request.BinaryAbsolutePath.IndexOf("brave", StringComparison.OrdinalIgnoreCase) != -1 ||
+                    request.BinaryAbsolutePath.IndexOf("microsoftedge", StringComparison.OrdinalIgnoreCase) != -1 ||
+                    request.BinaryAbsolutePath.IndexOf("vivaldi", StringComparison.OrdinalIgnoreCase) != -1 ||
+                    request.BinaryAbsolutePath.IndexOf("iexplore", StringComparison.OrdinalIgnoreCase) != -1;
 
                 //var filtering = true;
 
@@ -666,23 +653,23 @@ namespace Morphic.BlockService
             //{
 
 
-            foreach (Uri exceptionSite in Engine.ExceptionSites)
-            {
-                if (Uri.Compare(messageInfo.Url, exceptionSite, UriComponents.Host, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0)
-                {
-                    messageInfo.ProxyNextAction = ProxyNextAction.AllowAndIgnoreContentAndResponse;
-                    return;
-                }
-            }
+            //foreach (Uri exceptionSite in Engine.ExceptionSites)
+            //{
+            //    if (Uri.Compare(messageInfo.Url, exceptionSite, UriComponents.Host, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0)
+            //    {
+            //        messageInfo.ProxyNextAction = ProxyNextAction.AllowAndIgnoreContentAndResponse;
+            //        return;
+            //    }
+            //}
 
-            foreach (Uri blockSite in Engine.BlockSites)
-            {
-                if (Uri.Compare(messageInfo.Url, blockSite, UriComponents.Host, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0)
-                {
-                    RedirectToMorphic(messageInfo);
-                    return;
-                }
-            }
+            //foreach (Uri blockSite in Engine.BlockSites)
+            //{
+            //    if (Uri.Compare(messageInfo.Url, blockSite, UriComponents.Host, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0)
+            //    {
+            //        RedirectToMorphic(messageInfo);
+            //        return;
+            //    }
+            //}
             //}
             //    if (messageInfo.Url.Host.Contains("instagram"))
             //    {
@@ -699,11 +686,42 @@ namespace Morphic.BlockService
             //    return;
             //}
 
-            //if (Engine.BlockSites.Contains(messageInfo.Url.Host.ToLowerInvariant()))
+            //if (Engine.BlockSites.Any(p => p.ToString().Contains(messageInfo.Url.Host.ToLowerInvariant())))
             //{
             //    RedirectToMorphic(messageInfo);
             //    return;
             //}
+
+            foreach (Uri exceptionSite in Engine.ExceptionSites)
+            {
+                try
+                {
+                    if (exceptionSite.Host.AreTheSameUrls(messageInfo.Url.Host))
+                    {
+                        messageInfo.ProxyNextAction = ProxyNextAction.AllowAndIgnoreContentAndResponse;
+                        return;
+                    }
+                }
+                catch
+                {
+                }
+            }
+
+            foreach (Uri blockSite in Engine.BlockSites)
+            {
+                try
+                {
+                    if (blockSite.Host.AreTheSameUrls(messageInfo.Url.Host))
+                    {
+                        RedirectToMorphic(messageInfo);
+                        return;
+                    }
+                }
+                catch
+                {
+                }
+            }
+            
 
 
             //if (messageInfo.Url.Host.Contains("facebook.com"))

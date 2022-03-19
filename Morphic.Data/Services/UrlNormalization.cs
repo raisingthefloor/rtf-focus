@@ -45,9 +45,18 @@ namespace Morphic.Data.Services
             return url;
         }
 
-        public static string NormalizeUrl(this string url)
+        public static string NormalizeUrl(this string urlHost)
         {
-            return NormalizeUrl(new Uri(url));
+            var url = urlToLower(urlHost);
+            url = limitProtocols(url);
+            //url = removeDefaultDirectoryIndexes(url);
+            //url = removeTheFragment(url);
+            //url = removeDuplicateSlashes(url);
+            //url = addWww(url);
+            url = removeWww(url);
+            //url = removeFeedburnerPart(url);
+            //return removeTrailingSlashAndEmptyQuery(url);
+            return url;
         }
 
         private static string removeFeedburnerPart(string url)
@@ -58,10 +67,20 @@ namespace Morphic.Data.Services
 
         private static string addWww(string url)
         {
-            if (new Uri(url).Host.Split('.').Length == 2 && !url.Contains("://www."))
+            //if (new Uri(url).Host.Split('.').Length == 2 && !url.Contains("://www."))
+            //{
+            //    return url.Replace("://", "://www.");
+            //}
+            if (url.Split('.').Length == 2 && !url.Contains("://www."))
             {
                 return url.Replace("://", "://www.");
             }
+            return url;
+        }
+
+        private static string removeWww(string url)
+        {
+            if (url.StartsWith("www.")) return url.Replace("www.", "");
             return url;
         }
 
@@ -73,7 +92,8 @@ namespace Morphic.Data.Services
 
         private static string limitProtocols(string url)
         {
-            return new Uri(url).Scheme == "https" ? url.Replace("https://", "http://") : url;
+            //return new Uri(url).Scheme == "https" ? url.Replace("https://", "http://") : url;
+            return url.Replace("https://", "http://");
         }
 
         private static string removeTheFragment(string url)
@@ -84,7 +104,12 @@ namespace Morphic.Data.Services
 
         private static string urlToLower(Uri uri)
         {
-            return HttpUtility.UrlDecode(uri.AbsoluteUri.ToLowerInvariant());
+            return HttpUtility.UrlDecode(uri.Host.ToLowerInvariant());
+        }
+
+        private static string urlToLower(string url)
+        {
+            return url.ToLowerInvariant().Trim();
         }
 
         private static string removeTrailingSlashAndEmptyQuery(string url)

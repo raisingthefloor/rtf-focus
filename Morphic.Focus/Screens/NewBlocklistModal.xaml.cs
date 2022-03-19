@@ -87,6 +87,7 @@ namespace Morphic.Focus.Screens
                 blocklist.Blockcategories.Add(new Blockcategory() { Name = "News", IsActive = false });
                 blocklist.Blockcategories.Add(new Blockcategory() { Name = "Gambling", IsActive = false });
                 blocklist.Blockcategories.Add(new Blockcategory() { Name = "Dating", IsActive = false });
+                blocklist.Blockcategories.Add(new Blockcategory() { Name = "Productivity (exceptions)", IsActive = false });
 
                 Engine.UserPreferences.BlockLists.Add(blocklist);
                 this.DialogResult = true;

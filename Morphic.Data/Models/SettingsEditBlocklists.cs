@@ -236,7 +236,7 @@ namespace Morphic.Data.Models
         Restart
     }
 
-    public class Blockcategory : Category, IEquatable<Blockcategory>
+    public class Blockcategory : BaseClass, IEquatable<Blockcategory>
     {
         private bool _isActive;
      
@@ -256,6 +256,24 @@ namespace Morphic.Data.Models
             }
         }
 
+        private string _name;
+
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (value != this._name)
+                {
+                    this._name = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
         public override bool Equals(object obj)
         {
             return Equals(obj as Blockcategory);
@@ -264,15 +282,13 @@ namespace Morphic.Data.Models
         public bool Equals(Blockcategory other)
         {
             return other != null &&
-                   base.Equals(other) &&
-                   Name == other.Name &&
-                   EqualityComparer<ObservableCollection<string>>.Default.Equals(AppsAndWebsites, other.AppsAndWebsites) &&
-                   IsActive == other.IsActive;
+                   IsActive == other.IsActive &&
+                   Name == other.Name;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), Name, AppsAndWebsites, IsActive);
+            return HashCode.Combine(IsActive, Name);
         }
 
         public static bool operator ==(Blockcategory left, Blockcategory right)
@@ -380,6 +396,36 @@ namespace Morphic.Data.Models
                 }
             }
         }
+
+        #region CollAppsAndWebsites
+        private CollAppsAndWebsites _collAppsAndWebsites;
+
+        public CollAppsAndWebsites CollAppsAndWebsites
+        {
+            get
+            {
+                if (_collAppsAndWebsites == null)
+                {
+                    _collAppsAndWebsites = new CollAppsAndWebsites();
+                    _collAppsAndWebsites.PropertyChanged += _collAppsAndWebsites_PropertyChanged; ; ;
+                }
+                return _collAppsAndWebsites;
+            }
+            set
+            {
+                if (value != _collAppsAndWebsites)
+                {
+                    _collAppsAndWebsites = value;
+                    _collAppsAndWebsites.PropertyChanged += _collAppsAndWebsites_PropertyChanged;
+                }
+            }
+        }
+
+        private void _collAppsAndWebsites_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged();
+        }
+        #endregion
 
         #region PropertyChanged
         private void _appsAndWebsites_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

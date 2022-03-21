@@ -639,59 +639,7 @@ namespace Morphic.BlockService
         /// </remarks>
         private static void OnNewMessage(HttpMessageInfo messageInfo)
         {
-
-            //if (messageInfo.BodyContentType != string.Empty)
-            //{
-            //    Console.WriteLine("New message with content of type: {0}\n\t{1}\n\t{2}", messageInfo.BodyContentType, messageInfo.Url, messageInfo.MessageProtocol);
-            //}
-            //else
-            //{
-            //    Console.WriteLine("New message: {0}\n\t{1}", messageInfo.Url, messageInfo.MessageProtocol);
-            //}
-
-            //if (messageInfo.Url.Host.Contains("www.instagram"))
-            //{
-
-
-            //foreach (Uri exceptionSite in Engine.ExceptionSites)
-            //{
-            //    if (Uri.Compare(messageInfo.Url, exceptionSite, UriComponents.Host, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0)
-            //    {
-            //        messageInfo.ProxyNextAction = ProxyNextAction.AllowAndIgnoreContentAndResponse;
-            //        return;
-            //    }
-            //}
-
-            //foreach (Uri blockSite in Engine.BlockSites)
-            //{
-            //    if (Uri.Compare(messageInfo.Url, blockSite, UriComponents.Host, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0)
-            //    {
-            //        RedirectToMorphic(messageInfo);
-            //        return;
-            //    }
-            //}
-            //}
-            //    if (messageInfo.Url.Host.Contains("instagram"))
-            //    {
-            //        var result = Uri.Compare(messageInfo.Url, uri2,
-            //UriComponents.Host | UriComponents.PathAndQuery,
-            //UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase);
-
-            //    }
-
-            //// Block only this casino website.
-            //if (Engine.ExceptionSites.Contains(messageInfo.Url.Host.ToLowerInvariant()))
-            //{
-            //    messageInfo.ProxyNextAction = ProxyNextAction.AllowAndIgnoreContentAndResponse;
-            //    return;
-            //}
-
-            //if (Engine.BlockSites.Any(p => p.ToString().Contains(messageInfo.Url.Host.ToLowerInvariant())))
-            //{
-            //    RedirectToMorphic(messageInfo);
-            //    return;
-            //}
-
+            //If the website is part of the exception list, ignore and continue
             foreach (Uri exceptionSite in Engine.ExceptionSites)
             {
                 try
@@ -707,6 +655,7 @@ namespace Morphic.BlockService
                 }
             }
 
+            //If the website is part of the block list, block it and redirect to morphic
             foreach (Uri blockSite in Engine.BlockSites)
             {
                 try
@@ -721,16 +670,8 @@ namespace Morphic.BlockService
                 {
                 }
             }
-            
 
-
-            //if (messageInfo.Url.Host.Contains("facebook.com"))
-            //{
-            //    RedirectToMorphic(messageInfo);
-            //    return;
-            //}
-
-            // By default, allow and ignore content, but not any responses to this content.
+            // By default, allow and ignore content
             messageInfo.ProxyNextAction = ProxyNextAction.AllowAndIgnoreContentAndResponse;
         }
 
@@ -823,6 +764,8 @@ namespace Morphic.BlockService
                 //Starts Website Blocking
                 StartBlock();
                 //this.EventLog.WriteEntry("Started");
+
+                LaunchFocusApp(string.Empty); //Launch focus app on pc start
             }
             catch (Exception ex)
             {

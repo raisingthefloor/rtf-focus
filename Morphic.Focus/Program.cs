@@ -51,8 +51,11 @@ namespace Morphic.Focus
                     
                     UnsafeNative.SendMessage(runningProcess.MainWindowHandle, string.Join(" ", args));
                 }
-                LaunchWatcherAppTimer.Stop();
-                LaunchWatcherAppTimer.Dispose();
+                if (LaunchWatcherAppTimer != null)
+                {
+                    LaunchWatcherAppTimer.Stop();
+                    LaunchWatcherAppTimer.Dispose();
+                }
             }
             catch (Exception ex)
             {
@@ -74,26 +77,29 @@ namespace Morphic.Focus
         }
 
         private static System.Timers.Timer LaunchWatcherAppTimer;
-        
+        private static readonly object locker = new object();
         private static void LaunchWatcherApp()
         {
             try
             {
-                if (!ProcessHelpers.IsRunning("Morphic.FocusWatch"))
+                lock (locker)
                 {
-                    string appLocation = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Morphic.FocusWatch.exe");
-                    LoggingService.WriteAppLog("appLocation : " + appLocation);
-
-                    using (var managementClass = new ManagementClass("Win32_Process"))
+                    if (!ProcessHelpers.IsRunning("Morphic.FocusWatch"))
                     {
-                        var processInfo = new ManagementClass("Win32_ProcessStartup");
-                        processInfo.Properties["CreateFlags"].Value = 0x00000008;
+                        string appLocation = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Morphic.FocusWatch.exe");
+                        LoggingService.WriteAppLog("appLocation : " + appLocation);
 
-                        var inParameters = managementClass.GetMethodParameters("Create");
-                        inParameters["CommandLine"] = appLocation;
-                        inParameters["ProcessStartupInformation"] = processInfo;
+                        using (var managementClass = new ManagementClass("Win32_Process"))
+                        {
+                            var processInfo = new ManagementClass("Win32_ProcessStartup");
+                            processInfo.Properties["CreateFlags"].Value = 0x00000008;
 
-                        var result = managementClass.InvokeMethod("Create", inParameters, null);
+                            var inParameters = managementClass.GetMethodParameters("Create");
+                            inParameters["CommandLine"] = appLocation;
+                            inParameters["ProcessStartupInformation"] = processInfo;
+
+                            var result = managementClass.InvokeMethod("Create", inParameters, null);
+                        }
                     }
                 }
             }

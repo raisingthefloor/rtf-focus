@@ -232,16 +232,21 @@ namespace Morphic.Focus
 
         #region Schedule-Trigger
 
-        DailyTrigger? schTrigger1 = null;
-        DailyTrigger? schTrigger2 = null;
-        DailyTrigger? schTrigger3 = null;
-        DailyTrigger? schTrigger4 = null;
-        DailyTrigger? schTrigger5 = null;
+        public static DailyTrigger? schTrigger1 = null;
+        public static DailyTrigger? schTrigger2 = null;
+        public static DailyTrigger? schTrigger3 = null;
+        public static DailyTrigger? schTrigger4 = null;
+        public static DailyTrigger? schTrigger5 = null;
         public void ResetSchedules()
         {
             try
             {
                 //Reset Triggers
+                if (schTrigger1 != null) schTrigger1.Dispose();
+                if (schTrigger2 != null) schTrigger2.Dispose();
+                if (schTrigger3 != null) schTrigger3.Dispose();
+                if (schTrigger4 != null) schTrigger4.Dispose();
+                if (schTrigger5 != null) schTrigger5.Dispose();
                 schTrigger1 = null;
                 schTrigger2 = null;
                 schTrigger3 = null;
@@ -249,11 +254,16 @@ namespace Morphic.Focus
                 schTrigger5 = null;
 
                 //Set Triggers
-                SetTrigger(schTrigger1, UserPreferences.TodaysSchedule.Schedule1);
-                SetTrigger(schTrigger2, UserPreferences.TodaysSchedule.Schedule2);
-                SetTrigger(schTrigger3, UserPreferences.TodaysSchedule.Schedule3);
-                SetTrigger(schTrigger4, UserPreferences.TodaysSchedule.Schedule4);
-                SetTrigger(schTrigger5, UserPreferences.TodaysSchedule.Schedule5);
+                //SetTrigger(schTrigger1, UserPreferences.TodaysSchedule.Schedule1);
+                //SetTrigger(schTrigger2, UserPreferences.TodaysSchedule.Schedule2);
+                //SetTrigger(schTrigger3, UserPreferences.TodaysSchedule.Schedule3);
+                //SetTrigger(schTrigger4, UserPreferences.TodaysSchedule.Schedule4);
+                //SetTrigger(schTrigger5, UserPreferences.TodaysSchedule.Schedule5);
+                schTrigger1 = SetTrigger(UserPreferences.TodaysSchedule.Schedule1);
+                schTrigger2 = SetTrigger(UserPreferences.TodaysSchedule.Schedule2);
+                schTrigger3 = SetTrigger(UserPreferences.TodaysSchedule.Schedule3);
+                schTrigger4 = SetTrigger(UserPreferences.TodaysSchedule.Schedule4);
+                schTrigger5 = SetTrigger(UserPreferences.TodaysSchedule.Schedule5);
             }
             catch (Exception ex)
             {
@@ -261,40 +271,77 @@ namespace Morphic.Focus
             }
         }
 
-        private void SetTrigger(DailyTrigger? trigger, Schedule schedule)
+        private DailyTrigger? SetTrigger(Schedule schedule)
         {
-            if (schedule != null) //Schedule should be non-null
+            DailyTrigger? trigger = null;
+            try
             {
-                if (schedule.IsActive) //Schedule should be active
+                if (schedule != null) //Schedule should be non-null
                 {
-                    if (Helper.IsActiveToday(schedule)) //Schedule should be active today
+                    if (schedule.IsActive) //Schedule should be active
                     {
-                        if (!UserPreferences.General.dontGive5MinWarning) //Dialog not to be shown if disabled in General Setting
+                        if (Helper.IsActiveToday(schedule)) //Schedule should be active today
                         {
-                            DateTime scheduleStartTime = schedule.StartAt.AddMinutes(-5); //Modal dialog to be shown 5 mins before start time
-
-                            trigger = new DailyTrigger(scheduleStartTime.Hour, scheduleStartTime.Minute, scheduleStartTime.Second); // today at scheduled time
-
-                            trigger.OnTimeTriggered += () =>
+                            if (!UserPreferences.General.dontGive5MinWarning) //Dialog not to be shown if disabled in General Setting
                             {
-                                if (Session1 != null && Session1.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
+                                DateTime scheduleStartTime = schedule.StartAt.AddMinutes(-5); //Modal dialog to be shown 5 mins before start time
 
-                                if (Session2 != null && Session2.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
+                                trigger = new DailyTrigger(scheduleStartTime.Hour, scheduleStartTime.Minute, scheduleStartTime.Second); // today at scheduled time
 
-                                if (Session1 != null && Session2 != null) return; //Dialog not to be shown if two sessions are already active
-
-                                Application.Current.Dispatcher.Invoke(() =>
+                                trigger.OnTimeTriggered += () =>
                                 {
-                                    ScheduledSessionModal scrScheduledSessionModal = new ScheduledSessionModal(schedule);
-                                    scrScheduledSessionModal.Show();
-                                    LoggingService.WriteAppLog("Scheduled Session Dialog Open");
-                                });
+                                    if (Session1 != null && Session1.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
 
-                            };
+                                    if (Session2 != null && Session2.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
+
+                                    if (Session1 != null && Session2 != null) return; //Dialog not to be shown if two sessions are already active
+
+                                    Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        ScheduledSessionModal scrScheduledSessionModal = new ScheduledSessionModal(schedule);
+                                        scrScheduledSessionModal.Show();
+                                        LoggingService.WriteAppLog("Scheduled Session Dialog Open");
+                                    });
+
+                                };
+                            }
+                            else //Start schedule session at scheduled time
+                            {
+                                DateTime scheduleStartTime = schedule.StartAt; //Schedule start time
+
+                                trigger = new DailyTrigger(scheduleStartTime.Hour, scheduleStartTime.Minute, scheduleStartTime.Second); // today at scheduled time
+
+                                trigger.OnTimeTriggered += () =>
+                                {
+                                    double totalMinutes = (schedule.EndAt - DateTime.Now).TotalMinutes;
+
+                                    StartFocusSession(new Session()
+                                    {
+                                        ActualStartTime = DateTime.Now,
+                                        ActualEndTime = schedule.EndAt,
+                                        BlockListName = schedule.BlockListName,
+
+                                        //Break
+                                        ProvideBreak = UserPreferences.Schedules.Schedulebreak.IsActive,
+                                        BreakDuration = UserPreferences.Schedules.Schedulebreak.BreakDuration,
+                                        BreakGap = UserPreferences.Schedules.Schedulebreak.BreakGap,
+
+                                        //User & Log
+                                        FocusType = "ScheduledSession",
+                                        Schedule = schedule,
+                                        SessionDuration = Convert.ToInt32(totalMinutes)
+                                    });
+                                };
+                            }
                         }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+            return trigger;
         }
 
 
@@ -1545,11 +1592,12 @@ namespace Morphic.Focus
             {
                 while (true)
                 {
-                    var triggerTime = DateTime.Today + TriggerHour - DateTime.Now;
-                    if (triggerTime < TimeSpan.Zero)
-                        triggerTime = triggerTime.Add(new TimeSpan(24, 0, 0));
-                    await Task.Delay(triggerTime, CancellationToken.Token);
-                    OnTimeTriggered?.Invoke();
+                    //Example we need to schedule for 5pm and current time is 6pm
+                    var triggerTime = DateTime.Today + TriggerHour - DateTime.Now; //triggerTime = 00 hr + 17 hr - 18 hr = -1 hr
+                    if (triggerTime < TimeSpan.Zero) //if triggerTime < 0
+                        triggerTime = triggerTime.Add(new TimeSpan(24, 0, 0)); //triggerTime = -1 hr + 24 hr = 23 hr
+                    await Task.Delay(triggerTime, CancellationToken.Token); //wait for 23 hr. Currenttime = 6pm + 23 hr = 5pm next day
+                    OnTimeTriggered?.Invoke(); //trigger at 5 pm next day
                 }
             }, CancellationToken.Token);
         }
@@ -1557,11 +1605,19 @@ namespace Morphic.Focus
         /// <inheritdoc/>
         public void Dispose()
         {
-            CancellationToken?.Cancel();
-            CancellationToken?.Dispose();
-            CancellationToken = null;
-            RunningTask?.Dispose();
-            RunningTask = null;
+            try
+            {
+                CancellationToken?.Cancel();
+                CancellationToken?.Dispose();
+                CancellationToken = null;
+
+                RunningTask?.Dispose();
+                RunningTask = null;
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
 
         /// <summary>

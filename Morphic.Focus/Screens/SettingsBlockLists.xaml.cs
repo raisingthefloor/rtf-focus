@@ -231,7 +231,7 @@ namespace Morphic.Focus.Screens
         {
             try
             {
-                if (e.Action == ValidationErrorEventAction.Added)
+                if (e.Action == ValidationErrorEventAction.Added && e.Error.ErrorContent == "Blocklist in use")
                 {
                     InvokeBlocklistErrorDialog();
 

@@ -314,8 +314,8 @@
           },
           {
             "IsActive": true,
-            "Name": "http://Messages (Mac desktop app)",
-            "IsApp": false,
+            "Name": "Messages",
+            "IsApp": true,
             "Path": null
           },
           {
@@ -338,8 +338,8 @@
           },
           {
             "IsActive": true,
-            "Name": "http://Messages by Google ",
-            "IsApp": false,
+            "Name": "Messages",
+            "IsApp": true,
             "Path": null
           }
         ]
@@ -776,8 +776,8 @@
           },
           {
             "IsActive": true,
-            "Name": "http://Mail (deskto app)",
-            "IsApp": false,
+            "Name": "Mail",
+            "IsApp": true,
             "Path": null
           },
           {
@@ -3245,8 +3245,8 @@
           },
           {
             "IsActive": true,
-            "Name": "http://Apple Arcade desktop apps",
-            "IsApp": false,
+            "Name": "Apple Arcade",
+            "IsApp": true,
             "Path": null
           },
           {
@@ -4800,8 +4800,8 @@
           },
           {
             "IsActive": true,
-            "Name": "http://News (macOS PC desktop app)",
-            "IsApp": false,
+            "Name": "News",
+            "IsApp": true,
             "Path": null
           }
         ]

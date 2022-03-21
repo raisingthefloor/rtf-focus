@@ -120,7 +120,7 @@
                 <Style TargetType="TextBox">
                     <Setter Property="Text">
                         <Setter.Value>
-                            <Binding Path="Schedule.StartAt" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" 
+                            <Binding Path="Schedule.StartAt" Mode="TwoWay"  
                                      StringFormat="{}{0:t}">
                             </Binding>
                         </Setter.Value>
@@ -138,7 +138,7 @@
                 <Style TargetType="TextBox">
                     <Setter Property="Text">
                         <Setter.Value>
-                            <Binding Path="Schedule.EndAt" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" 
+                            <Binding Path="Schedule.EndAt" Mode="TwoWay"  
                                      StringFormat="{}{0:t}">
                             </Binding>
                         </Setter.Value>

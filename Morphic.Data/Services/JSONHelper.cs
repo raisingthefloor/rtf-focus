@@ -25,7 +25,22 @@ namespace Morphic.Data.Services
             {
                 if (File.Exists(path))
                 {
-                    string jsonString = File.ReadAllText(path);
+                    string jsonString = string.Empty;
+                    for (int i = 1; i <= 100; ++i)
+                    {
+                        try
+                        {
+                            jsonString = string.Empty;
+                            jsonString = File.ReadAllText(path);
+                            break;
+                        }
+                        catch (System.IO.IOException ex) when (i <= 100)
+                        {
+                            // You may check error code to filter some exceptions, not every error
+                            // can be recovered.
+                            Thread.Sleep(1000);
+                        }
+                    }
                     return JsonSerializer.Deserialize<T>(jsonString);
                 }
                 else
@@ -43,7 +58,22 @@ namespace Morphic.Data.Services
             //Write to Log File
             lock (locker)
             {
-                string jsonString = File.ReadAllText(path);
+                string jsonString = string.Empty;
+                for (int i = 1; i <= 100; ++i)
+                {
+                    try
+                    {
+                        jsonString = string.Empty;
+                        jsonString = File.ReadAllText(path);
+                        break;
+                    }
+                    catch (System.IO.IOException ex) when (i <= 100)
+                    {
+                        // You may check error code to filter some exceptions, not every error
+                        // can be recovered.
+                        Thread.Sleep(1000);
+                    }
+                }
                 return jsonString;
             }
         }

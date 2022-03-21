@@ -36,8 +36,8 @@
             </TextBlock>
 
             <TextBox Width="57" Height="23" Margin="8 10 0 11" 
-                     Text="{Binding Path=Schedule.StartAt, Mode=TwoWay, StringFormat={}{0:t}, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Width="57" Height="23" Margin="8 10 0 11" Text="{Binding Path=Schedule.EndAt, Mode=TwoWay, StringFormat={}{0:t}, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                     Text="{Binding Path=Schedule.StartAt, Mode=TwoWay, StringFormat={}{0:t}}"></TextBox>
+            <TextBox Width="57" Height="23" Margin="8 10 0 11" Text="{Binding Path=Schedule.EndAt, Mode=TwoWay, StringFormat={}{0:t}}"></TextBox>
 
             <CheckBox Name="cbTodaysSchedule" Margin="12 10 0 11" VerticalAlignment="Center" HorizontalAlignment="Center" Height="14" IsChecked="{Binding Path=Schedule.IsActive}" Style="{DynamicResource FocusCheckbox}"/>
         </StackPanel>

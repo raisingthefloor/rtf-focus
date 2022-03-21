@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Morphic.Focus.Screens"
         mc:Ignorable="d"
-        Width="312" Height="334" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Stop Focus Session"
+        Width="312" Height="auto" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Stop Focus Session" SizeToContent="Height"
         MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" Topmost="True">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
@@ -25,16 +25,18 @@
             <TextBlock Grid.Row="0" Grid.Column="0" Margin="25 20 25 0"  Style="{DynamicResource TitleStyle}" FontSize="18" Height="auto" LineHeight="23">
                 Stop Focus Session</TextBlock>
 
-            <StackPanel Grid.Row="1" Grid.Column="0" Margin="33 20 33 0" Width="246">
+            
+                <StackPanel Margin="33 20 33 0" Width="246" Grid.Row="1" Grid.Column="0">
                 <TextBlock Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" TextAlignment="Center">
                 You set the blocklist (currently being used) to require you to complete the task below in order to stop the focus session.</TextBlock>
 
                 <TextBlock Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" TextAlignment="Center" Margin="0 15 0 0">
                 Type the following characters in the space below:</TextBlock>
 
-                <TextBlock Style="{DynamicResource ModalTitle}" TextWrapping="WrapWithOverflow" TextAlignment="Center" Text="{Binding RandomChars}">
+                <TextBlock Style="{DynamicResource ModalTitle}" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding RandomChars}" Height="auto">
                 </TextBlock>
             </StackPanel>
+            
 
             <TextBox Grid.Row="2" Grid.Column="0" Margin="30 8 30 0" Height="25" Width="249" TextChanged="EnableDisableStopFocusButton" Name="txtRandomChars"></TextBox>
 

@@ -304,18 +304,36 @@ namespace Morphic.BlockService
                                     blockList.AlsoBlock.ActiveAppsAndWebsites.Where(p => p.IsActive && p.IsApp).ToList().ForEach(p => BlockApps.Add(p.Name.ToLowerInvariant().Trim()));
                                     blockList.Exceptions.ActiveAppsAndWebsites.Where(p => p.IsActive && p.IsApp).ToList().ForEach(p => ExceptionApps.Add(p.Name.ToLowerInvariant().Trim()));
 
-                                    foreach(Blockcategory blockCategory in blockList.Blockcategories.Where(p => p.IsActive))
+                                    //Category Blocking
+                                    //Check for each active category
+                                    foreach (Blockcategory blockCategory in blockList.Blockcategories.Where(p => p.IsActive))
                                     {
+                                        //Get the Category
                                         Category category = CategoryCollection.Categories
                                             .Where(p => p.Name.ToLowerInvariant().Trim() == blockCategory.Name.ToLowerInvariant().Trim()).First();
 
-                                        category.CollAppsAndWebsites.ActiveAppsAndWebsites
-                                            .Where(p => p.IsActive && !p.IsApp).ToList()
-                                            .ForEach(p => BlockSites.Add(new UriBuilder(p.Name.Trim()).Uri));
+                                        //Get Category websites
+                                        //category.CollAppsAndWebsites.ActiveAppsAndWebsites
+                                        //    .Where(p => p.IsActive && !p.IsApp).ToList()
+                                        //    .ForEach(p => BlockSites.Add(new UriBuilder(p.Name.Trim()).Uri));
+                                        List<ActiveAppsAndWebsites> appWebsites = category.CollAppsAndWebsites.ActiveAppsAndWebsites.Where(p => p.IsActive && !p.IsApp).ToList();
+                                        foreach (ActiveAppsAndWebsites appWebsite in appWebsites)
+                                        {
+                                            try
+                                            {
+                                                Uri uri = new UriBuilder(appWebsite.Name.ToLowerInvariant().Trim()).Uri;
+                                                BlockSites.Add(uri);
+                                            }
+                                            catch //If the category item is not well constructed, ignore them for now
+                                            {
+                                                
+                                            }
+                                        }
 
+                                        //Get Category apps
                                         category.CollAppsAndWebsites.ActiveAppsAndWebsites
-                                            .Where(p => p.IsActive && p.IsApp).ToList()
-                                            .ForEach(p => BlockApps.Add(p.Name.ToLowerInvariant().Trim()));
+                                        .Where(p => p.IsActive && p.IsApp).ToList()
+                                        .ForEach(p => BlockApps.Add(p.Name.ToLowerInvariant().Trim()));
                                     }
                                 }
                             }

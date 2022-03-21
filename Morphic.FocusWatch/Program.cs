@@ -14,6 +14,7 @@ namespace Morphic.FocusWatch
     {
         private static FileSystemWatcher watcher = null;
         private static System.Timers.Timer LaunchFocusAppTimer;
+        private static readonly object locker = new object();
         public static bool IsFocusRunning { get; set; } = false;
 
         static void Main(string[] args)
@@ -77,36 +78,29 @@ namespace Morphic.FocusWatch
         {
             try
             {
-                if (!ProcessHelpers.IsRunning("Focus"))
+                lock (locker)
                 {
-                    if (IsFocusRunning)
+                    if (!ProcessHelpers.IsRunning("Focus"))
                     {
-                        string appLocation = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Focus.exe");
-                        LoggingService.WriteAppLog("appLocation : " + appLocation);
-
-                        using (var managementClass = new ManagementClass("Win32_Process"))
+                        if (IsFocusRunning)
                         {
-                            var processInfo = new ManagementClass("Win32_ProcessStartup");
-                            processInfo.Properties["CreateFlags"].Value = 0x00000008;
+                            string appLocation = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Focus.exe");
+                            LoggingService.WriteAppLog("appLocation : " + appLocation);
 
-                            var inParameters = managementClass.GetMethodParameters("Create");
-                            inParameters["CommandLine"] = appLocation;
-                            inParameters["ProcessStartupInformation"] = processInfo;
+                            using (var managementClass = new ManagementClass("Win32_Process"))
+                            {
+                                var processInfo = new ManagementClass("Win32_ProcessStartup");
+                                processInfo.Properties["CreateFlags"].Value = 0x00000008;
 
-                            var result = managementClass.InvokeMethod("Create", inParameters, null);
+                                var inParameters = managementClass.GetMethodParameters("Create");
+                                inParameters["CommandLine"] = appLocation;
+                                inParameters["ProcessStartupInformation"] = processInfo;
+
+                                var result = managementClass.InvokeMethod("Create", inParameters, null);
+                            }
                         }
                     }
                 }
-
-                //if (!ProcessHelpers.IsRunning("Focus"))
-                //{
-                //    if (IsFocusRunning)
-                //    {
-                //        string appLocation = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Focus.exe");
-                //        Process.Start(appLocation);
-                //    }
-                //    Thread.Sleep(3000);
-                //}
             }
             catch (Exception ex)
             {

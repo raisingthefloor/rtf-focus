@@ -180,7 +180,7 @@ namespace Morphic.Data.Models
             }
         }
 
-        private DateTime _startAt;
+        private DateTime _startAt = DateTime.Today.AddHours(23).AddMinutes(59);
 
         public DateTime StartAt
         {
@@ -199,7 +199,7 @@ namespace Morphic.Data.Models
             }
         }
 
-        private DateTime _endAt;
+        private DateTime _endAt = DateTime.Today.AddHours(23).AddMinutes(59);
 
         public DateTime EndAt
         {

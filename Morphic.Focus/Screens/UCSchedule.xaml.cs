@@ -79,8 +79,8 @@ namespace Morphic.Focus.Screens
                 LoggingService.WriteAppLog("UCSchedule -> btnClearSchedule_Click");
 
                 Schedule.BlockListName = string.Empty;
-                Schedule.StartAt = DateTime.Today;
-                Schedule.EndAt = DateTime.Today;
+                Schedule.StartAt = DateTime.Today.AddHours(23).AddMinutes(59);
+                Schedule.EndAt = DateTime.Today.AddHours(23).AddMinutes(59);
                 Schedule.IsActiveSunday = Schedule.IsActiveMonday = Schedule.IsActiveTuesday = Schedule.IsActiveWednesday = Schedule.IsActiveThursday =
                     Schedule.IsActiveFriday = Schedule.IsActiveSaturday = false;
                 Schedule.IsActive = false;

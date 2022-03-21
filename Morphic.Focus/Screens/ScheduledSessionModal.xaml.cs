@@ -216,7 +216,7 @@ namespace Morphic.Focus.Screens
 
                 //Timer - Start a Session after x mins
                 double totalMinutes = (Schedule.EndAt - DateTime.Now).TotalMinutes;
-                _engine.StartFocusSession(new Session()
+                Engine.StartFocusSession(new Session()
                 {
                     ActualStartTime = DateTime.Now,
                     ActualEndTime = Schedule.EndAt,

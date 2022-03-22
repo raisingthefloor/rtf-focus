@@ -195,16 +195,16 @@ namespace Morphic.Focus.Screens
                             minutesLeft = Convert.ToInt32(Math.Ceiling(_time.TotalMinutes));
                         break;
                     case "btnNow":
-                        minutesLeft = 0;
+                        minutesLeft = Common.Min0;
                         break;
                     case "btn10Min":
-                        minutesLeft = 10;
+                        minutesLeft = Common.Min10;
                         break;
                     case "btn15Min":
-                        minutesLeft = 15;
+                        minutesLeft = Common.Min15;
                         break;
                     default:
-                        minutesLeft = 5;
+                        minutesLeft = Common.Min5;
                         break;
                 }
 

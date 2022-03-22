@@ -365,6 +365,7 @@
                                             <Binding ElementName="lvPenalty" Path="DataContext.PenaltyValue" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                                                 <Binding.ValidationRules>
                                                     <local:EditBlocklistErrorValidationRule/>
+                                                    <local:RangeValidationRule MinValue="1" MaxValue="99" />
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>

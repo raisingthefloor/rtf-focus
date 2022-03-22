@@ -483,7 +483,6 @@ namespace Morphic.BlockService
             try
             {
                 List<string> lstApps = new List<string>();
-                bool flag = false;
 
                 //Gather installed apps
                 try

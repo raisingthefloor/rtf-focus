@@ -31,6 +31,7 @@ namespace Morphic.Data.Services
         private static int min20 = 20; //change to 20
         private static int min25 = 25; //change to 25
         private static int min45 = 45; //change to 45
+        private static int min0 = 0; //change to 45
 
         public static int LongBreakDuration { get => longBreakDuration; set => longBreakDuration = value; }
         public static int Min60 { get => min60; set => min60 = value; }
@@ -43,6 +44,7 @@ namespace Morphic.Data.Services
         public static int Min20 { get => min20; set => min20 = value; }
         public static int Min25 { get => min25; set => min25 = value; }
         public static int Min45 { get => min45; set => min45 = value; }
+        public static int Min0 { get => min0; set => min0 = value; }
 
         public static string MakeFilePath(string fileName)
         {

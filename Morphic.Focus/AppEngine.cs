@@ -18,6 +18,7 @@ namespace Morphic.Focus
     {
         #region AppEngine Instance
         private static readonly object locker = new object();
+        private static readonly object schedulelocker = new object();
         private static readonly AppEngine _instance = new AppEngine();
         public static AppEngine Instance { get { return _instance; } }
 
@@ -29,7 +30,7 @@ namespace Morphic.Focus
                 //TODO - Add versioning to json to prevent copy of the file each time program loads
                 //Copy Categories JSON file to user folder
                 //if (!File.Exists(Common.MakeFilePath(Common.CATEGORIES_FILE_NAME)))
-                    File.Copy(Path.Combine(AppContext.BaseDirectory, Common.CATEGORIES_FILE_NAME), Common.MakeFilePath(Common.CATEGORIES_FILE_NAME), true);
+                File.Copy(Path.Combine(AppContext.BaseDirectory, Common.CATEGORIES_FILE_NAME), Common.MakeFilePath(Common.CATEGORIES_FILE_NAME), true);
 
                 //Get Categories from the Categories JSON File
                 GetCategoryies();
@@ -128,7 +129,7 @@ namespace Morphic.Focus
 
         private void AddOnlyWorkCommOK()
         {
-            Blocklist blocklist = new Blocklist() { Name = "Only Work, Comm OK", IsDefault=true };
+            Blocklist blocklist = new Blocklist() { Name = "Only Work, Comm OK", IsDefault = true };
 
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Notifications", IsActive = false });
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Email", IsActive = false });
@@ -149,7 +150,7 @@ namespace Morphic.Focus
 
         private void AddNoEntertainorSocial()
         {
-            Blocklist blocklist = new Blocklist() { Name = "No Entertain or Social", IsDefault=true };
+            Blocklist blocklist = new Blocklist() { Name = "No Entertain or Social", IsDefault = true };
 
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Notifications", IsActive = false });
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Email", IsActive = false });
@@ -170,7 +171,7 @@ namespace Morphic.Focus
 
         private void AddNoEntertain()
         {
-            Blocklist blocklist = new Blocklist() { Name = "No Entertain", IsDefault=true };
+            Blocklist blocklist = new Blocklist() { Name = "No Entertain", IsDefault = true };
 
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Notifications", IsActive = false });
             blocklist.Blockcategories.Add(new Blockcategory() { Name = "Email", IsActive = false });
@@ -232,38 +233,91 @@ namespace Morphic.Focus
 
         #region Schedule-Trigger
 
-        public static DailyTrigger? schTrigger1 = null;
-        public static DailyTrigger? schTrigger2 = null;
-        public static DailyTrigger? schTrigger3 = null;
-        public static DailyTrigger? schTrigger4 = null;
-        public static DailyTrigger? schTrigger5 = null;
+        private DailyTrigger? schTrigger1 = null;
+        private DailyTrigger? schTrigger2 = null;
+        private DailyTrigger? schTrigger3 = null;
+        private DailyTrigger? schTrigger4 = null;
+        private DailyTrigger? schTrigger5 = null;
+
+        public DailyTrigger? SchTrigger1 { get => schTrigger1; set => schTrigger1 = value; }
+        public DailyTrigger? SchTrigger2 { get => schTrigger2; set => schTrigger2 = value; }
+        public DailyTrigger? SchTrigger3 { get => schTrigger3; set => schTrigger3 = value; }
+        public DailyTrigger? SchTrigger4 { get => schTrigger4; set => schTrigger4 = value; }
+        public DailyTrigger? SchTrigger5 { get => schTrigger5; set => schTrigger5 = value; }
+
+        public void ResetSchedule(int scheduleNumber)
+        {
+            try
+            {
+                lock (schedulelocker)
+                {
+                    switch (scheduleNumber)
+                    {
+                        case 1:
+                            if (SchTrigger1 != null) SchTrigger1.Dispose();
+                            SchTrigger1 = null;
+                            SchTrigger1 = SetTrigger(UserPreferences.TodaysSchedule.Schedule1);
+                            break;
+                        case 2:
+                            if (SchTrigger2 != null) SchTrigger2.Dispose();
+                            SchTrigger2 = null;
+                            SchTrigger2 = SetTrigger(UserPreferences.TodaysSchedule.Schedule2);
+                            break;
+                        case 3:
+                            if (SchTrigger3 != null) SchTrigger3.Dispose();
+                            SchTrigger3 = null;
+                            SchTrigger3 = SetTrigger(UserPreferences.TodaysSchedule.Schedule3);
+                            break;
+                        case 4:
+                            if (SchTrigger4 != null) SchTrigger4.Dispose();
+                            SchTrigger4 = null;
+                            SchTrigger4 = SetTrigger(UserPreferences.TodaysSchedule.Schedule4);
+                            break;
+                        case 5:
+                            if (SchTrigger5 != null) SchTrigger5.Dispose();
+                            SchTrigger5 = null;
+                            SchTrigger5 = SetTrigger(UserPreferences.TodaysSchedule.Schedule5);
+                            break;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
         public void ResetSchedules()
         {
             try
             {
-                //Reset Triggers
-                if (schTrigger1 != null) schTrigger1.Dispose();
-                if (schTrigger2 != null) schTrigger2.Dispose();
-                if (schTrigger3 != null) schTrigger3.Dispose();
-                if (schTrigger4 != null) schTrigger4.Dispose();
-                if (schTrigger5 != null) schTrigger5.Dispose();
-                schTrigger1 = null;
-                schTrigger2 = null;
-                schTrigger3 = null;
-                schTrigger4 = null;
-                schTrigger5 = null;
+                lock (schedulelocker)
+                {
+                    //Reset Triggers
+                    if (SchTrigger1 != null) SchTrigger1.Dispose();
+                    if (schTrigger2 != null) schTrigger2.Dispose();
+                    if (schTrigger3 != null) schTrigger3.Dispose();
+                    if (schTrigger4 != null) schTrigger4.Dispose();
+                    if (schTrigger5 != null) schTrigger5.Dispose();
+                    SchTrigger1 = null;
+                    schTrigger2 = null;
+                    schTrigger3 = null;
+                    schTrigger4 = null;
+                    schTrigger5 = null;
 
-                //Set Triggers
-                //SetTrigger(schTrigger1, UserPreferences.TodaysSchedule.Schedule1);
-                //SetTrigger(schTrigger2, UserPreferences.TodaysSchedule.Schedule2);
-                //SetTrigger(schTrigger3, UserPreferences.TodaysSchedule.Schedule3);
-                //SetTrigger(schTrigger4, UserPreferences.TodaysSchedule.Schedule4);
-                //SetTrigger(schTrigger5, UserPreferences.TodaysSchedule.Schedule5);
-                schTrigger1 = SetTrigger(UserPreferences.TodaysSchedule.Schedule1);
-                schTrigger2 = SetTrigger(UserPreferences.TodaysSchedule.Schedule2);
-                schTrigger3 = SetTrigger(UserPreferences.TodaysSchedule.Schedule3);
-                schTrigger4 = SetTrigger(UserPreferences.TodaysSchedule.Schedule4);
-                schTrigger5 = SetTrigger(UserPreferences.TodaysSchedule.Schedule5);
+                    //Set Triggers
+                    //SetTrigger(schTrigger1, UserPreferences.TodaysSchedule.Schedule1);
+                    //SetTrigger(schTrigger2, UserPreferences.TodaysSchedule.Schedule2);
+                    //SetTrigger(schTrigger3, UserPreferences.TodaysSchedule.Schedule3);
+                    //SetTrigger(schTrigger4, UserPreferences.TodaysSchedule.Schedule4);
+                    //SetTrigger(schTrigger5, UserPreferences.TodaysSchedule.Schedule5);
+                    SchTrigger1 = SetTrigger(UserPreferences.TodaysSchedule.Schedule1);
+                    schTrigger2 = SetTrigger(UserPreferences.TodaysSchedule.Schedule2);
+                    schTrigger3 = SetTrigger(UserPreferences.TodaysSchedule.Schedule3);
+                    schTrigger4 = SetTrigger(UserPreferences.TodaysSchedule.Schedule4);
+                    schTrigger5 = SetTrigger(UserPreferences.TodaysSchedule.Schedule5);
+                }
             }
             catch (Exception ex)
             {
@@ -282,57 +336,157 @@ namespace Morphic.Focus
                     {
                         if (Helper.IsActiveToday(schedule)) //Schedule should be active today
                         {
-                            if (!UserPreferences.General.dontGive5MinWarning) //Dialog not to be shown if disabled in General Setting
+                            //New Logic
+                            DateTime scheduleStartTime = schedule.StartAt.AddMinutes(-5); //Modal dialog to be shown 5 mins before start time
+
+                            //Create trigger
+                            trigger = new DailyTrigger(scheduleStartTime.Hour, scheduleStartTime.Minute, scheduleStartTime.Second);
+
+                            trigger.OnTimeTriggered += () =>
                             {
-                                DateTime scheduleStartTime = schedule.StartAt.AddMinutes(-5); //Modal dialog to be shown 5 mins before start time
-
-                                trigger = new DailyTrigger(scheduleStartTime.Hour, scheduleStartTime.Minute, scheduleStartTime.Second); // today at scheduled time
-
-                                trigger.OnTimeTriggered += () =>
+                                //TODO - Review restart computer
+                                //Case - If recently scheduled and it's start time is less than 5 mins from now then on scheduled time
+                                if (DateTime.Now >= schedule.StartAt)
                                 {
-                                    if (Session1 != null && Session1.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
-
-                                    if (Session2 != null && Session2.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
-
-                                    if (Session1 != null && Session2 != null) return; //Dialog not to be shown if two sessions are already active
-
-                                    Application.Current.Dispatcher.Invoke(() =>
+                                    if (ShallStartSession(schedule))
                                     {
-                                        ScheduledSessionModal scrScheduledSessionModal = new ScheduledSessionModal(schedule);
-                                        scrScheduledSessionModal.Show();
-                                        LoggingService.WriteAppLog("Scheduled Session Dialog Open");
-                                    });
+                                        //Start the session
+                                        double totalMinutes = (schedule.EndAt - DateTime.Now).TotalMinutes;
 
-                                };
-                            }
-                            else //Start schedule session at scheduled time
-                            {
-                                DateTime scheduleStartTime = schedule.StartAt; //Schedule start time
+                                        StartFocusSession(new Session()
+                                        {
+                                            ActualStartTime = DateTime.Now,
+                                            ActualEndTime = schedule.EndAt,
+                                            BlockListName = schedule.BlockListName,
 
-                                trigger = new DailyTrigger(scheduleStartTime.Hour, scheduleStartTime.Minute, scheduleStartTime.Second); // today at scheduled time
+                                            //Break
+                                            ProvideBreak = UserPreferences.Schedules.Schedulebreak.IsActive,
+                                            BreakDuration = UserPreferences.Schedules.Schedulebreak.BreakDuration,
+                                            BreakGap = UserPreferences.Schedules.Schedulebreak.BreakGap,
 
-                                trigger.OnTimeTriggered += () =>
+                                            //User & Log
+                                            FocusType = "ScheduledSession",
+                                            Schedule = schedule,
+                                            SessionDuration = Convert.ToInt32(totalMinutes)
+                                        });
+                                    };
+                                    return;
+                                }
+
+                                //Case decision to be taken 5 mins prior to start time
+                                if (UserPreferences.General.dontGive5MinWarning) //Dialog not to be shown if disabled in General Setting
                                 {
-                                    double totalMinutes = (schedule.EndAt - DateTime.Now).TotalMinutes;
+                                    //Schedule to start a session in 5 mins
+                                    DateTime scheduleStartTime = schedule.StartAt; //Schedule start time
 
-                                    StartFocusSession(new Session()
+                                    FocusDispatchTimer focusDispatchTimer = new FocusDispatchTimer();
+                                    focusDispatchTimer.Time = TimeSpan.FromMinutes(5);
+
+                                    focusDispatchTimer.Timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
                                     {
-                                        ActualStartTime = DateTime.Now,
-                                        ActualEndTime = schedule.EndAt,
-                                        BlockListName = schedule.BlockListName,
+                                        //At schedule start time
+                                        if (focusDispatchTimer.Time <= TimeSpan.Zero)
+                                        {
+                                            if (focusDispatchTimer.Timer != null) focusDispatchTimer.Timer.Stop();
 
-                                        //Break
-                                        ProvideBreak = UserPreferences.Schedules.Schedulebreak.IsActive,
-                                        BreakDuration = UserPreferences.Schedules.Schedulebreak.BreakDuration,
-                                        BreakGap = UserPreferences.Schedules.Schedulebreak.BreakGap,
+                                            if (ShallStartSession(schedule))
+                                            {
+                                                //Start the session
+                                                double totalMinutes = (schedule.EndAt - DateTime.Now).TotalMinutes;
 
-                                        //User & Log
-                                        FocusType = "ScheduledSession",
-                                        Schedule = schedule,
-                                        SessionDuration = Convert.ToInt32(totalMinutes)
-                                    });
-                                };
-                            }
+                                                StartFocusSession(new Session()
+                                                {
+                                                    ActualStartTime = DateTime.Now,
+                                                    ActualEndTime = schedule.EndAt,
+                                                    BlockListName = schedule.BlockListName,
+
+                                                    //Break
+                                                    ProvideBreak = UserPreferences.Schedules.Schedulebreak.IsActive,
+                                                    BreakDuration = UserPreferences.Schedules.Schedulebreak.BreakDuration,
+                                                    BreakGap = UserPreferences.Schedules.Schedulebreak.BreakGap,
+
+                                                    //User & Log
+                                                    FocusType = "ScheduledSession",
+                                                    Schedule = schedule,
+                                                    SessionDuration = Convert.ToInt32(totalMinutes)
+                                                });
+                                            };
+
+                                            LstFocusDispatchTimer.Remove(focusDispatchTimer);
+                                        }
+                                        focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
+                                    }, Application.Current.Dispatcher);
+
+                                    focusDispatchTimer.Timer.Start();
+                                    LstFocusDispatchTimer.Add(focusDispatchTimer);
+                                }
+                                else //Show dialog of focus about to start
+                                {
+                                    if (ShallStartSession(schedule))
+                                    {
+                                        Application.Current.Dispatcher.Invoke(() =>
+                                        {
+                                            ScheduledSessionModal scrScheduledSessionModal = new ScheduledSessionModal(schedule);
+                                            scrScheduledSessionModal.Show();
+                                            LoggingService.WriteAppLog("Scheduled Session Dialog Open");
+                                        });
+                                    }
+                                }
+                            };
+                            #region Old Logic
+                            ////Previous Logic - to be commented
+                            //if (!UserPreferences.General.dontGive5MinWarning) //Dialog not to be shown if disabled in General Setting
+                            //{
+                            //    DateTime scheduleStartTime = schedule.StartAt.AddMinutes(-5); //Modal dialog to be shown 5 mins before start time
+
+                            //    trigger = new DailyTrigger(scheduleStartTime.Hour, scheduleStartTime.Minute, scheduleStartTime.Second); // today at scheduled time
+
+                            //    trigger.OnTimeTriggered += () =>
+                            //    {
+                            //        if (Session1 != null && Session1.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
+
+                            //        if (Session2 != null && Session2.BlockListName == schedule.BlockListName) return; //Dialog not to be shown if scheduled blocklist is already active
+
+                            //        if (Session1 != null && Session2 != null) return; //Dialog not to be shown if two sessions are already active
+
+                            //        Application.Current.Dispatcher.Invoke(() =>
+                            //        {
+                            //            ScheduledSessionModal scrScheduledSessionModal = new ScheduledSessionModal(schedule);
+                            //            scrScheduledSessionModal.Show();
+                            //            LoggingService.WriteAppLog("Scheduled Session Dialog Open");
+                            //        });
+
+                            //    };
+                            //}
+                            //else //Start schedule session at scheduled time
+                            //{
+                            //    DateTime scheduleStartTime = schedule.StartAt; //Schedule start time
+
+                            //    trigger = new DailyTrigger(scheduleStartTime.Hour, scheduleStartTime.Minute, scheduleStartTime.Second); // today at scheduled time
+
+                            //    trigger.OnTimeTriggered += () =>
+                            //    {
+                            //        double totalMinutes = (schedule.EndAt - DateTime.Now).TotalMinutes;
+
+                            //        StartFocusSession(new Session()
+                            //        {
+                            //            ActualStartTime = DateTime.Now,
+                            //            ActualEndTime = schedule.EndAt,
+                            //            BlockListName = schedule.BlockListName,
+
+                            //            //Break
+                            //            ProvideBreak = UserPreferences.Schedules.Schedulebreak.IsActive,
+                            //            BreakDuration = UserPreferences.Schedules.Schedulebreak.BreakDuration,
+                            //            BreakGap = UserPreferences.Schedules.Schedulebreak.BreakGap,
+
+                            //            //User & Log
+                            //            FocusType = "ScheduledSession",
+                            //            Schedule = schedule,
+                            //            SessionDuration = Convert.ToInt32(totalMinutes)
+                            //        });
+                            //    };
+                            //}
+                            #endregion
                         }
                     }
                 }
@@ -342,6 +496,47 @@ namespace Morphic.Focus
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
             return trigger;
+        }
+
+        private bool ShallStartSession(Schedule schedule)
+        {
+            try
+            {
+                //Dialog not to be shown if scheduled blocklist is already active
+                if (Session1 != null && Session1.BlockListName == schedule.BlockListName)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        schedule.IsActive = false;
+                    });
+                    return false;
+                }
+
+                //Dialog not to be shown if scheduled blocklist is already active
+                if (Session2 != null && Session2.BlockListName == schedule.BlockListName)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        schedule.IsActive = false;
+                    });
+                    return false;
+                }
+
+                //Dialog not to be shown if two sessions are already active
+                if (Session1 != null && Session2 != null)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        schedule.IsActive = false;
+                    });
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+            return true;
         }
 
 
@@ -907,6 +1102,8 @@ namespace Morphic.Focus
                 return null;
             }
         }
+
+
         #endregion
 
         #endregion
@@ -997,7 +1194,11 @@ namespace Morphic.Focus
                 //Start Session immediately
                 if (minutesLeft == 0)
                 {
-                    StartFocusSession(session);
+                    //If it is not a scheduled session, start
+                    //If it is a scheduled session and same blocklist is not already running, start
+                    //If it is a scheduled session and same blocklist is already running, start and deactive today's schedule
+                    if (session.Schedule == null || ShallStartSession(session.Schedule))
+                        StartFocusSession(session);
                     return;
                 }
 
@@ -1014,7 +1215,11 @@ namespace Morphic.Focus
                     {
                         if (focusDispatchTimer.Timer != null) focusDispatchTimer.Timer.Stop();
 
-                        StartFocusSession(session);
+                        //If it is not a scheduled session, start
+                        //If it is a scheduled session and same blocklist is not already running, start
+                        //If it is a scheduled session and same blocklist is already running, start and deactive today's schedule
+                        if (session.Schedule == null || ShallStartSession(session.Schedule))
+                            StartFocusSession(session);
 
                         LstFocusDispatchTimer.Remove(focusDispatchTimer);
                     }
@@ -1578,6 +1783,8 @@ namespace Morphic.Focus
         /// </summary>
         Task RunningTask { get; set; }
 
+
+
         /// <summary>
         /// Initiator
         /// </summary>
@@ -1588,16 +1795,25 @@ namespace Morphic.Focus
         {
             TriggerHour = new TimeSpan(hour, minute, second);
             CancellationToken = new CancellationTokenSource();
+
             RunningTask = Task.Run(async () =>
             {
                 while (true)
                 {
-                    //Example we need to schedule for 5pm and current time is 6pm
-                    var triggerTime = DateTime.Today + TriggerHour - DateTime.Now; //triggerTime = 00 hr + 17 hr - 18 hr = -1 hr
-                    if (triggerTime < TimeSpan.Zero) //if triggerTime < 0
-                        triggerTime = triggerTime.Add(new TimeSpan(24, 0, 0)); //triggerTime = -1 hr + 24 hr = 23 hr
-                    await Task.Delay(triggerTime, CancellationToken.Token); //wait for 23 hr. Currenttime = 6pm + 23 hr = 5pm next day
-                    OnTimeTriggered?.Invoke(); //trigger at 5 pm next day
+                    try
+                    {
+                        //Example we need to schedule for 5pm and current time is 6pm
+                        var triggerTime = DateTime.Today + TriggerHour - DateTime.Now; //triggerTime = 00 hr + 17 hr - 18 hr = -1 hr
+                        if (triggerTime < TimeSpan.Zero) //if triggerTime < 0
+                            triggerTime = triggerTime.Add(new TimeSpan(24, 0, 0)); //triggerTime = -1 hr + 24 hr = 23 hr
+
+                        await Task.Delay(triggerTime, CancellationToken.Token); //wait for 23 hr. Currenttime = 6pm + 23 hr = 5pm next day
+                        OnTimeTriggered?.Invoke(); //trigger at 5 pm next day
+                    }
+                    catch
+                    {
+                        break;
+                    }
                 }
             }, CancellationToken.Token);
         }

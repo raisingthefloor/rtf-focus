@@ -15,19 +15,31 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0A184E74287C4D539952EE28C1E198CE"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_175D0FA2440343959FC68D83F5BF3E74"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_2D41A4C9742E40C48B70B8E511398AD5"
+        "MsmKey" = "8:_1A5B1D37143245E28E3A0B1286BCBC93"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_21F7FFEB8D5C41EDB1EF440CE5B38E72"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_27D80FD4414447718D510C3E50919BEC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4F148966F0894076A25BE74E7A244AF5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -57,13 +69,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_AC5FD6DEF14A4F9D897C07D6A03CEC45"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B0B2447354514AD1B804A71ABAFDB595"
+        "MsmKey" = "8:_87DFD3AB7EE34C1E92ABCF75B7B2B161"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -82,12 +88,6 @@
         "Entry"
         {
         "MsmKey" = "8:_E7189B074B47485B8874F298E7C82492"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F45F03028E444BD29D8C8B924090C602"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -230,26 +230,6 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0A184E74287C4D539952EE28C1E198CE"
-            {
-            "SourcePath" = "8:..\\Morphic.BlockService\\bin\\Release\\net5.0\\publish\\x64\\WinDivert64.sys"
-            "TargetName" = "8:WinDivert64.sys"
-            "Tag" = "8:"
-            "Folder" = "8:_DB642DEBF5F74CB4BAA0697C912C188B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_175D0FA2440343959FC68D83F5BF3E74"
             {
             "SourcePath" = "8:..\\Morphic.BlockService\\installservice.bat"
@@ -270,10 +250,70 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2D41A4C9742E40C48B70B8E511398AD5"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1A5B1D37143245E28E3A0B1286BCBC93"
             {
-            "SourcePath" = "8:..\\Morphic.BlockService\\bin\\Release\\net5.0\\publish\\x64\\WinDivert.dll"
+            "SourcePath" = "8:..\\WinDivertSharp\\Lib\\WinDivert\\x64\\WinDivert.dll"
             "TargetName" = "8:WinDivert.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_DB642DEBF5F74CB4BAA0697C912C188B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_21F7FFEB8D5C41EDB1EF440CE5B38E72"
+            {
+            "SourcePath" = "8:..\\WinDivertSharp\\Lib\\WinDivert\\x86\\WinDivert.dll"
+            "TargetName" = "8:WinDivert.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_74FCB72560CD45A388BB37CA4B6AB83C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_27D80FD4414447718D510C3E50919BEC"
+            {
+            "SourcePath" = "8:..\\WinDivertSharp\\Lib\\WinDivert\\x86\\WinDivert64.sys"
+            "TargetName" = "8:WinDivert64.sys"
+            "Tag" = "8:"
+            "Folder" = "8:_74FCB72560CD45A388BB37CA4B6AB83C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4F148966F0894076A25BE74E7A244AF5"
+            {
+            "SourcePath" = "8:..\\WinDivertSharp\\Lib\\WinDivert\\x64\\WinDivert64.sys"
+            "TargetName" = "8:WinDivert64.sys"
             "Tag" = "8:"
             "Folder" = "8:_DB642DEBF5F74CB4BAA0697C912C188B"
             "Condition" = "8:"
@@ -350,29 +390,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AC5FD6DEF14A4F9D897C07D6A03CEC45"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_87DFD3AB7EE34C1E92ABCF75B7B2B161"
             {
-            "SourcePath" = "8:..\\Morphic.BlockService\\bin\\Release\\net5.0\\publish\\x86\\WinDivert.dll"
-            "TargetName" = "8:WinDivert.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_74FCB72560CD45A388BB37CA4B6AB83C"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B0B2447354514AD1B804A71ABAFDB595"
-            {
-            "SourcePath" = "8:..\\Morphic.BlockService\\bin\\Release\\net5.0\\publish\\x86\\WinDivert32.sys"
+            "SourcePath" = "8:..\\WinDivertSharp\\Lib\\WinDivert\\x86\\WinDivert32.sys"
             "TargetName" = "8:WinDivert32.sys"
             "Tag" = "8:"
             "Folder" = "8:_74FCB72560CD45A388BB37CA4B6AB83C"
@@ -396,26 +416,6 @@
             "TargetName" = "8:uninstallservice.bat"
             "Tag" = "8:"
             "Folder" = "8:_BF338CADC4114FAC86F0B57AC3DF1A9E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F45F03028E444BD29D8C8B924090C602"
-            {
-            "SourcePath" = "8:..\\Morphic.BlockService\\bin\\Release\\net5.0\\publish\\x86\\WinDivert64.sys"
-            "TargetName" = "8:WinDivert64.sys"
-            "Tag" = "8:"
-            "Folder" = "8:_74FCB72560CD45A388BB37CA4B6AB83C"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -508,15 +508,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Morphic Focus"
-        "ProductCode" = "8:{A79377C7-6B7B-4F47-BCA6-EED85B0574D9}"
-        "PackageCode" = "8:{F7E10DB5-7D13-4F4D-8D93-EB847DBC6194}"
+        "ProductCode" = "8:{BB87B780-6F8D-4A45-9D7C-2F82E3CC6422}"
+        "PackageCode" = "8:{049AA5C8-3564-44BE-BE95-703448E37C2D}"
         "UpgradeCode" = "8:{FA6CD905-D080-44C9-8B46-2E9FA3408312}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:17.0.0"
+        "ProductVersion" = "8:18.0.0"
         "Manufacturer" = "8:Raising The Floor"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

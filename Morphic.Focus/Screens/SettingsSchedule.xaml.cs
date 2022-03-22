@@ -146,12 +146,12 @@ namespace Morphic.Focus.Screens
         }
 
         private static readonly KeyValuePair<int, string>[] _breakGap = {
-            new KeyValuePair<int, string>(15, "15 min"),
-            new KeyValuePair<int, string>(20, "20 min"),
-            new KeyValuePair<int, string>(25, "25 min"),
-            new KeyValuePair<int, string>(30, "30 min"),
-            new KeyValuePair<int, string>(45, "45 min"),
-            new KeyValuePair<int, string>(60, "60 min"),
+            new KeyValuePair<int, string>(Common.Min15, "15 min"),
+            new KeyValuePair<int, string>(Common.Min20, "20 min"),
+            new KeyValuePair<int, string>(Common.Min25, "25 min"),
+            new KeyValuePair<int, string>(Common.Min30, "30 min"),
+            new KeyValuePair<int, string>(Common.Min45, "45 min"),
+            new KeyValuePair<int, string>(Common.Min60, "60 min"),
         };
 
         public KeyValuePair<int, string>[] BreakGap

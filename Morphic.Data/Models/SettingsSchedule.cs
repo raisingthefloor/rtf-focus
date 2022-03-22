@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Morphic.Data.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -435,7 +436,7 @@ namespace Morphic.Data.Models
             }
         }
 
-        private int _breakDuration = 1;
+        private int _breakDuration = Common.Min1;
         public int BreakDuration
         {
             get
@@ -452,7 +453,7 @@ namespace Morphic.Data.Models
             }
         }
 
-        private int _breakGap = 15;
+        private int _breakGap = Common.Min15;
         public int BreakGap
         {
             get

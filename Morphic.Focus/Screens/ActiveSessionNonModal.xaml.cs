@@ -26,8 +26,6 @@ namespace Morphic.Focus.Screens
     /// </summary>
     public partial class ActiveSessionNonModal : Window, INotifyPropertyChanged
     {
-        public event EventHandler SessionUpdate;
-
         AppEngine _engine;
         public AppEngine Engine { get { return _engine; } }
 

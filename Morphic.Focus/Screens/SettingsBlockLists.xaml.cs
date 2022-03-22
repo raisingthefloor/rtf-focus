@@ -231,11 +231,20 @@ namespace Morphic.Focus.Screens
         {
             try
             {
-                if (e.Action == ValidationErrorEventAction.Added && e.Error.ErrorContent == "Blocklist in use")
+                if (e.Action == ValidationErrorEventAction.Added && e.Error.ErrorContent.ToString() == "Blocklist in use")
                 {
                     InvokeBlocklistErrorDialog();
 
                     ((BindingExpressionBase)e.Error.BindingInError).UpdateTarget();
+                    return;
+                }
+
+                if (e.Action == ValidationErrorEventAction.Added)
+                {
+                    InvokeErrorDialog(e.Error.ErrorContent.ToString());
+
+                    //((BindingExpressionBase)e.Error.BindingInError).UpdateTarget();
+                    return;
                 }
             }
             catch (Exception ex)
@@ -273,6 +282,27 @@ namespace Morphic.Focus.Screens
             }
         }
 
+        private void InvokeErrorDialog(string errormessage)
+        {
+            try
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ErrorMessageModal errorMessageModal = new ErrorMessageModal()
+                    {
+                        TitleText = "Error",
+                        ContentText = errormessage
+                    };
+                    
+                    errorMessageModal.ShowDialog();
+                });
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+        }
+
         #endregion
     }
 
@@ -301,6 +331,28 @@ namespace Morphic.Focus.Screens
             {
                 return new ValidationResult(true, null);
             };
+        }
+    }
+
+    public class RangeValidationRule : ValidationRule
+    {
+        public int MinValue { get; set; }
+        public int MaxValue { get; set; }
+
+        public override ValidationResult Validate(
+          object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            int intValue;
+
+            string text = String.Format("Must be between {0} and {1}",
+                           MinValue, MaxValue);
+            if (!Int32.TryParse(value.ToString(), out intValue))
+                return new ValidationResult(false, "Not an integer");
+            if (intValue < MinValue)
+                return new ValidationResult(false, "Too small. " + text);
+            if (intValue > MaxValue)
+                return new ValidationResult(false, "Too large. " + text);
+            return new ValidationResult(true, null);
         }
     }
 }

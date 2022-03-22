@@ -46,11 +46,11 @@ namespace Morphic.Focus.Screens
             Schedule4.Schedule = Engine.UserPreferences.TodaysSchedule.Schedule4;
             Schedule5.Schedule = Engine.UserPreferences.TodaysSchedule.Schedule5;
 
-            Schedule1.Schedule.PropertyChanged += Schedule_PropertyChanged;
-            Schedule2.Schedule.PropertyChanged += Schedule_PropertyChanged;
-            Schedule3.Schedule.PropertyChanged += Schedule_PropertyChanged;
-            Schedule4.Schedule.PropertyChanged += Schedule_PropertyChanged;
-            Schedule5.Schedule.PropertyChanged += Schedule_PropertyChanged;
+            Schedule1.Schedule.PropertyChanged += Schedule_PropertyChanged1;
+            Schedule2.Schedule.PropertyChanged += Schedule_PropertyChanged2;
+            Schedule3.Schedule.PropertyChanged += Schedule_PropertyChanged3;
+            Schedule4.Schedule.PropertyChanged += Schedule_PropertyChanged4;
+            Schedule5.Schedule.PropertyChanged += Schedule_PropertyChanged5;
 
             if (!string.IsNullOrWhiteSpace(Schedule1.Schedule.BlockListName) &&
                 Engine.UserPreferences.BlockLists.Any(p => p.Name == Schedule1.Schedule.BlockListName))
@@ -96,10 +96,38 @@ namespace Morphic.Focus.Screens
             this.DataContext = this;
         }
 
-        private void Schedule_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void Schedule_PropertyChanged5(object? sender, PropertyChangedEventArgs e)
         {
             InitializeCalendarData();
-            Engine.ResetSchedules();
+            Engine.ResetSchedule(5);
+            ResetBlockListVisibility();
+        }
+
+        private void Schedule_PropertyChanged4(object? sender, PropertyChangedEventArgs e)
+        {
+            InitializeCalendarData();
+            Engine.ResetSchedule(4);
+            ResetBlockListVisibility();
+        }
+
+        private void Schedule_PropertyChanged3(object? sender, PropertyChangedEventArgs e)
+        {
+            InitializeCalendarData();
+            Engine.ResetSchedule(3);
+            ResetBlockListVisibility();
+        }
+
+        private void Schedule_PropertyChanged2(object? sender, PropertyChangedEventArgs e)
+        {
+            InitializeCalendarData();
+            Engine.ResetSchedule(2);
+            ResetBlockListVisibility();
+        }
+
+        private void Schedule_PropertyChanged1(object? sender, PropertyChangedEventArgs e)
+        {
+            InitializeCalendarData();
+            Engine.ResetSchedule(1);
             ResetBlockListVisibility();
         }
 

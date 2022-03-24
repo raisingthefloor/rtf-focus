@@ -990,7 +990,7 @@ namespace Morphic.Focus
         {
             get
             {
-                return new TimeSpan(0, (int)Math.Ceiling(TimeTillNextBreak.TotalMinutes), 0).ToString("%m");
+                return ((int)Math.Ceiling(TimeTillNextBreak.TotalMinutes)).ToString("0");
             }
         }
 
@@ -1041,16 +1041,16 @@ namespace Morphic.Focus
 
                     if (Session1 != null && Session2 == null) //If only session 1 is running
                     {
-                        return Session1.SessionDuration == 0; //Is the session duration set to zero
+                        return Session1.SessionDuration == Int32.MaxValue; //Is the session duration set to MaxValue
                     }
                     else if (Session2 != null && Session1 == null) //If only session 2 is running
                     {
-                        return Session2.SessionDuration == 0; //Is the session duration set to zero
+                        return Session2.SessionDuration == Int32.MaxValue; //Is the session duration set to zero
                     }
                     else if (Session1 != null && Session2 != null) //Both Sessions are running
                     {
                         //Return true only when both sessions are of type Focus Till Stop
-                        return Session1.SessionDuration == 0 && Session2.SessionDuration == 0;
+                        return Session1.SessionDuration == Int32.MaxValue && Session2.SessionDuration == Int32.MaxValue;
                     }
                     return false; //default
                 }
@@ -1555,7 +1555,7 @@ namespace Morphic.Focus
                             {
                                 if (session != null)
                                 {
-                                    if (session.SessionDuration > 0)
+                                    if (session.SessionDuration > 0 && session.SessionDuration != Int32.MaxValue /* Int32.MaxValue means "no scheduled end to session" */)
                                     {
                                         if (DateTime.Now >= session.ActualStartTime.AddMinutes(session.SessionDuration))
                                         {
@@ -1655,7 +1655,7 @@ namespace Morphic.Focus
                             {
                                 if (session != null)
                                 {
-                                    if (session.SessionDuration > 0)
+                                    if (session.SessionDuration > 0 && session.SessionDuration != Int32.MaxValue /* Int32.MaxValue means "no scheduled end to session" */)
                                     {
                                         if (DateTime.Now >= session.ActualStartTime.AddMinutes(session.SessionDuration))
                                         {

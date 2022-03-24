@@ -14,8 +14,8 @@
             <Setter Property="Padding" Value="4 2"/>
             <Setter Property="FontSize" Value="10"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Foreground" Value="#666666" />
             <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ToggleButton">
@@ -27,19 +27,21 @@
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" Value="White" />
-                    <Setter Property="Foreground" Value="#666666" />
-                </Trigger>
-
-                <DataTrigger Binding="{Binding Path=IsChecked, ElementName=chkIsActive}" Value="True">
-                    <Setter Property="Background" Value="White" />
-                    <Setter Property="Foreground" Value="#666666" />
-                </DataTrigger>
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="True"/>
+                        <Condition Binding="{Binding Path=IsChecked, ElementName=chkIsActive}" Value="True" />
+                        <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="Background" Value="#3566D8" />
+                        <Setter Property="Foreground" Value="White" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
                         <Condition Binding="{Binding Path=IsChecked, ElementName=chkIsActive}" Value="False" />
+                        <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="True"/>
                     </MultiDataTrigger.Conditions>
                     <MultiDataTrigger.Setters>
                         <Setter Property="Background" Value="#666666" />
@@ -49,19 +51,6 @@
 
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="True"/>
-                        <Condition Binding="{Binding Path=IsChecked, ElementName=chkIsActive}" Value="True" />
-                        <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="True"/>
-                    </MultiDataTrigger.Conditions>
-                    <MultiDataTrigger.Setters>
-                        <Setter Property="Background" Value="#3566D8" />
-                        <Setter Property="Foreground" Value="White" />
-                    </MultiDataTrigger.Setters>
-                </MultiDataTrigger>
-                
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="True"/>
                         <Condition Binding="{Binding Path=IsChecked, ElementName=chkIsActive}" Value="True" />
                         <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="False"/>
                     </MultiDataTrigger.Conditions>
@@ -70,6 +59,11 @@
                         <Setter Property="Foreground" Value="Black" />
                     </MultiDataTrigger.Setters>
                 </MultiDataTrigger>
+
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="Foreground" Value="#666666" />
+                </Trigger>
             </Style.Triggers>
         </Style>
         <local:ComboItemSelectedConverter x:Key="ComboItemSelectedConverter"></local:ComboItemSelectedConverter>
@@ -114,8 +108,7 @@
             <Border Width="27" Height="23" Name="scheduleColor" Canvas.Left="0" Canvas.Top="0" Canvas.ZIndex="1" BorderThickness="2.5" />
         </Canvas>
         
-        <TextBox Width="57" Height="23" Margin="12 10 0 11" IsEnabled="{Binding Path=IsChecked, ElementName=chkIsActive}"
-                 TextChanged="DateChanged">
+        <TextBox Width="57" Height="23" Margin="12 10 0 11" IsEnabled="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" TextChanged="DateChanged">
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Setter Property="Text">
@@ -133,7 +126,7 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <TextBox Width="57" Height="23" Margin="12 10 0 11" IsEnabled="{Binding Path=IsChecked, ElementName=chkIsActive}" TextChanged="DateChanged">
+        <TextBox Width="57" Height="23" Margin="12 10 0 11" IsEnabled="{Binding Path=SelectedItem, ElementName=cmbBlockList, Converter={StaticResource ComboItemSelectedConverter}}" TextChanged="DateChanged">
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Setter Property="Text">

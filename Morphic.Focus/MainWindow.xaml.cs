@@ -131,16 +131,13 @@ namespace Morphic.Focus
                 string timerText = isFocus ? Engine.TimeTillNextBreakHHMM : Engine.TimeTillNextBreakEndsHHMM;
                 string focusBreakText = isFocus ? "Focus" : "Break";
 
-                if (Engine.IsFocusTillStop)
+               if (Engine.UserPreferences.General.showBreakCountdownTimer)
                 {
-                    ButtonText = "Focus till Stop";
+                    ButtonText = focusBreakText + Environment.NewLine + timerText;
                 }
                 else
                 {
-                    if (Engine.UserPreferences.General.showBreakCountdownTimer)
-                        ButtonText = focusBreakText + Environment.NewLine + timerText;
-                    else
-                        ButtonText = focusBreakText;
+                    ButtonText = focusBreakText;
                 }
             }
             else

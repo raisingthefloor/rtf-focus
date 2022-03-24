@@ -202,18 +202,31 @@ namespace Morphic.Data.Models
             get
             {
                 //If it is Focus until Stop
-                if (SessionDuration == 0)
-                    return DateTime.MinValue;
+                if (SessionDuration == Int32.MaxValue)
+                {
+                    if (ProvideBreak) //If breaks are required
+                    {
+                        return LastStartTime.AddMinutes(BreakGap); //Next Break Time
+                    }
+                    else
+                    {
+                        return DateTime.MinValue; // Special value to indicate "no session end time"
+                    }
+                }
                 else
                 {
                     if (ProvideBreak) //If breaks are required
+                    {
                         return
                             new[] {
                                     LastStartTime.AddMinutes(BreakGap), //Next Break Time
                                     ActualStartTime.AddMinutes(SessionDuration) //Session End Time
                             }.Min(); //Minimum of Session End Time and next Break time
+                    }
                     else
+                    {
                         return ActualStartTime.AddMinutes(SessionDuration); //Session End Time
+                    }
                 }
             }
         }
@@ -240,7 +253,7 @@ namespace Morphic.Data.Models
                 else
                 {
                     //If it is focus till stop
-                    if (SessionDuration == 0)
+                    if (SessionDuration == Int32.MaxValue)
                         return string.Empty;
 
                     return ActualStartTime.AddMinutes(SessionDuration).ToString("hh:mm tt");

@@ -1,4 +1,5 @@
-﻿using Morphic.Data.Models;
+﻿using Morphic.Core;
+using Morphic.Data.Models;
 using Morphic.Data.Services;
 using System;
 using System.Collections.Generic;
@@ -102,9 +103,85 @@ namespace Morphic.Focus.Screens
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Schedule_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void Schedule_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            InitializeCalendarData();
+            var propertyChangeHandled = false;
+            switch (e.PropertyName)
+            {
+                case "IsActiveSunday":
+                case "IsActiveMonday":
+                case "IsActiveTuesday":
+                case "IsActiveWednesday":
+                case "IsActiveThursday":
+                case "IsActiveFriday":
+                case "IsActiveSaturday":
+                    {
+                        var schedule = (Schedule)sender;
+
+                        var dayOfWeek = SettingsSchedule.GetDayOfWeekFromIsActivePropertyName(e.PropertyName);
+                        var isActive = SettingsSchedule.GetDayOfWeekIsActiveProperty(schedule, e.PropertyName);
+
+                        // if we are adding a day to the schedule, handle the property change as a special case (where we make sure it's a valid change)
+                        if (isActive == true)
+                        {
+                            var getBrushResult = this.GetBrushForSchedule(schedule);
+                            if (getBrushResult.IsError == true)
+                            {
+                                // if we could not get a brush for the schedule, show the user an error and then exit our special-case handler
+                                this.InvokeInternalErrorDialog();
+                                break;
+                            }
+                            var brush = getBrushResult.Value!;
+                            
+                            var setDayToActiveResult = AddforDay(schedule, brush, isActive, dayOfWeek);
+                            if (setDayToActiveResult.IsError == true)
+                            {
+                                // set the day back to FALSE to indicate that we can't set the day for the user
+                                // NOTE: this should be safe (non-reentrant); if this causes us issues, we'll have to find another way to handle "ignoring" user schedule checkbox set-to-checked events
+                                SettingsSchedule.SetDayOfWeekIsActiveProperty(schedule, e.PropertyName, false);
+
+                                // show the user an error indicating that we couldn't add the day to the schedule
+                                this.InvokeScheduleErrorDialog();
+                            }
+
+                            propertyChangeHandled = true;
+                        }
+                    }
+                    break;
+                default:
+                    {
+                        propertyChangeHandled = false;
+                    }
+                    return;
+            }
+
+            // if the property change has not been handled, re-initialize the calendar data (as a catch-all)
+            if (propertyChangeHandled == false)
+            {
+                InitializeCalendarData();
+            }
+        }
+
+        private void InvokeInternalErrorDialog()
+        {
+            try
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ErrorMessageModal errorMessageModal = new ErrorMessageModal()
+                    {
+                        TitleText = "Sorry, I'm having trouble doing this right now.",
+                        ContentText = $"Please try again or contact support for assistance."
+                    };
+
+                    errorMessageModal.ShowDialog();
+
+                });
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
         }
 
         private void InvokeScheduleErrorDialog()
@@ -191,22 +268,37 @@ namespace Morphic.Focus.Screens
 
         }
 
-        private void AddSchedule(Schedule schedule, Brush brush)
+        private MorphicResult<MorphicUnit, MorphicUnit> AddSchedule(Schedule schedule, Brush brush)
         {
-            //Process only if the schedule is Active
-            AddforDay(schedule, brush, schedule.IsActiveSunday, 0);
-            AddforDay(schedule, brush, schedule.IsActiveMonday, 1);
-            AddforDay(schedule, brush, schedule.IsActiveTuesday, 2);
-            AddforDay(schedule, brush, schedule.IsActiveWednesday, 3);
-            AddforDay(schedule, brush, schedule.IsActiveThursday, 4);
-            AddforDay(schedule, brush, schedule.IsActiveFriday, 5);
-            AddforDay(schedule, brush, schedule.IsActiveSaturday, 6);
+            //Process only if the schedule for specific day(s) is Active
+            var addSundayResult = AddforDay(schedule, brush, schedule.IsActiveSunday, 0);
+            var addMondayResult = AddforDay(schedule, brush, schedule.IsActiveMonday, 1);
+            var addTuesdayResult = AddforDay(schedule, brush, schedule.IsActiveTuesday, 2);
+            var addWednesdayResult = AddforDay(schedule, brush, schedule.IsActiveWednesday, 3);
+            var addThursdayResult = AddforDay(schedule, brush, schedule.IsActiveThursday, 4);
+            var addFridayResult = AddforDay(schedule, brush, schedule.IsActiveFriday, 5);
+            var addSaturdayResult = AddforDay(schedule, brush, schedule.IsActiveSaturday, 6);
+
+            if (addSundayResult.IsSuccess == true &&
+                addMondayResult.IsSuccess == true &&
+                addTuesdayResult.IsSuccess == true &&
+                addWednesdayResult.IsSuccess == true &&
+                addThursdayResult.IsSuccess == true &&
+                addFridayResult.IsSuccess == true &&
+                addSaturdayResult.IsSuccess == true)
+            {
+                return MorphicResult.OkResult();
+            } 
+            else
+            {
+                return MorphicResult.ErrorResult();
+            }
         }
 
-        private void AddforDay(Schedule schedule, Brush brush, bool day, int dayValue)
+        private MorphicResult<MorphicUnit, MorphicUnit> AddforDay(Schedule schedule, Brush brush, bool day, int dayValue)
         {
             //Process for Weekday (e.g. Sunday)
-            if (day)
+            if (day == true)
             {
                 //Get the start and end time
                 TimeSpan startAt = schedule.StartAt.TimeOfDay;
@@ -248,49 +340,59 @@ namespace Morphic.Focus.Screens
                             item.BorderColor1 = brush;
                         }
                     }
+
+                    // change made in the first slot; return success
+                    return MorphicResult.OkResult();
                 }
-                else
+
+                // if the first slot was not available, then try the second slot
+
+                //Check if second color slot is available
+                bool isSecondSlotAvailable = true; //Assume it is available
+                for (int i = startHour; i <= endHour; i++)
                 {
-                    //Check if second color slot is available
-                    bool isSecondSlotAvailable = true; //Assume it is available
+                    //Make the check
+                    if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
+                    {
+                        CalendarData? item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
+                        //if (item.Color2 != Brushes.Transparent)
+                        //{
+                        //    isSecondSlotAvailable = false;
+                        //    break;
+                        //}
+                        if (item.BorderColor2 != Brushes.Transparent)
+                        {
+                            isSecondSlotAvailable = false;
+                            break;
+                        }
+                    }
+                }
+
+                //If Second Color Slot is available, assign the color to the slot
+                if (isSecondSlotAvailable)
+                {
                     for (int i = startHour; i <= endHour; i++)
                     {
                         //Make the check
                         if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
                         {
-                            CalendarData? item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
-                            //if (item.Color2 != Brushes.Transparent)
-                            //{
-                            //    isSecondSlotAvailable = false;
-                            //    break;
-                            //}
-                            if (item.BorderColor2 != Brushes.Transparent)
-                            {
-                                isSecondSlotAvailable = false;
-                                break;
-                            }
+                            CalendarData item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
+                            item.Color2 = schedule.IsActive ? brush : Brushes.Transparent;
+                            item.BorderColor2 = brush;
                         }
                     }
 
-                    //If Second Color Slot is available, assign the color to the slot
-                    if (isSecondSlotAvailable)
-                    {
-                        for (int i = startHour; i <= endHour; i++)
-                        {
-                            //Make the check
-                            if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
-                            {
-                                CalendarData item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
-                                item.Color2 = schedule.IsActive ? brush : Brushes.Transparent;
-                                item.BorderColor2 = brush;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        InvokeScheduleErrorDialog();
-                    }
+                    // change made in the second slot; return success
+                    return MorphicResult.OkResult();
                 }
+
+                // if no slots were available, return an error condition
+                return MorphicResult.ErrorResult();
+            }
+            else
+            {
+                // if there's nothing to add to the schedule, return success
+                return MorphicResult.OkResult();
             }
         }
 
@@ -351,6 +453,125 @@ namespace Morphic.Focus.Screens
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        // helper functions
+
+        public MorphicResult<Brush, MorphicUnit> GetBrushForSchedule(Schedule schedule)
+        {
+            if (schedule == Engine.UserPreferences.Schedules.Schedule1)
+            {
+                return MorphicResult.OkResult(AppEngine.Schedule1Brush);
+            }
+            else if (schedule == Engine.UserPreferences.Schedules.Schedule2)
+            {
+                return MorphicResult.OkResult(AppEngine.Schedule2Brush);
+            }
+            else if (schedule == Engine.UserPreferences.Schedules.Schedule3)
+            {
+                return MorphicResult.OkResult(AppEngine.Schedule3Brush);
+            }
+            else if (schedule == Engine.UserPreferences.Schedules.Schedule4)
+            {
+                return MorphicResult.OkResult(AppEngine.Schedule4Brush);
+            }
+            else if (schedule == Engine.UserPreferences.Schedules.Schedule5)
+            {
+                return MorphicResult.OkResult(AppEngine.Schedule5Brush);
+            }
+            else
+            {
+                return MorphicResult.ErrorResult();
+            }
+        }
+
+
+        private static int GetDayOfWeekFromIsActivePropertyName(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case "IsActiveSunday":
+                    return 0;
+                case "IsActiveMonday":
+                    return 1;
+                case "IsActiveTuesday":
+                    return 2;
+                case "IsActiveWednesday":
+                    return 3;
+                case "IsActiveThursday":
+                    return 4;
+                case "IsActiveFriday":
+                    return 5;
+                case "IsActiveSaturday":
+                    return 6;
+            }
+
+            // if the supplied property name is invalid, throw an exception
+            throw new ArgumentOutOfRangeException(nameof(propertyName));
+        }
+
+        private static bool GetDayOfWeekIsActiveProperty(Schedule schedule, string propertyName)
+        {
+            switch (propertyName)
+            {
+                case "IsActiveSunday":
+                    return schedule.IsActiveSunday;
+                    break;
+                case "IsActiveMonday":
+                    return schedule.IsActiveMonday;
+                    break;
+                case "IsActiveTuesday":
+                    return schedule.IsActiveTuesday;
+                    break;
+                case "IsActiveWednesday":
+                    return schedule.IsActiveWednesday;
+                    break;
+                case "IsActiveThursday":
+                    return schedule.IsActiveThursday;
+                    break;
+                case "IsActiveFriday":
+                    return schedule.IsActiveFriday;
+                    break;
+                case "IsActiveSaturday":
+                    return schedule.IsActiveSaturday;
+                    break;
+                default:
+                    // if the supplied property name is invalid, throw an exception
+                    throw new ArgumentOutOfRangeException(nameof(propertyName));
+            }
+        }
+
+        private static void SetDayOfWeekIsActiveProperty(Schedule schedule, string propertyName, bool value)
+        {
+            switch (propertyName)
+            {
+                case "IsActiveSunday":
+                    schedule.IsActiveSunday = value;
+                    break;
+                case "IsActiveMonday":
+                    schedule.IsActiveMonday = value;
+                    break;
+                case "IsActiveTuesday":
+                    schedule.IsActiveTuesday = value;
+                    break;
+                case "IsActiveWednesday":
+                    schedule.IsActiveWednesday = value;
+                    break;
+                case "IsActiveThursday":
+                    schedule.IsActiveThursday = value;
+                    break;
+                case "IsActiveFriday":
+                    schedule.IsActiveFriday = value;
+                    break;
+                case "IsActiveSaturday":
+                    schedule.IsActiveSaturday = value;
+                    break;
+                default:
+                    // if the supplied property name is invalid, throw an exception
+                    throw new ArgumentOutOfRangeException(nameof(propertyName));
+            }
+        }
+
+
     }
 
     public class CalendarData : BaseClass, IEquatable<CalendarData?>

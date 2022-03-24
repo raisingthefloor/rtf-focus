@@ -74,8 +74,10 @@ namespace Morphic.Focus.Screens
                 //Log Closing Session
                 LoggingService.WriteAppLog("Session Closing");
 
-                if (Engine.Session1 != null)
-                    Engine.EndSession(Engine.Session1, true);
+                if (Engine.Sessions.Count > 0)
+                {
+                    Engine.EndSession(Engine.Sessions[0], true);
+                }
 
                 //Hide this dialog
                 this.Hide();
@@ -135,7 +137,7 @@ namespace Morphic.Focus.Screens
         {
             try
             {
-                Task.Factory.StartNew(() => Engine.StartBreakSequence(Engine.Session1.BreakDuration));
+                Task.Factory.StartNew(() => Engine.StartBreakSequence(Engine.Sessions[0].BreakDuration));
 
                 //Closes this dialog
                 this.Hide();

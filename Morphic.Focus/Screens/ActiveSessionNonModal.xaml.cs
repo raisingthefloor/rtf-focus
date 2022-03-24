@@ -118,7 +118,7 @@ namespace Morphic.Focus.Screens
                 //Log Closing Session
                 LoggingService.WriteAppLog("Session Closing");
 
-                Engine.EndSession(Engine.Session1, true);
+                Engine.EndSession(Engine.Sessions[0], true);
                 
                 //Hide this dialog
                 this.Hide();
@@ -152,7 +152,7 @@ namespace Morphic.Focus.Screens
                 //Log Closing Session
                 LoggingService.WriteAppLog("Session Closing");
 
-                Engine.EndSession(Engine.Session2, true);
+                Engine.EndSession(Engine.Sessions[1], true);
 
                 //Hide this dialog
                 this.Hide();

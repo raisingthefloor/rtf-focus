@@ -72,7 +72,7 @@ namespace Morphic.Focus.Screens
                 //While a focus session is running with the selected blocklist, do not allow to edit the blocklist
                 if (Engine.IsFocusRunning)
                 {
-                    if (Engine.Session1Blocklist == Engine.SelectedBlockList || Engine.Session2Blocklist == Engine.SelectedBlockList)
+                    if (Engine.GetSessionBlocklist(0) == Engine.SelectedBlockList || Engine.GetSessionBlocklist(1) == Engine.SelectedBlockList)
                     {
                         InvokeBlocklistErrorDialog();
                         return;
@@ -98,7 +98,7 @@ namespace Morphic.Focus.Screens
                 //While a focus session is running with the selected blocklist, do not allow to edit the blocklist
                 if (Engine.IsFocusRunning)
                 {
-                    if (Engine.Session1Blocklist == Engine.SelectedBlockList || Engine.Session2Blocklist == Engine.SelectedBlockList)
+                    if (Engine.GetSessionBlocklist(0) == Engine.SelectedBlockList || Engine.GetSessionBlocklist(1) == Engine.SelectedBlockList)
                     {
                         InvokeBlocklistErrorDialog();
                         return;
@@ -123,7 +123,7 @@ namespace Morphic.Focus.Screens
                 //While a focus session is running with the selected blocklist, do not allow to edit the blocklist
                 if (Engine.IsFocusRunning)
                 {
-                    if (Engine.Session1Blocklist == Engine.SelectedBlockList || Engine.Session2Blocklist == Engine.SelectedBlockList)
+                    if (Engine.GetSessionBlocklist(0) == Engine.SelectedBlockList || Engine.GetSessionBlocklist(1) == Engine.SelectedBlockList)
                     {
                         InvokeBlocklistErrorDialog();
                         return;
@@ -150,7 +150,7 @@ namespace Morphic.Focus.Screens
                 //While a focus session is running with the selected blocklist, do not allow to edit the blocklist
                 if (Engine.IsFocusRunning)
                 {
-                    if (Engine.Session1Blocklist == Engine.SelectedBlockList || Engine.Session2Blocklist == Engine.SelectedBlockList)
+                    if (Engine.GetSessionBlocklist(0) == Engine.SelectedBlockList || Engine.GetSessionBlocklist(1) == Engine.SelectedBlockList)
                     {
                         InvokeBlocklistErrorDialog();
                         return;
@@ -176,7 +176,7 @@ namespace Morphic.Focus.Screens
                 //While a focus session is running with the selected blocklist, do not allow to edit the blocklist
                 if (Engine.IsFocusRunning)
                 {
-                    if (Engine.Session1Blocklist == Engine.SelectedBlockList || Engine.Session2Blocklist == Engine.SelectedBlockList)
+                    if (Engine.GetSessionBlocklist(0) == Engine.SelectedBlockList || Engine.GetSessionBlocklist(1) == Engine.SelectedBlockList)
                     {
                         InvokeBlocklistErrorDialog();
                         return;
@@ -201,7 +201,7 @@ namespace Morphic.Focus.Screens
                 //While a focus session is running with the selected blocklist, do not allow to edit the blocklist
                 if (Engine.IsFocusRunning)
                 {
-                    if (Engine.Session1Blocklist == Engine.SelectedBlockList || Engine.Session2Blocklist == Engine.SelectedBlockList)
+                    if (Engine.GetSessionBlocklist(0) == Engine.SelectedBlockList || Engine.GetSessionBlocklist(1) == Engine.SelectedBlockList)
                     {
                         InvokeBlocklistErrorDialog();
                         return;
@@ -322,7 +322,7 @@ namespace Morphic.Focus.Screens
         {
             if (Engine.IsFocusRunning)
             {
-                if (Engine.Session1Blocklist == Engine.SelectedBlockList || Engine.Session2Blocklist == Engine.SelectedBlockList)
+                if (Engine.GetSessionBlocklist(0) == Engine.SelectedBlockList || Engine.GetSessionBlocklist(1) == Engine.SelectedBlockList)
                     return new ValidationResult(false, "Blocklist in use");
                 else
                     return new ValidationResult(true, null);

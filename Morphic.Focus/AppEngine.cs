@@ -54,8 +54,10 @@ namespace Morphic.Focus
 
                 #region Ongoing Sessions
                 CheckIsFocusRunning();
-                //Session1.PropertyChanged += Session1_PropertyChanged;
-                //Session2.PropertyChanged += Session2_PropertyChanged;
+                //foreach (var session in this.LstSession)
+                //{
+                //    session.PropertyChanged += Session_PropertyChanged;
+                //}
                 #endregion
 
                 #region Set Timers to trigger scheduled focus sessions
@@ -503,7 +505,7 @@ namespace Morphic.Focus
             try
             {
                 //Dialog not to be shown if scheduled blocklist is already active
-                if (Session1 != null && Session1.BlockListName == schedule.BlockListName)
+                if (this.Sessions.Count >= 1 && this.Sessions[0].BlockListName == schedule.BlockListName)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
@@ -513,7 +515,7 @@ namespace Morphic.Focus
                 }
 
                 //Dialog not to be shown if scheduled blocklist is already active
-                if (Session2 != null && Session2.BlockListName == schedule.BlockListName)
+                if (this.Sessions.Count >= 2 && this.Sessions[1].BlockListName == schedule.BlockListName)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
@@ -523,7 +525,7 @@ namespace Morphic.Focus
                 }
 
                 //Dialog not to be shown if two sessions are already active
-                if (Session1 != null && Session2 != null)
+                if (this.Sessions.Count >= 2)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
@@ -871,8 +873,7 @@ namespace Morphic.Focus
 
         #region Session
 
-        private List<Session> _lstSession = new List<Session>();
-        public List<Session> LstSession { get => _lstSession; set => _lstSession = value; }
+        public List<Session> Sessions = new List<Session>();
 
         private bool _isFocusRunning = false;
         public bool IsFocusRunning
@@ -891,41 +892,14 @@ namespace Morphic.Focus
             }
         }
 
-        public Session? Session1
-        {
-            get
-            {
-                //lock (locker)
-                //{
-                if (LstSession.Count >= 1)
-                    return LstSession[0];
-                else
-                    return null;
-                //}
-            }
-        }
-        public Session? Session2
-        {
-            get
-            {
-                //lock (locker)
-                //{
-                if (LstSession.Count == 2)
-                    return LstSession[1];
-                else
-                    return null;
-                //}
-            }
-        }
-
         public bool IsFocusWithBreaks
         {
             get
             {
-                if (LstSession.Count == 0)
+                if (this.Sessions.Count == 0)
                     return false;
                 else
-                    return Session1.ProvideBreak;
+                    return this.Sessions[0].ProvideBreak;
             }
         }
 
@@ -933,12 +907,12 @@ namespace Morphic.Focus
         {
             get
             {
-                if (LstSession.Count == 0)
+                if (this.Sessions.Count == 0)
                     return DateTime.MinValue;
                 else //if (LstSession.Count == 1)
-                    return Session1.NextBreakTime;
+                    return this.Sessions[0].NextBreakTime;
                 //else if (LstSession.Count == 2)
-                //    return new[] { Session1.NextBreakTime, Session2.NextBreakTime }.Min();
+                //    return new[] { this.LstSession[0].NextBreakTime, this.LstSession[1].NextBreakTime }.Min();
                 //else
                 //    return DateTime.MinValue;
             }
@@ -948,12 +922,12 @@ namespace Morphic.Focus
         {
             get
             {
-                if (LstSession.Count == 0)
+                if (this.Sessions.Count == 0)
                     return DateTime.MinValue;
                 else //if (LstSession.Count == 1)
-                    return Session1.LastBreakStartTime.AddMinutes(Session1.BreakDuration);
+                    return this.Sessions[0].LastBreakStartTime.AddMinutes(this.Sessions[0].BreakDuration);
                 //else if (LstSession.Count == 2)
-                //    return new[] { Session1.NextBreakTime, Session2.NextBreakTime }.Min();
+                //    return new[] { this.LstSession[0].NextBreakTime, this.LstSession[1].NextBreakTime }.Min();
                 //else
                 //    return DateTime.MinValue;
             }
@@ -1038,71 +1012,53 @@ namespace Morphic.Focus
                 }
                 else
                 {
+                    if (this.Sessions.Count == 0)
+                    {
+                        // default
+                        return false;
+                    }
+                    else
+                    {
+                        // if any session is not "focus till stop" then return false
+                        foreach (var session in this.Sessions)
+                        {
+                            if (session.SessionDuration != Int32.MaxValue) 
+                            {
+                                return false;
+                            }
+                        }
 
-                    if (Session1 != null && Session2 == null) //If only session 1 is running
-                    {
-                        return Session1.SessionDuration == Int32.MaxValue; //Is the session duration set to MaxValue
+                        // if all sessions were "focus till stop" then return true
+                        return true;
                     }
-                    else if (Session2 != null && Session1 == null) //If only session 2 is running
-                    {
-                        return Session2.SessionDuration == Int32.MaxValue; //Is the session duration set to zero
-                    }
-                    else if (Session1 != null && Session2 != null) //Both Sessions are running
-                    {
-                        //Return true only when both sessions are of type Focus Till Stop
-                        return Session1.SessionDuration == Int32.MaxValue && Session2.SessionDuration == Int32.MaxValue;
-                    }
-                    return false; //default
                 }
             }
         }
 
-        public Blocklist? Session1Blocklist
+        public Blocklist? GetSessionBlocklist(int index)
         {
-            get
+            if (this.Sessions.Count < index + 1)
             {
-                if (Session1 == null) return null;
-
-                string blocklistName = Session1.Schedule != null ?
-                            (Session1.Schedule.BlockListName != null ? Session1.Schedule.BlockListName : string.Empty)
-                            : Session1.BlockListName;
-
-                if (!string.IsNullOrWhiteSpace(blocklistName))
-                {
-                    if (UserPreferences.BlockLists.Any(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()))
-                    {
-                        Blocklist blockList = UserPreferences.BlockLists.Where(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()).First();
-                        return blockList;
-                    }
-                }
-
                 return null;
             }
-        }
 
-        public Blocklist? Session2Blocklist
-        {
-            get
+            var session = this.Sessions[index];
+
+            string blocklistName = session.Schedule != null ?
+                        (session.Schedule.BlockListName != null ? session.Schedule.BlockListName : string.Empty)
+                        : session.BlockListName;
+
+            if (!string.IsNullOrWhiteSpace(blocklistName))
             {
-                if (Session2 == null) return null;
-
-                string blocklistName = Session2.Schedule != null ?
-                            (Session2.Schedule.BlockListName != null ? Session2.Schedule.BlockListName : string.Empty)
-                            : Session2.BlockListName;
-
-                if (!string.IsNullOrWhiteSpace(blocklistName))
+                if (UserPreferences.BlockLists.Any(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()))
                 {
-                    if (UserPreferences.BlockLists.Any(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()))
-                    {
-                        Blocklist blockList = UserPreferences.BlockLists.Where(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()).First();
-                        return blockList;
-                    }
+                    Blocklist blockList = UserPreferences.BlockLists.Where(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()).First();
+                    return blockList;
                 }
-
-                return null;
             }
-        }
 
+            return null;
+        }
 
         #endregion
 
@@ -1246,7 +1202,7 @@ namespace Morphic.Focus
                     LoggingService.WriteAppLog("Start Focus Session Request Received");
 
                     //Do not start a session, if two sessions are already running
-                    if (LstSession.Count >= 2)
+                    if (this.Sessions.Count >= 2)
                     {
                         LoggingService.WriteAppLog("Session cannot be started. Two Sessions already running.");
 
@@ -1272,7 +1228,7 @@ namespace Morphic.Focus
                     JSONHelper jSONHelper = new JSONHelper(Common.GetSessionFilePath(session));
                     jsonString = jSONHelper.Save(session);
 
-                    LstSession.Add(session);
+                    this.Sessions.Add(session);
                     session.PropertyChanged += CurrSession_PropertyChanged;
                     session.IsBreakRunning = false;
                     IsFocusRunning = true;
@@ -1290,7 +1246,7 @@ namespace Morphic.Focus
                     //}
 
                     //Reset Break Timer if this is the first session that has started
-                    if (LstSession.Count == 1) StartFocusToBreakTimer();
+                    if (this.Sessions.Count == 1) StartFocusToBreakTimer();
                 }
                 catch (Exception ex)
                 {
@@ -1303,7 +1259,7 @@ namespace Morphic.Focus
         {
             try
             {
-                foreach (Session session in LstSession.ToList())
+                foreach (Session session in this.Sessions.ToList())
                 {
                     OpenSessionCompletedModal(session);
                 }
@@ -1403,11 +1359,11 @@ namespace Morphic.Focus
                 File.Delete(Common.GetSessionFilePath(session));
 
                 session.PropertyChanged -= CurrSession_PropertyChanged;
-                LstSession.Remove(session);
+                this.Sessions.Remove(session);
                 session = null;
-                IsFocusRunning = LstSession.Count > 0;
+                IsFocusRunning = this.Sessions.Count > 0;
 
-                if (LstSession.Count == 0) StopFocusTimer();
+                if (this.Sessions.Count == 0) StopFocusTimer();
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
@@ -1443,7 +1399,7 @@ namespace Morphic.Focus
                     DateTime datetimeNow = DateTime.Now; //Start of Break time for one or both sessions
 
                     //1 - Set Last Break Start time for all running sessions
-                    foreach (Session session in LstSession.ToList())
+                    foreach (Session session in this.Sessions.ToList())
                     {
                         session.LastBreakStartTime = datetimeNow;
                         session.IsBreakRunning = true;
@@ -1481,13 +1437,13 @@ namespace Morphic.Focus
                 DateTime datetimeNow = DateTime.Now; //Start of Break time for one or both sessions
 
                 //1 - Set Last Break Start time for all running sessions
-                foreach (Session session in LstSession.ToList())
+                foreach (Session session in this.Sessions.ToList())
                 {
                     session.LastStartTime = datetimeNow;
                     session.IsBreakRunning = false;
                 }
 
-                if (LstSession.Count >= 1) StartFocusToBreakTimer();
+                if (this.Sessions.Count >= 1) StartFocusToBreakTimer();
             }
         }
 
@@ -1551,7 +1507,7 @@ namespace Morphic.Focus
 
                             //Todo Review
                             //Stop focus session if the end time has reached
-                            foreach (Session session in LstSession.ToList())
+                            foreach (Session session in this.Sessions.ToList())
                             {
                                 if (session != null)
                                 {
@@ -1566,10 +1522,10 @@ namespace Morphic.Focus
                             }
 
                             //Open Short/Long Break Modal
-                            if (LstSession.Count > 0)
+                            if (this.Sessions.Count > 0)
                             {
 
-                                if ((DateTime.Now - Session1.LastStartTime).TotalMinutes >= Common.LongBreakDuration) //If focussing for more than 120 mins
+                                if ((DateTime.Now - this.Sessions[0].LastStartTime).TotalMinutes >= Common.LongBreakDuration) //If focussing for more than 120 mins
                                 {
                                     Application.Current.Dispatcher.Invoke(() =>
                                     {
@@ -1651,7 +1607,7 @@ namespace Morphic.Focus
                                 focusDispatchTimer.Timer.Stop();
 
                             //Stop focus session if the end time has reached
-                            foreach (Session session in LstSession.ToList())
+                            foreach (Session session in this.Sessions.ToList())
                             {
                                 if (session != null)
                                 {
@@ -1666,7 +1622,7 @@ namespace Morphic.Focus
                             }
 
                             //Open Break End Modal
-                            if (LstSession.Count > 0)
+                            if (Sessions.Count > 0)
                             {
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {

@@ -8,12 +8,14 @@
         Height="auto" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Title="Currently Running Focus Session(s)" Width="auto"
         MouseMove="Window_MouseMove" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
     <Window.Resources>
+        <local:MaximumValueVisibilityConverter x:Key="MaximumValueVisibilityConverter"></local:MaximumValueVisibilityConverter>
+        <local:MinimumValueVisibilityConverter x:Key="MinimumValueVisibilityConverter"></local:MinimumValueVisibilityConverter>
         <local:NullVisibilityConverter x:Key="NullVisibilityConverter"></local:NullVisibilityConverter>
         <local:InvertVisibilityConverter x:Key="InvertVisibilityConverter"></local:InvertVisibilityConverter>
         <Style TargetType="{x:Type TextBlock}" x:Key="ContentStyleActiveSession" BasedOn="{StaticResource ContentStyle}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Engine.Session2}" Value="{x:Null}">
+                <DataTrigger Binding="{Binding Engine.ActiveSessions_NullableItem1}" Value="{x:Null}">
                     <Setter Property="HorizontalAlignment" Value="Right"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -21,7 +23,7 @@
         <Style TargetType="{x:Type Button}" x:Key="SettingsButtonsGreyActiveSession" BasedOn="{StaticResource SettingsButtonsGrey}">
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Engine.Session2}" Value="{x:Null}">
+                <DataTrigger Binding="{Binding Engine.ActiveSessions_NullableItem1}" Value="{x:Null}">
                     <Setter Property="HorizontalAlignment" Value="Center"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -52,9 +54,9 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Width="auto" HorizontalAlignment="Center" Margin="25 0">
                 <Border Height="auto" BorderBrush="Black" Width="auto" BorderThickness="1"  Padding="10 0"
-                        Visibility="{Binding Engine.Session1, Converter={StaticResource NullVisibilityConverter}}">
+                        Visibility="{Binding Engine.ActiveSessions.Count, Converter={StaticResource MinimumValueVisibilityConverter}, ConverterParameter=1}">
                     <StackPanel HorizontalAlignment="Stretch">
-                        <TextBlock Style="{DynamicResource ModalTitle}" Margin="6 15 0 0" Visibility="{Binding Engine.Session2, Converter={StaticResource NullVisibilityConverter}}">Focus Session 1</TextBlock>
+                        <TextBlock Style="{DynamicResource ModalTitle}" Margin="6 15 0 0" Visibility="{Binding Engine.ActiveSessions.Count, Converter={StaticResource MinimumValueVisibilityConverter}, ConverterParameter=2}">Focus Session 1</TextBlock>
                         <Grid Height="54" VerticalAlignment="Stretch" Margin="0 15 0 0" Width="auto" HorizontalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -67,19 +69,19 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Grid.Row="0" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyleActiveSession}" >Focus session has run for :</TextBlock>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session1.RunForHRMM}" Width="auto"></TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.ActiveSessions_NullableItem0.RunForHRMM}" Width="auto"></TextBlock>
 
                             <TextBlock Grid.Row="1" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyleActiveSession}" >Using blocklist :</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session1.BlockListName}" Width="auto"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.ActiveSessions_NullableItem0.BlockListName}" Width="auto"></TextBlock>
 
                             <TextBlock Grid.Row="2" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyleActiveSession}" >Focus session ends at :</TextBlock>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session1.EndTime}" Width="auto"></TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.ActiveSessions_NullableItem0.EndTime}" Width="auto"></TextBlock>
                         </Grid>
                         <Button Name="btnStopFocus" Click="btnStopFocus_Click" Style="{DynamicResource SettingsButtonsGreyActiveSession}" Margin="0 20 0 10" Height="25" Width="123" >Stop focus session</Button>
                     </StackPanel>
                 </Border>
                 <Border Name="brdSession2" Height="auto" BorderBrush="Black" Width="auto" BorderThickness="1" Padding="10 0" Margin="10 0 0 0"
-                        Visibility="{Binding Engine.Session2, Converter={StaticResource NullVisibilityConverter}}" >
+                        Visibility="{Binding Engine.ActiveSessions.Count, Converter={StaticResource MinimumValueVisibilityConverter}, ConverterParameter=2}" >
                     <StackPanel HorizontalAlignment="Stretch">
 
                         <TextBlock Style="{DynamicResource ModalTitle}" Margin="6 15 0 0">Focus Session 2</TextBlock>
@@ -94,13 +96,13 @@
                                 <RowDefinition Height="18"></RowDefinition>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" >Focus session has run for :</TextBlock>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session2.RunForHRMM}" Width="auto" TextAlignment="Left"></TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.ActiveSessions_NullableItem1.RunForHRMM}" Width="auto" TextAlignment="Left"></TextBlock>
 
                             <TextBlock Grid.Row="1" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" >Using blocklist :</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session2.BlockListName}" Width="auto" TextAlignment="Left"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.ActiveSessions_NullableItem1.BlockListName}" Width="auto" TextAlignment="Left"></TextBlock>
 
                             <TextBlock Grid.Row="2" Grid.Column="0" Margin="6 0 0 0" Style="{DynamicResource ContentStyle}" >Focus session ends at :</TextBlock>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.Session2.EndTime}" Width="auto" TextAlignment="Left"></TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Margin="6 0 0 0" Style="{DynamicResource ModalTitle}" Text="{Binding Engine.ActiveSessions_NullableItem1.EndTime}" Width="auto" TextAlignment="Left"></TextBlock>
                         </Grid>
                         <Button Name="btnStopFocus2" Click="btnStopFocus2_Click" Style="{DynamicResource SettingsButtonsGrey}" Margin="0 20 0 0" Height="25" Width="123" HorizontalAlignment="Right">Stop focus session</Button>
                     </StackPanel>

@@ -103,9 +103,10 @@ namespace Morphic.Focus.Screens
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Schedule_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Schedule_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            var propertyChangeHandled = false;
+            // NOTE: we do a basic variation on validating properties here; this is not ideal, as ideally we'd have a validation that happened before the property
+            //       changed; ideally this validation should be broken out in the future into validation code instead.
             switch (e.PropertyName)
             {
                 case "IsActiveSunday":
@@ -116,6 +117,16 @@ namespace Morphic.Focus.Screens
                 case "IsActiveFriday":
                 case "IsActiveSaturday":
                     {
+                        // NOTE: for this property type, we'll set the property to validate it (i.e. get a success/failure back from setting it); our code will also go 
+                        //       ahead and re-sync the schedules afterwards (which is somewhat redundant), but that's necessary in the currently implementation to make sure
+                        //       that all data binding is triggered; in the future, we will ideally move to a validation model...and discretely update values (instead of re-sync)
+                        if (sender is null)
+                        {
+                            // if sender is null, show the user an error and then exit our special-case handler
+                            this.InvokeInternalErrorDialog();
+                            break;
+                        }
+
                         var schedule = (Schedule)sender;
 
                         var dayOfWeek = SettingsSchedule.GetDayOfWeekFromIsActivePropertyName(e.PropertyName);
@@ -143,23 +154,17 @@ namespace Morphic.Focus.Screens
                                 // show the user an error indicating that we couldn't add the day to the schedule
                                 this.InvokeScheduleErrorDialog();
                             }
-
-                            propertyChangeHandled = true;
                         }
                     }
                     break;
                 default:
-                    {
-                        propertyChangeHandled = false;
-                    }
-                    return;
+                    // fall through; we don't validate this property
+                    break;
             }
 
-            // if the property change has not been handled, re-initialize the calendar data (as a catch-all)
-            if (propertyChangeHandled == false)
-            {
-                InitializeCalendarData();
-            }
+            // NOTE: even if the property change was validated (by discretely adding the data), we still re-initialize the calendar data here to make sure we raise all necessary events
+            //       [ideally, we'd have validation logic simply block changes instead...and would have separate routines to add/remove/update various pieces of data]
+            InitializeCalendarData();
         }
 
         private void InvokeInternalErrorDialog()

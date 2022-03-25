@@ -37,7 +37,7 @@
                 <TextBlock FontFamily="{DynamicResource SourceSansProBold}" FontWeight="Bold" FontSize="12" LineHeight="15" Foreground="#095930"
                            >
                     <Run>Continue with </Run>
-                    <Underline><Run Text="{Binding Engine.Session1.BreakDuration}"></Run></Underline> 
+                    <Underline><Run Text="{Binding Engine.ActiveSessions_NullableItem0.BreakDuration}"></Run></Underline> 
                     <Run>minute break</Run>
                 </TextBlock>
             </Button>

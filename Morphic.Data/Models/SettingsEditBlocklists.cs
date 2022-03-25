@@ -122,7 +122,7 @@ namespace Morphic.Data.Models
                 if (_exceptions == null)
                 {
                     _exceptions = new CollAppsAndWebsites();
-                    _exceptions.PropertyChanged += _exceptions_PropertyChanged; ; ;
+                    _exceptions.PropertyChanged += _exceptions_PropertyChanged;
                 }
                 return _exceptions;
             }

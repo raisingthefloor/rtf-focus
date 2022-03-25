@@ -66,6 +66,80 @@ namespace Morphic.Focus.Screens
         }
     }
 
+    public class MaximumValueVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            int valueAsInt;
+            try
+            {
+                valueAsInt = System.Convert.ToInt32(value);
+            }
+            catch
+            {
+                // if the 'value' argument was not convertible to an int, return collapsed
+                System.Diagnostics.Debug.Assert(false, "Argument 'value' must be convertible to Int32");
+                return Visibility.Collapsed;
+            }
+
+            int maximumValue;
+            try
+            {
+                maximumValue = System.Convert.ToInt32(parameter);
+            }
+            catch
+            {
+                // if the 'parameter' argument was not convertible to an int, return collapsed
+                System.Diagnostics.Debug.Assert(false, "Argument 'parameter' must be convertible to Int32");
+                return Visibility.Collapsed;
+            }
+
+            return valueAsInt <= maximumValue ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class MinimumValueVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            int valueAsInt;
+            try
+            {
+                valueAsInt = System.Convert.ToInt32(value);
+            }
+            catch
+            {
+                // if the 'value' argument was not convertible to an int, return collapsed
+                System.Diagnostics.Debug.Assert(false, "Argument 'value' must be convertible to Int32");
+                return Visibility.Collapsed;
+            }
+
+            int minimumValue;
+            try
+            {
+                minimumValue = System.Convert.ToInt32(parameter);
+            }
+            catch
+            {
+                // if the 'parameter' argument was not convertible to an int, return collapsed
+                System.Diagnostics.Debug.Assert(false, "Argument 'parameter' must be convertible to Int32");
+                return Visibility.Collapsed;
+            }
+
+            return valueAsInt >= minimumValue ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class NullVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

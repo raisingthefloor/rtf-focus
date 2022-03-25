@@ -82,7 +82,7 @@
                     <ListBoxItem Name="lstItemGeneral">General Settings</ListBoxItem>
                     <ListBoxItem Name="lstItemBlockLists">Edit Blocklists</ListBoxItem>
                     <ListBoxItem Name="lstItemSchedule">Focus Schedule</ListBoxItem>
-                    <ListBoxItem Name="lstItemToday">Today's Schedule</ListBoxItem>
+                    <ListBoxItem Name="lstItemToday" Visibility="Collapsed">Today's Schedule</ListBoxItem>
                 </ListBox>
             </StackPanel>
 

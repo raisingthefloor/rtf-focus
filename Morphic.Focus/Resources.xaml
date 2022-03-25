@@ -703,10 +703,11 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Path=Engine.IsFocusRunning, UpdateSourceTrigger=PropertyChanged}" Value="true">
+            <!-- NOTE: this behavior was not in the spec; it is being grayed out instead of being deleted...in case we want the color back in the future -->
+            <!--<DataTrigger Binding="{Binding Path=Engine.IsFocusRunning, UpdateSourceTrigger=PropertyChanged}" Value="true">
                 <Setter Property="Button.Background" Value="Gray" />
                 <Setter Property="Cursor" Value="Arrow"/>
-            </DataTrigger>
+            </DataTrigger>-->
             <DataTrigger Binding="{Binding Path=Engine.IsFocusRunning, UpdateSourceTrigger=PropertyChanged}" Value="false">
                 <Setter Property="Button.Background" Value="#008145" />
                 <Setter Property="Cursor" Value="Hand"/>

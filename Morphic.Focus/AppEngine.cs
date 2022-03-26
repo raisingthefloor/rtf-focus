@@ -327,6 +327,27 @@ namespace Morphic.Focus
             }
         }
 
+        private static bool StartTimeIsInNextFiveMinutes(DateTime startTime)
+        {
+            var startTimeTimeSpan = new TimeSpan(startTime.Hour, startTime.Minute, startTime.Second);
+            var fiveMinuteEarlyTimeSpan = startTimeTimeSpan.Subtract(new TimeSpan(0, 5, 0));
+
+            var today = DateTime.Today;
+            var now = DateTime.Now;
+
+            var adjustedStartTimeSpan = today + startTimeTimeSpan - now;
+            var adjustedFiveMinuteEarlyTimeSpan = today + fiveMinuteEarlyTimeSpan - now;
+
+            if (adjustedFiveMinuteEarlyTimeSpan < TimeSpan.Zero && adjustedStartTimeSpan >= TimeSpan.Zero)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private DailyTrigger? SetTrigger(Schedule schedule)
         {
             DailyTrigger? trigger = null;
@@ -339,11 +360,20 @@ namespace Morphic.Focus
                         if (Helper.IsActiveToday(schedule)) //Schedule should be active today
                         {
                             //New Logic
-                            DateTime scheduleStartTime = schedule.StartAt.AddMinutes(-5); //Modal dialog to be shown 5 mins before start time
+                            DateTime triggerTime;
+                            if (AppEngine.StartTimeIsInNextFiveMinutes(schedule.StartAt) == true)
+                            {
+                                triggerTime = schedule.StartAt;
+                            }
+                            else
+                            {
+                                triggerTime = schedule.StartAt.AddMinutes(-5); //Modal dialog to be shown 5 mins before start time
+                            }
 
                             //Create trigger
-                            trigger = new DailyTrigger(scheduleStartTime.Hour, scheduleStartTime.Minute, scheduleStartTime.Second);
+                            trigger = new DailyTrigger(triggerTime.Hour, triggerTime.Minute, triggerTime.Second);
 
+                            // NOTE: the time will be triggered 5 minutes ahead of the scheduled time (if possible) or right at the scheduled time (if the session needs to start less than five minutes from now)
                             trigger.OnTimeTriggered += () =>
                             {
                                 //TODO - Review restart computer
@@ -1789,23 +1819,31 @@ namespace Morphic.Focus
 
             RunningTask = Task.Run(async () =>
             {
-                while (true)
-                {
+                //while (true)
+                //{
                     try
                     {
                         //Example we need to schedule for 5pm and current time is 6pm
                         var triggerTime = DateTime.Today + TriggerHour - DateTime.Now; //triggerTime = 00 hr + 17 hr - 18 hr = -1 hr
-                        if (triggerTime < TimeSpan.Zero) //if triggerTime < 0
+                        // if the trigger time has passed within the last 5 seconds, re-schedule it to start right now
+                        // NOTE: this is a patch, primarily designed to deal with scenarios where we tried to schedule "5 minutes ahead of time" but barely missed that window
+                        if (triggerTime.Add(new TimeSpan(0, 0, 5)) > TimeSpan.Zero && triggerTime < TimeSpan.Zero)
+                        {
+                            triggerTime = TimeSpan.Zero;
+                        }
+                        else if (triggerTime < TimeSpan.Zero) //if triggerTime < 0
+                        {
                             triggerTime = triggerTime.Add(new TimeSpan(24, 0, 0)); //triggerTime = -1 hr + 24 hr = 23 hr
+                        }
 
                         await Task.Delay(triggerTime, CancellationToken.Token); //wait for 23 hr. Currenttime = 6pm + 23 hr = 5pm next day
                         OnTimeTriggered?.Invoke(); //trigger at 5 pm next day
                     }
                     catch
                     {
-                        break;
+                        //break;
                     }
-                }
+                //}
             }, CancellationToken.Token);
         }
 

@@ -47,7 +47,7 @@
             <Button Grid.Row="5" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="25 20 25 0" Width="130" Command="ApplicationCommands.Close">
                 Nevermind, go back</Button>
 
-            <TextBlock Grid.Row="6" Grid.Column="0" Margin="25 20 25 0" Style="{DynamicResource ContentStyleSmall}" TextAlignment="Center">
+            <TextBlock Grid.Row="6" Grid.Column="0" Margin="25 20 25 10" Style="{DynamicResource ContentStyleSmall}" TextAlignment="Center">
                 <Hyperlink>Show me the blocklist that requires this ...</Hyperlink>
             </TextBlock>
         </Grid>

@@ -221,8 +221,35 @@ namespace Morphic.Focus.Screens
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            var failedValidation = false;
+
             Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
+            if (regex.IsMatch(e.Text) == true)
+            {
+                failedValidation = true;
+            }
+
+            if (e.Text.Trim() == String.Empty)
+            {
+                failedValidation = true;
+            }
+
+            if (e.Text.Trim() == "0")
+            {
+                failedValidation = true;
+            }
+
+            e.Handled = failedValidation;
+        }
+
+        private void TextBox_PreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            // if the user left the textbox empty, change its value to 1
+            var textbox = (TextBox)sender;
+            if (textbox.Text.Length == 0)
+            {
+                textbox.Text = "1";
+            }
         }
         #endregion
 
@@ -339,19 +366,29 @@ namespace Morphic.Focus.Screens
         public int MinValue { get; set; }
         public int MaxValue { get; set; }
 
-        public override ValidationResult Validate(
-          object value, System.Globalization.CultureInfo cultureInfo)
+        public override ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)
         {
             int intValue;
 
             string text = String.Format("Must be between {0} and {1}",
                            MinValue, MaxValue);
-            if (!Int32.TryParse(value.ToString(), out intValue))
+            if (value is null || value!.ToString() is null || value!.ToString()!.Trim() == String.Empty)
+            {
+                return new ValidationResult(false, "Cannot be empty.");
+            }
+            else if (!Int32.TryParse(value.ToString(), out intValue))
+            {
                 return new ValidationResult(false, "Not an integer");
-            if (intValue < MinValue)
+            }
+            else if (intValue < MinValue)
+            {
                 return new ValidationResult(false, "Too small. " + text);
-            if (intValue > MaxValue)
+            }
+            else if (intValue > MaxValue)
+            {
                 return new ValidationResult(false, "Too large. " + text);
+            }
+
             return new ValidationResult(true, null);
         }
     }

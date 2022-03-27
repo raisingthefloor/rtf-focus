@@ -1819,8 +1819,9 @@ namespace Morphic.Focus
 
             RunningTask = Task.Run(async () =>
             {
-                //while (true)
-                //{
+                // OBSERVATION: this code appears to run in a loop so that it will trigger every day (until the application stops running)
+                while (true)
+                {
                     try
                     {
                         //Example we need to schedule for 5pm and current time is 6pm
@@ -1838,12 +1839,16 @@ namespace Morphic.Focus
 
                         await Task.Delay(triggerTime, CancellationToken.Token); //wait for 23 hr. Currenttime = 6pm + 23 hr = 5pm next day
                         OnTimeTriggered?.Invoke(); //trigger at 5 pm next day
+
+                        await Task.Delay(new TimeSpan(0, 0, 10), CancellationToken.Token); //wait for 10 seconds before attempting next trigger time calculation
                     }
                     catch
                     {
-                        //break;
+                        // OBSERVATION: this "break" seems to exist, in theory, to break out of this thread if the cancellation token is cancelled; note that
+                        //              this will also presumably exit if the invoked routine throws an exception (resulting in tomorrow's scheduled session _not_ being triggered)
+                        break;
                     }
-                //}
+                }
             }, CancellationToken.Token);
         }
 

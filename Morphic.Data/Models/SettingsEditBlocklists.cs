@@ -179,6 +179,20 @@ namespace Morphic.Data.Models
             }
         }
 
+        public static int ConstrainPenaltyValue(int value)
+        {
+            if (value < 1)
+            {
+                value = 1;
+            }
+            else if (value > 99)
+            {
+                value = 99;
+            }
+
+            return value;
+        }
+
         private int _penaltyValue = 1;
         public int PenaltyValue
         {
@@ -188,6 +202,9 @@ namespace Morphic.Data.Models
             }
             set
             {
+                // constrain penalty value range
+                value = Blocklist.ConstrainPenaltyValue(value);
+
                 if (value != this._penaltyValue)
                 {
                     this._penaltyValue = value;

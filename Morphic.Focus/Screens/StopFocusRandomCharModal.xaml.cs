@@ -78,9 +78,12 @@ namespace Morphic.Focus.Screens
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(_randomChars) || _randomChars.Length != PenaltyValue)
+                // constrain penalty value range
+                var penaltyValue = Blocklist.ConstrainPenaltyValue(this.PenaltyValue);
+
+                if (string.IsNullOrWhiteSpace(_randomChars) || _randomChars.Length != penaltyValue)
                 {
-                    _randomChars = RandomString(PenaltyValue);
+                    _randomChars = RandomString(penaltyValue);
                 }
 
                 return _randomChars;

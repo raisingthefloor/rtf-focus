@@ -444,13 +444,13 @@ namespace Morphic.Focus
                                                 });
                                             };
 
-                                            LstFocusDispatchTimer.Remove(focusDispatchTimer);
+                                            ActiveFocusDispatchTimers.Remove(focusDispatchTimer);
                                         }
                                         focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
                                     }, Application.Current.Dispatcher);
 
                                     focusDispatchTimer.Timer.Start();
-                                    LstFocusDispatchTimer.Add(focusDispatchTimer);
+                                    ActiveFocusDispatchTimers.Add(focusDispatchTimer);
                                 }
                                 else //Show dialog of focus about to start
                                 {
@@ -719,8 +719,8 @@ namespace Morphic.Focus
         #region Properties
 
         #region ListFocusDispatchTimer
-        private List<FocusDispatchTimer> _lstFocusDispatchTimer = new List<FocusDispatchTimer>();
-        public List<FocusDispatchTimer> LstFocusDispatchTimer { get => _lstFocusDispatchTimer; set => _lstFocusDispatchTimer = value; }
+        private List<FocusDispatchTimer> _activeFocusDispatchTimers = new List<FocusDispatchTimer>();
+        public List<FocusDispatchTimer> ActiveFocusDispatchTimers { get => _activeFocusDispatchTimers; set => _activeFocusDispatchTimers = value; }
 
         #endregion
 
@@ -960,9 +960,21 @@ namespace Morphic.Focus
             get
             {
                 if (this.ActiveSessions.Count == 0)
+                {
                     return false;
+                }
                 else
-                    return this.ActiveSessions[0].ProvideBreak;
+                {
+                    var provideBreak = false;
+                    foreach (var session in this.ActiveSessions)
+                    {
+                        if (session.ProvideBreak == true)
+                        {
+                            provideBreak = true;
+                        }
+                    }
+                    return provideBreak;
+                }
             }
         }
 
@@ -971,13 +983,31 @@ namespace Morphic.Focus
             get
             {
                 if (this.ActiveSessions.Count == 0)
+                {
                     return DateTime.MinValue;
-                else //if (LstSession.Count == 1)
-                    return this.ActiveSessions[0].NextBreakTime;
-                //else if (LstSession.Count == 2)
-                //    return new[] { this.LstSession[0].NextBreakTime, this.LstSession[1].NextBreakTime }.Min();
-                //else
-                //    return DateTime.MinValue;
+                }
+                else
+                {
+                    var earliestNextBreakTime = DateTime.MaxValue;
+                    var foundEarlierNextBreakTime = false;
+                    foreach (var session in this.ActiveSessions)
+                    {
+                        if (session.NextBreakTime < earliestNextBreakTime && session.NextBreakTime != DateTime.MinValue)
+                        {
+                            earliestNextBreakTime = session.NextBreakTime;
+                            foundEarlierNextBreakTime = true;
+                        }
+                    }
+                    
+                    if (foundEarlierNextBreakTime == true)
+                    {
+                        return earliestNextBreakTime;
+                    }
+                    else
+                    {
+                        return DateTime.MinValue;
+                    }
+                }
             }
         }
 
@@ -986,13 +1016,31 @@ namespace Morphic.Focus
             get
             {
                 if (this.ActiveSessions.Count == 0)
+                {
                     return DateTime.MinValue;
-                else //if (LstSession.Count == 1)
-                    return this.ActiveSessions[0].LastBreakStartTime.AddMinutes(this.ActiveSessions[0].BreakDuration);
-                //else if (LstSession.Count == 2)
-                //    return new[] { this.LstSession[0].NextBreakTime, this.LstSession[1].NextBreakTime }.Min();
-                //else
-                //    return DateTime.MinValue;
+                }
+                else
+                {
+                    var earliestLastBreakStartTime = DateTime.MaxValue;
+                    var foundEarlierLastBreakStartTime = false;
+                    foreach (var session in this.ActiveSessions)
+                    {
+                        if (session.LastBreakStartTime < earliestLastBreakStartTime && session.LastBreakStartTime != DateTime.MinValue)
+                        {
+                            earliestLastBreakStartTime = session.LastBreakStartTime;
+                            foundEarlierLastBreakStartTime = true;
+                        }
+                    }
+
+                    if (foundEarlierLastBreakStartTime == true)
+                    {
+                        return earliestLastBreakStartTime;
+                    }
+                    else
+                    {
+                        return DateTime.MinValue;
+                    }
+                }
             }
         }
 
@@ -1242,13 +1290,13 @@ namespace Morphic.Focus
                         if (session.Schedule == null || ShallStartSession(session.Schedule))
                             StartFocusSession(session);
 
-                        LstFocusDispatchTimer.Remove(focusDispatchTimer);
+                        ActiveFocusDispatchTimers.Remove(focusDispatchTimer);
                     }
                     focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
                 }, Application.Current.Dispatcher);
 
                 focusDispatchTimer.Timer.Start();
-                LstFocusDispatchTimer.Add(focusDispatchTimer);
+                ActiveFocusDispatchTimers.Add(focusDispatchTimer);
             }
             catch (Exception ex)
             {
@@ -1525,9 +1573,9 @@ namespace Morphic.Focus
                 FocusDispatchTimer? focusDispatchTimer = null;
 
                 //Get countdown dispatch timer
-                if (LstFocusDispatchTimer.Exists(p => p.IsCountdownTimer))
+                if (ActiveFocusDispatchTimers.Exists(p => p.IsCountdownTimer))
                 {
-                    focusDispatchTimer = LstFocusDispatchTimer.Find(p => p.IsCountdownTimer);
+                    focusDispatchTimer = ActiveFocusDispatchTimers.Find(p => p.IsCountdownTimer);
                 }
                 else
                 {
@@ -1542,9 +1590,13 @@ namespace Morphic.Focus
                 if (breakGap == 0)
                 {
                     if (NextBreakTime == DateTime.MinValue)
+                    {
                         TimeTillNextBreak = focusDispatchTimer.Time = new TimeSpan(0, Common.LongBreakDuration, 0); //Long Break TODO Review from specs
+                    }
                     else
+                    {
                         TimeTillNextBreak = focusDispatchTimer.Time = (NextBreakTime - DateTime.Now).Duration();
+                    }
                 }
                 else //Extended Session from break dialog
                 {
@@ -1570,6 +1622,8 @@ namespace Morphic.Focus
                             if (focusDispatchTimer.Timer != null)
                                 focusDispatchTimer.Timer.Stop();
 
+                            var sessionCompleted = false;
+
                             //Todo Review
                             //Stop focus session if the end time has reached
                             foreach (Session session in this.ActiveSessions.ToList())
@@ -1581,16 +1635,29 @@ namespace Morphic.Focus
                                         if (DateTime.Now >= session.ActualStartTime.AddMinutes(session.SessionDuration))
                                         {
                                             OpenSessionCompletedModal(session); //Stop the Session if End time has reached
+                                            sessionCompleted = true;
                                         }
                                     }
                                 }
                             }
 
-                            //Open Short/Long Break Modal
-                            if (this.ActiveSessions.Count > 0)
-                            {
+                            // NOTE: we should record the time that a break should start (either a short break or a long break) and use THAT time logic here to determine
+                            //       if a short/long break dialog should be shown
+                            //       [instead, we are using the legacy solution...but we're basing it on whether or not a session just ended]
 
-                                if ((DateTime.Now - this.ActiveSessions[0].LastStartTime).TotalMinutes >= Common.LongBreakDuration) //If focussing for more than 120 mins
+                            //Open Short/Long Break Modal
+                            if (sessionCompleted == false && this.ActiveSessions.Count > 0)
+                            {
+                                var showLongBreakModal = false;
+                                foreach (var session in this.ActiveSessions)
+                                {
+                                    if ((DateTime.Now - session.LastStartTime).TotalMinutes >= Common.LongBreakDuration) //If focusing for more than 120 mins
+                                    {
+                                        showLongBreakModal = true;
+                                    }
+                                }
+
+                                if (showLongBreakModal == true)
                                 {
                                     Application.Current.Dispatcher.Invoke(() =>
                                     {
@@ -1608,14 +1675,14 @@ namespace Morphic.Focus
                                 }
                             }
 
-                            LstFocusDispatchTimer.Remove(focusDispatchTimer);
+                            ActiveFocusDispatchTimers.Remove(focusDispatchTimer);
                         }
                     }
                     TimeTillNextBreak = focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
                 }, Application.Current.Dispatcher);
 
                 focusDispatchTimer.Timer.Start(); //Start Countdown timer
-                LstFocusDispatchTimer.Add(focusDispatchTimer);
+                ActiveFocusDispatchTimers.Add(focusDispatchTimer);
             }
             catch (Exception ex)
             {
@@ -1631,9 +1698,9 @@ namespace Morphic.Focus
                 FocusDispatchTimer? focusDispatchTimer = null;
 
                 //Get countdown dispatch timer
-                if (LstFocusDispatchTimer.Exists(p => p.IsCountdownTimer))
+                if (ActiveFocusDispatchTimers.Exists(p => p.IsCountdownTimer))
                 {
-                    focusDispatchTimer = LstFocusDispatchTimer.Find(p => p.IsCountdownTimer);
+                    focusDispatchTimer = ActiveFocusDispatchTimers.Find(p => p.IsCountdownTimer);
                 }
                 else
                 {
@@ -1696,14 +1763,14 @@ namespace Morphic.Focus
                                 });
                             }
 
-                            LstFocusDispatchTimer.Remove(focusDispatchTimer);
+                            ActiveFocusDispatchTimers.Remove(focusDispatchTimer);
                         }
                     }
                     TimeTillNextBreakEnds = focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
                 }, Application.Current.Dispatcher);
 
                 focusDispatchTimer.Timer.Start(); //Start Countdown timer
-                LstFocusDispatchTimer.Add(focusDispatchTimer);
+                ActiveFocusDispatchTimers.Add(focusDispatchTimer);
             }
             catch (Exception ex)
             {
@@ -1719,15 +1786,15 @@ namespace Morphic.Focus
                 FocusDispatchTimer? focusDispatchTimer = null;
 
                 //Get countdown dispatch timer
-                if (LstFocusDispatchTimer.Exists(p => p.IsCountdownTimer))
+                if (ActiveFocusDispatchTimers.Exists(p => p.IsCountdownTimer))
                 {
-                    focusDispatchTimer = LstFocusDispatchTimer.Find(p => p.IsCountdownTimer);
+                    focusDispatchTimer = ActiveFocusDispatchTimers.Find(p => p.IsCountdownTimer);
 
                     //Reset existing time & timer
                     if (focusDispatchTimer.Timer != null) focusDispatchTimer.Timer.Stop();
                     TimeTillNextBreak = focusDispatchTimer.Time = TimeSpan.Zero;
 
-                    LstFocusDispatchTimer.Remove(focusDispatchTimer);
+                    ActiveFocusDispatchTimers.Remove(focusDispatchTimer);
                 }
             }
             catch (Exception ex)
@@ -1767,13 +1834,13 @@ namespace Morphic.Focus
 
                         LockedScreenNonModal.Hide();
 
-                        LstFocusDispatchTimer.Remove(focusDispatchTimer);
+                        ActiveFocusDispatchTimers.Remove(focusDispatchTimer);
                     }
                     focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
                 }, Application.Current.Dispatcher);
 
                 focusDispatchTimer.Timer.Start();
-                LstFocusDispatchTimer.Add(focusDispatchTimer);
+                ActiveFocusDispatchTimers.Add(focusDispatchTimer);
             }
             catch (Exception ex)
             {

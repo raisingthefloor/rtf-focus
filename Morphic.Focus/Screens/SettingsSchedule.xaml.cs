@@ -197,8 +197,8 @@ namespace Morphic.Focus.Screens
                 {
                     ErrorMessageModal errorMessageModal = new ErrorMessageModal()
                     {
-                        TitleText = "Two Focus session already scheduled",
-                        ContentText = $"More than two Focus sessions cannot be scheduled for the same time.{Environment.NewLine}Try editing your schedule."
+                        TitleText = AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED + " Focus session(s) already scheduled",
+                        ContentText = "More than " + AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED + " focus session(s) cannot be scheduled for the same time.\nTry editing your schedule."
                     };
 
                     errorMessageModal.ShowDialog();
@@ -351,44 +351,50 @@ namespace Morphic.Focus.Screens
                 }
 
                 // if the first slot was not available, then try the second slot
-
-                //Check if second color slot is available
-                bool isSecondSlotAvailable = true; //Assume it is available
-                for (int i = startHour; i <= endHour; i++)
+                if (AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED == 2)
                 {
-                    //Make the check
-                    if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
-                    {
-                        CalendarData? item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
-                        //if (item.Color2 != Brushes.Transparent)
-                        //{
-                        //    isSecondSlotAvailable = false;
-                        //    break;
-                        //}
-                        if (item.BorderColor2 != Brushes.Transparent)
-                        {
-                            isSecondSlotAvailable = false;
-                            break;
-                        }
-                    }
-                }
-
-                //If Second Color Slot is available, assign the color to the slot
-                if (isSecondSlotAvailable)
-                {
+                    //Check if second color slot is available
+                    bool isSecondSlotAvailable = true; //Assume it is available
                     for (int i = startHour; i <= endHour; i++)
                     {
                         //Make the check
                         if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
                         {
-                            CalendarData item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
-                            item.Color2 = schedule.IsActive ? brush : Brushes.Transparent;
-                            item.BorderColor2 = brush;
+                            CalendarData? item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
+                            //if (item.Color2 != Brushes.Transparent)
+                            //{
+                            //    isSecondSlotAvailable = false;
+                            //    break;
+                            //}
+                            if (item.BorderColor2 != Brushes.Transparent)
+                            {
+                                isSecondSlotAvailable = false;
+                                break;
+                            }
                         }
                     }
 
-                    // change made in the second slot; return success
-                    return MorphicResult.OkResult();
+                    //If Second Color Slot is available, assign the color to the slot
+                    if (isSecondSlotAvailable)
+                    {
+                        for (int i = startHour; i <= endHour; i++)
+                        {
+                            //Make the check
+                            if (CalendarDataSource.Any(x => x.I == i && x.J == dayValue))
+                            {
+                                CalendarData item = CalendarDataSource.Where(x => x.I == i && x.J == dayValue).First();
+                                item.Color2 = schedule.IsActive ? brush : Brushes.Transparent;
+                                item.BorderColor2 = brush;
+                            }
+                        }
+
+                        // change made in the second slot; return success
+                        return MorphicResult.OkResult();
+                    }
+                }
+                else if (AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED > 2)
+                {
+                    throw new Exception("Invalid code path; constant " + nameof(AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED) + " is out of range.");
                 }
 
                 // if no slots were available, return an error condition

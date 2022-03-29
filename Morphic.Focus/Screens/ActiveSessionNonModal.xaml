@@ -108,7 +108,7 @@
                     </StackPanel>
                 </Border>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Margin="0 20 0 0" HorizontalAlignment="Center" Visibility="{Binding ElementName=brdSession2, Path=Visibility, Converter={StaticResource InvertVisibilityConverter}}">
+            <!--<StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Margin="0 20 0 0" HorizontalAlignment="Center" Visibility="{Binding ElementName=brdSession2, Path=Visibility, Converter={StaticResource InvertVisibilityConverter}}">
                 <TextBlock Width="{Binding Path=ActualWidth, ElementName=txtWhatsThis}" Margin="15 0 0 0"></TextBlock>
                 <Button Style="{DynamicResource SettingsButtonsLightGreen}" Height="25" Width="176" Click="StartSecondSession">
                     Start a second focus session
@@ -118,10 +118,10 @@
                         <TextBlock FontFamily="{DynamicResource SourceSansProRegular}" FontWeight="Normal" Text="Why do this?"/>
                     </Hyperlink>
                 </TextBlock>
-            </StackPanel>
+            </StackPanel>-->
 
-            <Border Grid.Row="5" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#A3A3A3" Margin="0 15 0 0"
-                    Visibility="{Binding ElementName=brdSession2, Path=Visibility, Converter={StaticResource InvertVisibilityConverter}}"></Border>
+            <!--<Border Grid.Row="5" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#A3A3A3" Margin="0 15 0 0"
+                    Visibility="{Binding ElementName=brdSession2, Path=Visibility, Converter={StaticResource InvertVisibilityConverter}}"></Border>-->
 
             <Button Grid.Row="6" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="0 15 0 15" Height="25" Width="176" Command="ApplicationCommands.Close">OK</Button>
 

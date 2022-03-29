@@ -22,6 +22,8 @@ namespace Morphic.Focus
         private static readonly AppEngine _instance = new AppEngine();
         public static AppEngine Instance { get { return _instance; } }
 
+        public const int NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED = 1; // valid range: 1...2
+
         AppEngine()
         {
             try
@@ -535,27 +537,20 @@ namespace Morphic.Focus
             try
             {
                 //Dialog not to be shown if scheduled blocklist is already active
-                if (this.ActiveSessions.Count >= 1 && this.ActiveSessions[0].BlockListName == schedule.BlockListName)
+                foreach(var session in this.ActiveSessions)
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    if (session.BlockListName == schedule.BlockListName)
                     {
-                        schedule.IsActive = false;
-                    });
-                    return false;
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            schedule.IsActive = false;
+                        });
+                        return false;
+                    }
                 }
 
-                //Dialog not to be shown if scheduled blocklist is already active
-                if (this.ActiveSessions.Count >= 2 && this.ActiveSessions[1].BlockListName == schedule.BlockListName)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        schedule.IsActive = false;
-                    });
-                    return false;
-                }
-
-                //Dialog not to be shown if two sessions are already active
-                if (this.ActiveSessions.Count >= 2)
+                //Dialog not to be shown if the maximum number of sessions is/are already active
+                if (this.ActiveSessions.Count >= AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
@@ -1315,16 +1310,16 @@ namespace Morphic.Focus
                     LoggingService.WriteAppLog("Start Focus Session Request Received");
 
                     //Do not start a session, if two sessions are already running
-                    if (this.ActiveSessions.Count >= 2)
+                    if (this.ActiveSessions.Count >= AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED)
                     {
-                        LoggingService.WriteAppLog("Session cannot be started. Two Sessions already running.");
+                        LoggingService.WriteAppLog("Session cannot be started. Maximum number of session(s) already running.");
 
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             ErrorMessageModal errorMessageModal = new ErrorMessageModal()
                             {
-                                TitleText = "Two Focus sessions already running",
-                                ContentText = "More than two Focus Sessions cannot run for the same time. Try closing one of the running Focus Session."
+                                TitleText = AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED + " focus session(s) already running",
+                                ContentText = "More than " + AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED + "Focus Sessions cannot run for the same time. Try closing one of the running Focus Session."
                             };
                             errorMessageModal.ShowDialog();
 

@@ -1233,8 +1233,8 @@ namespace Morphic.Focus
                 {
                     ErrorMessageModal errorMessageModal = new ErrorMessageModal()
                     {
-                        TitleText = "One or more Focus sessions are active",
-                        ContentText = $"You started at least one Focus session before you last logged out or restarted this computer."
+                        TitleText = "A Focus session is active",
+                        ContentText = $"You started a Focus session before you last logged out or restarted this computer."
                     };
 
                     errorMessageModal.ShowDialog();

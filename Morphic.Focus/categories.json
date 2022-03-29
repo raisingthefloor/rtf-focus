@@ -55,71 +55,60 @@
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://slack.com",
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://zoom.com",
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://Zoho.com",
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://goto.com",
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://eyeson.com/",
             "IsApp": false,
             "Path": null
           },
-         
           {
             "IsActive": true,
             "Name": "http://meet.jit.si/",
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://webex.com/video-conferencing",
             "IsApp": false,
             "Path": null
           },
-         
-          
           {
             "IsActive": true,
             "Name": "http://Hangouts.google.com",
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://yammer.com/",
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://chanty.com",
@@ -132,64 +121,54 @@
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://discord.com/",
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://mattermost.com/",
             "IsApp": false,
             "Path": null
           },
-         
           {
             "IsActive": true,
             "Name": "http://flock.com/",
             "IsApp": false,
             "Path": null
           },
-         
           {
             "IsActive": true,
             "Name": "http://ryver.com/",
             "IsApp": false,
             "Path": null
           },
-         
           {
             "IsActive": true,
             "Name": "http://flowdock.com/",
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://app.glip.com/",
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://fleep.io/",
             "IsApp": false,
             "Path": null
           },
-          
-          
           {
             "IsActive": true,
             "Name": "http://messenger.com/desktop",
             "IsApp": false,
             "Path": null
           },
-       
           {
             "IsActive": true,
             "Name": "http://messages.google.com/",
@@ -327,7 +306,6 @@
             "IsApp": false,
             "Path": null
           },
-          
           {
             "IsActive": true,
             "Name": "http://friendfinder.com",
@@ -4248,7 +4226,6 @@
     {
       "Name": "Porn",
       "AppsAndWebsites": [
-        "*.xxx",
         "18videosz.com",
         "24porn.com",
         "3movs.com",
@@ -4464,12 +4441,6 @@
       ],
       "CollAppsAndWebsites": {
         "ActiveAppsAndWebsites": [
-          {
-            "IsActive": true,
-            "Name": "http://*.xxx",
-            "IsApp": false,
-            "Path": null
-          },
           {
             "IsActive": true,
             "Name": "http://18videosz.com",
@@ -6402,12 +6373,6 @@
         "ActiveAppsAndWebsites": [
           {
             "IsActive": true,
-            "Name": "http://*p=*proxies*\u0022,",
-            "IsApp": false,
-            "Path": null
-          },
-          {
-            "IsActive": true,
             "Name": "http://expressvpn.com",
             "IsApp": false,
             "Path": null
@@ -6516,20 +6481,20 @@
       "AppsAndWebsites": [
         "alibaba.com",
         "aliexpress.com",
-        "amazon.*",
-        "bestbuy.*",
+        "amazon.com",
+        "bestbuy.com",
         "boohoo.com",
         "craigslist.org",
-        "ebay.*",
+        "ebay.com",
         "etsy.com",
         "facebook.com/marketplace*",
         "fashionnova.com",
         "forever21.com",
         "gilt.com",
-        "google.*/shopping*",
+        "shopping.google.com",
         "groupon.com",
         "ikea.com",
-        "kijiji.*",
+        "kijiji.com",
         "macys.com",
         "necessaryclothing.com",
         "overstock.com",
@@ -6546,12 +6511,12 @@
         "shopzilla.com",
         "snapdeal.com",
         "soap.com",
-        "staples.*",
+        "staples.com",
         "target.com",
         "thinkgeek.com",
         "tuftandneedle.com",
         "uniqlo.com",
-        "walmart.*",
+        "walmart.com",
         "westelm.com",
         "wish.com",
         "zappos.com"
@@ -6572,13 +6537,13 @@
           },
           {
             "IsActive": true,
-            "Name": "http://amazon.*",
+            "Name": "http://amazon.com",
             "IsApp": false,
             "Path": null
           },
           {
             "IsActive": true,
-            "Name": "http://bestbuy.*",
+            "Name": "http://bestbuy.com",
             "IsApp": false,
             "Path": null
           },
@@ -6596,7 +6561,7 @@
           },
           {
             "IsActive": true,
-            "Name": "http://ebay.*",
+            "Name": "http://ebay.com",
             "IsApp": false,
             "Path": null
           },
@@ -6632,7 +6597,7 @@
           },
           {
             "IsActive": true,
-            "Name": "http://google.*/shopping*",
+            "Name": "http://shopping.google.com",
             "IsApp": false,
             "Path": null
           },
@@ -6650,7 +6615,7 @@
           },
           {
             "IsActive": true,
-            "Name": "http://kijiji.*",
+            "Name": "http://kijiji.com",
             "IsApp": false,
             "Path": null
           },
@@ -6752,7 +6717,7 @@
           },
           {
             "IsActive": true,
-            "Name": "http://staples.*",
+            "Name": "http://staples.com",
             "IsApp": false,
             "Path": null
           },
@@ -6782,7 +6747,7 @@
           },
           {
             "IsActive": true,
-            "Name": "http://walmart.*",
+            "Name": "http://walmart.com",
             "IsApp": false,
             "Path": null
           },

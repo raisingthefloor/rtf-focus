@@ -121,9 +121,21 @@ namespace Morphic.Focus.Screens
 
         private void StartBreak(object sender, RoutedEventArgs e)
         {
+            // TODO: capture the active session (rather than hard-coding to session 1)
+            int breakDuration;
+            if (Engine.ActiveSessions.Count > 0)
+            {
+                breakDuration = Engine.ActiveSessions[0].BreakDuration;
+            }
+            else
+            {
+                System.Diagnostics.Debug.Assert(false, "Programming error: cannot streak break if there is no active session");
+                return;
+            }
+
             try
             {
-                Task.Factory.StartNew(() => Engine.StartBreakSequence());
+                Task.Factory.StartNew(() => Engine.StartBreakSequence(breakDuration));
 
                 ShowButtonVisibility();
 

@@ -197,8 +197,8 @@ namespace Morphic.Focus.Screens
                 {
                     ErrorMessageModal errorMessageModal = new ErrorMessageModal()
                     {
-                        TitleText = AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED + " Focus session(s) already scheduled",
-                        ContentText = "More than " + AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED + " focus session(s) cannot be scheduled for the same time.\nTry editing your schedule."
+                        TitleText = AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED + " Focus Session" + (AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED != 1 ? "s" : "") + " already scheduled",
+                        ContentText = "More than " + AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED + " Focus Session" + (AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED != 1 ? "s" : "") + " cannot be scheduled for the same time.\nTry editing your schedule."
                     };
 
                     errorMessageModal.ShowDialog();

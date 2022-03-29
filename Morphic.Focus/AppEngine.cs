@@ -1312,14 +1312,14 @@ namespace Morphic.Focus
                     //Do not start a session, if two sessions are already running
                     if (this.ActiveSessions.Count >= AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED)
                     {
-                        LoggingService.WriteAppLog("Session cannot be started. Maximum number of session(s) already running.");
+                        LoggingService.WriteAppLog("Session cannot be started. Maximum number of sessions already running.");
 
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             ErrorMessageModal errorMessageModal = new ErrorMessageModal()
                             {
-                                TitleText = AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED + " focus session(s) already running",
-                                ContentText = "More than " + AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED + "Focus Sessions cannot run for the same time. Try closing one of the running Focus Session."
+                                TitleText = AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED + " Focus Session" + (AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED != 1 ? "s" : "") + " already running",
+                                ContentText = "More than " + AppEngine.NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED + "Focus Sessions cannot run for the same time. Try closing one of the running Focus Sessions."
                             };
                             errorMessageModal.ShowDialog();
 

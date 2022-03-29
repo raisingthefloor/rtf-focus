@@ -64,16 +64,17 @@ use this feature to unblock it.</TextBlock>
                         <RowDefinition Height="41"/>
                     </Grid.RowDefinitions>
 
-                    <ItemsControl  Grid.Row="0" Grid.Column="0" Name="dgBlock" MinHeight="130" ItemsSource="{Binding Path=Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites}">
+                    <ItemsControl Grid.Row="0" Grid.Column="0" Name="dgBlock" MinHeight="130" ItemsSource="{Binding Path=Engine.UserPreferences.General.TemporarilyUnblock.ActiveAppsAndWebsites}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Width="230" Height="23">
                                     <CheckBox Style="{DynamicResource FocusCheckbox}" Content="{Binding Name}" Width="150" Margin="6 0" Validation.Error="EditGeneralError" Validation.ErrorTemplate="{x:Null}">
                                         <CheckBox.IsChecked>
-                                            <Binding Path="IsActive" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
-                                                <Binding.ValidationRules>
+                                            <!--<Binding Path="IsActive" ValidatesOnDataErrors="True" NotifyOnValidationError="True">-->
+                                            <Binding Path="IsActive">
+                                                <!--<Binding.ValidationRules>
                                                     <local:EditGeneralErrorValidationRule/>
-                                                </Binding.ValidationRules>
+                                                </Binding.ValidationRules>-->
                                             </Binding>
                                         </CheckBox.IsChecked>
                                     </CheckBox>

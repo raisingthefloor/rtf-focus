@@ -458,7 +458,9 @@ namespace Morphic.Focus
                                 {
                                     if (ShallStartSession(schedule))
                                     {
-                                        if (DateTime.Now < schedule.StartAt)
+                                        // NOTE: out of an abundance of caution, we don't show the "5 minute warning" unless it's at least 4:40 before the session; this should
+                                        //       account for any very short (a few seconds') delay in starting the session...with good margin
+                                        if (DateTime.Now < schedule.StartAt.Subtract(new TimeSpan(0, 4, 40)))
                                         {
                                             Application.Current.Dispatcher.Invoke(() =>
                                             {

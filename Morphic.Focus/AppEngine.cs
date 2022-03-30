@@ -458,12 +458,15 @@ namespace Morphic.Focus
                                 {
                                     if (ShallStartSession(schedule))
                                     {
-                                        Application.Current.Dispatcher.Invoke(() =>
+                                        if (DateTime.Now < schedule.StartAt)
                                         {
-                                            ScheduledSessionModal scrScheduledSessionModal = new ScheduledSessionModal(schedule);
-                                            scrScheduledSessionModal.Show();
-                                            LoggingService.WriteAppLog("Scheduled Session Dialog Open");
-                                        });
+                                            Application.Current.Dispatcher.Invoke(() =>
+                                            {
+                                                ScheduledSessionModal scrScheduledSessionModal = new ScheduledSessionModal(schedule);
+                                                scrScheduledSessionModal.Show();
+                                                LoggingService.WriteAppLog("Scheduled Session Dialog Open");
+                                            });
+                                        }
                                     }
                                 }
                             };

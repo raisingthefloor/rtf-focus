@@ -193,7 +193,7 @@ namespace Morphic.Data.Models
             return value;
         }
 
-        private int _penaltyValue = 1;
+        private int _penaltyValue = 30;
         public int PenaltyValue
         {
             get

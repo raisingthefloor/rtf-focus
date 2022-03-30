@@ -221,6 +221,8 @@ namespace Morphic.Focus.Screens
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            var textbox = (TextBox)sender;
+
             var failedValidation = false;
 
             Regex regex = new Regex("[^0-9]+");
@@ -229,12 +231,12 @@ namespace Morphic.Focus.Screens
                 failedValidation = true;
             }
 
-            if (e.Text.Trim() == String.Empty)
+            if (textbox.Text.Trim() == String.Empty)
             {
                 failedValidation = true;
             }
 
-            if (e.Text.Trim() == "0")
+            if (textbox.Text.Trim() == "0")
             {
                 failedValidation = true;
             }

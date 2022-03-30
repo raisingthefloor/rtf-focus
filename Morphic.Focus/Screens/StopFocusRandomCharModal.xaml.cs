@@ -56,7 +56,7 @@ namespace Morphic.Focus.Screens
             }
         }
 
-        private int _penaltyValue = 0;
+        private int _penaltyValue = 30;
         public int PenaltyValue
         {
             get

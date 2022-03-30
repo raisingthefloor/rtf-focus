@@ -39,6 +39,7 @@ namespace Morphic.Data.Models
                 }
             }
         }
+
         public bool ProvideBreak
         {
             get

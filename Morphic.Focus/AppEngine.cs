@@ -401,7 +401,9 @@ namespace Morphic.Focus
                                             //User & Log
                                             FocusType = "ScheduledSession",
                                             Schedule = schedule,
-                                            SessionDuration = Convert.ToInt32(totalMinutes)
+                                            SessionDuration = Convert.ToInt32(totalMinutes),
+
+                                            TurnONDND = this.BlocklistnameIncludesNotificationCategory(schedule.BlockListName)
                                         });
                                     };
                                     return;
@@ -442,7 +444,9 @@ namespace Morphic.Focus
                                                     //User & Log
                                                     FocusType = "ScheduledSession",
                                                     Schedule = schedule,
-                                                    SessionDuration = Convert.ToInt32(totalMinutes)
+                                                    SessionDuration = Convert.ToInt32(totalMinutes),
+
+                                                    TurnONDND = this.BlocklistnameIncludesNotificationCategory(schedule.BlockListName)
                                                 });
                                             };
 
@@ -521,7 +525,9 @@ namespace Morphic.Focus
                             //            //User & Log
                             //            FocusType = "ScheduledSession",
                             //            Schedule = schedule,
-                            //            SessionDuration = Convert.ToInt32(totalMinutes)
+                            //            SessionDuration = Convert.ToInt32(totalMinutes),
+
+                            //            TurnONDND = this.BlocklistnameIncludesNotificationCategory(schedule.BlockListName)
                             //        });
                             //    };
                             //}
@@ -1436,6 +1442,26 @@ namespace Morphic.Focus
             {
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
+        }
+
+        public bool BlocklistnameIncludesNotificationCategory(string? blocklistName)
+        {
+            if (!string.IsNullOrWhiteSpace(blocklistName))
+            {
+                if (UserPreferences.BlockLists.Any(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()))
+                {
+                    Blocklist blockList = UserPreferences.BlockLists.Where(p => p.Name.ToLowerInvariant() == blocklistName.ToLowerInvariant()).First();
+                    foreach (Blockcategory category in blockList.Blockcategories)
+                    {
+                        if (category.Name.ToLowerInvariant() == "notifications")
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
 
         internal void EndSession(Session session, bool isEarlyEnding = false)

@@ -33,7 +33,7 @@
                 <TextBlock Style="{DynamicResource ContentStyle}" TextWrapping="WrapWithOverflow" TextAlignment="Center" Margin="0 15 0 0">
                 Type the following characters in the space below:</TextBlock>
 
-                <TextBlock Style="{DynamicResource ModalTitle}" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding RandomChars}" Height="auto">
+                <TextBlock Style="{DynamicResource ModalTitle}" FontFamily="Arial" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding RandomChars}" Height="auto">
                 </TextBlock>
             </StackPanel>
             

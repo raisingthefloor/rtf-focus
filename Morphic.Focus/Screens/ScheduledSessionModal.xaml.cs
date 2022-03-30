@@ -96,7 +96,9 @@ namespace Morphic.Focus.Screens
 
                             //User & Log
                             FocusType = "ScheduledSession",
-                            Schedule = Schedule
+                            Schedule = Schedule,
+
+                            TurnONDND = Engine.BlocklistnameIncludesNotificationCategory(Schedule.BlockListName)
                         });
 
                         this.Close();
@@ -230,7 +232,9 @@ namespace Morphic.Focus.Screens
                     //User & Log
                     FocusType = "ScheduledSession",
                     Schedule = Schedule,
-                    SessionDuration = Convert.ToInt32(totalMinutes)
+                    SessionDuration = Convert.ToInt32(totalMinutes),
+
+                    TurnONDND = Engine.BlocklistnameIncludesNotificationCategory(Schedule.BlockListName)
                 }, minutesLeft);
 
                 this.Close();

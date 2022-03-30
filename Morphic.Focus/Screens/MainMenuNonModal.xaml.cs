@@ -105,21 +105,29 @@ namespace Morphic.Focus.Screens
         {
             try
             {
+                var blocklistName = chkBlockProgram.IsChecked ?? false ?
+                        (cmbBlockList.SelectedValue == null ? "" : cmbBlockList.SelectedValue.ToString()) :
+                        "";
+
+                var turnOnDnd = chkDND.IsChecked ?? false;
+                if (Engine.BlocklistnameIncludesNotificationCategory(blocklistName) == true)
+                {
+                    turnOnDnd = true;
+                }
+
                 Engine.StartFocusSession(new Session()
                 {
-                    TurnONDND = chkDND.IsChecked ?? false,
-
                     ProvideBreak = chkProvide.IsChecked ?? false,
                     BreakDuration = int.Parse(((ComboBoxItem)cmbBreakTIme.SelectedItem).Tag.ToString()),
                     BreakGap = int.Parse(((ComboBoxItem)cmbEvery.SelectedItem).Tag.ToString()),
 
-                    BlockListName = chkBlockProgram.IsChecked ?? false ?
-                        (cmbBlockList.SelectedValue == null ? "" : cmbBlockList.SelectedValue.ToString()) :
-                        "",
+                    BlockListName = blocklistName,
 
                     ActualStartTime = DateTime.Now,
                     
-                    SessionDuration = int.Parse(((Button)sender).Tag.ToString())
+                    SessionDuration = int.Parse(((Button)sender).Tag.ToString()),
+
+                    TurnONDND = turnOnDnd
                 });
 
                 //Hide this dialog

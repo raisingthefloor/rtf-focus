@@ -1336,6 +1336,45 @@ namespace Morphic.Focus
                     JSONHelper jSONHelper = new JSONHelper(Common.GetSessionFilePath(session));
                     jsonString = jSONHelper.Save(session);
 
+                    if (session.TurnONDND == true)
+                    {
+                        var targetFocusAssistState = FocusAssist.FocusAssistState.AlarmsOnly;
+
+                        var numAttemptsToSetState = 3;
+                        for (var iAttempt = 0; iAttempt < numAttemptsToSetState; iAttempt += 1)
+                        {
+                            var setStateResult = FocusAssist.SetState(targetFocusAssistState);
+                            if (setStateResult.IsError == true)
+                            {
+                                LoggingService.WriteAppLog("Error: could not turn on Windows Focus Assist");
+                            }
+
+                            var getStateResult = FocusAssist.GetState();
+                            if (getStateResult.IsError == true)
+                            {
+                                LoggingService.WriteAppLog("Error: could not determine if Windows Focus Assist was turned on successfully");
+                            }
+                            var focusAssistState = getStateResult.Value!;
+
+                            // if we successfully turned on focus assist, break out of this loop
+                            // NOTE: this is necessary because _sometimes_ Windows doesn't turn in focus assist when we ask it to (via the undocumented API call)
+                            if (focusAssistState == targetFocusAssistState)
+                            {
+                                break;
+                            }
+
+                            // wait 100ms before the next attempt
+                            if (iAttempt < numAttemptsToSetState - 1)
+                            {
+                                Thread.Sleep(100);
+                            }
+                            else
+                            {
+                                LoggingService.WriteAppLog("Error: could not turn on Windows Focus Assist successfully");
+                            }
+                        }
+                    }
+
                     this.ActiveSessions.Add(session);
                     session.PropertyChanged += CurrSession_PropertyChanged;
                     session.IsBreakRunning = false;
@@ -1398,6 +1437,43 @@ namespace Morphic.Focus
         {
             try
             {
+                if (session.TurnONDND == true)
+                {
+                    var numAttemptsToSetState = 3;
+                    for (var iAttempt = 0; iAttempt < numAttemptsToSetState; iAttempt += 1)
+                    {
+                        var setStateResult = FocusAssist.SetState(FocusAssist.FocusAssistState.Off);
+                        if (setStateResult.IsError == true)
+                        {
+                            LoggingService.WriteAppLog("Error: could not turn off Windows Focus Assist");
+                        }
+
+                        var getStateResult = FocusAssist.GetState();
+                        if (getStateResult.IsError == true)
+                        {
+                            LoggingService.WriteAppLog("Error: could not determine if Windows Focus Assist was turned off successfully");
+                        }
+                        var focusAssistState = getStateResult.Value!;
+
+                        // if we successfully turned off focus assist, break out of this loop
+                        // NOTE: this is necessary because _sometimes_ Windows doesn't turn off focus assist when we ask it to (via the undocumented API call)
+                        if (focusAssistState == FocusAssist.FocusAssistState.Off)
+                        {
+                            break;
+                        }
+
+                        // wait 100ms before the next attempt
+                        if (iAttempt < numAttemptsToSetState - 1)
+                        {
+                            Thread.Sleep(100);
+                        }
+                        else
+                        {
+                            LoggingService.WriteAppLog("Error: could not turn off Windows Focus Assist successfully");
+                        }
+                    }
+                }
+
                 if (isEarlyEnding)
                 {
                     if (string.IsNullOrWhiteSpace(session.BlockListName))

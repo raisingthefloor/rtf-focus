@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -121,6 +122,14 @@ namespace Morphic.Focus.Screens
 
         private void RestartComputer(object sender, RoutedEventArgs e)
         {
+            /* telemetry event */
+            string eventName = "B-STOPfs-restartComp";
+            var eventData = new TelemetryEventData();
+            Engine.PopulateCommonEventData(ref eventData);
+            var eventDataAsJson = JsonSerializer.Serialize(eventData);
+            //
+            Engine.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+
             //Opens up Win Menu
             KeyboardSend.OpenPowerBar();
             Session.IsMarkedForClose = true;
@@ -141,5 +150,18 @@ namespace Morphic.Focus.Screens
             }
         }
         #endregion
+
+        private void NevermindButton_Click(object sender, RoutedEventArgs e)
+        {
+            /* telemetry event */
+            string eventName = "B-nevermind-restartComp";
+            var eventData = new TelemetryEventData();
+            Engine.PopulateCommonEventData(ref eventData);
+            var eventDataAsJson = JsonSerializer.Serialize(eventData);
+            //
+            Engine.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+
+            this.Close();
+        }
     }
 }

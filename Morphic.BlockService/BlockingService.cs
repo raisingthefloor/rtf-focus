@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.ServiceProcess;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using WindowsFirewallHelper;
@@ -678,7 +679,20 @@ namespace Morphic.BlockService
         {
             if (messageInfo.MessageType == MessageType.Request)
             {
-                messageInfo.MakeTemporaryRedirect("https://morphic.org/websiteblocked/");
+                try
+                {
+                    /* telemetry event */
+                    string eventName = "E-website_BLOCKED";
+                    var eventData = new TelemetryEventData();
+                    AppEngine.Instance.PopulateCommonEventData(ref eventData);
+                    var eventDataAsJson = JsonSerializer.Serialize(eventData);
+                    //
+                    AppEngine.Instance.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+                }
+                catch { }
+
+                //messageInfo.MakeTemporaryRedirect("https://morphic.org/websiteblocked/");
+                messageInfo.MakeTemporaryRedirect("https://terpconnect.umd.edu/~zyskinal/websiteblocked");
                 messageInfo.ProxyNextAction = ProxyNextAction.DropConnection;
                 return true;
             }
@@ -811,6 +825,15 @@ namespace Morphic.BlockService
 
         protected override void OnShutdown()
         {
+            try
+            {
+                Task.Run(async () =>
+                {
+                    await AppEngine.Instance.StopTelemetrySessionAsync();
+                });
+            }
+            catch { }
+
             try
             {
                 LoggingService.WriteServiceLog("On Shutdown");

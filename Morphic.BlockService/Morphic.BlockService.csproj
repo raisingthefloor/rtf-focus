@@ -15,6 +15,7 @@
     <ProjectReference Include="..\CitadelCore.Windows\CitadelCore.Windows.csproj" />
     <ProjectReference Include="..\CitadelCore\CitadelCore.csproj" />
     <ProjectReference Include="..\Morphic.Data\Morphic.Data.csproj" />
+    <ProjectReference Include="..\Morphic.Telemetry\Morphic.Telemetry.csproj" />
   </ItemGroup>
 
 </Project>

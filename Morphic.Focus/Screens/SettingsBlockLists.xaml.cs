@@ -37,6 +37,14 @@ namespace Morphic.Focus.Screens
         #region User Events
         private void AddBlockList_Click(object sender, RoutedEventArgs e)
         {
+            // enforce a reasonable limit to blocklist count
+            const int MAX_BLOCKLIST_COUNT = 10;
+            if (_engine.UserPreferences?.BlockLists.Count() > MAX_BLOCKLIST_COUNT)
+            {
+                MessageBox.Show("Blocklists are awesome, but we are currently limited to " + MAX_BLOCKLIST_COUNT.ToString() + " maximum.");
+                return;
+            }
+
             try
             {
                 LoggingService.WriteAppLog("AddBlockList_Click");

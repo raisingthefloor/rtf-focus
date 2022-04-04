@@ -1,11 +1,16 @@
 ﻿using Morphic.Data.Models;
 using Morphic.Data.Services;
 using Morphic.Focus.Screens;
+using Morphic.Telemetry;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,8 +29,20 @@ namespace Morphic.Focus
 
         public const int NUMBER_OF_SIMULTANEOUS_SESSIONS_ALLOWED = 1; // valid range: 1...2
 
+        private MorphicTelemetryClient? _telemetryClient = null;
+
         AppEngine()
         {
+            try
+            {
+                // start telemetry session
+                this.StartTelemetrySession();
+            }
+            catch (Exception ex)
+            {
+                LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
+            }
+
             try
             {
                 #region Categories
@@ -71,6 +88,286 @@ namespace Morphic.Focus
             {
                 LoggingService.WriteAppLog(ex.Message + ex.StackTrace);
             }
+        }
+
+        private void StartTelemetrySession()
+        {
+            // retrieve the telemetry device ID for this device; if it doesn't exist then create a new one
+            var telemetryDeviceUuid = this.GetOrCreateTelemetryDeviceUuid();
+
+            // configure our telemetry uplink
+            var mqttHostname = "focusmqtt.morphic.org";
+            var mqttClientId = telemetryDeviceUuid;
+            var mqttUsername = "focus-windows";
+            var mqttAnonymousPassword = "wY2NeLJht6Ss4IhN";
+
+            var mqttConfig = new MorphicTelemetryClient.WebsocketTelemetryClientConfig()
+            {
+                Hostname = mqttHostname,
+                Port = 443,
+                Path = "/ws",
+                ClientId = mqttClientId,
+                Username = mqttUsername,
+                Password = mqttAnonymousPassword,
+                UseTls = true
+            };
+            var telemetryClient = new MorphicTelemetryClient(mqttConfig);
+            telemetryClient.SiteId = null;
+            _telemetryClient = telemetryClient;
+
+            Task.Run(async () =>
+            {
+                await telemetryClient.StartSessionAsync();
+
+                /* telemetry event */
+                string eventName = "app_startUP";
+                var eventData = new TelemetryEventData();
+                this.PopulateCommonEventData(ref eventData);
+                var eventDataAsJson = JsonSerializer.Serialize(eventData);
+                //
+                this.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+            });
+        }
+
+        internal string? GetTelemetryClientId()
+        {
+            return _telemetryClient?.GetTelemetryClientId();
+        }
+
+        internal async Task StopTelemetrySessionAsync()
+        {
+            try
+            {
+                if (_telemetryClient is not null)
+                {
+                    /* telemetry event */
+                    string eventName = "app_shutDOWN";
+                    var eventData = new TelemetryEventData();
+                    this.PopulateCommonEventData(ref eventData);
+                    var eventDataAsJson = JsonSerializer.Serialize(eventData);
+                    //
+                    this.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+
+                    // wait up to 2.5 seconds for message queue to empty
+                    await _telemetryClient.FlushMessageQueueAsync(2500);
+
+                    await _telemetryClient.StopSessionAsync();
+                }
+            }
+            catch { }
+        }
+
+        private string GetOrCreateTelemetryDeviceUuid()
+        {
+            // retrieve the telemetry device ID for this device; if it doesn't exist then create a new one
+            string? telemetryDeviceUuid = null;
+
+            // capture our existing telemetry id, if one already exists
+            // NOTE: realistically, we should make a folder WITHIN %PROGRAMDATA%, but we are using that base folder since the rest of the app uses it
+            var telemetryUuidFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Common.TELEMETRY_UUID_FILE_NAME);
+            if (File.Exists(telemetryUuidFilePath) == true)
+            {
+                try
+                {
+                    telemetryDeviceUuid = File.ReadAllText(telemetryUuidFilePath);
+                }
+                catch { }
+            }
+
+            // if we could not retrieve a device uuid, create a new one now
+            if (telemetryDeviceUuid is null)
+            {
+                telemetryDeviceUuid = Guid.NewGuid().ToString();
+
+                // save our telemetry uuid to disk
+                try
+                {
+                    File.WriteAllText(telemetryUuidFilePath, telemetryDeviceUuid);
+                }
+                catch
+                {
+                    Debug.Assert(false, "Could not write telemetry ID to disk");
+                    // TODO: remove this message after the study has concluded
+                    MessageBox.Show("Sorry, we're having trouble establishing your participant ID; please contact the study manager.");
+                }
+            }
+
+            return telemetryDeviceUuid!;
+        }
+
+        public void EnqueueTelemetryRecord(string eventName, string? data = null)
+        {
+            _telemetryClient?.EnqueueActionMessage(eventName, data);
+        }
+
+        internal void PopulateCommonEventData(ref TelemetryEventData eventData)
+        {
+            eventData.CountdownTimerCheckbox = this.UserPreferences?.General.showBreakCountdownTimer ?? null;
+            eventData.OneMinLockScreenCheckbox = this.UserPreferences?.General.blockScreen1stMinofBreak ?? null;
+            var temporaryUnblockItemCount = this.UserPreferences?.General.TemporarilyUnblock.ActiveAppsAndWebsites.Count;
+            if (temporaryUnblockItemCount is not null)
+            {
+                int checkedItemCount = 0;
+                foreach (var element in this.UserPreferences!.General.TemporarilyUnblock.ActiveAppsAndWebsites)
+                {
+                    if (element.IsActive == true)
+                    {
+                        checkedItemCount += 1;
+                    }
+                }
+                eventData.AllowUnblockingItemCount = checkedItemCount;
+            }
+            else
+            {
+                eventData.AllowUnblockingItemCount = null;
+            }
+
+            //
+
+            var blocklistCount = this.UserPreferences?.BlockLists.Count ?? 0;
+            var blocklistList = new List<TelemetryEventDataBlocklistData>();
+            if (blocklistCount > 0)
+            {
+                foreach (var blocklist in this.UserPreferences!.BlockLists)
+                {
+                    var blocklistData = new TelemetryEventDataBlocklistData();
+
+                    foreach (var blockcategory in blocklist.Blockcategories)
+                    {
+                        switch (blockcategory.Name)
+                        {
+                            case "Notifications":
+                            case "Notifcations":
+                                blocklistData.NotificationsCategoryCheckbox = blockcategory.IsActive;
+                                break;
+                            case "Communication (Not Email)":
+                                blocklistData.CommunicationCategoryCheckbox = blockcategory.IsActive;
+                                break;
+                            case "Dating":
+                                blocklistData.DatingCategoryCheckbox = blockcategory.IsActive;
+                                break;
+                            case "Email":
+                                blocklistData.EmailCategoryCheckbox = blockcategory.IsActive;
+                                break;
+                            case "Gambling":
+                                blocklistData.GamblingCategoryCheckbox = blockcategory.IsActive;
+                                break;
+                            case "Games":
+                                blocklistData.GamesCategoryCheckbox = blockcategory.IsActive;
+                                break;
+                            case "News":
+                                blocklistData.NewsCategoryCheckbox = blockcategory.IsActive;
+                                break;
+                            case "Porn":
+                                blocklistData.PornCategoryCheckbox = blockcategory.IsActive;
+                                break;
+                            //case "Productivity (exceptions)":
+                            //    blocklistData.ProductivityCategoryCheckbox = blockcategory.IsActive;
+                            //    break;
+                            case "Proxies":
+                                blocklistData.ProxiesCategoryCheckbox = blockcategory.IsActive;
+                                break;
+                            case "Shopping":
+                                blocklistData.ShoppingCategoryCheckbox = blockcategory.IsActive;
+                                break;
+                            case "Social Media":
+                                blocklistData.SocialmediaCategoryCheckbox = blockcategory.IsActive;
+                                break;
+                            case "Videos":
+                                blocklistData.VideosCategoryCheckbox = blockcategory.IsActive;
+                                break;
+                            default:
+                                // unknown list
+                                break;
+                        }
+                    }
+
+                    blocklistData.BlocklistNameHash = this.HashUsingSHA1(blocklist.Name);
+                    blocklistData.AlsoBlockItemsCount = blocklist.AlsoBlock.ActiveAppsAndWebsites.Count();
+                    blocklistData.ExceptionItemsCount = blocklist.Exceptions.ActiveAppsAndWebsites.Count();
+                    switch (blocklist.Penalty)
+                    {
+                        case Penalty.None:
+                            blocklistData.Penalty = "none";
+                            break;
+                        case Penalty.Type:
+                            blocklistData.Penalty = blocklist.PenaltyValue.ToString();
+                            break;
+                        case Penalty.Restart:
+                            blocklistData.Penalty = "restart";
+                            break;
+                        default:
+                            Debug.Assert(false, "Invalid blocklist penalty");
+                            blocklistData.Penalty = null;
+                            break;
+                    }
+                    switch (blocklist.BreakBehavior)
+                    {
+                        case BreakBehavior.Blocked:
+                            blocklistData.BreakBehavior = "block";
+                            break;
+                        case BreakBehavior.UnblockLongOnly:
+                            blocklistData.BreakBehavior = "unblock-Long";
+                            break;
+                        case BreakBehavior.UnblockFull:
+                            blocklistData.BreakBehavior = "unblock-ALL";
+                            break;
+                        default:
+                            Debug.Assert(false, "Invalid blocklist break behavior");
+                            blocklistData.BreakBehavior = null;
+                            break;
+                    }
+
+                    blocklistList.Add(blocklistData);
+                }
+            }
+            eventData.BlocklistList = blocklistList;
+        }
+
+        internal string HashUsingSHA1(string value)
+        {
+            var valueAsBytes = System.Text.Encoding.UTF8.GetBytes(value);
+
+            using (SHA1 sha256 = SHA1.Create())
+            {
+                var hashAsBytes = sha256.ComputeHash(valueAsBytes);
+
+                var resultBuilder = new StringBuilder();
+                for (int i = 0; i < hashAsBytes.Length; i += 1)
+                {
+                    resultBuilder.Append(hashAsBytes[i].ToString("X2"));
+                }
+                return resultBuilder.ToString();
+            }
+        }
+
+        internal int? ConvertToInt32OrNull(string? value)
+        {
+            int? result;
+
+            if (value is not null)
+            {
+                if (value.Trim() == String.Empty)
+                {
+                    return null;
+                }
+
+                try
+                {
+                    result = Convert.ToInt32(value);
+                }
+                catch
+                {
+                    Debug.Assert(false, "Cannot convert the value to an int; value: " + value);
+                    result = null;
+                }
+            }
+            else
+            {
+                result = null;
+            }
+
+            return result;
         }
 
         private void SetDefaultBlocklists()
@@ -1238,6 +1535,14 @@ namespace Morphic.Focus
 
         private void InvokeStartSessionErrorDialog()
         {
+            /* telemetry event */
+            string eventName = "E-FocusSessionACTIVE";
+            var eventData = new TelemetryEventData();
+            this.PopulateCommonEventData(ref eventData);
+            var eventDataAsJson = JsonSerializer.Serialize(eventData);
+            //
+            this.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+
             try
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -1780,7 +2085,7 @@ namespace Morphic.Focus
                             ActiveFocusDispatchTimers.Remove(focusDispatchTimer);
                         }
                     }
-                    TimeTillNextBreak = focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
+                    this.TimeTillNextBreak = focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
                 }, Application.Current.Dispatcher);
 
                 focusDispatchTimer.Timer.Start(); //Start Countdown timer
@@ -1868,7 +2173,7 @@ namespace Morphic.Focus
                             ActiveFocusDispatchTimers.Remove(focusDispatchTimer);
                         }
                     }
-                    TimeTillNextBreakEnds = focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
+                    this.TimeTillNextBreakEnds = focusDispatchTimer.Time = focusDispatchTimer.Time.Add(TimeSpan.FromSeconds(-1));
                 }, Application.Current.Dispatcher);
 
                 focusDispatchTimer.Timer.Start(); //Start Countdown timer

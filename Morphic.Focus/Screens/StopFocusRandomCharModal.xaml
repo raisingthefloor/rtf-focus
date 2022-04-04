@@ -44,7 +44,7 @@
 
             <Border Grid.Row="4" Grid.Column="0" Width="75" BorderThickness="0 1 0 0" BorderBrush="#a3a3a3" Margin="25 15 25 0"></Border>
 
-            <Button Grid.Row="5" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="25 20 25 0" Width="130" Command="ApplicationCommands.Close">
+            <Button Grid.Row="5" Grid.Column="0" Style="{DynamicResource FocusButtonOK}" Margin="25 20 25 0" Width="130" Click="NevermindButton_Click">
                 Nevermind, go back</Button>
 
             <TextBlock Grid.Row="6" Grid.Column="0" Margin="25 20 25 10" Style="{DynamicResource ContentStyleSmall}" TextAlignment="Center">

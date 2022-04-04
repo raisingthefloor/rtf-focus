@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -113,6 +114,14 @@ namespace Morphic.Focus.Screens
         /// <param name="e"></param>
         private void btnStopFocus_Click(object sender, RoutedEventArgs e)
         {
+            /* telemetry event */
+            string eventName = "B-STOPfs-currentlyRunningFocusSessions";
+            var eventData = new TelemetryEventData();
+            Engine.PopulateCommonEventData(ref eventData);
+            var eventDataAsJson = JsonSerializer.Serialize(eventData);
+            //
+            Engine.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+
             try
             {
                 //Log Closing Session
@@ -147,6 +156,14 @@ namespace Morphic.Focus.Screens
         }
         private void btnStopFocus2_Click(object sender, RoutedEventArgs e)
         {
+            /* telemetry event */
+            string eventName = "B-STOPfs-currentlyRunningFocusSessions-SESSION2";
+            var eventData = new TelemetryEventData();
+            Engine.PopulateCommonEventData(ref eventData);
+            var eventDataAsJson = JsonSerializer.Serialize(eventData);
+            //
+            Engine.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+
             try
             {
                 //Log Closing Session

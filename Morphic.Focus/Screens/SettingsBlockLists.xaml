@@ -417,7 +417,8 @@
                     
                         A blocklist is a group of apps, websites and other items that you can choose to block during a focus session. 
                     
-                    <Hyperlink NavigateUri="https://morphic.org/blocklists">
+                    <!--<Hyperlink NavigateUri="https://morphic.org/blocklists">-->
+                    <Hyperlink NavigateUri="https://terpconnect.umd.edu/~zyskinal/blocklists">
                         Learn more about Blocklists
                         <InlineUIContainer>
                             <Image Source="/Images/external-link 1.png" Width="12" Height="12"/>

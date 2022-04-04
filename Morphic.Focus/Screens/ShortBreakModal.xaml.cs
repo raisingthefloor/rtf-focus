@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -56,6 +57,14 @@ namespace Morphic.Focus.Screens
         }
         private void btnStopFocus_Click(object sender, RoutedEventArgs e)
         {
+            /* telemetry event */
+            string eventName = "B-STOPfs-shortBreak";
+            var eventData = new TelemetryEventData();
+            Engine.PopulateCommonEventData(ref eventData);
+            var eventDataAsJson = JsonSerializer.Serialize(eventData);
+            //
+            Engine.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+
             try
             {
                 //Log Closing Session
@@ -77,6 +86,14 @@ namespace Morphic.Focus.Screens
 
         private void btn5Min_Click(object sender, RoutedEventArgs e)
         {
+            /* telemetry event */
+            string eventName = "B-5min-shortBreak";
+            var eventData = new TelemetryEventData();
+            Engine.PopulateCommonEventData(ref eventData);
+            var eventDataAsJson = JsonSerializer.Serialize(eventData);
+            //
+            Engine.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+
             try
             {
                 HideButtonVisibility();
@@ -91,6 +108,14 @@ namespace Morphic.Focus.Screens
 
         private void btn10Min_Click(object sender, RoutedEventArgs e)
         {
+            /* telemetry event */
+            string eventName = "B-10min-shortBreak";
+            var eventData = new TelemetryEventData();
+            Engine.PopulateCommonEventData(ref eventData);
+            var eventDataAsJson = JsonSerializer.Serialize(eventData);
+            //
+            Engine.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+
             try
             {
                 HideButtonVisibility();
@@ -105,6 +130,14 @@ namespace Morphic.Focus.Screens
 
         private void btn15Min_Click(object sender, RoutedEventArgs e)
         {
+            /* telemetry event */
+            string eventName = "B-15min-shortBreak";
+            var eventData = new TelemetryEventData();
+            Engine.PopulateCommonEventData(ref eventData);
+            var eventDataAsJson = JsonSerializer.Serialize(eventData);
+            //
+            Engine.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+
             try
             {
                 HideButtonVisibility();
@@ -121,6 +154,14 @@ namespace Morphic.Focus.Screens
 
         private void StartBreak(object sender, RoutedEventArgs e)
         {
+            /* telemetry event */
+            string eventName = "B-OK-shortBreak";
+            var eventData = new TelemetryEventData();
+            Engine.PopulateCommonEventData(ref eventData);
+            var eventDataAsJson = JsonSerializer.Serialize(eventData);
+            //
+            Engine.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+
             // TODO: capture the active session (rather than hard-coding to session 1)
             int breakDuration;
             if (Engine.ActiveSessions.Count > 0)

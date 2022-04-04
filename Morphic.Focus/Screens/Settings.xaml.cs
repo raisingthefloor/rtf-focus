@@ -27,6 +27,7 @@ namespace Morphic.Focus.Screens
         private SettingsBlockLists _objSettingsBlockLists;
         private SettingsSchedule _objSettingsSchedule;
         private SettingsTodaysSchedule _objSettingsTodaysSchedule;
+        private SettingsStudyInformation _objSettingsStudyInformation;
 
         private Control _currentSelectedSetting;
         private bool openBlocklist = false;
@@ -64,6 +65,9 @@ namespace Morphic.Focus.Screens
 
             _objSettingsTodaysSchedule = new SettingsTodaysSchedule();
             _objSettingsTodaysSchedule.SetBinding(UserControl.HeightProperty, binding);
+
+            _objSettingsStudyInformation = new SettingsStudyInformation();
+            _objSettingsStudyInformation.SetBinding(UserControl.HeightProperty, binding);
 
             //Set the General Setting as the default View of the Setting when opened up
             _currentSelectedSetting = _objSettingsGeneral;
@@ -181,6 +185,9 @@ namespace Morphic.Focus.Screens
                     break;
                 case "lstItemToday":
                     _currentSelectedSetting = _objSettingsTodaysSchedule;
+                    break;
+                case "lstItemStudyInformation":
+                    _currentSelectedSetting = _objSettingsStudyInformation;
                     break;
             }
 

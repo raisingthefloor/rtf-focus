@@ -115,6 +115,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Morphic.Data\Morphic.Data.csproj" />
+    <ProjectReference Include="..\Morphic.Telemetry\Morphic.Telemetry.csproj" />
   </ItemGroup>
 
   <ItemGroup>

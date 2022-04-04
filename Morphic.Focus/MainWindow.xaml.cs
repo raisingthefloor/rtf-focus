@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -181,12 +182,30 @@ namespace Morphic.Focus
         {
             // Do stuff with the args
             if (Application.Current?.MainWindow is MainWindow mainWindow)
+            {
                 if (args.Count() > 0)
-                    new BlockedAppModal(string.Join("\r\n", args)).ShowDialog();
+                {
+                    try
+                    {
+                        /* telemetry event */
+                        string eventName = "E-app_BLOCKED";
+                        var eventData = new TelemetryEventData();
+                        AppEngine.Instance.PopulateCommonEventData(ref eventData);
+                        var eventDataAsJson = JsonSerializer.Serialize(eventData);
+                        //
+                        AppEngine.Instance.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+                    }
+                    catch { }
+
+                    // NOTE: we are intentionally surpessing the dialog
+                    //new BlockedAppModal(string.Join("\r\n", args)).ShowDialog();
                     //mainWindow.ButtonText = string.Join("\r\n", args);
+                }
                 //else
+                //{
                 //    mainWindow.ButtonText = string.Join("\r\n", "No args");
-                
+                //}
+            }   
         }
 
         private static IntPtr HandleMessages

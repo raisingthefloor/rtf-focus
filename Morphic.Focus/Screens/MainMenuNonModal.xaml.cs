@@ -4,10 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -114,6 +117,50 @@ namespace Morphic.Focus.Screens
                 {
                     turnOnDnd = true;
                 }
+
+                /* telemetry event */
+                string eventName;
+                var focusDurationInMinutes = Convert.ToInt32(((Button)sender).Tag.ToString());
+                switch (focusDurationInMinutes)
+                {
+                    case 30:
+                        eventName = "B-mainMENU-30m";
+                        break;
+                    case 60:
+                        eventName = "B-mainMENU-60m";
+                        break;
+                    case 120:
+                        eventName = "B-mainMENU-120m";
+                        break;
+                    case Int32.MaxValue:
+                        eventName = "B-mainMENU-untilStop";
+                        break;
+                    default:
+                        throw new Exception("Invalid break duration");
+                }
+                //
+                var provideBreak = chkProvide.IsChecked ?? false;
+                var useBlocklist = chkBlockProgram.IsChecked ?? null;
+                string? scheduledEndTime = null;
+                if (focusDurationInMinutes != Int32.MaxValue)
+                {
+                    scheduledEndTime = DateTime.Now.AddMinutes(focusDurationInMinutes).ToString("HH:mm");
+                }
+                //
+                var eventData = new TelemetryEventData()
+                {
+                    DndStatusCheckbox = chkDND.IsChecked ?? null,
+                    GiveMeBreaksCheckbox = chkProvide.IsChecked ?? null,
+                    FocusIntervalLength = (provideBreak == true) ? Engine.ConvertToInt32OrNull(((ComboBoxItem)cmbEvery.SelectedItem).Tag.ToString()) : null,
+                    ShortIntervalBreakLength = (provideBreak == true) ? Engine.ConvertToInt32OrNull(((ComboBoxItem)cmbBreakTIme.SelectedItem).Tag.ToString()) : null,
+                    BlockingCheckbox = chkBlockProgram.IsChecked ?? null,
+                    BlocklistNameHash = (useBlocklist == true && blocklistName is not null) ? Engine.HashUsingSHA1(blocklistName) : null,
+                    ScheduledEndTime = scheduledEndTime ?? null,
+                };
+                Engine.PopulateCommonEventData(ref eventData);
+                var eventDataAsJson = JsonSerializer.Serialize(eventData);
+                //
+                Engine.EnqueueTelemetryRecord(eventName, eventDataAsJson);
 
                 Engine.StartFocusSession(new Session()
                 {

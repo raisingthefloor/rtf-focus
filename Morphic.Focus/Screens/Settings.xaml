@@ -81,8 +81,9 @@
 
                     <ListBoxItem Name="lstItemGeneral">General Settings</ListBoxItem>
                     <ListBoxItem Name="lstItemBlockLists">Edit Blocklists</ListBoxItem>
-                    <ListBoxItem Name="lstItemSchedule">Focus Schedule</ListBoxItem>
+                    <ListBoxItem Name="lstItemSchedule" Visibility="Collapsed">Focus Schedule</ListBoxItem>
                     <ListBoxItem Name="lstItemToday" Visibility="Collapsed">Today's Schedule</ListBoxItem>
+                    <ListBoxItem Name="lstItemStudyInformation">Study Information</ListBoxItem>
                 </ListBox>
             </StackPanel>
 

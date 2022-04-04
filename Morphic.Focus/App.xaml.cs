@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Morphic.Focus
@@ -22,7 +23,15 @@ namespace Morphic.Focus
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            
+            try
+            {
+                Task.Run(async () =>
+                {
+                    await AppEngine.Instance.StopTelemetrySessionAsync();
+                });
+            }
+            catch { }
+
         }
     }
 }

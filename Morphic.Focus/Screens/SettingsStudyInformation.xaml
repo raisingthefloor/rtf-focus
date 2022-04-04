@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Morphic.Focus.Screens.SettingsStudyInformation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Morphic.Focus.Screens"
+             mc:Ignorable="d" 
+             d:DesignWidth="100">
+    <UserControl.Resources>
+
+
+    </UserControl.Resources>
+    <StackPanel Style="{DynamicResource SettingStackPanelStyle}">
+        <TextBlock Style="{DynamicResource SettingsHeader}" Height="auto">Study Information</TextBlock>
+
+        <StackPanel Orientation="Horizontal" Height="auto">
+            <TextBlock Margin="0,0,8,0">Participant ID:</TextBlock>
+            <TextBox x:Name="ParticipantIdTextBox" IsReadOnly="True" Width="300"/>
+            <Button x:Name="ParticipantIdCopyButton" Click="ParticipantIdCopyButton_Click" Margin="8,0,0,0" Padding="8,0">Copy</Button>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

@@ -15,7 +15,7 @@
 
         <StackPanel Name="sPnlFocusSessionBehavior" Height="auto">
             <TextBlock Style="{DynamicResource SettingsSectionTitle}">Behavior during focus sessions:</TextBlock>
-            <CheckBox Margin="0 4 0 0"  Style="{DynamicResource FocusCheckbox}" Validation.Error="EditGeneralError" Validation.ErrorTemplate="{x:Null}">
+            <!--<CheckBox Margin="0 4 0 0"  Style="{DynamicResource FocusCheckbox}" Validation.Error="EditGeneralError" Validation.ErrorTemplate="{x:Null}">
                 <CheckBox.IsChecked>
                     <Binding Path="Engine.UserPreferences.General.dontGive5MinWarning" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                         <Binding.ValidationRules>
@@ -23,7 +23,7 @@
                         </Binding.ValidationRules>
                     </Binding>
                 </CheckBox.IsChecked>
-                Don't give me a 5 minute warning before scheduled focus sessions start</CheckBox>
+                Don't give me a 5 minute warning before scheduled focus sessions start</CheckBox>-->
             <CheckBox Margin="0 4 0 0" Style="{DynamicResource FocusCheckbox}" Validation.Error="EditGeneralError" Validation.ErrorTemplate="{x:Null}">
                 <CheckBox.IsChecked>
                     <Binding Path="Engine.UserPreferences.General.showBreakCountdownTimer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
@@ -32,7 +32,7 @@
                         </Binding.ValidationRules>
                     </Binding>
                 </CheckBox.IsChecked>
-                Show count down timer in minutes for break start and end</CheckBox>
+                Show countdown timer in minutes for break start and end</CheckBox>
             <CheckBox Margin="0 4 0 0" Style="{DynamicResource FocusCheckbox}" Validation.Error="EditGeneralError" Validation.ErrorTemplate="{x:Null}">
                 <CheckBox.IsChecked>
                     <Binding Path="Engine.UserPreferences.General.blockScreen1stMinofBreak" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">

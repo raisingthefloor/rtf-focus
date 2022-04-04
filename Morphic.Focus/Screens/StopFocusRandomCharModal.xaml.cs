@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -94,7 +95,7 @@ namespace Morphic.Focus.Screens
 
         public static string RandomString(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
@@ -168,6 +169,14 @@ namespace Morphic.Focus.Screens
 
         private void StopSession(object sender, RoutedEventArgs e)
         {
+            /* telemetry event */
+            string eventName = "B-STOPfs-randomCHAR";
+            var eventData = new TelemetryEventData();
+            Engine.PopulateCommonEventData(ref eventData);
+            var eventDataAsJson = JsonSerializer.Serialize(eventData);
+            //
+            Engine.EnqueueTelemetryRecord(eventName, eventDataAsJson);
+
             try
             {
                 Engine.EndSession(Session);
@@ -183,8 +192,20 @@ namespace Morphic.Focus.Screens
         {
             btnStopSession.IsEnabled = txtRandomChars.Text == RandomChars;
         }
+
         #endregion
 
+        private void NevermindButton_Click(object sender, RoutedEventArgs e)
+        {
+            /* telemetry event */
+            string eventName = "B-nevermind-randomCHAR";
+            var eventData = new TelemetryEventData();
+            Engine.PopulateCommonEventData(ref eventData);
+            var eventDataAsJson = JsonSerializer.Serialize(eventData);
+            //
+            Engine.EnqueueTelemetryRecord(eventName, eventDataAsJson);
 
+            this.Close();
+        }
     }
 }
